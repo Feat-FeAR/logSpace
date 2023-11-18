@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Setups on My New Hugo Site</title>
+    <title>Setups on --</title>
     <link>https://example.org/setups/</link>
-    <description>Recent content in Setups on My New Hugo Site</description>
+    <description>Recent content in Setups on --</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Fri, 17 Nov 2023 23:20:42 +0100</lastBuildDate>
     <atom:link href="https://example.org/setups/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>R_setup</title>
+      <title>R</title>
       <link>https://example.org/setups/r_setup/</link>
       <pubDate>Fri, 17 Nov 2023 23:20:42 +0100</pubDate>
       <guid>https://example.org/setups/r_setup/</guid>
-      <description>Windows R go to https://cloud.r-project.org/ choose Download R for Windows &amp;gt; base download R from that page double click on the executable file you just downloaded and follow the on-screen instructions (Optional) go back and choose Download R for Windows &amp;gt; Rtools to install the latest version of Rtools (tools to build R packages on Windows) RStudio RStudio is a third-party program providing a nicer graphical interface to R. The RStudio integrated development environment (IDE) for R is a product of Posit PBC.</description>
+      <description>Win R go to https://cloud.r-project.org/ choose Download R for Windows &amp;gt; base download R from that page double click on the executable file you just downloaded and follow the on-screen instructions (Optional) go back and choose Download R for Windows &amp;gt; Rtools to install the latest version of Rtools (tools to build R packages on Windows) RStudio RStudio is a third-party program providing a nicer graphical interface to R. The RStudio integrated development environment (IDE) for R is a product of Posit PBC.</description>
     </item>
   </channel>
 </rss>

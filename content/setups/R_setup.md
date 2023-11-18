@@ -1,12 +1,12 @@
 +++
-title = 'R_setup'
+title = 'R'
 date = 2023-11-17T23:20:42+01:00
 draft = false
 +++
 
 #
 
-## Windows
+## Win
 ### R
 1. go to https://cloud.r-project.org/
 1. choose _Download R for Windows_ > _base_
