@@ -1,22 +1,0 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Codings on --</title>
-    <link>https://example.org/coding/</link>
-    <description>Recent content in Codings on --</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <lastBuildDate>Fri, 17 Nov 2023 23:54:16 +0100</lastBuildDate>
-    <atom:link href="https://example.org/coding/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Functional_1</title>
-      <link>https://example.org/coding/functional_1/</link>
-      <pubDate>Fri, 17 Nov 2023 23:54:16 +0100</pubDate>
-      <guid>https://example.org/coding/functional_1/</guid>
-      <description>Create a function In JavaScript you can create functions in 2 ways:
-by Function Declaration as Function Expressions Function Declarations C-style syntax function declarations are used to create named functions. These functions can be called using their declared name.
-// JS Function Declaration function twoFold(num) { return 2 * num; }A similar syntax is also used, for instance, in Python
-# Python Function Declaration def twoFold(num): return 2 * numor in MATLAB, except that, in this case, the returned value must also be indicated to the left of the = symbol in function declaration (the return keyword has a different usage here).</description>
-    </item>
-  </channel>
-</rss>

@@ -1,23 +1,28 @@
 +++
-title = 'Hugo PowerShell'
+title = 'Hugo'
 date = 2023-11-17T23:54:39+01:00
 draft = false
 +++
 
 #
 
-This is a concise guide on how to make a website via __Hugo__ in a Windows
-environment. To this purpose, all of the following commands must be run from
-`PowerShell` (tested on PowerShell 7.3.9) and not from `Windows PowerShell`,
-which is a different application (😱😱😱).
+__Hugo__ is a fast and easy-to-use static website generator written in __Go__
+that renders a complete HTML website starting from content and templates written
+in __Markdown__.
 
-I recommend using __PS__ to work in a Windows environment instead of __WSL__
-since with my ManjaroWSL2 I experienced malfunctions in page refresh.
-Nevertheless, 90% of the following commands also apply in a Linux/Bash environment.
-Except for Winget is Microsoft’s official free and open-source package manager for Windows. This will install the extended edition of Hugo:
+This is a concise guide on how to make a website via __Hugo__ working in a pure
+Windows environment. To this purpose, all of the following commands are intended
+to be run from `PowerShell` (tested on _PowerShell v7.3.9_) and NOT from
+`Windows PowerShell`, which is a different application (😱). Nevertheless, most
+of them also apply without modification to a pure Linux/Bash environment, the
+only exceptions being those few overtly Win-specific commands such as `winget`
+(Microsoft’s official package manager for Windows) or `Set-Location` (to change
+drive letter).
 
-Change detected, rebuilding site.
-realt time rendering 
+In any case, when running __Hugo__ in a Windows environment, I recommend using
+__PS__ as CLI instead of __WSL__, since with my _ManjaroWSL2_ the change
+detector for site real-time rendering didn't work well.
+
 
 ## Prerequisites
 
@@ -36,10 +41,10 @@ ssh-keygen -t ed25519 -C "your_mail_here"
 # Copy the SSH public key to your clipboard from here
 cat $HOME/.ssh/id_ed25519.pub
 ```
-Finally add the SSH key to your account on __GitHub__ web site: _Settings_ `>`
-_SSH and GPG keys_ `>` _New SSH key_ `>` add a title (usually, the device you’ll
-use that key from) and select _Authentication Key_ as key type `>` paste your
-key into the _Key_ field (including the `-C` comment) `>` _Add SSH key_
+Finally add the SSH key to your account on __GitHub__ web site: _Settings_ >
+_SSH and GPG keys_ > _New SSH key_ > add a title (usually, the device you will
+use that key from) > select _Authentication Key_ as key type > paste your key
+into the _Key_ field (including the `-C` comment) > _Add SSH key_.
 
 ### Hugo
 Install __Hugo__.
@@ -50,116 +55,133 @@ winget install Hugo.Hugo.Extended
 
 
 ## Create a Hugo site
-Run these commands to create a Hugo web site with the _Ananke_ theme (default),
-make it a Git (local) repository, and test it by local hosting (at
-`localhost:1313`).
+Run these commands to create a new Hugo web site and run it on `localhost:1313`.
+Official guide [here](https://gohugo.io/getting-started/quick-start/).
 ```sh
+# Move to the directory that will contain the site directory
 Set-Location <drive:>
 cd <path_to_parent_folder>
 
+# Create a new Hugo web site and enter the site root directory
 hugo new site <site_name>
 cd <site_name>
+
+# Make it a Git (local) repository
 git init
+ 
+# Add a theme (e.g., 'Ananke') as a Git submodule and set it in the config file
 git submodule add https://github.com/theNewDynamic/gohugo-theme-ananke.git themes/ananke
 echo "theme = 'ananke'" >> hugo.toml
+
+# Test the site by local hosting (localhost:1313)
 hugo server
 ```
-Full guide [here](https://gohugo.io/getting-started/quick-start/).
+
 
 ## Host on GitHub Pages
-Deploy Hugo as a _GitHub Pages_ site and automate the whole process with _GitHub
-Actions_ (full guide [here](https://gohugo.io/hosting-and-deployment/hosting-on-github/)).
-* Go to GitHub and create a GitHub repository using the same name of your Hugo
-site (better to add no `README file`, no `.gitignore`, and no license in this
-step).
+Deploy Hugo as a _GitHub Pages_ site and automate the whole building process
+with _GitHub Actions_. Full guide [here](https://gohugo.io/hosting-and-deployment/hosting-on-github/).
+* Go to __GitHub__ and create a GitHub repository using the same name of your
+Hugo site (better to add no _README file_, no `.gitignore`, and no license in
+this step).
 * Push your local repository to GitHub.
 ```sh
 # Push your local repository to GitHub
-git remote add origin <SSH_reference_as_provided_by_GitHub>
+git remote add origin <SSH_repo_reference_as_provided_by_GitHub>
 git branch -M main
 git push -u origin main
 ```
-* From the main menu of the GitHub repository, choose _Settings_ `>` _Pages_. In
+* From the main menu of the GitHub repository, choose _Settings_ > _Pages_. In
 _Build and deployment_ section, change the _Source_ to `GitHub Actions` (the
 change is immediate; you do not have to press a "Save" button).
 * `mkdir .github/workflows` in your local repository and copy [this](https://github.com/Feat-FeAR/logSpace/blob/main/.github/workflows/hugo.yaml)
 YAML file there.
 * Stage, commit (e.g., `-m "Add workflow"`), and push your local repository to
-GitHub.
-* When GitHub has finished building and deploying your site, the color of the
-status indicator in GitHub’s _Actions_ menu will change to green.
-* Click on the commit message and under the _deploy_ step, you will see a link
-to your live site.
+__GitHub__.
+* When __GitHub__ has finished building and deploying your site, the color of
+the status indicator in GitHub’s _Actions_ menu will change to green.
+* Clicking on the commit message and under the _deploy_ step, you will see a
+link to your live site.
 
 __In the future, whenever you push a change from your local repository, GitHub
-will rebuild your site and deploy the changes__.
+will automatically rebuild your site and deploy the changes__.
 
 
-## Add Content
-Hugo pages are markdown...
+## Add content
+In __Hugo__, both __HTML__ and __Markdown__ are supported content formats. You
+can put any file type into your `./content/*` directories, but Hugo uses the
+markup front matter value (if set) or the file extension to determine if the
+file needs to be processed. As an alternative you can use the following command
+to get a new blank page already provided with a suitable front matter.
 ```sh
 # Add a new page to your site
 hugo new content <section_name>\<filename>.md
 ```
-* Open the file with your editor (notice the `draft` value in the front matter
-is _true_).
-* Add some markdown to the body of the post, but do not change the `draft` value.
-* Save the file, then start Hugo’s development server to view the site. 
+* Open the `.md` file with your editor (notice the `draft` value in the front
+matter is _true_).
+* Add some markdown to the body of the post (do not change the `draft` value).
+* Save the file, then start Hugo’s development server to build the site. 
 ```sh
 # You can run either of the following commands to include draft content
 hugo server --buildDrafts
 hugo server -D
 ```
-* View your site at the URL displayed in your terminal (`localhost:1313`).
-__Keep the development server running as you continue to add and change
-content.__ All changes made locally will be reflected on the site, without the
-need to refresh your browser each time.
+* View your site locally at the URL displayed in your terminal
+(`localhost:1313`). __Keep the development server running as you continue to add
+and change content.__ All the changes will be reflected on the site, without the
+need to refresh your browser each time!
 
-In addition, you can add/modify the `README file`, `.gitignore`, and the license
-now.
+In addition, you can now add/modify the _README file_, `.gitignore`, and the
+license file.
 
 
 ## Themes
 ### Install a new theme
-* Install a theme from https://themes.gohugo.io/. Since your site is already a
-git repository, you can add the theme as a _submodule_.
+* Choose a theme from [the _Hugo Themes_ section](https://themes.gohugo.io/).
+* Since your site is already a git repository, you can add it as a _git
+submodule_.
 ```sh
 # For instance, under the root directory of your Hugo site
 git submodule add -f https://github.com/JingWangTW/dark-theme-editor.git themes/dark-theme-editor
 ```
 * Edit the site configuration file `hugo.toml` (in the root of your project)
-setting the `theme` property to the theme name.
+setting the `theme` property to the theme name (`dark-theme-editor` in this
+example).
 
 ### Configuration 
-Additionally, the theme provides many custom fields for you to configure as needed. Please refer to the config.toml file in the theme to find all available options. You can override these values by adding them to your own config.toml file or by directly modifying the file in the theme directory.
+Most of the themes provide some custom fields for you to configure as needed.
+Please refer to the _config file_ (e.g., `hugo.toml`, `config.yaml`) in the
+theme sub-directory to find all available options. You can override these values
+by adding them to your own `hugo.toml` file or by directly modifying the file in
+the theme directory.
 
 ### Remove a theme
-To effectively remove a Git submodule you need to:
+As [GitHub Gist-ed](https://gist.github.com/myusuf3/7f645819ded92bda6677)
+by Mahdi Yusuf ([myusuf3](https://github.com/myusuf3)), to effectively remove a
+Git submodule you need to:
 * Delete the relevant section from the `.gitmodules` file.
-* Stage the changes `git add .gitmodules`
+* Stage the changes `git add .gitmodules`.
 * Delete the relevant section from `.git/config`.
 * Run `git rm --cached <path_to_submodule>` (no trailing slash).
 * Run `rm -rf .git/modules/<path_to_submodule>` (no trailing slash).
 * Commit `git commit -m "Removed submodule <name>"`.
 * Delete the now untracked submodule files `rm -rf <path_to_submodule>`.
 
-Contributed as a [GitHub Gist](https://gist.github.com/myusuf3/7f645819ded92bda6677)
-by Mahdi Yusuf ([myusuf3](https://github.com/myusuf3)).
-
 
 ## Release
-* Since your public directory may contain extraneous files from a previous
-build, a common practice is to manually clear the contents of the `public`
-directory before each new build to remove draft, expired, and future content.
-* Change the `draft` field from `true` to `false` in all the pages you want to
-publish.
-* Publish your site!
-```sh
-hugo
-```
 When you publish your site, Hugo creates the entire static site in the `public`
 directory in the root of your project. This includes the HTML files, and assets
 such as images, CSS files, and JavaScript files. In this step you will publish
-your site, but you will not deploy it. However, if GitHub Actions have been
+your site, but you will not deploy it. However, if _GitHub Actions_ have been
 properly set, GitHub will automatically rebuild your site and deploy the changes
 right after the push of the new commit.
+* Since your `./public` directory may contain extraneous files from a previous
+build, a common practice is to manually clear the contents of `./public` before
+each new build in order to remove draft, expired, and future content.
+* Change the `draft` field from `true` to `false` in all the pages you want to
+publish.
+* Publish your site by simply typing
+```sh
+hugo
+```
+* Done!
