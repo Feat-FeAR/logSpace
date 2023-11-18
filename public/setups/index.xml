@@ -6,8 +6,16 @@
     <description>Recent content in Setups on --</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 17 Nov 2023 23:20:42 +0100</lastBuildDate>
+    <lastBuildDate>Fri, 17 Nov 2023 23:54:39 +0100</lastBuildDate>
     <atom:link href="https://example.org/setups/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Hugo PowerShell</title>
+      <link>https://example.org/setups/hugo/</link>
+      <pubDate>Fri, 17 Nov 2023 23:54:39 +0100</pubDate>
+      <guid>https://example.org/setups/hugo/</guid>
+      <description>This is a concise guide on how to make a website via Hugo in a Windows environment. To this purpose, all of the following commands must be run from PowerShell (tested on PowerShell 7.3.9) and not from Windows PowerShell, which is a different application (😱😱😱).
+I recommend using PS to work in a Windows environment instead of WSL since with my ManjaroWSL2 I experienced malfunctions in page refresh. Nevertheless, 90% of the following commands also apply in a Linux/Bash environment.</description>
+    </item>
     <item>
       <title>R</title>
       <link>https://example.org/setups/r_setup/</link>

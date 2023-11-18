@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <meta name="generator" content="Hugo 0.120.4">
+
+    
+
+    
+
+    
+        
+            <meta
+                name="description"
+                content="This is my new hugo site" />
+        
+
+        
+            <meta
+                name="keywords"
+                content="hugo,site,new" />
+        
+
+        
+            <meta
+                name="author"
+                content="Jing Wang" />
+        
+
+    
+
+
+    <title>
+        
+            Hugo PowerShell |
+            My New Hugo Site
+        
+    </title>
+
+    
+
+
+    
+    
+
+    
+    
+
+
+    
+    
+
+
+    
+    
+
+
+    
+    
+
+    
+
+
+    
+    
+
+    
+
+    
+
+        
+        
+
+
+        
+        
+
+
+        <link
+            rel="stylesheet"
+            href="/css/index_d751713.min.9df58e9c2a03e4ceb2ff91126f04294a1ecf22e508185e556fa41e3dbe34efdb7b6fa01a7654ab906c32a8de378702d1d27718529aea0fa2aece5f3b16bcfeae.css"
+            integrity="sha512-nfWOnCoD5M6y/5ESbwQpSh7PIuUIGF5Vb6QePb4079t7b6AadlSrkGwyqN43hwLR0ncYUprqD6Kuzl87Frz&#43;rg==" />
+    
+
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+</head>
+
+
+
+    <body>
+        <header class="header">
+    <div class="header_left">
+        
+    </div>
+
+    <div class="header_middle">
+        
+            Hugo PowerShell -
+            My New Hugo Site
+        
+    </div>
+</header>
+
+
+
+        <main>
+            <aside class="sidebar">
+    
+
+
+
+    
+    
+
+    
+    
+
+
+    <ul class="section-tree">
+        
+            
+                <li
+                    
+                        class="dir opened-dir"
+                    >
+                    <span class="dir-text"> Setups </span>
+
+                    
+
+
+
+    
+    
+
+    
+    
+
+
+    <ul class="section-tree">
+        
+            
+                <li class="file">
+                    <a href="https://example.org/setups/hugo/" title="./setups/hugo/">
+                        Hugo PowerShell
+                    </a>
+                </li>
+            
+        
+            
+                <li class="file">
+                    <a href="https://example.org/setups/r_setup/" title="./setups/r_setup/">
+                        R
+                    </a>
+                </li>
+            
+        
+    </ul>
+
+
+                </li>
+            
+        
+            
+                <li
+                    
+                        class="dir closed-dir"
+                    >
+                    <span class="dir-text"> Codings </span>
+
+                    
+
+
+
+    
+    
+
+    
+    
+
+
+    <ul class="section-tree">
+        
+            
+                <li class="file">
+                    <a href="https://example.org/coding/functional_1/" title="./coding/functional_1/">
+                        Functional_1
+                    </a>
+                </li>
+            
+        
+    </ul>
+
+
+                </li>
+            
+        
+    </ul>
+
+
+</aside>
+<aside class="exapandable"></aside>
+
+
+            
+    <article class="main">
+        <button
+    class="sidebar-toggle-btn"
+    type="menu"
+    aria-expanded="false"
+    aria-haspopup="true">
+    <i class="bi bi-list"></i>
+</button>
+
+
+
+        <div class="title">
+            <h1 class="title-header">
+                Hugo PowerShell
+            </h1>
+
+            <div class="author-date-readtime">
+                
+
+                    
+                        <div class="author" title="Author">
+                            <i class="bi bi-person"></i>
+                            <a
+                                href="/author/jing-wang/"
+                                class="cat-btn">
+                                Jing Wang
+                            </a>
+                        </div>
+                    
+
+                
+
+                
+                    <div class="date" title="Date">
+                        <i class="bi bi-calendar3"></i>
+                        <time
+                            datetime="2023.11.17"
+                            >2023.11.17
+                        </time>
+                    </div>
+                
+
+                
+                    <div
+                        class="readtime"
+                        title="Time to Read">
+                        <i class="bi bi-clock"></i>
+                        5 mins to read
+                    </div>
+                
+            </div>
+        </div>
+
+        <div class="article-meta">
+            
+
+            
+
+            
+                <div class="breadcumb">
+                    <i class="bi bi-folder"></i>
+                    
+    
+    
+
+
+
+
+<a href="https://example.org/" class="bread-btn">
+    
+        <i class="bi bi-house-fill"></i>
+    
+
+    
+        Home
+    
+</a>
+
+
+
+
+    /
+
+
+
+<a href="https://example.org/setups/" class="bread-btn">
+    
+
+    
+        Setups
+    
+</a>
+
+
+
+
+    /
+
+
+
+<a href="https://example.org/setups/hugo/" class="bread-btn">
+    
+
+    
+        Hugo PowerShell
+    
+</a>
+
+                </div>
+            
+
+            
+        </div>
+
+        
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#prerequisites">Prerequisites</a>
+      <ul>
+        <li><a href="#git--github">Git / GitHub</a></li>
+        <li><a href="#hugo">Hugo</a></li>
+      </ul>
+    </li>
+    <li><a href="#create-a-hugo-site">Create a Hugo site</a></li>
+    <li><a href="#host-on-github-pages">Host on GitHub Pages</a></li>
+    <li><a href="#add-content">Add Content</a></li>
+    <li><a href="#themes">Themes</a>
+      <ul>
+        <li><a href="#install-a-new-theme">Install a new theme</a></li>
+        <li><a href="#configuration">Configuration</a></li>
+        <li><a href="#remove-a-theme">Remove a theme</a></li>
+      </ul>
+    </li>
+    <li><a href="#release">Release</a></li>
+  </ul>
+</nav>
+        
+
+
+        <div class="content">
+            
+                <h1 id="heading"></h1>
+<p>This is a concise guide on how to make a website via <strong>Hugo</strong> in a Windows
+environment. To this purpose, all of the following commands must be run from
+<code>PowerShell</code> (tested on PowerShell 7.3.9) and not from <code>Windows PowerShell</code>,
+which is a different application (😱😱😱).</p>
+<p>I recommend using <strong>PS</strong> to work in a Windows environment instead of <strong>WSL</strong>
+since with my ManjaroWSL2 I experienced malfunctions in page refresh.
+Nevertheless, 90% of the following commands also apply in a Linux/Bash environment.
+Except for Winget is Microsoft’s official free and open-source package manager for Windows. This will install the extended edition of Hugo:</p>
+<p>Change detected, rebuilding site.
+realt time rendering</p>
+<h2 id="prerequisites">Prerequisites</h2>
+<h3 id="git--github">Git / GitHub</h3>
+<p>Install and configure <strong>Git</strong> and <strong>GitHub</strong>.</p>
+
+
+
+
+
+
+<div class="codeblock">
+    
+        <div class="copy-button-box">
+            <button class="copy-button" state="copy" data="#%20Install%20Git%0awinget%20install%20--id%20Git.Git%20-e%20--source%20winget%0a%0a#%20Configure%20Git%0agit%20config%20--global%20user.email%20%22your_mail_here%22%0agit%20config%20--global%20user.name%20%22Name%20Surname%22%0a%0a#%20Create%20a%20SSH%20key%20through%20ssh-keygen%20%28if%20none%20exists%29%0assh-keygen%20-t%20ed25519%20-C%20%22your_mail_here%22%0a#%20Copy%20the%20SSH%20public%20key%20to%20your%20clipboard%20from%20here%0acat%20$HOME/.ssh/id_ed25519.pub">
+                <i class="bi bi-clipboard"></i>
+            </button>
+        </div>
+    
+
+    
+        <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#75715e"># Install Git</span>
+</span></span><span style="display:flex;"><span>winget install --id Git.Git -e --source winget
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Configure Git</span>
+</span></span><span style="display:flex;"><span>git config --global user.email <span style="color:#e6db74">&#34;your_mail_here&#34;</span>
+</span></span><span style="display:flex;"><span>git config --global user.name <span style="color:#e6db74">&#34;Name Surname&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Create a SSH key through ssh-keygen (if none exists)</span>
+</span></span><span style="display:flex;"><span>ssh-keygen -t ed25519 -C <span style="color:#e6db74">&#34;your_mail_here&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Copy the SSH public key to your clipboard from here</span>
+</span></span><span style="display:flex;"><span>cat $HOME/.ssh/id_ed25519.pub</span></span></code></pre></div>
+    
+</div>
+<p>Finally add the SSH key to your account on <strong>GitHub</strong> web site: <em>Settings</em> <code>&gt;</code>
+<em>SSH and GPG keys</em> <code>&gt;</code> <em>New SSH key</em> <code>&gt;</code> add a title (usually, the device you’ll
+use that key from) and select <em>Authentication Key</em> as key type <code>&gt;</code> paste your
+key into the <em>Key</em> field (including the <code>-C</code> comment) <code>&gt;</code> <em>Add SSH key</em></p>
+<h3 id="hugo">Hugo</h3>
+<p>Install <strong>Hugo</strong>.</p>
+
+
+
+
+
+
+<div class="codeblock">
+    
+        <div class="copy-button-box">
+            <button class="copy-button" state="copy" data="#%20Install%20Hugo%20extended%20edition%20%28v0.112.0%20or%20later%29%0awinget%20install%20Hugo.Hugo.Extended">
+                <i class="bi bi-clipboard"></i>
+            </button>
+        </div>
+    
+
+    
+        <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#75715e"># Install Hugo extended edition (v0.112.0 or later)</span>
+</span></span><span style="display:flex;"><span>winget install Hugo.Hugo.Extended</span></span></code></pre></div>
+    
+</div>
+<h2 id="create-a-hugo-site">Create a Hugo site</h2>
+<p>Run these commands to create a Hugo web site with the <em>Ananke</em> theme (default),
+make it a Git (local) repository, and test it by local hosting (at
+<code>localhost:1313</code>).</p>
+
+
+
+
+
+
+<div class="codeblock">
+    
+        <div class="copy-button-box">
+            <button class="copy-button" state="copy" data="#ZgotmplZ">
+                <i class="bi bi-clipboard"></i>
+            </button>
+        </div>
+    
+
+    
+        <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>Set-Location &lt;drive:&gt;
+</span></span><span style="display:flex;"><span>cd &lt;path_to_parent_folder&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>hugo new site &lt;site_name&gt;
+</span></span><span style="display:flex;"><span>cd &lt;site_name&gt;
+</span></span><span style="display:flex;"><span>git init
+</span></span><span style="display:flex;"><span>git submodule add https://github.com/theNewDynamic/gohugo-theme-ananke.git themes/ananke
+</span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;theme = &#39;ananke&#39;&#34;</span> &gt;&gt; hugo.toml
+</span></span><span style="display:flex;"><span>hugo server</span></span></code></pre></div>
+    
+</div>
+<p>Full guide <a href="https://gohugo.io/getting-started/quick-start/">here</a>.</p>
+<h2 id="host-on-github-pages">Host on GitHub Pages</h2>
+<p>Deploy Hugo as a <em>GitHub Pages</em> site and automate the whole process with <em>GitHub
+Actions</em> (full guide <a href="https://gohugo.io/hosting-and-deployment/hosting-on-github/">here</a>).</p>
+<ul>
+<li>Go to GitHub and create a GitHub repository using the same name of your Hugo
+site (better to add no <code>README file</code>, no <code>.gitignore</code>, and no license in this
+step).</li>
+<li>Push your local repository to GitHub.</li>
+</ul>
+
+
+
+
+
+
+<div class="codeblock">
+    
+        <div class="copy-button-box">
+            <button class="copy-button" state="copy" data="#%20Push%20your%20local%20repository%20to%20GitHub%0agit%20remote%20add%20origin%20%3cSSH_reference_as_provided_by_GitHub%3e%0agit%20branch%20-M%20main%0agit%20push%20-u%20origin%20main">
+                <i class="bi bi-clipboard"></i>
+            </button>
+        </div>
+    
+
+    
+        <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#75715e"># Push your local repository to GitHub</span>
+</span></span><span style="display:flex;"><span>git remote add origin &lt;SSH_reference_as_provided_by_GitHub&gt;
+</span></span><span style="display:flex;"><span>git branch -M main
+</span></span><span style="display:flex;"><span>git push -u origin main</span></span></code></pre></div>
+    
+</div>
+<ul>
+<li>From the main menu of the GitHub repository, choose <em>Settings</em> <code>&gt;</code> <em>Pages</em>. In
+<em>Build and deployment</em> section, change the <em>Source</em> to <code>GitHub Actions</code> (the
+change is immediate; you do not have to press a &ldquo;Save&rdquo; button).</li>
+<li><code>mkdir .github/workflows</code> in your local repository and copy <a href="https://github.com/Feat-FeAR/logSpace/blob/main/.github/workflows/hugo.yaml">this</a>
+YAML file there.</li>
+<li>Stage, commit (e.g., <code>-m &quot;Add workflow&quot;</code>), and push your local repository to
+GitHub.</li>
+<li>When GitHub has finished building and deploying your site, the color of the
+status indicator in GitHub’s <em>Actions</em> menu will change to green.</li>
+<li>Click on the commit message and under the <em>deploy</em> step, you will see a link
+to your live site.</li>
+</ul>
+<p><strong>In the future, whenever you push a change from your local repository, GitHub
+will rebuild your site and deploy the changes</strong>.</p>
+<h2 id="add-content">Add Content</h2>
+<p>Hugo pages are markdown&hellip;</p>
+
+
+
+
+
+
+<div class="codeblock">
+    
+        <div class="copy-button-box">
+            <button class="copy-button" state="copy" data="#%20Add%20a%20new%20page%20to%20your%20site%0ahugo%20new%20content%20%3csection_name%3e%5c%3cfilename%3e.md">
+                <i class="bi bi-clipboard"></i>
+            </button>
+        </div>
+    
+
+    
+        <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#75715e"># Add a new page to your site</span>
+</span></span><span style="display:flex;"><span>hugo new content &lt;section_name&gt;<span style="color:#ae81ff">\&lt;</span>filename&gt;.md</span></span></code></pre></div>
+    
+</div>
+<ul>
+<li>Open the file with your editor (notice the <code>draft</code> value in the front matter
+is <em>true</em>).</li>
+<li>Add some markdown to the body of the post, but do not change the <code>draft</code> value.</li>
+<li>Save the file, then start Hugo’s development server to view the site.</li>
+</ul>
+
+
+
+
+
+
+<div class="codeblock">
+    
+        <div class="copy-button-box">
+            <button class="copy-button" state="copy" data="#%20You%20can%20run%20either%20of%20the%20following%20commands%20to%20include%20draft%20content%0ahugo%20server%20--buildDrafts%0ahugo%20server%20-D">
+                <i class="bi bi-clipboard"></i>
+            </button>
+        </div>
+    
+
+    
+        <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#75715e"># You can run either of the following commands to include draft content</span>
+</span></span><span style="display:flex;"><span>hugo server --buildDrafts
+</span></span><span style="display:flex;"><span>hugo server -D</span></span></code></pre></div>
+    
+</div>
+<ul>
+<li>View your site at the URL displayed in your terminal (<code>localhost:1313</code>).
+<strong>Keep the development server running as you continue to add and change
+content.</strong> All changes made locally will be reflected on the site, without the
+need to refresh your browser each time.</li>
+</ul>
+<p>In addition, you can add/modify the <code>README file</code>, <code>.gitignore</code>, and the license
+now.</p>
+<h2 id="themes">Themes</h2>
+<h3 id="install-a-new-theme">Install a new theme</h3>
+<ul>
+<li>Install a theme from <a href="https://themes.gohugo.io/">https://themes.gohugo.io/</a>. Since your site is already a
+git repository, you can add the theme as a <em>submodule</em>.</li>
+</ul>
+
+
+
+
+
+
+<div class="codeblock">
+    
+        <div class="copy-button-box">
+            <button class="copy-button" state="copy" data="#ZgotmplZ">
+                <i class="bi bi-clipboard"></i>
+            </button>
+        </div>
+    
+
+    
+        <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#75715e"># For instance, under the root directory of your Hugo site</span>
+</span></span><span style="display:flex;"><span>git submodule add -f https://github.com/JingWangTW/dark-theme-editor.git themes/dark-theme-editor</span></span></code></pre></div>
+    
+</div>
+<ul>
+<li>Edit the site configuration file <code>hugo.toml</code> (in the root of your project)
+setting the <code>theme</code> property to the theme name.</li>
+</ul>
+<h3 id="configuration">Configuration</h3>
+<p>Additionally, the theme provides many custom fields for you to configure as needed. Please refer to the config.toml file in the theme to find all available options. You can override these values by adding them to your own config.toml file or by directly modifying the file in the theme directory.</p>
+<h3 id="remove-a-theme">Remove a theme</h3>
+<p>To effectively remove a Git submodule you need to:</p>
+<ul>
+<li>Delete the relevant section from the <code>.gitmodules</code> file.</li>
+<li>Stage the changes <code>git add .gitmodules</code></li>
+<li>Delete the relevant section from <code>.git/config</code>.</li>
+<li>Run <code>git rm --cached &lt;path_to_submodule&gt;</code> (no trailing slash).</li>
+<li>Run <code>rm -rf .git/modules/&lt;path_to_submodule&gt;</code> (no trailing slash).</li>
+<li>Commit <code>git commit -m &quot;Removed submodule &lt;name&gt;&quot;</code>.</li>
+<li>Delete the now untracked submodule files <code>rm -rf &lt;path_to_submodule&gt;</code>.</li>
+</ul>
+<p>Contributed as a <a href="https://gist.github.com/myusuf3/7f645819ded92bda6677">GitHub Gist</a>
+by Mahdi Yusuf (<a href="https://github.com/myusuf3">myusuf3</a>).</p>
+<h2 id="release">Release</h2>
+<ul>
+<li>Since your public directory may contain extraneous files from a previous
+build, a common practice is to manually clear the contents of the <code>public</code>
+directory before each new build to remove draft, expired, and future content.</li>
+<li>Change the <code>draft</code> field from <code>true</code> to <code>false</code> in all the pages you want to
+publish.</li>
+<li>Publish your site!</li>
+</ul>
+
+
+
+
+
+
+<div class="codeblock">
+    
+        <div class="copy-button-box">
+            <button class="copy-button" state="copy" data="hugo">
+                <i class="bi bi-clipboard"></i>
+            </button>
+        </div>
+    
+
+    
+        <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>hugo</span></span></code></pre></div>
+    
+</div>
+<p>When you publish your site, Hugo creates the entire static site in the <code>public</code>
+directory in the root of your project. This includes the HTML files, and assets
+such as images, CSS files, and JavaScript files. In this step you will publish
+your site, but you will not deploy it. However, if GitHub Actions have been
+properly set, GitHub will automatically rebuild your site and deploy the changes
+right after the push of the new commit.</p>
+
+            
+        </div>
+    </article>
+
+        </main>
+
+        <footer class="footer">
+    <div class="footer-left">
+        <ul class="social">
+            
+                <li>All Rights Reserved ®.</li>
+            
+
+            
+                <li>Jing Wang</li>
+            
+
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        </ul>
+    </div>
+
+    <div class="footer-right">
+        <ul class="control status clearfix">
+            
+                <li>
+                    
+                        Word Count:
+                        960
+                    
+                </li>
+            
+
+            
+            
+
+            
+                <li>en</li>
+            
+
+            
+                <li>
+                    <a href="https://gohugo.io" class="btn" target="_blank"
+                        >Hugo: 0.120.4</a
+                    >
+                </li>
+            
+
+            
+                <li>
+                    <a
+                        href="https://github.com/JingWangTW/dark-theme-editor"
+                        class="btn"
+                        target="_blank"
+                        >Theme: dark-theme-editor</a
+                    >
+                </li>
+            
+
+            
+                <li>
+                    
+                        Last modified: &nbsp;
+                        <time>
+                            Nov 17 2023 23:54:39
+                        </time>
+                    
+                </li>
+            
+
+            
+                <li title="">
+                    
+                </li>
+            
+        </ul>
+    </div>
+</footer>
+
+    </body>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+
+
+    
+    
+
+
+    <script
+        type="text/javascript"
+        src="/js/index_d751713.min.0f452eed6f68af149fe54a5968d067f15e00cd391f7c734ee76a275067b3218dfcadb0c38adda0858e487f8963f377cf846beeaf10c70828adb7de37ef4e4984.js"
+        integrity="sha512-D0Uu7W9orxSf5UpZaNBn8V4AzTkffHNO52onUGezIY38rbDDit2ghY5If4lj83fPhGvurxDHCCitt943705JhA=="></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" />
+
+
+
+
+</html>

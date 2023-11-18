@@ -1,7 +1,7 @@
 +++
 title = 'Hugo PowerShell'
 date = 2023-11-17T23:54:39+01:00
-draft = true
+draft = false
 +++
 
 #
@@ -148,11 +148,18 @@ by Mahdi Yusuf ([myusuf3](https://github.com/myusuf3)).
 
 
 ## Release
-When you publish your site, Hugo creates the entire static site in the public directory in the root of your project. This includes the HTML files, and assets such as images, CSS files, and JavaScript files.
+* Since your public directory may contain extraneous files from a previous
+build, a common practice is to manually clear the contents of the `public`
+directory before each new build to remove draft, expired, and future content.
+* Change the `draft` field from `true` to `false` in all the pages you want to
+publish.
+* Publish your site!
 ```sh
 hugo
 ```
-In this step you will publish your site, but you will not deploy it. However, if
-GitHub Actions were  properly cofigured, GitHub will automatically rebuild your
-site and deploy the changes upon the next commit.
-
+When you publish your site, Hugo creates the entire static site in the `public`
+directory in the root of your project. This includes the HTML files, and assets
+such as images, CSS files, and JavaScript files. In this step you will publish
+your site, but you will not deploy it. However, if GitHub Actions have been
+properly set, GitHub will automatically rebuild your site and deploy the changes
+right after the push of the new commit.
