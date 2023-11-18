@@ -1,10 +1,10 @@
 +++
-title = 'Functional_1'
+title = 'Functional'
 date = 2023-11-17T23:54:16+01:00
 draft = false
 +++
 
-#
+# Functional Programming
 
 ## Create a function
 In __JavaScript__ you can create functions in 2 ways:

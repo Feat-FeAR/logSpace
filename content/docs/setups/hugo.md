@@ -4,7 +4,7 @@ date = 2023-11-17T23:54:39+01:00
 draft = false
 +++
 
-#
+# Hugo
 
 __Hugo__ is a fast and easy-to-use static website generator written in __Go__
 that renders a complete HTML website starting from content and templates written
@@ -128,8 +128,8 @@ hugo server -D
 ```
 * View your site locally at the URL displayed in your terminal
 (`localhost:1313`). __Keep the development server running as you continue to add
-and change content.__ All the changes will be reflected on the site, without the
-need to refresh your browser each time!
+and change content. All the saved changes will be reflected on the site in real
+time, without the need to refresh your browser each time!__.
 
 In addition, you can now add/modify the _README file_, `.gitignore`, and the
 license file.
@@ -150,10 +150,10 @@ example).
 
 ### Configuration 
 Most of the themes provide some custom fields for you to configure as needed.
-Please refer to the _config file_ (e.g., `hugo.toml`, `config.yaml`) in the
-theme sub-directory to find all available options. You can override these values
-by adding them to your own `hugo.toml` file or by directly modifying the file in
-the theme directory.
+Please refer to the `README.md` and _config file_ (e.g., `hugo.toml`,
+`config.yaml`) in the theme sub-directory to find all available options. You can
+override these values by adding them to your own `hugo.toml` file or by directly
+modifying files in the theme directory.
 
 ### Remove a theme
 As [GitHub Gist-ed](https://gist.github.com/myusuf3/7f645819ded92bda6677)
@@ -178,7 +178,7 @@ right after the push of the new commit.
 * Since your `./public` directory may contain extraneous files from a previous
 build, a common practice is to manually clear the contents of `./public` before
 each new build in order to remove draft, expired, and future content.
-* Change the `draft` field from `true` to `false` in all the pages you want to
+* Change the `draft` field from `true` to `false` on all the pages you want to
 publish.
 * Publish your site by simply typing
 ```sh
