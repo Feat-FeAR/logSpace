@@ -10,6 +10,7 @@ enableGitInfo = true
 disableKinds = ['taxonomy', 'taxonomyTerm']
 
 # Needed for mermaid/katex shortcodes
+# Also allow HTML in .md files
 [markup]
 [markup.goldmark.renderer]
   unsafe = true
