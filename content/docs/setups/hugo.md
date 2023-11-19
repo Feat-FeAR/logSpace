@@ -7,8 +7,9 @@ draft = false
 # Hugo
 
 __Hugo__ is a fast and easy-to-use static website generator written in __Go__
-that renders a complete HTML website starting from content and templates written
-in __Markdown__.
+that renders a complete HTML website (just like _The log_Space_ you are browsing
+right now) starting from content and templates written in __Markdown__
+(such as [the source of this page](https://github.com/Feat-FeAR/logSpace/blob/main/content/docs/setups/hugo.md?plain=1)).
 
 This is a concise guide on how to make a website via __Hugo__ working in a pure
 Windows environment. To this purpose, all of the following commands are intended
@@ -16,12 +17,12 @@ to be run from `PowerShell` (tested on _PowerShell v7.3.9_) and NOT from
 `Windows PowerShell`, which is a different application (😱). Nevertheless, most
 of them also apply without modification to a pure Linux/Bash environment, the
 only exceptions being those few overtly Win-specific commands such as `winget`
-(Microsoft’s official package manager for Windows) or `Set-Location` (to change
-drive letter).
+(the Microsoft’s official package manager for Windows) or `Set-Location` (to
+change drive letter).
 
 In any case, when running __Hugo__ in a Windows environment, I recommend using
 __PS__ as CLI instead of __WSL__, since with my _ManjaroWSL2_ the change
-detector for site real-time rendering didn't work well.
+detector for site real-time rendering never worked well.
 
 
 ## Prerequisites
@@ -119,7 +120,7 @@ hugo new content <section_name>\<filename>.md
 ```
 * Open the `.md` file with your editor (notice the `draft` value in the front
 matter is _true_).
-* Add some markdown to the body of the post (do not change the `draft` value).
+* Add some markdown to the body of the post.
 * Save the file, then start Hugo’s development server to build the site. 
 ```sh
 # You can run either of the following commands to include draft content
@@ -131,8 +132,8 @@ hugo server -D
 and change content. All the saved changes will be reflected on the site in real
 time, without the need to refresh your browser each time!__.
 
-In addition, you can now add/modify the _README file_, `.gitignore`, and the
-license file.
+Also, now you can add/modify the _README file_, `.gitignore`, and the license
+file.
 
 
 ## Themes
@@ -151,9 +152,9 @@ example).
 ### Configuration 
 Most of the themes provide some custom fields for you to configure as needed.
 Please refer to the `README.md` and _config file_ (e.g., `hugo.toml`,
-`config.yaml`) in the theme sub-directory to find all available options. You can
-override these values by adding them to your own `hugo.toml` file or by directly
-modifying files in the theme directory.
+`config.yaml`) you will find in the theme sub-directory to see all available
+options. You can override these values by adding them to your own `hugo.toml`
+file.
 
 ### Remove a theme
 As [GitHub Gist-ed](https://gist.github.com/myusuf3/7f645819ded92bda6677)
@@ -169,19 +170,22 @@ Git submodule you need to:
 
 
 ## Release
-When you publish your site, Hugo creates the entire static site in the `public`
-directory in the root of your project. This includes the HTML files, and assets
-such as images, CSS files, and JavaScript files. In this step you will publish
-your site, but you will not deploy it. However, if _GitHub Actions_ have been
-properly set, GitHub will automatically rebuild your site and deploy the changes
-right after the push of the new commit.
+If _GitHub Actions_ have been properly set, __GitHub will automatically rebuild
+your site and deploy the changes without the need for further steps beyond the
+push of the new commit__.
+
+Otherwise, you have to remember that to _publish_ the site is not to _deploy_
+it. In this step you will do just the first thing, for which Hugo creates the
+entire static site in the `./public` subdirectory in the root of your project.
+This includes the HTML files, and assets such as images, CSS files, and
+JavaScript files. Here's how to proceed.
 * Since your `./public` directory may contain extraneous files from a previous
 build, a common practice is to manually clear the contents of `./public` before
 each new build in order to remove draft, expired, and future content.
 * Change the `draft` field from `true` to `false` on all the pages you want to
 publish.
-* Publish your site by simply typing
+* Publish your site by simply typing:
 ```sh
 hugo
 ```
-* Done!
+Now you will find the site inside the `./public` folder, ready to be deployed.
