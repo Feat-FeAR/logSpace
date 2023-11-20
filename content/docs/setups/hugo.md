@@ -207,7 +207,7 @@ __JS__ script is the path relative to `./static/` (see documentation about
 [`relURL`](https://gohugo.io/functions/urls/relurl/)
 and [`urlize`](https://gohugo.io/functions/urls/urlize/)).
 ```html
-<script defer language="javascript" type="text/javascript" src="{{ "/js/myscripts.js" | urlize | relURL }}"></script>
+<script defer language="javascript" type="text/javascript" src="{{ "js/myscripts.js" | urlize | relURL }}"></script>
 ``` 
 
 ### Latex
