@@ -24,6 +24,8 @@ In any case, when running __Hugo__ in a Windows environment, I recommend using
 __PS__ as CLI instead of __WSL__, since with my _ManjaroWSL2_ the change
 detector for site real-time rendering never worked well.
 
+Throughout this tutorial, the working directory `.` will represent the _site
+root directory_.
 
 ## Prerequisites
 
@@ -84,7 +86,7 @@ Deploy Hugo as a _GitHub Pages_ site and automate the whole building process
 with _GitHub Actions_. Full guide [here](https://gohugo.io/hosting-and-deployment/hosting-on-github/).
 * Go to __GitHub__ and create a GitHub repository using the same name of your
 Hugo site (better to add no _README file_, no `.gitignore`, and no license in
-this step).
+this step, but do it later).
 * Push your local repository to GitHub.
 ```sh
 # Push your local repository to GitHub
@@ -109,17 +111,21 @@ will automatically rebuild your site and deploy the changes__.
 
 
 ## Add content
-In __Hugo__, both __HTML__ and __Markdown__ are supported content formats. You
-can put any file type into your `./content/*` directories, but Hugo uses the
-markup front matter value (if set) or the file extension to determine if the
-file needs to be processed. As an alternative you can use the following command
-to get a new blank page already provided with a suitable front matter.
+### Pages
+__Markdown__ is the standard content format supported by __Hugo__. You can put
+any file type into your `./content/*` directories, but __Hugo__ uses the markup
+front matter value (if set) or the file extension to determine if the file needs
+to be processed. As an alternative you can use the following command to get a
+new blank page already provided with a suitable front matter.
 ```sh
 # Add a new page to your site
-hugo new content <section_name>\<filename>.md
+hugo new content <section_name>/<filename>.md
 ```
-* Open the `.md` file with your editor (notice the `draft` value in the front
-matter is _true_).
+
+### Markdown
+To add __Markdown__ text to existing pages:
+* Open the `.md` file with your editor (notice that the `draft` value in the
+front matter could be _true_).
 * Add some markdown to the body of the post.
 * Save the file, then start Hugo’s development server to build the site. 
 ```sh
@@ -132,9 +138,80 @@ hugo server -D
 and change content. All the saved changes will be reflected on the site in real
 time, without the need to refresh your browser each time!__.
 
-Also, now you can add/modify the _README file_, `.gitignore`, and the license
-file.
+### HTML
+Beyond __Markdown__, you can insert __HTML__ directly inside Markdown files in
+`./content`. However, from version 0.6, __Hugo__ uses _Goldmark_ for Markdown
+that--for security reasons--wipes HTML code by default. If you use HTML
+frequently in your site, you can add to your `hugo.toml`
+```toml
+# Allow HTML in md files
+[markup.goldmark.renderer]
+  unsafe = true
+```
+By doing so, the HTML code in your `.md` files will be rendered without
+modification (but your indented code will follow Markdown formatting as usual).
+You could also save your content files as `.html`, but then you’ll have to write
+everything in HTML.
 
+### JavaScript
+__JavaScript__ code can be inserted _inline_ simply using the HTML `<script>`
+tag.
+```html
+<!-- Example of inline JS script to display a simple popup message --> 
+<button onclick="showPopup_fromHere()">Click me</button>
+<script>
+    function showPopup_fromHere() {
+        alert("Hello! This inline JS insert works fine.");
+    }
+</script>
+```
+The previous example results in this interactive button:
+<!-- Example of inline JS script to display a simple popup message --> 
+<button onclick="showPopup_fromHere()">Click me</button>
+<script>
+    function showPopup_fromHere() {
+        alert("Hello! This inline JS insert works fine.");
+    }
+</script>
+However, as you can test here below, you can also import any `.js` script from
+the `./static` subfolder in this way:
+```html
+<!-- Example of imported JS script to display a simple popup message --> 
+<script src="/js/popUp_test.js"></script>
+<button onclick="showPopup_fromThere()">Click me</button>
+```
+<script src="/js/popUp_test.js"></script>
+<button onclick="showPopup_fromThere()">Click me</button>
+
+---
+`TO BE REVIEWED`
+Finally, if you want to flexibly embed a JavaScript app in markdown syntax you
+better build a Hugo _shortcode_ to reference your script anywhere in the code.
+* Save your __JS__ scripts as `.js` files and put them in the `./static/js`
+subfolder (e.g., `./static/js/popUp_test.js`).
+* Now you need to find a file that is included in every page of your final HTML.
+Typical choices are `header.html`, `footer.html`, or something similar, but in
+any case their exact location depends on the particular theme you are using.
+* Once located, copy this file to _your_ `./layouts/partials` folder, in order
+to override the content of the original.
+```sh
+# For instance (if using the 'hugo-book' theme)
+cd <project_root>
+New-Item -Type dir ./layouts/partials/docs
+cp `
+	./themes/hugo-book/layouts/partials/docs/header.html `
+	./layouts/partials/docs/header.html
+```
+* Add the following line to the bottom of that file, where the location of the
+__JS__ script is the path relative to `./static/` (see documentation about
+[`relURL`](https://gohugo.io/functions/urls/relurl/)
+and [`urlize`](https://gohugo.io/functions/urls/urlize/)).
+```html
+<script defer language="javascript" type="text/javascript" src="{{ "/js/myscripts.js" | urlize | relURL }}"></script>
+``` 
+
+### Latex
+`TO BE DONE`
 
 ## Themes
 ### Install a new theme
