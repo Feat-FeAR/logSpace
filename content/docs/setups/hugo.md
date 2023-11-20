@@ -27,6 +27,7 @@ detector for site real-time rendering never worked well.
 Throughout this tutorial, the working directory `.` will represent the _site
 root directory_.
 
+---
 ## Prerequisites
 
 ### Git / GitHub
@@ -49,6 +50,7 @@ _SSH and GPG keys_ > _New SSH key_ > add a title (usually, the device you will
 use that key from) > select _Authentication Key_ as key type > paste your key
 into the _Key_ field (including the `-C` comment) > _Add SSH key_.
 
+---
 ### Hugo
 Install __Hugo__.
 ```sh
@@ -56,7 +58,7 @@ Install __Hugo__.
 winget install Hugo.Hugo.Extended
 ```
 
-
+---
 ## Create a Hugo site
 Run these commands to create a new Hugo web site and run it on `localhost:1313`.
 Official guide [here](https://gohugo.io/getting-started/quick-start/).
@@ -80,7 +82,7 @@ echo "theme = 'ananke'" >> hugo.toml
 hugo server
 ```
 
-
+---
 ## Host on GitHub Pages
 Deploy Hugo as a _GitHub Pages_ site and automate the whole building process
 with _GitHub Actions_. Full guide [here](https://gohugo.io/hosting-and-deployment/hosting-on-github/).
@@ -105,11 +107,13 @@ __GitHub__.
 the status indicator in GitHub’s _Actions_ menu will change to green.
 * Clicking on the commit message and under the _deploy_ step, you will see a
 link to your live site.
+* Also, use that link to update the `baseURL` field in your `hugo.toml`
+configuration file.
 
 __In the future, whenever you push a change from your local repository, GitHub
 will automatically rebuild your site and deploy the changes__.
 
-
+---
 ## Add content
 ### Pages
 __Markdown__ is the standard content format supported by __Hugo__. You can put
@@ -122,6 +126,7 @@ new blank page already provided with a suitable front matter.
 hugo new content <section_name>/<filename>.md
 ```
 
+---
 ### Markdown
 To add __Markdown__ text to existing pages:
 * Open the `.md` file with your editor (notice that the `draft` value in the
@@ -138,6 +143,7 @@ hugo server -D
 and change content. All the saved changes will be reflected on the site in real
 time, without the need to refresh your browser each time!__.
 
+---
 ### HTML
 Beyond __Markdown__, you can insert __HTML__ directly inside Markdown files in
 `./content`. However, from version 0.6, __Hugo__ uses _Goldmark_ for Markdown
@@ -153,6 +159,7 @@ modification (but your indented code will follow Markdown formatting as usual).
 You could also save your content files as `.html`, but then you’ll have to write
 everything in HTML.
 
+---
 ### JavaScript
 __JavaScript__ code can be inserted _inline_ simply using the HTML `<script>`
 tag.
@@ -166,27 +173,17 @@ tag.
 </script>
 ```
 The previous example results in this interactive button:
-<!-- Example of inline JS script to display a simple popup message --> 
+
 <button onclick="showPopup_fromHere()">Click me</button>
 <script>
     function showPopup_fromHere() {
         alert("Hello! This inline JS insert works fine.");
     }
 </script>
-However, as you can test here below, you can also import any `.js` script from
-the `./static` subfolder in this way:
-```html
-<!-- Example of imported JS script to display a simple popup message --> 
-<script src="/js/popUp_test.js"></script>
-<button onclick="showPopup_fromThere()">Click me</button>
-```
-<button onclick="showPopup_fromThere()">Click me</button>
-
 
 ---
-`TO BE REVIEWED`
-Finally, if you want to flexibly embed a JavaScript app in markdown syntax you
-better build a Hugo _shortcode_ to reference your script anywhere in the code.
+However you can also import any `.js` script from the `./static` subfolder in
+this way:
 * Save your __JS__ scripts as `.js` files and put them in the `./static/js`
 subfolder (e.g., `./static/js/popUp_test.js`).
 * Now you need to find a file that is included in every page of your final HTML.
@@ -203,16 +200,34 @@ cp `
 	./layouts/partials/docs/header.html
 ```
 * Add the following line to the bottom of that file, where the location of the
-__JS__ script is the path relative to `./static/` (see documentation about
+__JS__ script is the path relative to `./static/`.
+```html
+<script defer language="javascript" type="text/javascript" src="{{ "js/popUp_test.js" | urlize | relURL }}"></script>
+``` 
+> Importantly, never include a leading slash to locate the source file when
+using the `relURL` function, otherwise the resulting URL will be incorrect when
+the `baseURL` includes a subdirectory! See documentation about
 [`relURL`](https://gohugo.io/functions/urls/relurl/)
 and [`urlize`](https://gohugo.io/functions/urls/urlize/)).
-```html
-<script defer language="javascript" type="text/javascript" src="{{ "js/myscripts.js" | urlize | relURL }}"></script>
-``` 
 
+Now you can use the __JS__ functions from within any page of the site, as shown
+here below.
+```html
+<!-- Example of imported JS script to display a simple popup message --> 
+<button onclick="showPopup_fromThere()">Click me</button>
+```
+<button onclick="showPopup_fromThere()">Click me</button>
+
+> If you want to embed JavaScript apps in markdown syntax more flexibly you
+should build a Hugo _shortcode_ to reference your scripts anywhere in the code.
+But this requires more advanced Hogo feature such as
+[`js.Build`](https://gohugo.io/hugo-pipes/js/) and pipes.
+
+---
 ### Latex
 `TO BE DONE`
 
+---
 ## Themes
 ### Install a new theme
 * Choose a theme from [the _Hugo Themes_ section](https://themes.gohugo.io/).
@@ -226,6 +241,7 @@ git submodule add -f https://github.com/JingWangTW/dark-theme-editor.git themes/
 setting the `theme` property to the theme name (`dark-theme-editor` in this
 example).
 
+---
 ### Configuration 
 Most of the themes provide some custom fields for you to configure as needed.
 Please refer to the `README.md` and _config file_ (e.g., `hugo.toml`,
@@ -233,6 +249,7 @@ Please refer to the `README.md` and _config file_ (e.g., `hugo.toml`,
 options. You can override these values by adding them to your own `hugo.toml`
 file.
 
+---
 ### Remove a theme
 As [GitHub Gist-ed](https://gist.github.com/myusuf3/7f645819ded92bda6677)
 by Mahdi Yusuf ([myusuf3](https://github.com/myusuf3)), to effectively remove a
@@ -245,7 +262,7 @@ Git submodule you need to:
 * Commit `git commit -m "Removed submodule <name>"`.
 * Delete the now untracked submodule files `rm -rf <path_to_submodule>`.
 
-
+---
 ## Release
 If _GitHub Actions_ have been properly set, __GitHub will automatically rebuild
 your site and deploy the changes without the need for further steps beyond the
