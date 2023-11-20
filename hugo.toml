@@ -1,4 +1,4 @@
-baseURL = 'https://example.org/'
+baseURL = 'https://feat-fear.github.io/logSpace/'
 languageCode = 'en-us'
 title = 'The log_Space'
 theme = 'hugo-book'

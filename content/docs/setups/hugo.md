@@ -180,7 +180,7 @@ the `./static` subfolder in this way:
 <script src="/js/popUp_test.js"></script>
 <button onclick="showPopup_fromThere()">Click me</button>
 ```
-<script defer language="javascript" type="text/javascript" src="{{ "/js/popUp_test.js" | urlize | relURL }}"></script>
+<script src="/js/popUp_test.js"></script>
 <button onclick="showPopup_fromThere()">Click me</button>
 
 ---
