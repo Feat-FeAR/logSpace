@@ -180,7 +180,6 @@ the `./static` subfolder in this way:
 <script src="/js/popUp_test.js"></script>
 <button onclick="showPopup_fromThere()">Click me</button>
 ```
-<script src="/js/popUp_test.js"></script>
 <button onclick="showPopup_fromThere()">Click me</button>
 
 
