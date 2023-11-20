@@ -183,6 +183,7 @@ the `./static` subfolder in this way:
 <script src="/js/popUp_test.js"></script>
 <button onclick="showPopup_fromThere()">Click me</button>
 
+
 ---
 `TO BE REVIEWED`
 Finally, if you want to flexibly embed a JavaScript app in markdown syntax you
