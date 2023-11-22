@@ -147,8 +147,8 @@ time, without the need to refresh your browser each time!__.
 ### HTML
 Beyond __Markdown__, you can insert __HTML__ directly inside Markdown files in
 `./content`. However, from version 0.6, __Hugo__ uses _Goldmark_ for Markdown
-that--for security reasons--wipes HTML code by default. If you use HTML
-frequently in your site, you can add to your `hugo.toml`
+that--for security reasons--wipes HTML code by default. So, if you use HTML
+frequently in your site, you can add this to your `hugo.toml`:
 ```toml
 # Allow HTML in md files
 [markup.goldmark.renderer]
@@ -186,9 +186,10 @@ However you can also import any `.js` script from the `./static` subfolder in
 this way:
 * Save your __JS__ scripts as `.js` files and put them in the `./static/js`
 subfolder (e.g., `./static/js/popUp_test.js`).
-* Now you need to find a file that is included in every page of your final HTML.
-Typical choices are `header.html`, `footer.html`, or something similar, but in
-any case their exact location depends on the particular theme you are using.
+* Now you need a file that is going to be included in each page of the final
+HTML. Typical choices are `header.html`, `footer.html`, or similar _partial
+templates_ you can find in `./themes/<theme_name>/layouts/partials` subfolder
+(even if their exact location may depend on the particular theme you are using).
 * Once located, copy this file to _your_ `./layouts/partials` folder, in order
 to override the content of the original.
 ```sh
@@ -199,16 +200,21 @@ cp `
 	./themes/hugo-book/layouts/partials/docs/header.html `
 	./layouts/partials/docs/header.html
 ```
-* Add the following line to the bottom of that file, where the location of the
-__JS__ script is the path relative to `./static/`.
+* Add the following line to the bottom of the file, where the location of the
+__JS__ script is the path relative to `./static/` (since all the files therein
+will be copied with no modification, _as-is_, to the `./public` directory when
+building the site).
 ```html
 <script defer language="javascript" type="text/javascript" src="{{ "js/popUp_test.js" | urlize | relURL }}"></script>
-``` 
-> Importantly, never include a leading slash to locate the source file when
-using the `relURL` function, otherwise the resulting URL will be incorrect when
-the `baseURL` includes a subdirectory! See documentation about
+```
+{{< hint warning >}}
+__Mind the slashes!__  
+Never include a leading slash to locate the source file when using the `relURL`
+function, otherwise the resulting URL will be incorrect when the `baseURL`
+includes a subdirectory! See documentation about
 [`relURL`](https://gohugo.io/functions/urls/relurl/)
-and [`urlize`](https://gohugo.io/functions/urls/urlize/)).
+and [`urlize`](https://gohugo.io/functions/urls/urlize/).
+{{< /hint >}}
 
 Now you can use the __JS__ functions from within any page of the site, as shown
 here below.
@@ -217,11 +223,14 @@ here below.
 <button onclick="showPopup_fromThere()">Click me</button>
 ```
 <button onclick="showPopup_fromThere()">Click me</button>
-
-> If you want to embed JavaScript apps in markdown syntax more flexibly you
-should build a Hugo _shortcode_ to reference your scripts anywhere in the code.
-But this requires more advanced Hogo feature such as
-[`js.Build`](https://gohugo.io/hugo-pipes/js/) and pipes.
+{{< hint info >}}
+__js.Build__  
+If you want to embed JavaScript apps in markdown syntax more flexibly you should
+build a Hugo _shortcode_ to reference your scripts anywhere in the code. However
+this requires more advanced Hugo features such as
+[`js.Build`](https://gohugo.io/hugo-pipes/js/) and pipes, along with the use of
+the newer `./assets` subdirectory in place of `./static`.
+{{< /hint >}}
 
 ---
 ### LaTeX
