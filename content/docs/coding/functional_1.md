@@ -6,6 +6,15 @@ draft = false
 
 # Functional Programming
 
+If you approached coding with an imperative object-oriented language such as
+__C++__ or __Java__, the functional programming paradigm may look like something
+perverse to you. If, on the other hand, you have affinity for calculus,
+programming in terms of functions will sound more natural and familiar. Finally,
+if like me you have a Physics master's degree AND started programming with
+__C++__, well, it may be time for you to come to terms with your mind. Let me
+give it a try...
+
+
 ## Create a function
 In __JavaScript__ you can create functions in 2 ways:
 * by Function Declaration
