@@ -234,7 +234,8 @@ markdown documents. In order to insert math LaTeX code in a _Hugo Book_ page you
 can either use the shortcodes shown in the box below--always remembering that it
 is likely to be a theme-specific syntax. Notably, if the `{{</* katex */>}}`
 tags have been used at least once in the document, you can also opt for the more
-compact bracket notation.
+compact bracket notation (even if something might be different in the final
+rendering...).
 ```
 {{</* katex */>}} ... {{</* /katex */>}}           # shortcodes for inline-style
 {{</* katex display */>}} ... {{</* /katex */>}}   # shortcodes for display-style
@@ -247,11 +248,11 @@ As an _inline-style_ example of KaTeX rendering, I could exhibit
 as a good argument against the existence of magnetic monopole, while a popular
 definition of the fabulous Fourier transform can be seen here below in
 _display-style_.
-\\[
+{{< katex display >}}
     \hat{f}\left(\xi\right) =
         \int_{-\infty}^{+\infty}f\left(x\right)\,e^{-i\,2\pi\xi x}\,dx
         \qquad \forall\,\xi\in\mathbb{R}
-\\]
+{{< /katex >}}
 
 ---
 ### Specials
