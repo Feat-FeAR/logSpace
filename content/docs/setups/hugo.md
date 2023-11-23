@@ -161,10 +161,10 @@ everything in HTML.
 
 ---
 ### JavaScript
-__JavaScript__ code can be inserted _inline_ simply using the HTML `<script>`
-tag.
+__JavaScript__ code can be inserted _inline_ into the Markdown simply using the
+HTML `<script>` tag.
 ```html
-<!-- Example of inline JS script to display a simple popup message --> 
+<!-- Example of inline JS script that displays a simple popup message --> 
 <button onclick="showPopup_fromHere()">Click me</button>
 <script>
     function showPopup_fromHere() {
@@ -182,8 +182,13 @@ The previous example results in this interactive button:
 </script>
 
 ---
-However you can also import any `.js` script from the `./static` subfolder in
-this way:
+However you can also source any `.js` script previously saved in the `./static`
+subfolder in two different ways, depending on whether you want to load it from
+every page of the site or only as needed.
+
+#### Global import
+If you plan to use the script extensively it is best to have every page on the
+site import it.
 * Save your __JS__ scripts as `.js` files and put them in the `./static/js`
 subfolder (e.g., `./static/js/popUp_test.js`).
 * Now you need a file that is going to be included in each page of the final
@@ -200,13 +205,14 @@ cp `
 	./themes/hugo-book/layouts/partials/docs/header.html `
 	./layouts/partials/docs/header.html
 ```
-* Add the following line to the bottom of the file, where the location of the
-__JS__ script is the path relative to `./static/` (since all the files therein
-will be copied with no modification, _as-is_, to the `./public` directory when
-building the site).
+* Add the following line to the bottom of the file.
 ```html
 <script defer language="javascript" type="text/javascript" src="{{ "js/popUp_test.js" | urlize | relURL }}"></script>
 ```
+Here, the location of the __JS__ script must be the path relative to
+`./static/`, since all the files therein will be copied with no modification,
+_as-is_, to the `./public` directory when building the site.
+
 {{< hint warning >}}
 __Mind the slashes!__  
 Never include a leading slash to locate the source file when using the `relURL`
@@ -219,17 +225,36 @@ and [`urlize`](https://gohugo.io/functions/urls/urlize/).
 Now you can use the __JS__ functions from within any page of the site, as shown
 here below.
 ```html
-<!-- Example of imported JS script to display a simple popup message --> 
+<!-- Example of imported JS script that displays a simple popup message -->
 <button onclick="showPopup_fromThere()">Click me</button>
 ```
+
+#### Local import
+Alternatively, you can build a cool Hugo shortcode in order to flexibly embed
+the script in Markdown syntax, only on pages where it is actually needed.
+* Write a short HTML that sources the JS script (and possibly add some other
+useful HTML elements).
+```html
+<!-- Example of JS script to import via shortcode -->
+<script defer language="javascript" type="text/javascript" src="{{ "js/popUp_test.js" | urlize | relURL }}"></script>
 <button onclick="showPopup_fromThere()">Click me</button>
+```
+* Save it into the `./layouts/shortcodes` subfolder
+(e.g., `./layouts/shortcodes/js_test.html`).
+* Now, you can reference this HTML chunk anywhere just by its name, using:
+```
+{{</* js_test */>}}
+```
+In both cases, the final result will be an interactive button like this:
+
+{{< js_test >}}
+
 {{< hint info >}}
 __js.Build__  
-If you want to embed JavaScript apps in markdown syntax more flexibly you should
-build a Hugo _shortcode_ to reference your scripts anywhere in the code. However
-this requires more advanced Hugo features such as
-[`js.Build`](https://gohugo.io/hugo-pipes/js/) and pipes, along with the use of
-the newer `./assets` subdirectory in place of `./static`.
+For more advanced purposes, the latest __Hugo__ releases provide the `./assets`
+subdirectory (in place of `./static`) and the
+[`js.Build`](https://gohugo.io/hugo-pipes/js/) function as an advanced tool for
+managing JavaScript resources.
 {{< /hint >}}
 
 ---
