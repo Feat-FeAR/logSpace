@@ -222,7 +222,7 @@ includes a subdirectory! See documentation about
 and [`urlize`](https://gohugo.io/functions/urls/urlize/).
 {{< /hint >}}
 
-Now you can use the __JS__ functions from within any page of the site, as shown
+Now you can use the __JS__ functions from within any page of the site as shown
 here below.
 ```html
 <!-- Example of imported JS script that displays a simple popup message -->
@@ -230,8 +230,8 @@ here below.
 ```
 
 #### Local import
-Alternatively, you can build a cool Hugo shortcode in order to flexibly embed
-the script in Markdown syntax, only on pages where it is actually needed.
+Alternatively, you can build a cool Hugo _shortcode_ in order to flexibly embed
+the script in Markdown syntax only on pages where it is actually needed.
 * Write a short HTML that sources the JS script (and possibly add some other
 useful HTML elements).
 ```html
