@@ -47,14 +47,6 @@ It’s important to know that although we can’t reassign an object declared wi
 Mutation means change, and in programming that usually means evolved through multiple iterations over the same data structure. When we change the value of an element in an array, add to or delete a value from the array, we mutate that array. It’s still an array, but the contents have been altered.
 Obviously any change to anything could be called mutation. For our purposes, if it is not an array or object, it is a set event, rather than a mutation. We are changing a state. Mutation means a data structure has changed.
 
-
-<h2>Date</h2>
-<div class="stdField">
-    <label for="experiment_date">Date:</label>
-    <input type="date" id="experiment_date" value="">
-</div>
-
-
 Objects are passed by reference. This means when we pass a variable assigned to an object into a function as an argument, the computer interprets the parameter name as pointing to the space in memory holding that object. As a result, functions which change object properties actually mutate the object permanently (even when the object is assigned to a const variable).
 
 https://stackoverflow.com/questions/2612802/how-do-i-clone-a-list-so-that-it-doesnt-change-unexpectedly-after-assignment
