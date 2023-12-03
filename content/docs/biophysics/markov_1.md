@@ -1,7 +1,7 @@
 +++
 title = 'Markov 1'
 date = 2023-12-01T23:20:42+01:00
-draft = true
+draft = false
 +++
 
 # Soccer Markov Chain
