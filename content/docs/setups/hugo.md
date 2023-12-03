@@ -5,7 +5,6 @@ draft = false
 +++
 
 # Hugo
-
 __Hugo__ is a fast and easy-to-use static website generator written in __Go__
 that renders a complete HTML website (just like _The log_Space_ you are browsing
 right now) starting from content and templates written in __Markdown__
@@ -29,7 +28,6 @@ root directory_.
 
 ---
 ## Prerequisites
-
 ### Git / GitHub
 Install and configure __Git__ and __GitHub__.
 ```sh
@@ -269,13 +267,16 @@ can either use the shortcodes shown in the box below--always remembering that it
 is likely to be a theme-specific syntax. Notably, if the `{{</* katex */>}}`
 tags have been used at least once in the document, you can also opt for the more
 compact bracket notation (which also produces results more consistent with the
-final rendering...).
+final rendering) or even for the standard and more portable double-dollar key,
+in the case of display-styled equations.
 ```
 {{</* katex */>}} ... {{</* /katex */>}}           # shortcodes for inline-style
 {{</* katex display */>}} ... {{</* /katex */>}}   # shortcodes for display-style
 
 \\( ... \\)                                # bracket for inline-style
 \\[ ... \\]                                # bracket for display-style
+
+$$ ... $$                                  # dollars for display-style
 ```
 As an _inline-style_ example of KaTeX rendering, I could exhibit
 {{< katex >}}\nabla\cdot\mathbf{B} = 0{{< /katex >}}
