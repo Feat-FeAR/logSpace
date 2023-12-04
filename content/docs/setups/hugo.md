@@ -48,9 +48,8 @@ _SSH and GPG keys_ > _New SSH key_ > add a title (usually, the device you will
 use that key from) > select _Authentication Key_ as key type > paste your key
 into the _Key_ field (including the `-C` comment) > _Add SSH key_.
 
----
 ### Hugo
-Install __Hugo__.
+Just install __Hugo__.
 ```sh
 # Install Hugo extended edition (v0.112.0 or later)
 winget install Hugo.Hugo.Extended
@@ -84,28 +83,28 @@ hugo server
 ## Host on GitHub Pages
 Deploy Hugo as a _GitHub Pages_ site and automate the whole building process
 with _GitHub Actions_. Full guide [here](https://gohugo.io/hosting-and-deployment/hosting-on-github/).
-* Go to __GitHub__ and create a GitHub repository using the same name of your
+1. Go to __GitHub__ and create a GitHub repository using the same name of your
 Hugo site (better to add no _README file_, no `.gitignore`, and no license in
 this step, but do it later).
-* Push your local repository to GitHub.
-```sh
-# Push your local repository to GitHub
-git remote add origin <SSH_repo_reference_as_provided_by_GitHub>
-git branch -M main
-git push -u origin main
-```
-* From the main menu of the GitHub repository, choose _Settings_ > _Pages_. In
+1. Push your local repository to GitHub.
+    ```sh
+    # Push your local repository to GitHub
+    git remote add origin <SSH_repo_reference_as_provided_by_GitHub>
+    git branch -M main
+    git push -u origin main
+    ```
+1. From the main menu of the GitHub repository, choose _Settings_ > _Pages_. In
 _Build and deployment_ section, change the _Source_ to `GitHub Actions` (the
 change is immediate; you do not have to press a "Save" button).
-* `mkdir .github/workflows` in your local repository and copy [this](https://github.com/Feat-FeAR/logSpace/blob/main/.github/workflows/hugo.yaml)
+1. `mkdir .github/workflows` in your local repository and copy [this](https://github.com/Feat-FeAR/logSpace/blob/main/.github/workflows/hugo.yaml)
 YAML file there.
-* Stage, commit (e.g., `-m "Add workflow"`), and push your local repository to
+1. Stage, commit (e.g., `-m "Add workflow"`), and push your local repository to
 __GitHub__.
-* When __GitHub__ has finished building and deploying your site, the color of
+1. When __GitHub__ has finished building and deploying your site, the color of
 the status indicator in GitHub’s _Actions_ menu will change to green.
-* Clicking on the commit message and under the _deploy_ step, you will see a
+1. Clicking on the commit message and under the _deploy_ step, you will see a
 link to your live site.
-* Also, use that link to update the `baseURL` field in your `hugo.toml`
+1. Also, use that link to update the `baseURL` field in your `hugo.toml`
 configuration file.
 
 __In the future, whenever you push a change from your local repository, GitHub
@@ -113,7 +112,7 @@ will automatically rebuild your site and deploy the changes__.
 
 ---
 ## Add content
-### Pages
+### Blank pages
 __Markdown__ is the standard content format supported by __Hugo__. You can put
 any file type into your `./content/*` directories, but __Hugo__ uses the markup
 front matter value (if set) or the file extension to determine if the file needs
@@ -124,24 +123,22 @@ new blank page already provided with a suitable front matter.
 hugo new content <section_name>/<filename>.md
 ```
 
----
 ### Markdown
 To add __Markdown__ text to existing pages:
-* Open the `.md` file with your editor (notice that the `draft` value in the
+1. Open the `.md` file with your editor (notice that the `draft` value in the
 front matter could be _true_).
-* Add some markdown to the body of the post.
-* Save the file, then start Hugo’s development server to build the site. 
-```sh
-# You can run either of the following commands to include draft content
-hugo server --buildDrafts
-hugo server -D
-```
-* View your site locally at the URL displayed in your terminal
+1. Add some markdown to the body of the post.
+1. Save the file, then start Hugo’s development server to build the site. 
+    ```sh
+    # You can run either of the following commands to include draft content
+    hugo server --buildDrafts
+    hugo server -D
+    ```
+1. View your site locally at the URL displayed in your terminal
 (`localhost:1313`). __Keep the development server running as you continue to add
 and change content. All the saved changes will be reflected on the site in real
 time, without the need to refresh your browser each time!__.
 
----
 ### HTML
 Beyond __Markdown__, you can insert __HTML__ directly inside Markdown files in
 `./content`. However, from version 0.6, __Hugo__ uses _Goldmark_ for Markdown
@@ -157,6 +154,7 @@ modification (but your indented code will follow Markdown formatting as usual).
 You could also save your content files as `.html`, but then you’ll have to write
 everything in HTML.
 
+---
 ---
 ### JavaScript
 __JavaScript__ code can be inserted _inline_ into the Markdown simply using the
@@ -179,7 +177,6 @@ The previous example results in this interactive button:
     }
 </script>
 
----
 However you can also source any `.js` script previously saved in the `./static`
 subfolder in two different ways, depending on whether you want to load it from
 every page of the site or only as needed.
@@ -187,23 +184,23 @@ every page of the site or only as needed.
 #### Global import
 If you plan to use the script extensively it is best to have every page on the
 site import it.
-* Save your __JS__ scripts as `.js` files and put them in the `./static/js`
+1. Save your __JS__ scripts as `.js` files and put them in the `./static/js`
 subfolder (e.g., `./static/js/popUp_test.js`).
-* Now you need a file that is going to be included in each page of the final
+1. Now you need a file that is going to be included in each page of the final
 HTML. Typical choices are `header.html`, `footer.html`, or similar _partial
 templates_ you can find in `./themes/<theme_name>/layouts/partials` subfolder
 (even if their exact location may depend on the particular theme you are using).
-* Once located, copy this file to _your_ `./layouts/partials` folder, in order
+1. Once located, copy this file to _your_ `./layouts/partials` folder, in order
 to override the content of the original.
-```sh
-# For instance (if using the 'hugo-book' theme)
-cd <project_root>
-New-Item -Type dir ./layouts/partials/docs
-cp `
-	./themes/hugo-book/layouts/partials/docs/header.html `
-	./layouts/partials/docs/header.html
-```
-* Add the following line to the bottom of the file.
+    ```sh
+    # For instance (if using the 'hugo-book' theme)
+    cd <project_root>
+    New-Item -Type dir ./layouts/partials/docs
+    cp `
+    	./themes/hugo-book/layouts/partials/docs/header.html `
+    	./layouts/partials/docs/header.html
+    ```
+1. Add the following line to the bottom of the file.
 ```html
 <script defer language="javascript" type="text/javascript" src="{{ "js/popUp_test.js" | urlize | relURL }}"></script>
 ```
@@ -215,7 +212,8 @@ _as-is_, to the `./public` directory when building the site.
 __Mind the slashes!__  
 Never include a leading slash to locate the source file when using the `relURL`
 function, otherwise the resulting URL will be incorrect when the `baseURL`
-includes a subdirectory! See documentation about
+includes a subdirectory (such as those you are assigned to by default when
+deploying through __GitHub Pages__!)! See documentation about
 [`relURL`](https://gohugo.io/functions/urls/relurl/)
 and [`urlize`](https://gohugo.io/functions/urls/urlize/).
 {{< /hint >}}
@@ -230,19 +228,19 @@ here below.
 #### Local import
 Alternatively, you can build a cool Hugo _shortcode_ in order to flexibly embed
 the script in Markdown syntax only on pages where it is actually needed.
-* Write a short HTML that sources the JS script (and possibly add some other
+1. Write a short HTML that sources the JS script (and possibly add some other
 useful HTML elements).
-```html
-<!-- Example of JS script to import via shortcode -->
-<script defer language="javascript" type="text/javascript" src="{{ "js/popUp_test.js" | urlize | relURL }}"></script>
-<button onclick="showPopup_fromThere()">Click me</button>
-```
-* Save it into the `./layouts/shortcodes` subfolder
+    ```html
+    <!-- Example of JS script to import via shortcode -->
+    <script defer language="javascript" type="text/javascript" src="{{ "js/popUp_test.js" | urlize | relURL }}"></script>
+    <button onclick="showPopup_fromThere()">Click me</button>
+    ```
+1. Save it into the `./layouts/shortcodes` subfolder
 (e.g., `./layouts/shortcodes/js_test.html`).
-* Now, you can reference this HTML chunk anywhere just by its name, using:
-```
-{{</* js_test */>}}
-```
+1. Now, you can reference this HTML chunk anywhere just by its name, using:
+    ```go
+    {{</* js_test */>}}
+    ```
 In both cases, the final result will be an interactive button like this:
 
 {{< js_test >}}
@@ -256,6 +254,44 @@ managing JavaScript resources.
 {{< /hint >}}
 
 ---
+---
+### Images
+In theory, embedding images to a Hugo page is very straightforward. Just put
+your images somewhere into the `./static` directory
+(e.g., `./static/images/fig1.png`), then choose one of these three methods
+1. embedding via Markdown (very basic syntax, does not provide further options)
+    ```markdown
+    ![Alternative Text](/images/fig1.png "Mouseover Title")
+    ```
+1. embedding via HTML `<figure>` and `<img>` tags (with all their attributes)
+    ```html
+    <img src="/images/fig1.png" alt="Alternative Text" class="img-responsive">
+    ```
+1. via Hugo’s built-in `figure` shortcode (whose parameters can be found
+[here](https://gohugo.io/content-management/shortcodes/#figure))
+    ```go
+    {{</* figure src="/images/fig1.png" title="Mouseover Title" */>}}
+    ```
+Here, the location of the image file must be the path relative to `./static`,
+since all the files therein will be copied with no modification, _as-is_, to the
+`./public` directory when building the site.
+
+{{< hint warning >}}
+__Mind your baseURL__  
+However, in practice, __none of these options will work when the base URL
+includes a subdirectory__ (such as those you are assigned to by default when
+deploying through __GitHub Pages__!). In these cases, you have to use a custom
+figure shortcode, as the one proposed by
+[Kaushal Modi](https://github.com/kaushalmodi)
+available from
+[here](https://gitlab.com/kaushalmodi/hugo-theme-refined/blob/master/layouts/shortcodes/figure.html)
+or [here](https://github.com/Feat-FeAR/logSpace/blob/main/layouts/shortcodes/figure.html).
+Just download it and put it into the `./layouts/shortcodes/` folder in order to
+override the default one. This shortcode manually prefixes the site baseURL
+wherever needed, also allowing for location different from `./static`
+(see e.g., [this issue](https://github.com/gohugoio/hugo/issues/4562)).
+{{< /hint >}}
+
 ### LaTeX
 __LaTeX__ math typesetting is not natively supported by __Hugo__, but it can be
 enabled by including the JavaScript LaTeX renderer
@@ -269,7 +305,7 @@ tags have been used at least once in the document, you can also opt for the more
 compact bracket notation (which also produces results more consistent with the
 final rendering) or even for the standard and more portable double-dollar key,
 in the case of display-styled equations.
-```
+```tpl
 {{</* katex */>}} ... {{</* /katex */>}}           # shortcodes for inline-style
 {{</* katex display */>}} ... {{</* /katex */>}}   # shortcodes for display-style
 
@@ -289,7 +325,6 @@ _display-style_.
         \qquad \forall\\,\xi\in\mathbb{R}
 \\]
 
----
 ### Specials
 Depending on the chosen theme, there could be a number of available predefined
 shortcodes that can be used to include special blocks--not natively supported
@@ -297,7 +332,7 @@ by __Hugo__--into the Markdown.
 Beyond the already discussed KeTeX support for LaTeX typesetting, one of the
 most useful shortcodes provided by the _Hugo Book_ theme are the _Hint_ boxes,
 you can include by
-```tpl
+```go
 {{</* hint [info|warning|danger] */>}}
 **Markdown content here**  
 ...
@@ -338,18 +373,17 @@ There is actually nothing really dangerous about all this...
 ---
 ## Themes
 ### Install a new theme
-* Choose a theme from [the _Hugo Themes_ section](https://themes.gohugo.io/).
-* Since your site is already a git repository, you can add it as a _git
+1. Choose a theme from [the _Hugo Themes_ section](https://themes.gohugo.io/).
+1. Since your site is already a git repository, you can add it as a _git
 submodule_.
-```sh
-# For instance, under the root directory of your Hugo site
-git submodule add -f https://github.com/JingWangTW/dark-theme-editor.git themes/dark-theme-editor
-```
-* Edit the site configuration file `hugo.toml` (in the root of your project)
+    ```sh
+    # For instance, under the root directory of your Hugo site
+    git submodule add -f https://github.com/JingWangTW/dark-theme-editor.git themes/dark-theme-editor
+    ```
+1. Edit the site configuration file `hugo.toml` (in the root of your project)
 setting the `theme` property to the theme name (`dark-theme-editor` in this
 example).
 
----
 ### Configuration 
 Most of the themes provide some custom fields for you to configure as needed.
 Please refer to the `README.md` and _config file_ (e.g., `hugo.toml`,
@@ -357,18 +391,17 @@ Please refer to the `README.md` and _config file_ (e.g., `hugo.toml`,
 options. You can override these values by adding them to your own `hugo.toml`
 file.
 
----
 ### Remove a theme
 As [GitHub Gist-ed](https://gist.github.com/myusuf3/7f645819ded92bda6677)
 by Mahdi Yusuf ([myusuf3](https://github.com/myusuf3)), to effectively remove a
 Git submodule you need to:
-* Delete the relevant section from the `.gitmodules` file.
-* Stage the changes `git add .gitmodules`.
-* Delete the relevant section from `.git/config`.
-* Run `git rm --cached <path_to_submodule>` (no trailing slash).
-* Run `rm -rf .git/modules/<path_to_submodule>` (no trailing slash).
-* Commit `git commit -m "Removed submodule <name>"`.
-* Delete the now untracked submodule files `rm -rf <path_to_submodule>`.
+1. Delete the relevant section from the `.gitmodules` file.
+1. Stage the changes `git add .gitmodules`.
+1. Delete the relevant section from `.git/config`.
+1. Run `git rm --cached <path_to_submodule>` (no trailing slash).
+1. Run `rm -rf .git/modules/<path_to_submodule>` (no trailing slash).
+1. Commit `git commit -m "Removed submodule <name>"`.
+1. Delete the now untracked submodule files `rm -rf <path_to_submodule>`.
 
 ---
 ## Release
@@ -381,12 +414,12 @@ it. In this step you will do just the first thing, for which Hugo creates the
 entire static site in the `./public` subdirectory in the root of your project.
 This includes the HTML files, and assets such as images, CSS files, and
 JavaScript files. Here's how to proceed.
-* Since your `./public` directory may contain extraneous files from a previous
+1. Since your `./public` directory may contain extraneous files from a previous
 build, a common practice is to manually clear the contents of `./public` before
 each new build in order to remove draft, expired, and future content.
-* Change the `draft` field from `true` to `false` on all the pages you want to
+1. Change the `draft` field from `true` to `false` on all the pages you want to
 publish.
-* Publish your site by simply typing:
+1. Publish your site by simply typing:
 ```sh
 hugo
 ```

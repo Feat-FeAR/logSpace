@@ -1,7 +1,7 @@
 +++
 title = 'Markov 1'
 date = 2023-12-01T23:20:42+01:00
-draft = false
+draft = true
 +++
 
 # Soccer Markov Chain
@@ -111,7 +111,7 @@ To get a little more formal, for a system with \\(m\\) states, we can introduce 
 
 
 If we are confident about their reliability, then we can use probabilities to model the system according to the chart below:
-{{< figure src="/images/2_states_toro-juve.png" title="An elephant at sunset" >}}
+{{< figure src="/images/2_states_toro-juve.png" title="An elephant at sunset" caption="this is a caption" >}}
 
 We are dealing here with a stochastic system that admits a finite number of states and that, at each cycle, can transition from one to the other according to well-defined probabilities. If these probabilities depend only on the state of the system at the time of the transition and not on previous ones (i.e., the system is memoryless) the process is said to be Markovian of the first order.
 As a stochastic, the state that a Markovian system will assume after a given number of cycles is not predictable. Nevertheless, its evolution over time can be approached statistically, since even if the path is random, not all branches are equally likely.
