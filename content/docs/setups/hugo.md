@@ -325,6 +325,36 @@ _display-style_.
         \qquad \forall\\,\xi\in\mathbb{R}
 \\]
 
+### Code blocks
+Code blocks can be directly included inside any Markdown document just copying
+the code into a properly backquoted section. However, if you want to keep the
+source file separate from the Markdown---so that it is easier to maintain---you
+can import the code text from the source file using a shortcode like
+[this](https://github.com/Feat-FeAR/logSpace/blob/main/layouts/shortcodes/include.html).
+Just download it and put it into the `./layouts/shortcodes/` folder. Then,
+to get the content of, e.g., `/static/codes/some-script.xxx` properly rendered
+in your page, simply call the shortcode in this way
+```go
+{{%/* include "/static/codes/some-script.xxx" */%}}
+```
+{{< hint info >}}
+__Shortcode delimiters__  
+Using the angle bracket styled shortcode delimiter, `❴❴< ... >❵❵`, tells __Hugo__
+that the inner content is HTML/plain text and needs no further processing. By
+using the percent styled delimiter `❴❴% ... %❵❵`, __Hugo__ will treat the
+shortcode body as __Markdown__. Use the most convenient version as appropriate.
+{{< /hint >}}
+
+{{< hint warning >}}
+__Script path__  
+In this case it is correct to indicate the very path where the script is located
+_during site development_, without needing to worry about where it will be
+copied after the build. This is because the content of the script is embedded in
+Markdown _before_ building. Although the location here proposed
+(`./static/codes/`) is convenient, any location within the site domain is
+acceptable.
+{{< /hint >}}
+
 ### Specials
 Depending on the chosen theme, there could be a number of available predefined
 shortcodes that can be used to include special blocks--not natively supported
