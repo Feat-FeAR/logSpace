@@ -1,0 +1,3 @@
+<!-- A custom shortcode to include code blocks from files -->
+{{ $file := .Get 0 }}
+{{ $file | readFile | safeHTML }}
