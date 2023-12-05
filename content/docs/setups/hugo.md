@@ -333,7 +333,7 @@ can import the code text from the source file using a shortcode like
 [this](https://github.com/Feat-FeAR/logSpace/blob/main/layouts/shortcodes/include.html).
 Just download it and put it into the `./layouts/shortcodes/` folder. Then,
 to get the content of, e.g., `/static/codes/some-script.xxx` properly rendered
-in your page, simply call the shortcode in this way
+in your page, call the following shortcode into a properly backquoted section.
 ```go
 {{%/* include "/static/codes/some-script.xxx" */%}}
 ```
