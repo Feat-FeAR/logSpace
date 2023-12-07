@@ -7,7 +7,7 @@ draft = false
 # Soccer Markov Chain
 
 ## Draw the raw chain
-Go to Youtube and pick up a video of any soccer match. Ideally, you want to
+Go to YouTube and pick up a video of any soccer match. Ideally, you want to
 choose a complete match so that you can actually select a random sequence of
 game play that is representative of the baseline dynamics of the match, and not
 necessarily some outstanding actions, which---in being outstanding---may not be

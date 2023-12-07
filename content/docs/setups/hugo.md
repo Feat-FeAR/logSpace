@@ -43,10 +43,10 @@ ssh-keygen -t ed25519 -C "your_mail_here"
 # Copy the SSH public key to your clipboard from here
 cat $HOME/.ssh/id_ed25519.pub
 ```
-Finally add the SSH key to your account on __GitHub__ web site: _Settings_ >
-_SSH and GPG keys_ > _New SSH key_ > add a title (usually, the device you will
-use that key from) > select _Authentication Key_ as key type > paste your key
-into the _Key_ field (including the `-C` comment) > _Add SSH key_.
+Finally add the SSH key to your account from the __GitHub__ web site:
+_Settings_ > _SSH and GPG keys_ > _New SSH key_ > add a title (usually, the
+device you will use that key from) > select _Authentication Key_ as key type >
+paste your key into the _Key_ field (including the `-C` comment) > _Add SSH key_.
 
 ### Hugo
 Just install __Hugo__.
