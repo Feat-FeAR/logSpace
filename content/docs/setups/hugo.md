@@ -404,8 +404,8 @@ There is actually nothing really dangerous about all this...
 ## Themes
 ### Install a new theme
 1. Choose a theme from [the _Hugo Themes_ section](https://themes.gohugo.io/).
-1. Since your site is already a git repository, you can add it as a _git
-submodule_.
+1. Since your site is already a Git repository, you can add it as a _Git
+Submodule_.
     ```sh
     # For instance, under the root directory of your Hugo site
     git submodule add -f https://github.com/JingWangTW/dark-theme-editor.git themes/dark-theme-editor
@@ -413,6 +413,21 @@ submodule_.
 1. Edit the site configuration file `hugo.toml` (in the root of your project)
 setting the `theme` property to the theme name (`dark-theme-editor` in this
 example).
+
+{{< hint warning >}}
+__Cloning Git Submodules__  
+A Git submodule is a kind of link within a host Git repository that points to a
+specific commit in another external repository. Submodules only track specific
+commits and are not automatically updated when the host repository is updated.
+When you `git clone` a repository, its possible submodules are not downloaded by
+default. To download a repository including submodules use instead
+```sh
+# Locally download the source of the current web site, including the theme(s) 
+git clone --recurse-submodules -j8 git@github.com:Feat-FeAR/logSpace.git
+```
+where `-j8` is just an optional performance optimization to fetches up to 8
+submodules at a time in parallel.
+{{< /hint >}}
 
 ### Configuration 
 Most of the themes provide some custom fields for you to configure as needed.
