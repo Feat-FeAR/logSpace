@@ -1,7 +1,7 @@
 +++
 title = 'Markov 2'
 date = 2023-12-07T17:20:42+01:00
-draft = true
+draft = false
 +++
 
 # K<sub>2</sub>P Markov Chain
