@@ -22,9 +22,10 @@ function generateNewChain(element_id) {
     // Update the 'now' state
     now = chain[chain.length - 1];
 
-    if (now === 't') {
+    let new_state;
+    if (now === states[0]) {
       new_state = randomChoice(states, TM[0]);
-    } else if (now === 'j') {
+    } else if (now === states[1]) {
       new_state = randomChoice(states, TM[1]);
     }
     chain.push(new_state);

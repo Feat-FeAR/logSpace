@@ -58,4 +58,4 @@ lines of code were added to the bottom just to convert the chain made of
 _open_ and _closed_ strings into a numerical sequence of current values that we
 can plot.
 ```r {{% include "/static/codes/K2P_markov_chain.R" %}} ```
-
+{{< k2pMarkov >}}
