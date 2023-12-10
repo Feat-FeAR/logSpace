@@ -12,7 +12,6 @@ const TM = [
 
 // Function to generate a new chain
 function generateNewChain(element_id) {
-  
   let now = states[1]; // The kickoff
   let chain = [now];   // The chain
   const n = 1.5e3;     // Chain length

@@ -1,21 +1,38 @@
-// JavaScript implementation of a 2-state "soccer" Markov system
-// The literal translation of './static/codes/soccer_markov_chain.R'
+// JavaScript implementation of a two-state ion channel with a constant
+// transition matrix (JS translation of './static/codes/K2P_markov_chain.R').
+
+
+// --- Variable Assignments ----------------------------------------------------
 
 // List of all the possible states
-const states = [0, 1];
+const k2p_states = [0, 1];
 
-// Transition matrix (transition probabilities per pass)
-const TM = [
+// Transition matrix (transition probabilities per time step / unit of time)
+const k2p_TM = [
   [0.98, 0.02],
   [0.01, 0.99]
 ];
 
+// Chain length
+const n = 1.5e3;     
+
+
+// --- Function Definitions ----------------------------------------------------
+
+// Function to generate a new current trace and update the chart
+function generateAndPlot(element_id) {
+  // Get the canvas element
+  const canvas = document.getElementById(element_id);
+  const ctx = canvas.getContext('2d');
+
+  let currentTrace = generateNewChain(k2p_states, k2p_TM, n);
+  updateChart(currentTrace, ctx);
+}
+
 // Function to generate a new chain
-function generateNewChain() {
-  
+function generateNewChain(states, TM, n) {
   let now = states[0]; // The kickoff
   let chain = [now];   // The chain
-  const n = 1.5e3;     // Chain length
 
   // Chain builder loop
   for (let i = 1; i < n; i++) {
@@ -31,11 +48,29 @@ function generateNewChain() {
     chain.push(new_state);
   }
 
-  // Add electrical noise (uniformly distributed)
-  chain = chain.map(x => x + 0.1*Math.random() - 0.05)
+  // Add electrical noise
+  //chain = chain.map(x => x + 0.2*Math.random() - 0.1)     // Uniform
+  chain = chain.map(x => x + normRandom(0, 0.05))           // Gaussian
 
   // Return the array chain
   return chain;
+}
+
+// Function to generate a normally distributed random number with the specified
+// mean and standard deviation. The Box-Muller transform generates two
+// independent, standard normally distributed random numbers that can be
+// then adjusted to have the desired mean and standard deviation.
+function normRandom(mean, sd) {
+  let u1 = Math.random();
+  let u2 = Math.random();
+
+  // Box-Muller transform
+  let z0 = Math.sqrt(-2 * Math.log(u1)) * Math.cos(2 * Math.PI * u2);
+
+  // Adjust mean and standard deviation
+  let result = z0 * sd + mean;
+
+  return result;
 }
 
 // Function to randomly choose an element based on probabilities
@@ -54,31 +89,22 @@ function randomChoice(choices, probabilities) {
   return choices[choices.length - 1];
 }
 
-
-
-
-
-// Get the canvas element
-const canvas = document.getElementById('vectorPlot');
-const ctx = canvas.getContext('2d');
-
-
 // Function to update the chart with a new vector
-function updateChart(vector) {
+function updateChart(vector, context) {
   // Check if a chart instance already exists
   if (window.myLineChart) {
     // Update the existing chart with new data
-    window.myLineChart.data.labels = vector.map((_, index) => index + 1);
+    //window.myLineChart.data.labels = vector.map((_, index) => index/1e3);
     window.myLineChart.data.datasets[0].data = vector;
     window.myLineChart.update();
   } else {
     // Create a new chart instance
-    window.myLineChart = new Chart(ctx, {
+    window.myLineChart = new Chart(context, {
       type: 'line',
       data: {
-        labels: vector.map((_, index) => index + 1),
+        labels: vector.map((_, index) => index/1e3),
         datasets: [{
-          label: 'Vector',
+          label: 'Normalized Current',
           //borderColor: 'rgb(75, 192, 192)', // Alternative color
           borderColor: 'rgb(20, 20, 20)',
           backgroundColor: 'rgba(255, 255, 255, 1)', // White background
@@ -94,14 +120,3 @@ function updateChart(vector) {
     });
   }
 }
-
-// Initial vector
-let integerVector = generateNewChain();
-updateChart(integerVector);
-
-// Button click event handler
-document.getElementById('generateButton').addEventListener('click', function () {
-  // Generate a new random vector and update the chart
-  integerVector = generateNewChain();
-  updateChart(integerVector);
-});
