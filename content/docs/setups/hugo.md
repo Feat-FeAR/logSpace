@@ -213,7 +213,11 @@ to override the content of the original.
     ```
 1. Add the following line to the bottom of the file.
 ```html
-<script defer language="javascript" type="text/javascript" src="{{ "js/popUp_test.js" | urlize | relURL }}"></script>
+<script defer
+        language="javascript"
+        type="text/javascript"
+        src='{{ "js/popUp_test.js" | urlize | relURL }}'>
+</script>
 ```
 Here, the location of the __JS__ script must be the path relative to
 `./static/`, since all the files therein will be copied with no modification,
@@ -243,8 +247,14 @@ the script in Markdown syntax only on pages where it is actually needed.
 useful HTML elements).
     ```html
     <!-- Example of JS script to import via shortcode -->
-    <script defer language="javascript" type="text/javascript" src="{{ "js/popUp_test.js" | urlize | relURL }}"></script>
-    <button onclick="showPopup_fromThere()">Click me</button>
+    <script defer
+            language="javascript"
+            type="text/javascript"
+            src='{{ "js/popUp_test.js" | urlize | relURL }}'>
+    </script>
+    <button onclick="showPopup_fromThere()">
+        Click me
+    </button>
     ```
 1. Save it into the `./layouts/shortcodes` subfolder
 (e.g., `./layouts/shortcodes/js_test.html`).

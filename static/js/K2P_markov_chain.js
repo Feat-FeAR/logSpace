@@ -25,6 +25,7 @@ function generateAndPlot(element_id) {
   const canvas = document.getElementById(element_id);
   const ctx = canvas.getContext('2d');
 
+  // Get the chain
   let currentTrace = generateNewChain(k2p_states, k2p_TM, n);
   updateChart(currentTrace, ctx);
 }
