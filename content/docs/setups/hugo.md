@@ -10,24 +10,34 @@ that renders a complete HTML website (just like _The log_Space_ you are browsing
 right now) starting from content and templates written in __Markdown__
 (such as [the source of this page](https://github.com/Feat-FeAR/logSpace/blob/main/content/docs/setups/hugo.md?plain=1)).
 
-This is a concise guide on how to make a website via __Hugo__ working in a pure
-Windows environment. To this purpose, all of the following commands are intended
-to be run from `PowerShell` (tested on _PowerShell v7.3.9_) and NOT from
-`Windows PowerShell`, which is a different application (😱). Nevertheless, most
-of them also apply without modification to a pure Linux/Bash environment, the
-only exceptions being those few overtly Win-specific commands such as `winget`
-(the Microsoft’s official package manager for Windows) or `Set-Location` (to
-change drive letter).
+This is a concise tutorial on how to make a website via __Hugo__, working in a
+pure Windows environment. To this purpose, all of the following commands are
+intended to be issued from `PowerShell` (tested on _PowerShell v7.3.9_ and
+above) and __NOT__ from `Windows PowerShell`, which is a different application
+(😱). Nevertheless, most of these commands also apply without any modifications
+to a pure Linux/Bash environment, the only exceptions being those few overtly
+Win-specific commands such as `winget` (the Microsoft’s official package manager
+for Windows) or `Set-Location` (to change drive letter).
 
-In any case, when running __Hugo__ in a Windows environment, I recommend using
-__PS__ as CLI instead of __WSL__, since with my _ManjaroWSL2_ the change
-detector for site real-time rendering never worked well.
+In any case, when running __Hugo__ in a Windows environment, my advice is to use
+__PS__ as the CLI instead of __WSL__, since, with my _ManjaroWSL2_, the change
+detector for the real-time rendering of the site never worked that well.
 
-Throughout this tutorial, the working directory `.` will represent the _site
-root directory_.
+{{< hint warning >}}
+__Working Directory__  
+Throughout this tutorial, the working directory `.` will always represent the
+_site root directory_.
+{{< /hint >}}
 
 ---
 ## Prerequisites
+### PowerShell
+Install `PowerShell` from `Command Prompt` or `Windows PowerShell`.
+```sh
+# Install PowerShell
+winget install --id Microsoft.Powershell --source winget
+```
+
 ### Git / GitHub
 Install and configure __Git__ and __GitHub__.
 ```sh
@@ -49,7 +59,7 @@ device you will use that key from) > select _Authentication Key_ as key type >
 paste your key into the _Key_ field (including the `-C` comment) > _Add SSH key_.
 
 ### Hugo
-Just install __Hugo__.
+Install __Hugo__ (_extended edition_).
 ```sh
 # Install Hugo extended edition (v0.112.0 or later)
 winget install Hugo.Hugo.Extended
@@ -58,7 +68,8 @@ winget install Hugo.Hugo.Extended
 ---
 ## Create a Hugo site
 Run these commands to create a new Hugo web site and run it on `localhost:1313`.
-Official guide [here](https://gohugo.io/getting-started/quick-start/).
+See the official quick-start guide
+[here](https://gohugo.io/getting-started/quick-start/).
 ```sh
 # Move to the directory that will contain the site directory
 Set-Location <drive:>
