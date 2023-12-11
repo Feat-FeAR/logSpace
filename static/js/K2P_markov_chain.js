@@ -14,7 +14,7 @@ const k2p_TM = [
 ];
 
 // Chain length
-const n = 1.5e3;     
+const N = 1.5e3;
 
 
 // --- Function Definitions ----------------------------------------------------
@@ -26,33 +26,29 @@ function generateAndPlot(element_id) {
   const ctx = canvas.getContext('2d');
 
   // Get the chain
-  let currentTrace = generateNewChain(k2p_states, k2p_TM, n);
+  let currentTrace = generateNewChain(k2p_states, k2p_TM, N);
   updateChart(currentTrace, ctx);
 }
 
 // Function to generate a new chain
-function generateNewChain(states, TM, n) {
+function generateNewChain(states, TM, N) {
+  // Initialize
   let now = states[0]; // The kickoff
   let chain = [now];   // The chain
-
   // Chain builder loop
-  for (let i = 1; i < n; i++) {
+  for (let i = 1; i < N; i++) {
     // Update the 'now' state
-    now = chain[chain.length - 1];
-
-    let new_state;
     if (now === states[0]) {
-      new_state = randomChoice(states, TM[0]);
+      now = randomChoice(states, TM[0]);
     } else if (now === states[1]) {
-      new_state = randomChoice(states, TM[1]);
+      now = randomChoice(states, TM[1]);
     }
-    chain.push(new_state);
+    // Extend the chain
+    chain.push(now);
   }
-
   // Add electrical noise
   //chain = chain.map(x => x + 0.2*Math.random() - 0.1)     // Uniform
   chain = chain.map(x => x + normRandom(0, 0.05))           // Gaussian
-
   // Return the array chain
   return chain;
 }

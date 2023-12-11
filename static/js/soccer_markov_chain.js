@@ -1,5 +1,5 @@
 // JavaScript implementation of a two-state "soccer" Markov system
-// The literal translation of './static/codes/soccer_markov_chain.R'
+// The (almost literal) translation of './static/codes/soccer_markov_chain.R'
 
 
 // --- Variable Assignments ----------------------------------------------------
@@ -14,7 +14,7 @@ const derby_TM = [
 ];
 
 // Chain length
-const n = 1.5e3;     
+const N = 1.5e3;     
 
 
 // --- Function Definitions ----------------------------------------------------
@@ -22,31 +22,27 @@ const n = 1.5e3;
 // Function to generate a new "match" and display the result
 function generateAndDisplay(element_id) {
   // Get the chain
-  const derbyChain = generateNewChain(derby_states, derby_TM, n)
-  
+  const derbyChain = generateNewChain(derby_states, derby_TM, N)  
   // Display the result as simple text
   document.getElementById(element_id).innerText = derbyChain.join('');
 }
 
 // Function to generate a new chain
-function generateNewChain(states, TM, n) {
+function generateNewChain(states, TM, N) {
+  // Initialize
   let now = states[1]; // The kickoff
   let chain = [now];   // The chain
-
   // Chain builder loop
-  for (let i = 1; i < n; i++) {
+  for (let i = 1; i < N; i++) {
     // Update the 'now' state
-    now = chain[chain.length - 1];
-
-    let new_state;
     if (now === states[0]) {
-      new_state = randomChoice(states, TM[0]);
+      now = randomChoice(states, TM[0]);
     } else if (now === states[1]) {
-      new_state = randomChoice(states, TM[1]);
+      now = randomChoice(states, TM[1]);
     }
-    chain.push(new_state);
+    // Extend the chain
+    chain.push(now);
   }
-
   // Return the array chain
   return chain;
 }
@@ -62,7 +58,6 @@ function randomChoice(choices, probabilities) {
       return choices[i];
     }
   }
-
   // This should not happen, but just in case
   return choices[choices.length - 1];
 }
