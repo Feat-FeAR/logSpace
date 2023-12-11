@@ -273,6 +273,12 @@ subdirectory (in place of `./static`) and the
 [`js.Build`](https://gohugo.io/hugo-pipes/js/) function as an advanced tool for
 managing JavaScript resources.
 {{< /hint >}}
+{{< hint info >}}
+__Mind the cache!__  
+Whichever way you chose to insert JS code into the Hugo web page, remember that,
+to see the effects of a change to the script, you may need to use the key
+combination `Ctrl+F5` to force page refresh ignoring the cache.
+{{< /hint >}}
 
 ---
 ---
