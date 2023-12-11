@@ -255,8 +255,38 @@ Notice that both nesting and pipes are suitable to limit the use of unnecessary
 variables, but pipes, in addition, maintain the natural sequence of
 function-calls in the written code.
 
-__JavaScript__ does not have a native pipe operator like some other languages.
-However, you can achieve a similar effect using _method chaining_.
+{{< hint warning >}}
+__R native pipe__  
+Notice that the __R__ native pipe operator `|>` (starting from _R 4.1.0_)
+inserts the left-hand side object as the _first argument_ in the right-hand side
+function. However, _R 4.2.0_ added a `_` placeholder to the base pipe, with one
+additional restriction: the argument has to be named. For example,
+`x |> f(1, y = _)` is equivalent to `f(1, y = x)`. As an alternative, you can
+always define your own custom anonymous function directly _in-pipe_.
+```r
+# Anonymous functions can be used as early as they are defined (just enclose
+# them in round or curly brackets)
+(\(x){x*x})(3) # Returns 9
+c(1,2,3) |> {\(x)x^2+1}() |> sum() # Returns 17
+
+animals <- c("dog", "sheep", "frog", "pig")
+# Unary operator (no problem)
+animals |> toupper()
+# Binary operator that need to be piped in first position (standard behavior)
+animals |> sapply(nchar)
+# Binary operator that need to be piped in second position -> Doesn't work!
+animals |> grepl(".*og$")
+# Pipe placeholder used as a named argument -> OK
+animals |> grepl(".*og$", x=_)
+# Anonymous function in-pipe definition -> OK
+animals |> {\(x)grepl(".*og$",x)}()
+```
+On top of that, Tidyverse _magrittr_ package pipe operaror `%>%` still offers
+[some more advanced features](https://www.tidyverse.org/blog/2023/04/base-vs-magrittr-pipe/).
+{{< /hint >}}
+
+As for __JavaScript__, it does not have a native pipe operator like some other
+languages. However, you can achieve a similar effect using _method chaining_.
 ```js
 data = [0.5, 1, 2, 8];
 const compose = (g,f) => (x => f(g(f(x))));
