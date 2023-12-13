@@ -19,45 +19,13 @@ const N = 1.5e3;
 
 // --- Function Definitions ----------------------------------------------------
 
+// 'import' not supported? --> imported by HTML <script src='...'></script>
+// import { make2StateChain } from './funxov.js';
+
 // Function to generate a new "match" and display the result
 function generateAndDisplay(element_id) {
   // Get the chain
-  const derbyChain = generateNewChain(derby_states, derby_TM, N)  
+  const derbyChain = make2StateChain(derby_states, derby_TM, N, starting = 'j')  
   // Display the result as simple text
   document.getElementById(element_id).innerText = derbyChain.join('');
-}
-
-// Function to generate a new chain
-function generateNewChain(states, TM, N) {
-  // Initialize
-  let now = states[1]; // The kickoff
-  let chain = [now];   // The chain
-  // Chain builder loop
-  for (let i = 1; i < N; i++) {
-    // Update the 'now' state
-    if (now === states[0]) {
-      now = randomChoice(states, TM[0]);
-    } else if (now === states[1]) {
-      now = randomChoice(states, TM[1]);
-    }
-    // Extend the chain
-    chain.push(now);
-  }
-  // Return the array chain
-  return chain;
-}
-
-// Function to randomly choose an element based on probabilities
-function randomChoice(choices, probabilities) {
-  const rand = Math.random();
-  let cumulativeProbability = 0;
-
-  for (let i = 0; i < choices.length; i++) {
-    cumulativeProbability += probabilities[i];
-    if (rand <= cumulativeProbability) {
-      return choices[i];
-    }
-  }
-  // This should not happen, but just in case
-  return choices[choices.length - 1];
 }
