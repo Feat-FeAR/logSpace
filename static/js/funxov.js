@@ -29,6 +29,42 @@ function make2StateChain(states, TM, N, starting = states[0], noise = false) {
   return chain;
 }
 
+// Function to generate a new chain
+function make2StateChain2TM(states, TM1, TM2, N, n_change = N/2,
+                            starting = states[0], noise = false) {
+  // Initialize
+  let now = starting; // The kickoff
+  let chain = [now];   // The chain
+  
+  // Chain builder loop
+  for (let i = 1; i < N; i++) {
+
+    let TM = [];
+    if (i < n_change) {
+      TM = TM1;
+    } else {
+      TM = TM2;
+    }
+    // Update the 'now' state
+    if (now === states[0]) {
+      now = sample(states, TM[0]);
+    } else if (now === states[1]) {
+      now = sample(states, TM[1]);
+    }
+    // Extend the chain
+    chain.push(now);
+  }
+
+  if (noise) {
+    // Add electrical noise
+    //chain = chain.map(x => x + 0.2*Math.random() - 0.1)     // Uniform
+    chain = chain.map(x => x + normRandom(0, 0.05))           // Gaussian
+  }
+
+  // Return the array chain
+  return chain;
+}
+
 // Function to generate a normally distributed random number with the specified
 // mean and standard deviation. The Box-Muller transform generates two
 // independent, standard normally distributed random numbers that can be

@@ -1,0 +1,60 @@
+<!-- Shortcode for the K2P ion channel Markov Chain -->
+
+<!-- Import Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- Import the script (variables and functions) and dependencies-->
+<script defer
+		language="javascript"
+		type="text/javascript"
+		src='{{ "js/funxov.js" | urlize | relURL }}'>
+</script>
+<script defer
+		language="javascript"
+		type="text/javascript"
+		src='{{ "js/KVOC_markov_chain.js" | urlize | relURL }}'>
+</script>
+
+<!-- White box to contain the plot with inline styles -->
+<div style="width: 737px;
+			height: 750px;
+			text-align: left;
+			background-color: white;
+			padding: 20px;
+			border-radius: 10px;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+
+	<!-- Subplot 1 -->
+	<canvas id="micro1"
+			width="650"
+			height="150"
+			style="margin: auto;">
+	</canvas>
+
+	<!-- Subplot 2 -->
+	<canvas id="micro2"
+			width="650"
+			height="150"
+			style="margin: auto;">
+	</canvas>
+
+	<!-- Subplot 3 -->
+	<canvas id="micro3"
+			width="650"
+			height="150"
+			style="margin: auto;">
+	</canvas>
+
+	<!-- Subplot 4 -->
+	<canvas id="macro"
+			width="650"
+			height="200"
+			style="margin: auto;">
+	</canvas>
+
+	<button id="generateButton"
+			style="margin-top: 15px;"
+			onclick="multiPlot('micro1', 'micro2', 'micro3', 'macro')">
+		Generate Currents
+	</button>
+</div>
