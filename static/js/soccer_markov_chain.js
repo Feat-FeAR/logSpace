@@ -18,12 +18,12 @@ const N = 1.5e3;
 // --- Function Definitions ----------------------------------------------------
 
 // 'import' not supported? --> imported by HTML <script src='...'></script>
-// import { make2StateChain } from './funxov.js';
+// import { makeChain2S } from './funxov.js';
 
 // Function to generate a new "match" and display the result
 function generateAndDisplay(element_id) {
   // Get the chain
-  const derbyChain = make2StateChain(derby_states, derby_TM, N, 'j', false)
+  const derbyChain = makeChain2S(derby_states, derby_TM, N, 'j', false)
   // Display the result as simple text
   document.getElementById(element_id).innerText = derbyChain.join('');
 }

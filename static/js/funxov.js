@@ -2,10 +2,10 @@
 // i.e., a JS Module of general utility functions for Markov chains
 
 // Function to generate a new N-long Markov Chain, with only two possible states
-function make2StateChain(states, TM, N, starting = states[0], noise = false) {
+function makeChain2S(states, TM, N, starting = states[0], noise = false) {
   // Initialize
   let now = starting; // The kickoff
-  let chain = [now];   // The chain
+  let chain = [now];  // The chain
   
   // Chain builder loop
   for (let i = 1; i < N; i++) {
@@ -32,16 +32,16 @@ function make2StateChain(states, TM, N, starting = states[0], noise = false) {
 // Function to generate a new N-long Markov Chain, with only two possible states
 // and a transition matrix that changes from TM1 to TM2 at the n_change cycle,
 // to represent ion channel activation (gating stimulus)
-function make2StateChain2TM(states, TM1, TM2, N, n_change = N/2,
+function makeChain2S2T(states, TM1, TM2, N, n_change = N/2,
                             starting = states[0], noise = false) {
   // Initialize
   let now = starting; // The kickoff
-  let chain = [now];   // The chain
+  let chain = [now];  // The chain
   
   // Chain builder loop
   for (let i = 1; i < N; i++) {
     // Conditional ternary operator
-    let TM = i < n_change ? TM1 : TM2;
+    const TM = i < n_change ? TM1 : TM2;
     // Update the 'now' state
     if (now === states[0]) {
       now = sample(states, TM[0]);
@@ -112,7 +112,9 @@ function colSums(matrix) {
   return result;
 }
 
-// Function to create a chart (or update it) with a new vector of numbers
+// Function to create (or update) a chart with a new vector of numbers.
+// Note that this function always returns a chart object, even if this feature
+// is not currently used anywhere in the script.
 function createChart(canvasId, vector, ylab, color = 'rgb(20, 20, 20)') {
 
   // Update an existing chart
@@ -123,7 +125,6 @@ function createChart(canvasId, vector, ylab, color = 'rgb(20, 20, 20)') {
   // const exists = window[canvasId].attributes.style.value.includes('display')
   const existingChart = Chart.getChart(canvasId);
   if (existingChart) {
-    // Update existing chart
     existingChart.data.datasets[0].data = vector;
     existingChart.update();
     return existingChart;

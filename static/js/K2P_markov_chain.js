@@ -18,12 +18,10 @@ const N = 1.5e3;
 // --- Function Definitions ----------------------------------------------------
 
 // 'import' not supported? --> imported by HTML <script src='...'></script>
-// import { make2StateChain } from './funxov.js';
+// import { makeChain2S } from './funxov.js';
 
 // Function to generate a new current trace and create/update the chart
 function generateAndPlot(element_id) {
-  // Get the chain
-  const currentTrace = make2StateChain(k2p_states, k2p_TM, N, 0, true);
-  // Create the chart
-  const currentChart = createChart(element_id, currentTrace, 'Normalized Current');
+  const iTrace = makeChain2S(k2p_states, k2p_TM, N, 0, true);
+  createChart(element_id, iTrace, 'Normalized Current');
 }
