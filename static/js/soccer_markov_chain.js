@@ -1,7 +1,6 @@
 // JavaScript implementation of a two-state "soccer" Markov system
 // The (almost literal) translation of './static/codes/soccer_markov_chain.R'
 
-
 // --- Variable Assignments ----------------------------------------------------
 
 // List of all the possible states
@@ -14,8 +13,7 @@ const derby_TM = [
 ];
 
 // Chain length
-const N = 1.5e3;     
-
+const N = 1.5e3;
 
 // --- Function Definitions ----------------------------------------------------
 
@@ -25,7 +23,7 @@ const N = 1.5e3;
 // Function to generate a new "match" and display the result
 function generateAndDisplay(element_id) {
   // Get the chain
-  const derbyChain = make2StateChain(derby_states, derby_TM, N, starting = 'j')  
+  const derbyChain = make2StateChain(derby_states, derby_TM, N, 'j', false)
   // Display the result as simple text
   document.getElementById(element_id).innerText = derbyChain.join('');
 }

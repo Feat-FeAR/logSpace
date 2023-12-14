@@ -1,7 +1,7 @@
-// funxov is 'functions for Markov', i.e.,
-// a JS Module of functions for Markov chains
+// funxov is a short for 'functions for Markov'
+// i.e., a JS Module of general utility functions for Markov chains
 
-// Function to generate a new chain
+// Function to generate a new N-long Markov Chain, with only two possible states
 function make2StateChain(states, TM, N, starting = states[0], noise = false) {
   // Initialize
   let now = starting; // The kickoff
@@ -29,7 +29,9 @@ function make2StateChain(states, TM, N, starting = states[0], noise = false) {
   return chain;
 }
 
-// Function to generate a new chain
+// Function to generate a new N-long Markov Chain, with only two possible states
+// and a transition matrix that changes from TM1 to TM2 at the n_change cycle,
+// to represent ion channel activation (gating stimulus)
 function make2StateChain2TM(states, TM1, TM2, N, n_change = N/2,
                             starting = states[0], noise = false) {
   // Initialize
@@ -38,13 +40,8 @@ function make2StateChain2TM(states, TM1, TM2, N, n_change = N/2,
   
   // Chain builder loop
   for (let i = 1; i < N; i++) {
-
-    let TM = [];
-    if (i < n_change) {
-      TM = TM1;
-    } else {
-      TM = TM2;
-    }
+    // Conditional ternary operator
+    let TM = i < n_change ? TM1 : TM2;
     // Update the 'now' state
     if (now === states[0]) {
       now = sample(states, TM[0]);
@@ -98,16 +95,10 @@ function sample(choices, probabilities) {
   return choices[choices.length - 1];
 }
 
-// Function to get the row-wise sum of the elements of a matrix
+// Function to get the sum of the values in each column of a matrix
 function colSums(matrix) {
-  // Check if the matrix is not empty
-  if (matrix.length === 0 || matrix[0].length === 0) {
-    throw new Error('Empty matrix');
-  }
-
-  // Get the length of the arrays (N)
+  // Get the length of the arrays
   const arrayLength = matrix[0].length;
-
   // Initialize the result array with zeros
   const result = Array(arrayLength).fill(0);
   
@@ -119,4 +110,43 @@ function colSums(matrix) {
   }
 
   return result;
+}
+
+// Function to create a chart (or update it) with a new vector of numbers
+function createChart(canvasId, vector, ylab, color = 'rgb(20, 20, 20)') {
+
+  // Update an existing chart
+  // Test if the related <canvas> is still empty or not
+  // Another approach would have been to test the 'display: block;' value of
+  // of the <canvas>'s 'style' attribute, since in the present code it is
+  // initially uset, but it will be set by 'Chart' constructor upon button click
+  // const exists = window[canvasId].attributes.style.value.includes('display')
+  const existingChart = Chart.getChart(canvasId);
+  if (existingChart) {
+    // Update existing chart
+    existingChart.data.datasets[0].data = vector;
+    existingChart.update();
+    return existingChart;
+  }
+
+  // Create a new chart instance
+  const context = document.getElementById(canvasId).getContext('2d');
+  return new Chart(context, {
+    type: 'line',
+    data: {
+      labels: vector.map((_, index) => index/1e3),
+      datasets: [{
+        label: ylab,
+        borderColor: color,
+        backgroundColor: 'rgba(255, 255, 255, 1)', // White background
+        data: vector,
+        fill: false,
+        borderWidth: 1.5,
+        pointRadius: 0,
+      }]
+    },
+    options: {
+      responsive: false,
+    }
+  });
 }
