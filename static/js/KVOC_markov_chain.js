@@ -18,9 +18,9 @@ const depol_TM = [
   [0.01, 0.99]
 ];
 
-const N = 1.5e3; // Chain length
-const M = 1e3;   // Number of chains (channels)
-const t0 = 200;  // Voltage step start
+const N = 1e3; // Chain length
+const M = 5e3;   // Number of chains (channels)
+const t0 = 300;  // Voltage step start
 
 
 // --- Function Definitions ----------------------------------------------------
@@ -40,14 +40,28 @@ function multiPlot(micro_id1, micro_id2, micro_id3, macro_id) {
   }
 
     // Create charts for each subplot
-    const chart1 = createChart(micro_id1, dataset[0]);
-    const chart2 = createChart(micro_id2, dataset[1]);
-    const chart3 = createChart(micro_id3, dataset[2]);
-    const chart4 = createChart(macro_id, colSums(dataset), 'rgb(75, 192, 192)');
+    const chart1 = createChart(micro_id1, dataset[0], 'Channel 1');
+    const chart2 = createChart(micro_id2, dataset[1], 'Channel 2');
+    const chart3 = createChart(micro_id3, dataset[2], 'Channel 3');
+    const chart4 = createChart(macro_id, colSums(dataset),
+      'Total Current', 'rgb(75, 192, 192)');
 }
 
 // Function to create or update the chart with a new vector
-function createChart(canvasId, vector, color = 'rgb(20, 20, 20)') {
+function createChart(canvasId, vector, ylab, color = 'rgb(20, 20, 20)') {
+
+  // Test if the related <canvas> is still empty or not
+  // Another approach would have been to test the 'display: block;' value of
+  // of the <canvas>'s 'style' attribute, since in the present code it is
+  // initially uset, but it will be set by 'Chart' constructor upon button click
+  // const exists = window[canvasId].attributes.style.value.includes('display')
+  const existingChart = Chart.getChart(canvasId);
+  if (existingChart) {
+    // Update existing chart
+    existingChart.data.datasets[0].data = vector;
+    existingChart.update();
+    return existingChart;
+  }
 
   const context = document.getElementById(canvasId).getContext('2d');
   // Create a new chart instance
@@ -56,7 +70,7 @@ function createChart(canvasId, vector, color = 'rgb(20, 20, 20)') {
     data: {
       labels: vector.map((_, index) => index/1e3),
       datasets: [{
-        label: 'Normalized Current',
+        label: ylab,
         borderColor: color,
         backgroundColor: 'rgba(255, 255, 255, 1)', // White background
         data: vector,
@@ -69,27 +83,4 @@ function createChart(canvasId, vector, color = 'rgb(20, 20, 20)') {
       responsive: false,
     }
   });
-}
-
-// Function to sum the arrays element-wise
-function colSums(matrix) {
-  // Check if the matrix is not empty
-  if (matrix.length === 0 || matrix[0].length === 0) {
-    throw new Error('Empty matrix');
-  }
-
-  // Get the length of the arrays (N)
-  const arrayLength = matrix[0].length;
-
-  // Initialize the result array with zeros
-  const result = Array(arrayLength).fill(0);
-
-  // Sum the arrays element-wise
-  for (let i = 0; i < matrix.length; i++) {
-    for (let j = 0; j < arrayLength; j++) {
-      result[j] += matrix[i][j];
-    }
-  }
-
-  return result;
 }

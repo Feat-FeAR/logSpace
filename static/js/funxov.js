@@ -97,3 +97,26 @@ function sample(choices, probabilities) {
   // This should not happen, but just in case
   return choices[choices.length - 1];
 }
+
+// Function to get the row-wise sum of the elements of a matrix
+function colSums(matrix) {
+  // Check if the matrix is not empty
+  if (matrix.length === 0 || matrix[0].length === 0) {
+    throw new Error('Empty matrix');
+  }
+
+  // Get the length of the arrays (N)
+  const arrayLength = matrix[0].length;
+
+  // Initialize the result array with zeros
+  const result = Array(arrayLength).fill(0);
+  
+  // Sum the arrays element-wise
+  for (let i = 0; i < matrix.length; i++) {
+    for (let j = 0; j < arrayLength; j++) {
+      result[j] += matrix[i][j];
+    }
+  }
+
+  return result;
+}
