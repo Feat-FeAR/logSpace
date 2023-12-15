@@ -3,7 +3,7 @@
 <!-- Include the Chart.js library from a Content Delivery Network (CDN) -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<!-- Import the script (variables and functions) and dependencies-->
+<!-- Import the script (variables and functions) and dependencies -->
 <script defer
 		language="javascript"
 		type="text/javascript"
@@ -17,7 +17,7 @@
 
 <!-- White box to contain the plot with inline style values -->
 <div style="width: 737px;
-			height: 280px;
+			height: 230px;
 			text-align: left;
 			background-color: white;
 			padding: 20px;
@@ -26,12 +26,11 @@
 
 	<canvas id="arrayPlot"
 			width="650"
-			height="200"
+			height="150"
 			style="margin: auto;">
 	</canvas>
 
-	<button id="generateButton"
-			style="margin-top: 15px;"
+	<button style="margin-top: 15px;"
 			onclick="generateAndPlot('arrayPlot')">
 		Generate Single Channel Current
 	</button>

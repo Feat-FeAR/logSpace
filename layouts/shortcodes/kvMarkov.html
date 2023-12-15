@@ -3,7 +3,7 @@
 <!-- Include the Chart.js library from a Content Delivery Network (CDN) -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<!-- Import the script (variables and functions) and dependencies-->
+<!-- Import the script (variables and functions) and dependencies -->
 <script defer
 		language="javascript"
 		type="text/javascript"
@@ -12,7 +12,7 @@
 <script defer
 		language="javascript"
 		type="text/javascript"
-		src='{{ "js/KVOC_markov_chain.js" | urlize | relURL }}'>
+		src='{{ "js/KV_markov_chain.js" | urlize | relURL }}'>
 </script>
 
 <!-- White box to contain the plot with inline style values -->
@@ -52,8 +52,7 @@
 			style="margin: auto;">
 	</canvas>
 
-	<button id="generateButton"
-			style="margin-top: 15px;"
+	<button style="margin-top: 15px;"
 			onclick="multiPlot('micro1', 'micro2', 'micro3', 'macro')">
 		Generate Currents
 	</button>

@@ -1,9 +1,9 @@
-// funxov is a short for 'functions for Markov'
-// i.e., a JS Module of general utility functions for Markov chains
+// funxov is a short for 'functions for Markov',
+// i.e., a JS Module of general-utility functions to build Markov chains.
 
-// Function to generate a new N-long Markov Chain, with only two possible states
+// Function to generate N-long Markov Chains, with only two possible states.
 function makeChain2S(states, TM, N, starting = states[0], noise = false) {
-  // Initialize
+  // Initialize the chain
   let now = starting; // The kickoff
   let chain = [now];  // The chain
   
@@ -24,24 +24,22 @@ function makeChain2S(states, TM, N, starting = states[0], noise = false) {
   	//chain = chain.map(x => x + 0.2*Math.random() - 0.1)     // Uniform
   	chain = chain.map(x => x + normRandom(0, 0.05))           // Gaussian
   }
-
   // Return the array chain
   return chain;
 }
 
-// Function to generate a new N-long Markov Chain, with only two possible states
-// and a transition matrix that changes from TM1 to TM2 at the n_change cycle,
-// to represent ion channel activation (gating stimulus)
+// Function to generate N-long Markov Chains, with only two possible states and
+// a transition matrix that changes from TM1 to TM2 at the 'n_change' cycle, to
+// represent ion channel activation (i.e., gating stimulus).
 function makeChain2S2T(states, TM1, TM2, N, n_change = N/2,
-                            starting = states[0], noise = false) {
+                       starting = states[0], noise = false) {
   // Initialize
   let now = starting; // The kickoff
   let chain = [now];  // The chain
   
   // Chain builder loop
   for (let i = 1; i < N; i++) {
-    // Conditional ternary operator
-    const TM = i < n_change ? TM1 : TM2;
+    const TM = i < n_change ? TM1 : TM2; // Conditional ternary operator
     // Update the 'now' state
     if (now === states[0]) {
       now = sample(states, TM[0]);
@@ -57,15 +55,14 @@ function makeChain2S2T(states, TM1, TM2, N, n_change = N/2,
     //chain = chain.map(x => x + 0.2*Math.random() - 0.1)     // Uniform
     chain = chain.map(x => x + normRandom(0, 0.05))           // Gaussian
   }
-
   // Return the array chain
   return chain;
 }
 
 // Function to generate a normally distributed random number with the specified
 // mean and standard deviation. The Box-Muller transform generates two
-// independent, standard normally distributed random numbers that can be
-// then adjusted to have the desired mean and standard deviation.
+// independent, standard normally distributed random numbers that can be then
+// adjusted to have the desired mean and standard deviation.
 function normRandom(mean, sd) {
   let u1 = Math.random();
   let u2 = Math.random();
@@ -79,7 +76,7 @@ function normRandom(mean, sd) {
   return result;
 }
 
-// Function to randomly choose an element based on probabilities
+// Function to randomly choose an element based on probabilities.
 function sample(choices, probabilities) {
   const rand = Math.random();
   let cumulativeProbability = 0;
@@ -90,12 +87,11 @@ function sample(choices, probabilities) {
       return choices[i];
     }
   }
-
-  // This should not happen, but just in case
+  // This should not happen, but just in case...
   return choices[choices.length - 1];
 }
 
-// Function to get the sum of the values in each column of a matrix
+// Function to get the sum of the values in each column of a matrix.
 function colSums(matrix) {
   // Get the length of the arrays
   const arrayLength = matrix[0].length;
@@ -108,7 +104,6 @@ function colSums(matrix) {
       result[j] += matrix[i][j];
     }
   }
-
   return result;
 }
 
@@ -120,7 +115,7 @@ function createChart(canvasId, vector, ylab, color = 'rgb(20, 20, 20)') {
   // Update an existing chart
   // Test if the related <canvas> is still empty or not
   // Another approach would have been to test the 'display: block;' value of
-  // of the <canvas>'s 'style' attribute, since in the present code it is
+  // of the <canvas>'s 'style' attribute, since--in the present code--it is
   // initially uset, but it will be set by 'Chart' constructor upon button click
   // const exists = window[canvasId].attributes.style.value.includes('display')
   const existingChart = Chart.getChart(canvasId);
