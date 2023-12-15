@@ -91,6 +91,20 @@ function sample(choices, probabilities) {
   return choices[choices.length - 1];
 }
 
+// Function to compute the steady-state probability distribution of states for
+// a 2-by-2 transition matrix. 
+function steady2(TM) {
+  // Check if the matrix is 2-by-2
+  if (TM.length != 2 || TM[0].length != 2 || TM[1].length != 2) {
+    throw new Error('Not a 2-by-2 Transition Matrix.');
+  }
+  // Secondary diagonal elements
+  const AtoB = TM[0][1];
+  const BtoA = TM[1][0];
+  // Return the steady state
+  return [BtoA/(AtoB+BtoA), AtoB/(AtoB+BtoA)];
+}
+
 // Function to get the sum of the values in each column of a matrix.
 function colSums(matrix) {
   // Get the length of the arrays

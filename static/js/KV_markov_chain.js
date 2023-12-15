@@ -30,7 +30,8 @@ const t0 = 300; // Voltage step start.
 function multiPlot(micro_id1, micro_id2, micro_id3, macro_id) {
   let dataset = [];
   for (let j = 0; j < M; j++) {
-    const iTrace = makeChain2S2T(kv_states, hyper_TM, depol_TM, N, t0, 0, true);
+    const i0 = sample(kv_states, steady2(hyper_TM));
+    const iTrace = makeChain2S2T(kv_states, hyper_TM, depol_TM, N, t0, i0, true);
     dataset.push(iTrace);
   }
   createChart(micro_id1, dataset[0], 'Channel 1');
