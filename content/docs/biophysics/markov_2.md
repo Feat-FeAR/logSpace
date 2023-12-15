@@ -13,7 +13,9 @@ substituting the Torino state with the _open_ configuration of an ion channel
 and the Juventus state with the _closed_ one (or the other way around, if you
 prefer).
 
-
+<div style="text-align: center;">
+{{< figure src="/images/2_states_open-closed.png" title="2-state Ion Channel Markov Chain" width=600 >}}
+</div>
 
 Markov chains are a suitable tool to model single ion channel behavior because
 ion channels are macromolecules that, in the simplest case, admit at least two
