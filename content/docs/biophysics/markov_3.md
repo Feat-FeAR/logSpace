@@ -8,5 +8,6 @@ draft = false
 
 ## System design
 
-
+```r {{% include "/static/codes/KV_markov_chain.R" %}} ```
 {{< kvMarkov >}}
+
