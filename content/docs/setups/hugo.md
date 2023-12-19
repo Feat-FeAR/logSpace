@@ -279,6 +279,12 @@ Whichever way you chose to insert JS code into the Hugo web page, remember that,
 to see the effects of a change to the script, you may need to use the key
 combination `Ctrl+F5` to force page refresh ignoring the cache.
 {{< /hint >}}
+{{< hint info >}}
+__Shortcode CSS__  
+Using the same procedure described in the _Local Import_ subsection, you can
+also include portions of HTML code containing only `<style>` tags via shortcode,
+in order to apply alternative CSS locally (i.e., on individual web pages).
+{{< /hint >}}
 
 ---
 ---
