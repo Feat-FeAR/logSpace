@@ -1,0 +1,22 @@
+{
+    "member": [
+        "---",
+        "Giorgia Chinigò",
+        "Alesandra Fiorio Pla",
+        "Tullio Genova",
+        "Federico Alessandro Ruffinatti",
+        "Chiara Vaghi",
+        "Francesca Bianco",
+        "Luca Visentin"
+    ],
+    "experiment_type": [
+        "---",
+        "Calcium Imaging",
+        "Patch Clamp",
+        "Wound Healing",
+        "Random Migration",
+        "Micro TAC",
+        "Western Blot",
+        "RT-qPCR"
+    ]
+}
