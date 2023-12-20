@@ -11,3 +11,4 @@ Pay fucking attention to this
 {{< MDM_CSS >}}
 {{< DateOperator >}}
 {{< Notes >}}
+{{< getValues >}}

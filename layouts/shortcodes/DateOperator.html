@@ -2,46 +2,52 @@
 
 <!-- Access the JSON ('./data/TCPL.json') -->
 <script>
-	const tcpLab = {{ $.Site.Data.TCPL }};
+    const tcpLab = {{ $.Site.Data.TCPL }};
 </script>
 <!-- Import the JS script -->
 <script defer
-		language="javascript"
-		type="text/javascript"
-		src='{{ "js/MDM_date_operator.js" | urlize | relURL }}'>
+        language="javascript"
+        type="text/javascript"
+        src='{{ "js/MDM_date_operator.js" | urlize | relURL }}'>
 </script>
 
 <!-- Date field as a calendar selector -->
 <h2>Date</h2>
 <div class="stdMetaField">
-	<label class="metalabel"
-		   for="today_date">
-		Date:
-	</label>
-	<input type="date" id="today_date" value="">
+    <label class="metalabel"
+           for="today_date">
+        Date:
+    </label>
+    <input type="date"
+           id="today_date"
+           value=""
+           class="metaValue"
+           data-meta-info="Date">
 </div>
 
 <!-- Operator field as a drop-down menu with [+] and [-] buttons -->
 <h2>Operator(s)</h2>
 <button class="stdMetaField smallButton"
-		onclick="addOp()">
-	[ + ]
+        onclick="addOp()">
+    [ + ]
 </button>
 <button class="smallButton"
-		onclick="removeOp()">
-	[ -- ]
+        onclick="removeOp()">
+    [ -- ]
 </button>
 <!-- Nested <div> to accommodate multiple drop-down menus -->
 <div id="opFields"
-	 class="stdMetaField">
-	<div> <!-- For a single Drop-down menu -->
-		<label class="metalabel"
-			   for="dropdown_operator1">
-			Op. 1:
-		</label>
-		<select id="dropdown_operator1">
-			<!-- Automatically generate drop-down menu options by JS -->
-			<!-- see generateFieldOptions() JavaScript function-->
-		</select>
-	</div>
+     class="stdMetaField">
+    <div> <!-- For a single Drop-down menu -->
+        <label class="metalabel"
+               for="dropdown_operator1">
+            Op. 1:
+        </label>
+        <select id="dropdown_operator1"
+                class="metaValue"
+                data-meta-info="Operator 1">
+            <!-- Automatically generate drop-down menu options by JS -->
+            <!-- see generateFieldOptions() JavaScript function-->
+        </select>
+    </div>
 </div>
