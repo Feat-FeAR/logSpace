@@ -24,8 +24,7 @@ function addOp() {
     const new_field = document.createElement("div");
     new_field.innerHTML = `
         <label class="metalabel"
-               for="dropdown_operator${opCounter}">
-            Op. ${opCounter}:
+               for="dropdown_operator${opCounter}">Op. ${opCounter}:
         </label>
         <select id="dropdown_operator${opCounter}"></select>
     `;
