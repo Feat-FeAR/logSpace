@@ -31,8 +31,15 @@ function getAllMetaValues() {
         const element = elements[i];
 
         // Get the value and data-meta-info attribute
-        const value = element.value;
         let metaData = element.dataset.metaInfo;
+        let value;
+        if (element.value === 'GUEST') {    
+            // Extract the trailing digits from a string by a regular expression 
+            const opNum = element.id.match(/\d+$/)[0];
+            value = document.getElementById(`guest_operator${opNum}`).value;
+        } else {
+            value = element.value;
+        }
 
         // Check if the key was set
         if (metaData === undefined) {

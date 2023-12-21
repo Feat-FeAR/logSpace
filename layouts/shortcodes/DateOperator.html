@@ -14,7 +14,7 @@
 <!-- Date field as a calendar selector -->
 <h2>Date</h2>
 <div class="stdMetaField">
-    <label class="metalabel"
+    <label class="metaLabel"
            for="today_date">
         Date:
     </label>
@@ -25,7 +25,8 @@
            data-meta-info="Date">
 </div>
 
-<!-- Operator field as a drop-down menu with [+] and [-] buttons -->
+<!-- Operator field as a drop-down menu, with [+] and [-] buttons to add and
+    remove operators, and the 'Guest' option for custom operator values -->
 <h2>Operator(s)</h2>
 <button class="stdMetaField smallButton"
         onclick="addOp()">
@@ -39,15 +40,21 @@
 <div id="opFields"
      class="stdMetaField">
     <div> <!-- For a single Drop-down menu -->
-        <label class="metalabel"
+        <label class="metaLabel"
                for="dropdown_operator1">
             Op. 1:
         </label>
         <select id="dropdown_operator1"
+                onchange="toggleCustomInput(this)"
                 class="metaValue"
                 data-meta-info="Operator 1">
             <!-- Automatically generate drop-down menu options by JS -->
             <!-- see generateFieldOptions() JavaScript function-->
         </select>
+         <!-- Input field for a custom name -->
+        <input type="text"
+               id="guest_operator1"
+               placeholder="Name Surname"
+               style="display: none;">
     </div>
 </div>
