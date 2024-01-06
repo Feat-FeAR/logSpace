@@ -258,7 +258,12 @@ sampled to regularly spaced discrete points in time (\\(t=n\ \delta t\\)) or whe
 the process is inherently discrete, consisting in as a sequence of cycles or
 steps (as in the soccer case).
 
-For a system with \\(m\\) states, we can introduce the _transition matrix_ as
+A discrete-time (first-order) Markov random process---better known as a
+___Markov chain___---is a memoryless random process such that
+
+
+
+For a system with a finite number of states (let's say \\(m\\)), we can introduce the _transition matrix_ as
 \\(\bm{P}=\left\(p_{ab}\right\)\_{m\times m}\\) meaning the square
 \\(m\times m\\) matrix whose generic element is the transition probability from
 \\(a\\) to \\(b\\) (i.e., the probability of having a state _b_, conditional on
