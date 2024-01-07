@@ -218,58 +218,63 @@ the system  we are interested in.
 
 ## Simulate the process
 If we assume that the Markovian hypothesis is---at least approximately---met, we
-might think of using the empirical transition matrix drawn from the real
-sequence to simulate any long Markovian chain of states (provided we have a
-random number generator). The following __R__ code is a general example of a
-"Markovian engine" for a 2-state process, such as our soccer game between
-Juventus and Torino.
+might think of using the empirical transition matrix drawn from the observed
+sequence to simulate any long Markov chain of states (provided we have a random
+number generator). The following __R__ code is a general example of "Markovian
+engine" for a 2-state process, such as our soccer game between Juventus and
+Torino.
 ```r {{% include "/static/codes/soccer_markov_chain.R" %}} ```
 {{< soccerMarkov >}}
 
-What we obtained here is one particular _realization_ of the Markovian random
-process defined by \\(bm{P}\\), among the infinite possible ones. By running the
-simulation again, it is extremely unlikely to get the same sequence of states
-(by "very unlikely" I mean that if it happens---obviously without using
-fixed-seeded pseudo-random numbers, man---I will gift you my credit card right
-away). What we would get instead would be a new realization, absolutely
-different from the previous one, but still similar to it, in that it would be
-based on the same transition probabilities between states (having been generated
-from the same transition matrix).
+What we obtained here is a particular _realization_ of the Markov random process
+defined by \\(\bm{P}\\), being just one among the infinite possible chains. By
+running the simulation again, it is extremely unlikely to get the same sequence
+of states (without using fixed-seeded pseudo-random numbers). And by "very
+unlikely" I mean much more unlikely than Torino winning the league. What we
+would get instead would be a new realization, absolutely different from the
+previous one, but still similar to it, in that it would be based on the same
+transition probabilities between states (having been generated from the same
+transition matrix).
 
 More in detail, we simulated here a chain that is 9 times as long as the
 original one, thus representing _a possible_ full game without stoppage or extra
 time, that is to say 90 endless minutes of boring idle playing. By moving the
 above slider to the right you can experience the same excitement of an entire
 game condensed into a few seconds... or, at least, it works for me in the sense
-that the emotion is really the same.
+that my emotion is really the same in both the situations.
 
 ## A bit of formalism
 A __random process__ is generally defined as a random function of time
-\\(X\\!\left(t\right)\\), that is to say a time sequence of random variables even though independent variables of different nature
+\\(X\\!\left(t\right)\\), that is to say a time sequence of random variables
+even though independent variables of different nature
 (e.g., position) are still possible. Consistent with a standard notation, the
-function \\(x\\!\left(t\right)\\) is a member of an _ensemble_ (family, set, collection) of functions, which is denoted with an upper case letter. Thus,
+function \\(x\\!\left(t\right)\\) is a member of an _ensemble_ (family, set,
+collection) of functions, which is denoted with an upper case letter. Thus,
 \\(X\\!\left(t\right)\\) represents the random process, while
-\\(x\\!\left(t\right)\\) is one particular member or _realization_ of the random
-process. For discrete time signals we use the notation \\(X\\!\left[n\right]\\)
-to represent the discrete sequence of random variables and
-\\(x\\!\left[n\right]\\) to represent the discrete sequence of numbers of a
-particular realization. This occurs when either a continuous time variable is
-sampled to regularly spaced discrete points in time (\\(t=n\ \delta t\\)) or when
-the process is inherently discrete, consisting in as a sequence of cycles or
-steps (as in the soccer case).
+\\(x\\!\left(t\right)\\) is one particular member or _realization_ of it. For
+discrete time series we use the notation \\(X\\!\left[n\right]\\)
+(or \\(X_{n}\\)) to represent the discrete sequence of random variables and
+\\(x\\!\left[n\right]\\) (or \\(x_{n}\\)) to represent the discrete sequence of
+numbers of a particular realization. This occurs when either a continuous time
+variable is sampled to regularly spaced discrete points in time
+(\\(t=n\ \delta t\\)) or when the process is inherently discrete, consisting in
+as a sequence of cycles or steps (as in the soccer case).
 
 A discrete-time (first-order) Markov random process---better known as a
 ___Markov chain___---is a memoryless random process such that
-
-
-
-For a system with a finite number of states (let's say \\(m\\)), we can introduce the _transition matrix_ as
-\\(\bm{P}=\left\(p_{ab}\right\)\_{m\times m}\\) meaning the square
-\\(m\times m\\) matrix whose generic element is the transition probability from
-\\(a\\) to \\(b\\) (i.e., the probability of having a state _b_, conditional on
-coming from state _a_).
 {{< katex display >}}
-    \bm{P} =
+\begin{aligned}
+       & \textrm{Pr}\left(X_{n+1}=x\ |\ X_{n}=x_{n},\ X_{n-1}=x_{n-1},\ \ldots,\ X_{0}=x_{0}\right)\\
+    =\ & \textrm{Pr}\left(X_{n+1}=x\ |\ X_{n}=x_{n}\right)
+\end{aligned}
+{{< /katex >}}
+
+Depending on the state space (i.e., the set of possible values that the random
+process can take) Markov chains can be either continuous- or discrete-valued. In
+this latter case, for a system with a finite number of states (let's say
+\\(m\\)), it is convenient to define the _transition matrix_
+{{< katex display >}}
+    \bm{P} = \left(p_{ab}\right)_{m\times m} =
     \begin{pmatrix}
         p_{11} & p_{12} & \ldots & p_{1m}\\
         p_{21} & p_{22} & \ldots & p_{2m}\\
@@ -277,22 +282,26 @@ coming from state _a_).
         p_{m1} & p_{m2} & \ldots & p_{mm}
     \end{pmatrix}
 {{< /katex >}}
+which is a square \\(m\\)-by-\\(m\\) matrix whose generic element is the
+transition probability from \\(a\\) to \\(b\\) (i.e., the probability of having
+a state \\(b\\), conditional on coming from a state \\(a\\)).
 $$
-p_{ab}=\textrm{Pr}\left(X\\!\left[k+1\right]=b\ |\ X\\!\left[k\right]=a\right)
+p_{ab}=\textrm{Pr}\left(X\\!\left[n+1\right]=b\ |\ X\\!\left[n\right]=a\right)
 $$
+Also, by definition, \\(\bm{P}\\) is a _stochastic matrix_, meaning that all of
+its elements are between 0 and 1 and each row must sum to 1.
+{{< katex display >}}
+\begin{cases}
+    p_{ab}\in[0,1]\\
+    \sum_b p_{ab}=1\ \forall a
+\end{cases}
+{{< /katex >}}
 
-Also, by definition, \\(\bm{P}\\) is a _stochastic matrix_,
-meaning that all of its elements are between 0 and 1 (\\(p_{ab}\in[0,1]\\)) and
-each row must sum to 1 (\\(\sum_b p_{ab}=1\ \forall a\\)).
-
-
-(although some might object by
-arguing that these are just two different playing tactics and here we measure
-_passes_ and not the real _ball possession time_).
-
-As a stochastic system, the state that a Markovian system will assume after a
-given number of cycles is not predictable. Nevertheless, its evolution over time
-can be approached statistically, since even if the path is random, not all
-branches are equally likely.
-
-the xxx function is intended to measure...
+Markov chains are frequently assumed to be _time-homogeneous_ (aka _stationary
+Markov chains_), meaning that
+$$
+\textrm{Pr}\left(X_{n+1}=x\ |\ X_{n}=y\right) = \textrm{Pr}\left(X_{n}=x\ |\ X_{n-1}=y\right)
+$$
+for all \\(n\\). In this case, transition probabilities are independent of
+\\(n\\). However, in general, the transition matrix can change in time
+(\\(\bm{P}\\!\left[n\right]\\)).

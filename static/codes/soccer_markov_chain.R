@@ -10,7 +10,7 @@ states <- c("t", "j")
 # Transition matrix (transition probabilities per pass)
 TM <- matrix(c(0.5811, 0.4189,
                0.3333, 0.6667), nrow = 2, byrow = TRUE)
-colnames(TM) <- rownames(TM) <- states # Just cosmetics, if you wanna print TM
+colnames(TM) <- rownames(TM) <- states # Just aesthetic, if you wanna print TM
 
 # Initialize the chain
 now <- states[2]  # The kickoff
