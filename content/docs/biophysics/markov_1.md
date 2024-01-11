@@ -5,23 +5,22 @@ draft = false
 +++
 
 # Soccer Markov Chain
-Markov chains are out there. They are everywhere around us, so much so that you
-can get one even before knowing what they actually are. Let me show you.
+Markov chains are out there. They are everywhere around you, so much so that you
+can build one even before knowing what they actually are. Let me show you.
 
 ## Draw the raw chain
 Go to __YouTube__ and pick up a video of any soccer game. Ideally, you want to
-choose a _complete_ game to get a sequence that is long enough and well
-representative of the average game dynamics, rather than being limited to a few
-short and outstanding actions.
+choose a _complete_ game to get a sequence long enough and well representative
+of the average game dynamics, rather than just a few short, exceptional actions.
 
 For the occasion, I chose the so-called
 [_Derby della Mole_ number 142](https://www.youtube.com/watch?v=5kKGW5EOJNg&t=995s),
 i.e., the _Serie A_ match between Juventus and Torino held on March 20, 2016,
 which ended 4-1 in favor of Juventus (which is no surprise to anyone, not even
 to me, who doesn't follow soccer). Referee Rizzoli whistles the start of the
-game at video time 6:45, with kickoff set for Juventus (it is legitimate to
-question the content of the earlier minutes in the clip). As I watch the game, I
-note down ball possession, simply by writing either _j_ or _t_ at each
+game at video time 6:45, with kickoff set for Juventus (one has to wonder about
+the meaning of the preceding minutes of the clip...). As I watch the game, I
+note down _ball possession_, simply by writing either _j_ or _t_ at each
 interception or ball pass, depending on whether the ball comes to a Juve or Toro
 player, respectively.
 
@@ -29,13 +28,13 @@ Here is the sequence resulting from the first 10 minutes of game play:
 ```
 jjtjjtjjttttjtttjjjjttttjjjjjjjjtttjttjjtjjjjjjjtjjtjjjjjjtttjtttjjjjjjtjtjjtjjtttttttjttjjtjtjtjtjjjtttjtjtjjttttjtttttttjjjjjjjjjjtttttjtttjttjjjjjjjjjtjjttttjjjjjjjj
 ```
-Well, you can think of this ugly thing (pretty much what I see whenever someone
-makes me watch a soccer game) as our first random chain! The chain is made up of
-several ___time steps___, with each step taking only one of the two possible
-values in our system---either _j_ or _t_---also referred to as the possible
-___states___ allowed by the process. Finally, the pass from one state to another
-is called a ___transition___. Specifically, when dealing with just two states,
-only four different transitions are possible, in this case being
+Well, you can think of this ugly sequence of letters (pretty much what I see
+whenever someone makes me watch a soccer game) as a _chain of events_. The chain
+is made up of several ___time steps___, with each step taking only one of the
+two possible values in our system---either _j_ or _t_---also referred to as the
+possible ___states___ allowed by the process. Finally, the pass from one state
+to another is called a ___transition___. Specifically, when dealing with just
+two states, only four different transitions are possible, in this case being
 - \\(t\rightarrow t\quad\\) passes completed by Torino
 - \\(t\rightarrow j\quad\\) Torino passes intercepted by Juventus
 - \\(j\rightarrow j\quad\\) passes completed by Juventus
@@ -43,15 +42,15 @@ only four different transitions are possible, in this case being
 
 What we are looking at is definitely __not a deterministic system__. On the
 contrary, the whole game is a __stochastic process__, both in terms of its final
-result (which justifies the existence of the soccer betting ecosystem), but also
+result (which justifies the existence of a soccer betting ecosystem), but also
 in its more marginal aspects, such as the one represented by our putative Markov
 chain, namely ball possession. You cannot predict which of the two teams will
 control the ball on, e.g., the 250th pass---and even knowing who kicked off does
 not add any information. Nevertheless, in most cases, the sequence of passes is
-not _completely random_, but state transitions are governed by specific
-__probability distributions__ that will make some pass sequences (_actions_)
-more likely than others, ultimately favoring one of the two teams. Now we will
-try to get an estimate of such probabilities.
+not _completely random_ (in the sense of equiprobability), but state transitions
+are governed by specific __probability distributions__ that will make some pass
+sequences (_actions_) more likely than others, ultimately favoring one of the
+two teams. Now we will try to get an estimate of such probabilities.
 
 ## Compute some basic stats
 Out of the {{< katex >}}N=167{{< /katex >}} total steps in the chain, \\(74\\)
@@ -150,7 +149,7 @@ opposing team.
 Nevertheless, if all we have are the first 10 minutes of the game, the empirical
 frequencies shown in the previous table are also our best estimates of the four
 theoretical probabilities. These numbers are usually assembled into one single
-algebraic structure, called the _transition matrix_, that features the
+algebraic structure, called the _transition matrix_, which features the
 probabilities for all the possible ordered pairs of starting and arrival states,
 indexed by rows and columns, respectively.
 
@@ -159,8 +158,8 @@ indexed by rows and columns, respectively.
 |__From \\(t\\)...__|\\(p_{tt}\\) |\\(p_{tj}\\) |
 |__From \\(j\\)...__|\\(p_{jt}\\) |\\(p_{jj}\\) |
 
-Using the standard notation for matrix algebra, the transition matrix
-\\(\bm{P}\\) associated with our state sequence should be
+In matrix algebra notation, the transition matrix \\(\bm{P}\\) associated with
+our state sequence should be
 {{< katex display >}}
     \bm{P} =
     \begin{pmatrix}
@@ -178,13 +177,15 @@ Also note how, by the way the transition matrix is built, __each row of
 of the next step state, from a given starting state. For instance, in our case
 the first line of \\(\bm{P}\\) tells us with what probability a Toro pass will
 either succeed or be intercepted---and yet we already know that one of the two
-things has to happen, which is why the sum of the row's probabilities must be 1.
+things has to happen, which is why the sum of the row's probabilities must be
+always 1.
 
 ## The Markovian hypothesis
-Now it comes the most important and distinctive feature that a Markov chain must
-possess to call itself such, namely, the fact of being a ___memoryless___ random
-process. Many standard ways of describing this so-called _Markovian property_
-can be found in the literature, all of them equivalent. Here are a few:
+Now it comes the most important and distinctive feature that any Markov chain
+must possess to call itself such, namely, the fact of being a ___memoryless___
+random process. Many standard ways of describing this so-called _Markovian
+property_ can be found in the literature, all of them equivalent. Here are a
+few:
 - at each time step, the probabilities that govern the transition to the next
     state depend only on the current state of the system and not on previous
     ones;
@@ -193,13 +194,14 @@ can be found in the literature, all of them equivalent. Here are a few:
 - the future of the random process depends only on where it is now and not on
     how it got there;
 - the dependence of the random process on the past is only through the previous
-    state;
-- the transition matrix fully describes the random process.
+    state.
 
 In any case, since knowledge of the current state is the only requirement for
-the transition to the next one, any Markov chain can be represented by a
-___state diagram___ like the one below, where states are represented as nodes
-and transitions are arrows.
+the transition to the next one, the probabilities contained in \\(\bm{P}\\) are
+all we need to properly describe the evolution of the system over time. For the
+same reason, any Markov chain can be represented by a ___state diagram___ like
+the one below, where states are represented as nodes and transition
+probabilities are edges.
 <div style="text-align: center;">
 {{< figure src="/images/2_states_toro-juve.png" title="Juve-Toro Markov Chain" width=600 >}}
 </div>
@@ -212,9 +214,9 @@ stolen it from an opponent---that is reasonable---the Markovian hypothesis would
 fail, or rather we would have to resort to a _higher-order_ model. The point is
 that any model is by definition a simplification of reality, usually intended to
 draw out some fundamental aspects of the phenomenon, at the expense of other
-aspects that may be considered secondary. The correct question should therefore
+aspects that may be considered secondary. Therefore, the correct question should
 be how relevant second-order (or higher-order) effects are to the description of
-the system  we are interested in.
+the system we are interested in.
 
 ## Simulate the process
 If we assume that the Markovian hypothesis is---at least approximately---met, we
@@ -229,10 +231,10 @@ Torino.
 What we obtained here is a particular _realization_ of the Markov random process
 defined by \\(\bm{P}\\), being just one among the infinite possible chains. By
 running the simulation again, it is extremely unlikely to get the same sequence
-of states (without using fixed-seeded pseudo-random numbers). And by "very
-unlikely" I mean much more unlikely than Torino winning the league. What we
-would get instead would be a new realization, absolutely different from the
-previous one, but still similar to it, in that it would be based on the same
+of states (without using fixed-seeded pseudo-random numbers). And by "extremely
+unlikely" I mean much more unlikely than Torino winning the league. Instead, a
+new realization would be obtained, absolutely different from the previous one,
+but still similar to it in its overall structure, since it is based on the same
 transition probabilities between states (having been generated from the same
 transition matrix).
 
@@ -241,24 +243,24 @@ original one, thus representing _a possible_ full game without stoppage or extra
 time, that is to say 90 endless minutes of boring idle playing. By moving the
 above slider to the right you can experience the same excitement of an entire
 game condensed into a few seconds... or, at least, it works for me in the sense
-that my emotion is really the same in both the situations.
+that my emotion is really the same in both the situations...
 
 ## A bit of formalism
 A __random process__ is generally defined as a random function of time
-\\(X\\!\left(t\right)\\), that is to say a time sequence of random variables
-even though independent variables of different nature
+\\(X\\!\left(t\right)\\), that is to say a time sequence of random
+variables---even though independent variables of different nature
 (e.g., position) are still possible. Consistent with a standard notation, the
 function \\(x\\!\left(t\right)\\) is a member of an _ensemble_ (family, set,
 collection) of functions, which is denoted with an upper case letter. Thus,
 \\(X\\!\left(t\right)\\) represents the random process, while
 \\(x\\!\left(t\right)\\) is one particular member or _realization_ of it. For
-discrete time series we use the notation \\(X\\!\left[n\right]\\)
-(or \\(X_{n}\\)) to represent the discrete sequence of random variables and
+discrete-time series we use the notation \\(X\\!\left[n\right]\\) (or
+\\(X_{n}\\)) to represent the discrete sequence of random variables and
 \\(x\\!\left[n\right]\\) (or \\(x_{n}\\)) to represent the discrete sequence of
-numbers of a particular realization. This occurs when either a continuous time
+states of a particular realization. This occurs when either a continuous time
 variable is sampled to regularly spaced discrete points in time
 (\\(t=n\ \delta t\\)) or when the process is inherently discrete, consisting in
-as a sequence of cycles or steps (as in the soccer case).
+a sequence of cycles or steps (as in the soccer case).
 
 A discrete-time (first-order) Markov random process---better known as a
 ___Markov chain___---is a memoryless random process such that
@@ -269,10 +271,10 @@ ___Markov chain___---is a memoryless random process such that
 \end{aligned}
 {{< /katex >}}
 
-Depending on the state space (i.e., the set of possible values that the random
-process can take) Markov chains can be either continuous- or discrete-valued. In
-this latter case, for a system with a finite number of states (let's say
-\\(m\\)), it is convenient to define the _transition matrix_
+Depending on the state space (i.e., the set of possible values that each random
+variable in the process can take) Markov chains can be either continuous- or
+discrete-valued. In this latter case, for a system with a finite number of
+states (let's say \\(m\\)), it is convenient to define the _transition matrix_
 {{< katex display >}}
     \bm{P} = \left(p_{ab}\right)_{m\times m} =
     \begin{pmatrix}
