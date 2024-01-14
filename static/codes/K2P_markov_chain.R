@@ -10,7 +10,7 @@ states <- c("closed", "open")
 # Transition matrix (transition probabilities per unit of time or 'time step')
 TM <- matrix(c(0.98, 0.02,
                0.01, 0.99), nrow = 2, byrow = TRUE)
-colnames(TM) <- rownames(TM) <- states # Just cosmetics, if you wanna print TM
+colnames(TM) <- rownames(TM) <- states # Just aesthetic, if you wanna print TM
 
 # Initialize the chain
 now <- states[1]  # The kickoff
@@ -34,7 +34,7 @@ for (i in 2:N) {
 current <- vector(mode = "numeric", length = N)
 # Make current flow (!=0) when the channel is open
 current[chain == "open"] <- 1 # Outward potassium current
-# Add 'cosmetic' 5% electrical noise
+# Add a 5% "electrical" noise
 current <- current + rnorm(N, mean = 0, sd = 0.05)
 # Plot as time series
 plot(as.ts(current), xlab = "time step", ylab  = "normalized current")

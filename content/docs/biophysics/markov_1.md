@@ -253,28 +253,31 @@ variables---even though independent variables of different nature
 function \\(x\\!\left(t\right)\\) is a member of an _ensemble_ (family, set,
 collection) of functions, which is denoted with an upper case letter. Thus,
 \\(X\\!\left(t\right)\\) represents the random process, while
-\\(x\\!\left(t\right)\\) is one particular member or _realization_ of it. For
+\\(x\\!\left(t\right)\\) is one particular member (or _realization_) of it. For
 discrete-time series we use the notation \\(X\\!\left[n\right]\\) (or
 \\(X_{n}\\)) to represent the discrete sequence of random variables and
 \\(x\\!\left[n\right]\\) (or \\(x_{n}\\)) to represent the discrete sequence of
 states of a particular realization. This occurs when either a continuous time
 variable is sampled to regularly spaced discrete points in time
-(\\(t=n\ \delta t\\)) or when the process is inherently discrete, consisting in
-a sequence of cycles or steps (as in the soccer case).
+(\\(t=n\ \delta t\\), where \\(\delta t\\) is the sampling time) or when the
+process is inherently discrete, consisting in a sequence of cycles or steps (as
+in the soccer case).
 
 A discrete-time (first-order) Markov random process---better known as a
 ___Markov chain___---is a memoryless random process such that
 {{< katex display >}}
 \begin{aligned}
-       & \textrm{Pr}\left(X_{n+1}=x\ |\ X_{n}=x_{n},\ X_{n-1}=x_{n-1},\ \ldots,\ X_{0}=x_{0}\right)\\
-    =\ & \textrm{Pr}\left(X_{n+1}=x\ |\ X_{n}=x_{n}\right)
+        & \textrm{Pr}\left(X_{n+1}=x\ |\ X_{n}=x_{n},\ X_{n-1}=x_{n-1},\ \ldots,\ X_{0}=x_{0}\right)\\
+    =\  & \textrm{Pr}\left(X_{n+1}=x\ |\ X_{n}=x_{n}\right)\\
+        &\\
+        &\forall\ n\in\mathbb{N}\quad\text{and}\quad\forall\ x,x_{n}\in S
 \end{aligned}
 {{< /katex >}}
-
-Depending on the state space (i.e., the set of possible values that each random
-variable in the process can take) Markov chains can be either continuous- or
-discrete-valued. In this latter case, for a system with a finite number of
-states (let's say \\(m\\)), it is convenient to define the _transition matrix_
+where \\(S\\) is the __state space__, defined as the set of all the possible
+values that the random variable \\(X\\) can take during the process. Depending
+on \\(S\\), Markov chains can be either continuous- or discrete-valued. In this
+latter case, for a system with a finite number of states (let's say \\(m\\)), it
+is convenient to define the _transition matrix_
 {{< katex display >}}
     \bm{P} = \left(p_{ab}\right)_{m\times m} =
     \begin{pmatrix}
