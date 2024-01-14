@@ -309,4 +309,4 @@ $$
 $$
 for all \\(n\\). In this case, transition probabilities are independent of
 \\(n\\). However, in general, the transition matrix can change in time
-(\\(\bm{P}\\!\left[n\right]\\)).
+(\\(\bm{P}\\!\left[n\right]\\)), as we will see in the next chapters.

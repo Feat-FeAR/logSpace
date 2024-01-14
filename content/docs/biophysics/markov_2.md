@@ -187,5 +187,3 @@ first script (say we put `N <- 1.5e5`), you should get
     \end{pmatrix}
 {{< /katex >}}
 that's almost perfect.
-
-
