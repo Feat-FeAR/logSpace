@@ -1,6 +1,5 @@
 +++
 title = 'Hugo'
-date = 2023-11-17T23:54:39+01:00
 draft = false
 +++
 
@@ -133,6 +132,19 @@ new blank page already provided with a suitable front matter.
 # Add a new page to your site
 hugo new content <section_name>/<filename>.md
 ```
+The full list of the available front matter variables can be found
+[here](https://gohugo.io/content-management/front-matter/#front-matter-variables).
+Just keep in mind that, by default, Hugo sorts page collections by:
+1. Page `weight`
+1. Page `date` (descending)
+1. Page `linkTitle`, falling back to page `title`
+1. Page file path if the page is backed by a file
+
+In particular, page `weight` controls the position of a page within a collection
+that is sorted by weight. Assign weights using non-zero integers. Lighter items
+float to the top, while heavier items sink to the bottom. Unweighted or
+zero-weighted elements are placed at the end of the collection. Both the `date`
+and `weight` fields are optional.
 
 ### Markdown
 To add __Markdown__ text to existing pages:

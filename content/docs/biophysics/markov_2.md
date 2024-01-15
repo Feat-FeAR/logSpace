@@ -1,5 +1,6 @@
 +++
-title = 'Markov 2'
+title = 'K_2P Markov Chain'
+weight = 20
 date = 2023-12-07T17:20:42+01:00
 draft = false
 +++

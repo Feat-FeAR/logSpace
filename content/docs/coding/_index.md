@@ -1,6 +1,6 @@
 ---
 title: "Coding"
-weight: 1
+weight: 20
 bookCollapseSection: true
 ---
 

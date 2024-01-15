@@ -1,5 +1,6 @@
 +++
 title = 'Shallow vs deep'
+weight = 20
 date = 2023-11-17T23:20:42+01:00
 draft = true
 +++

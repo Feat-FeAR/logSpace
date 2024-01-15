@@ -1,6 +1,7 @@
 +++
 title = 'Functional'
-date = 2023-11-17T23:54:16+01:00
+weight = 10
+date = 2023-11-10T23:54:16+01:00
 draft = false
 +++
 
