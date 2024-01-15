@@ -254,12 +254,12 @@ function \\(x\\!\left(t\right)\\) is a member of an _ensemble_ (family, set,
 collection) of functions, which is denoted with an upper case letter. Thus,
 \\(X\\!\left(t\right)\\) represents the random process, while
 \\(x\\!\left(t\right)\\) is one particular member (or _realization_) of it. For
-discrete-time series we use the notation \\(X\\!\left[n\right]\\) (or
-\\(X_{n}\\)) to represent the discrete sequence of random variables and
-\\(x\\!\left[n\right]\\) (or \\(x_{n}\\)) to represent the discrete sequence of
+discrete-time series we use the notation \\(X\\!\left[k\right]\\) (or
+\\(X_{k}\\)) to represent the discrete sequence of random variables and
+\\(x\\!\left[k\right]\\) (or \\(x_{k}\\)) to represent the discrete sequence of
 states of a particular realization. This occurs when either a continuous time
 variable is sampled to regularly spaced discrete points in time
-(\\(t=n\ \delta t\\), where \\(\delta t\\) is the sampling time) or when the
+(\\(t=k\ \delta t\\), where \\(\delta t\\) is the sampling time) or when the
 process is inherently discrete, consisting in a sequence of cycles or steps (as
 in the soccer case).
 
@@ -267,10 +267,10 @@ A discrete-time (first-order) Markov random process---better known as a
 ___Markov chain___---is a memoryless random process such that
 {{< katex display >}}
 \begin{aligned}
-        & \textrm{Pr}\left(X_{n+1}=x\ |\ X_{n}=x_{n},\ X_{n-1}=x_{n-1},\ \ldots,\ X_{0}=x_{0}\right)\\
-    =\  & \textrm{Pr}\left(X_{n+1}=x\ |\ X_{n}=x_{n}\right)\\
+        & \textrm{Pr}\left(X_{k+1}=x\ |\ X_{k}=x_{k},\ X_{k-1}=x_{k-1},\ \ldots,\ X_{0}=x_{0}\right)\\
+    =\  & \textrm{Pr}\left(X_{k+1}=x\ |\ X_{k}=x_{k}\right)\\
         &\\
-        &\forall\ n\in\mathbb{N}\quad\text{and}\quad\forall\ x,x_{n}\in S
+        &\forall\ k\in\mathbb{N}\quad\text{and}\quad\forall\ x,x_{k}\in S
 \end{aligned}
 {{< /katex >}}
 where \\(S\\) is the __state space__, defined as the set of all the possible
@@ -291,7 +291,7 @@ which is a square \\(m\\)-by-\\(m\\) matrix whose generic element is the
 transition probability from \\(a\\) to \\(b\\) (i.e., the probability of having
 a state \\(b\\), conditional on coming from a state \\(a\\)).
 $$
-p_{ab}=\textrm{Pr}\left(X\\!\left[n+1\right]=b\ |\ X\\!\left[n\right]=a\right)
+p_{ab}=\textrm{Pr}\left(X\\!\left[k+1\right]=b\ |\ X\\!\left[k\right]=a\right)
 $$
 Also, by definition, \\(\bm{P}\\) is a _stochastic matrix_, meaning that all of
 its elements are between 0 and 1 and each row must sum to 1.
@@ -305,8 +305,8 @@ its elements are between 0 and 1 and each row must sum to 1.
 Markov chains are frequently assumed to be _time-homogeneous_ (aka _stationary
 Markov chains_), meaning that
 $$
-\textrm{Pr}\left(X_{n+1}=x\ |\ X_{n}=y\right) = \textrm{Pr}\left(X_{n}=x\ |\ X_{n-1}=y\right)
+\textrm{Pr}\left(X_{k+1}=x\ |\ X_{k}=y\right) = \textrm{Pr}\left(X_{k}=x\ |\ X_{k-1}=y\right)
 $$
-for all \\(n\\). In this case, transition probabilities are independent of
-\\(n\\). However, in general, the transition matrix can change in time
-(\\(\bm{P}\\!\left[n\right]\\)), as we will see in the next chapters.
+for all \\(k\\). In this case, transition probabilities are independent of
+\\(k\\). However, in general, the transition matrix can change in time
+(\\(\bm{P}\\!\left[k\right]\\)), as we will see in the next chapters.

@@ -17,24 +17,24 @@ states. For simplicity, again, we will assume that our K<sub>V</sub> channel
 admits only two states:
 {{< katex >}}S=\left\{\text{closed},\text{open}\right\}\equiv\left\{c,o\right\}{{< /katex >}}.
 In contrast to the previous case, now the transition matrix will be a function
-of time (\\(\bm{P}\\!\left[n\right]\\)) that changes its values after the time
-step \\(n_{0}=200\\) of application of the depolarizing stimulus. Given the step
+of time (\\(\bm{P}\\!\left[k\right]\\)) that changes its values after the time
+step \\(k_{0}=200\\) of application of the depolarizing stimulus. Given the step
 shape of our gating voltage, it is reasonable to imagine an instantaneous
 transition between the two possible configuration of the transition matrix.
 {{< katex display >}}
-\bm{P}\!\left[n\right]=\left\{
+\bm{P}\!\left[k\right]=\left\{
 \begin{aligned}
 	\begin{pmatrix}
 		0.99 & 0.01\\
 		0.20 & 0.80
 	\end{pmatrix}
-		&\qquad\textrm{if}\quad n < 200\\
+		&\qquad\textrm{if}\quad k < 200\\
 		&\\
 	\begin{pmatrix}
 		0.98 & 0.02\\
 		0.01 & 0.99
 	\end{pmatrix}
-		&\qquad\textrm{if}\quad n \geq 200
+		&\qquad\textrm{if}\quad k \geq 200
 \end{aligned}
 \right.
 {{< /katex >}}

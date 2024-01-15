@@ -137,11 +137,11 @@ reproducible analysis must rely in any case on some automated procedure. One
 possibility is to __compute the time derivative of the signal to quantify
 current variations__. In the case of Markov chains, which are discrete-time
 random processes (exactly like an experimental electrical signal sampled in
-time), the derivative reduces to a ratio of finite differences, where the
-denominator \\(\Delta n\\) is equal to 1, assuming that \\(n\in\mathbb{N}\\).
+time), the derivative reduces to a ratio of finite differences, whose
+denominator \\(\Delta k\\) is equal to 1, assuming that \\(k\in\mathbb{N}\\).
 Formally:
 $$
-i^{\prime}\\!\left(t\right)=\frac{d\ i\\!\left(t\right)}{dt} \longrightarrow i^{\prime}\\!\left[n\right]=\frac{\Delta\ i\\!\left[n\right]}{\Delta n}=\Delta\ i\\!\left[n\right]=i_{n+1}-i_{n}
+i^{\prime}\\!\left(t\right)=\frac{d\ i\\!\left(t\right)}{dt} \longrightarrow i^{\prime}\\!\left[k\right]=\frac{\Delta\ i\\!\left[k\right]}{\Delta k}=\Delta\ i\\!\left[k\right]=i_{k+1}-i_{k}
 $$
 The plot below shows an example signal (top) aligned with its time derivative
 (bottom). As we expected, opening events give rise to upward spikes in
