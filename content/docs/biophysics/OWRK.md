@@ -18,7 +18,7 @@ $$
 $$
 <div style="text-align: center;">
 <br>
-{{< figure src="/images/drop.png" title="sessile drop of liquid to define quantities in Young equation" width=500 >}}
+{{< figure src="/images/drop.png" title="sessile drop of liquid to define quantities in Young equation" width=450 >}}
 </div>
 
 where
@@ -120,15 +120,80 @@ different surface tension properties are usually used, namely water and
 diiodomethane (aka _methylene iodide_, MI), with the following reference values:
 
 | Solvent |\\(\gamma_{\scriptscriptstyle{L}}^{\scriptscriptstyle{P}}\\) (mN/m)<sup>1</sup>|\\(\gamma_{\scriptscriptstyle{L}}^{\scriptscriptstyle{D}}\\) (mN/m)|\\(\gamma_{\scriptscriptstyle{L}}\\) (mN/m)|\\(x\\)|
-|:-----------------:|:-----:|:-----:|:-----:|:----:|
-| __Water__         | 43.70 | 29.10 | 72.80 | 1.23 |
-| __Diiodomethane__ |  2.60 | 47.40 | 50.00 | 0.23 |
+|:-------------------:|:-----:|:-----:|:-----:|:----:|
+| __Water__           | 43.70 | 29.10 | 72.80 | 1.23 |
+| __Diiodomethane__   |  2.60 | 47.40 | 50.00 | 0.23 |
+| __Ethylene Glycol__ | 21.30 | 26.40 | 47.70 | 0.81 |
 
 <p style="font-size:12px;">
 	<sup>1</sup> The surface energy is usually measured in units of joules per
 	square meter (J/m<sup>2</sup>), which is equivalent in the case of liquids
 	to surface tension, usually measured in newtons per meter (N/m).
 </p>
+
+In summary, for each surface \\(S\\) subjected to surface free energy
+measurement by sessile drop technique, a regression line of this type needs to
+be calculated:
+<div style="text-align: center;">
+{{< figure src="/images/surface_energy.png" title="OWRK method for SFE estimation" width=720 >}}
+</div>
+
+## Uncertainty estimation
+Typically, the surface tension values of the probe liquids used in the sessile
+drop test are known in the literature with such a precision that they can be
+assumed to be without uncertainty. Therefore, the x-values in the above graph
+are also assumed error-free. In contrast, empirical measurements of contact
+angles usually come with an uncertainty \\(s_\theta\\) resulting from the stochastic
+fluctuations of \\(\theta\\), which is measured \\(n\\) times. This uncertainty
+propagates to the \\(y\\) variable according to the usual rule:
+$$
+s_y=\sqrt{\left[\frac{d}{d\theta}\frac{\gamma_{\scriptscriptstyle{L}}\left(1+\cos\theta\right)}{2\sqrt{\gamma_{\scriptscriptstyle{L}}^{\scriptscriptstyle{D}}}}\right]^{2}s_{\theta}^{2}}=\frac{\gamma_{\scriptscriptstyle{L}}\sin\theta}{2\sqrt{\gamma_{\scriptscriptstyle{L}}^{\scriptscriptstyle{D}}}}\ s_{\theta}\qquad\textrm{with}\quad\theta\in\left[0,\pi\right]
+$$
+{{< hint danger >}}
+It is extremely important here to make sure that all the angles are expressed in
+__radians__, with special attention to the value of \\(s_\theta\\) !!
+{{< /hint >}}
+
+### Two probe liquids
+When only two probe liquids are used, \\(s_{y}\\) represents the only source of
+uncertainty, since the interpolation of two points by a line is always exact. In
+that case it is necessary to propagate the uncertainty on the slope and
+intercept estimators, but instead of starting from the general formulas of
+linear regression for ordinary least squares (OLS) minimization, with just two
+experimental points (e.g., water and diiodomethane) we can use the simpler
+relations
+{{< katex display >}}
+\left\{
+\begin{aligned}
+m & =\frac{y_{\scriptscriptstyle{H_{2}O}}-y_{\scriptscriptstyle{MI}}}{x_{\scriptscriptstyle{H_{2}O}}-x_{\scriptscriptstyle{MI}}}\\
+q & =y_{i}-m\,x_{i}
+\end{aligned}
+\right.\quad\Longrightarrow\quad
+\left\{
+\begin{aligned}
+s_m & =\frac{1}{\left|x_{\scriptscriptstyle{H_{2}O}}-x_{\scriptscriptstyle{MI}}\right|}\sqrt{s_{y\scriptscriptstyle{H_{2}O}}^2+s_{y\scriptscriptstyle{MI}}^2}\\
+s_q & =x_{i}\ s_m
+\end{aligned}
+\right.
+{{< /katex >}}
+where possible correlations between \\(y_{\scriptscriptstyle{H_{2}O}}\\) and
+\\(y_{\scriptscriptstyle{MI}}\\) have been neglected (assumption of independent
+variables), and \\(i\\) is either \\(\scriptscriptstyle{H_{2}O}\\) or
+\\(\scriptscriptstyle{MI}\\). Actually, \\(\left(x_i,y_i\right)\\) can be _any_
+point of the line, including \\(\left(\bar{x},\bar{y}\right)\\) or
+\\(\left(x_{\scriptscriptstyle{H_{2}O}}-x_{\scriptscriptstyle{MI}},y_{\scriptscriptstyle{H_{2}O}}-y_{\scriptscriptstyle{MI}}\right)\\).
+
+Of course,
+{{< katex display >}}
+\left\{
+\begin{aligned}
+s_{\gamma\scriptscriptstyle{P}} & =2m\,s_m\\
+s_{\gamma\scriptscriptstyle{D}} & =2q\,s_q
+\end{aligned}
+\right.\quad\Longrightarrow\quad
+s_{\gamma}=2\sqrt{m^{2}\,s_{m}^{2}+q^{2}\,s_{q}^{2}}
+{{< /katex >}}
+
 
 ## Hydrophobic surfaces
 For some of the more hydrophobic surfaces, the slope of the fitted line can even
