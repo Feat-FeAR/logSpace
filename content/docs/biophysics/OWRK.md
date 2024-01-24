@@ -101,11 +101,19 @@ If the surface tension of the liquid is known in both its components
 \\(\gamma_{\scriptscriptstyle{L}}^{\scriptscriptstyle{P}}\\) and
 \\(\gamma_{\scriptscriptstyle{L}}^{\scriptscriptstyle{D}}\\), the above equation
 is a linear equation of the form \\(y=mx+q\\) in which \\(x\\) is known as well,
-while \\(y\\) can be drawn by contact angle measurement. In OWRK method, __the
-contact angle of the surface is measured with several (at least two) liquids__
-so that the slope and vertical intercept of the line can be calculated to
-estimate the polar and dispersive components of the surface free energy,
-respectively.
+while \\(y\\) can be drawn by contact angle measurement.
+{{< katex display >}}
+\left\{
+\begin{aligned}
+x & = \sqrt{{}^{\gamma_{\scriptscriptstyle{L}}^{\scriptscriptstyle{P}}}{\mskip -5mu/\mskip -3mu}_{\gamma_{\scriptscriptstyle{L}}^{\scriptscriptstyle{D}}}}\\
+y & =\frac{\gamma_{\scriptscriptstyle{L}}\left(1+\cos\theta\right)}{2\sqrt{\gamma_{\scriptscriptstyle{L}}^{\scriptscriptstyle{D}}}}
+\end{aligned}
+\right.
+{{< /katex >}}
+In OWRK method, __the contact angle of the surface is measured with several (at
+least two) liquids__ so that the slope and vertical intercept of the line can be
+estimated to calculate the polar and dispersive components of the surface free
+energy, respectively.
 {{< katex display >}}
 \left\{
 \begin{aligned}
@@ -115,7 +123,7 @@ respectively.
 \right.
 {{< /katex >}}
 
-To get two properly spaced points on the plane, two liquids with markedly
+To get properly spaced points on the plane, (at least) two liquids with markedly
 different surface tension properties are usually used, namely water and
 diiodomethane (aka _methylene iodide_, MI), with the following reference values:
 
@@ -141,11 +149,17 @@ be calculated:
 ## Uncertainty estimation
 Typically, the surface tension values of the probe liquids used in the sessile
 drop test are known in the literature with such a precision that they can be
-assumed to be without uncertainty. Therefore, the x-values in the above graph
-are also assumed error-free. In contrast, empirical measurements of contact
-angles usually come with an uncertainty \\(s_\theta\\) resulting from the stochastic
-fluctuations of \\(\theta\\), which is measured \\(n\\) times. This uncertainty
-propagates to the \\(y\\) variable according to the usual rule:
+assumed as without any uncertainty. Therefore, the x-values in the graph above
+are also assumed to be error-free. In contrast, the empirical measurements of
+contact angles usually come with an uncertainty \\(s_\theta\\) resulting from
+the stochastic fluctuations of the angle through its multiple measurements.
+Overall, this makes simple linear regression by ordinary least squares (OLS)
+minimization a suitable tool for analyzing this type of data.
+
+If \\(\theta\\) is the mean contact angle from \\(n\\) measurements, then its
+uncertainty \\(s_\theta\\) can be estimated by the standard error of the mean
+(SEM), which is the standard deviation of the sample divided by \\(\sqrt{n}\\).
+This uncertainty propagates to the \\(y\\) variable according to the usual rule:
 $$
 s_y=\sqrt{\left[\frac{d}{d\theta}\frac{\gamma_{\scriptscriptstyle{L}}\left(1+\cos\theta\right)}{2\sqrt{\gamma_{\scriptscriptstyle{L}}^{\scriptscriptstyle{D}}}}\right]^{2}s_{\theta}^{2}}=\frac{\gamma_{\scriptscriptstyle{L}}\sin\theta}{2\sqrt{\gamma_{\scriptscriptstyle{L}}^{\scriptscriptstyle{D}}}}\ s_{\theta}\qquad\textrm{with}\quad\theta\in\left[0,\pi\right]
 $$
@@ -154,14 +168,51 @@ It is extremely important here to make sure that all the angles are expressed in
 __radians__, with special attention to the value of \\(s_\theta\\) !!
 {{< /hint >}}
 
+Although this is always true, the way in which to handle the uncertainty and
+propagate it on the surface energy changes depending on the number \\(k\\) of
+probe liquids used.
+
+### Three or more probe liquids
+If each surface was tested with at least three probe liquids (\\(k\geq3\\)), the
+OLS method provides estimates for slope and intercept accompanied by their
+standard errors, which are derived from the computed sum of squared residuals
+\\(\sum_{i=1}^{k}\varepsilon_{i}^{2}\\), where \\(\varepsilon_i\\) are the
+differences between actual and predicted values of the dependent variable
+\\(y\\).
+{{< katex display >}}
+\left\{
+\begin{aligned}
+m & =\frac{\sum_{i=1}^{k}\left(x_{i}-\bar{x}\right)\left(y_{i}-\bar{y}\right)}{\sum_{i=1}^{k}\left(x_{i}-\bar{x}\right)^2}\\
+\\
+q & =\bar{y}-m\,\bar{x}
+\end{aligned}
+\right.\quad\Longrightarrow\quad
+\left\{
+\begin{aligned}
+s_m & =\sqrt{\frac{\frac{1}{k-2}\sum_{i=1}^{k}\varepsilon_{i}^{2}}{\sum_{i=1}^{k}\left(x_{i}-\bar{x}\right)^{2}}}\\
+\\
+s_q & =s_m\sqrt{\frac{1}{k}\sum_{i=1}^{k}x_{i}^{2}}
+\end{aligned}
+\right.
+{{< /katex >}}
+
+Notably, the calculation of this error term "automatically" accounts for the
+uncertainty \\(s_y\\) of each single point, since uncertainty on y-values
+directly reflects on their scattering about the line. In other words, even
+assuming a perfectly linear underlying relation, the more the points are
+individually affected by uncertainty, the less likely they are to occur aligned.
+Therefore, the regression can be conducted on the basis of the mean y-values
+alone, without even the need to propagate the error from \\(\theta\\) on
+\\(y\\). Just consider the use of weighted least squares (WSL) in case of
+manifest heteroscedasticity.
+
 ### Two probe liquids
-When only two probe liquids are used, \\(s_{y}\\) represents the only source of
-uncertainty, since the interpolation of two points by a line is always exact. In
-that case it is necessary to propagate the uncertainty on the slope and
-intercept estimators, but instead of starting from the general formulas of
-linear regression for ordinary least squares (OLS) minimization, with just two
-experimental points (e.g., water and diiodomethane) we can use the simpler
-relations
+When only \\(k=2\\) probe liquids are used, \\(s_{y}\\) is the only information
+we have about uncertainty, since the interpolation of two points by a line is
+always exact. In that case it is necessary to "manually" propagate the
+uncertainty on the slope and intercept estimators. With just two experimental
+points (e.g., water and diiodomethane), instead of starting from the general
+formulas for OLS linear regression, we can use these simpler relations:
 {{< katex display >}}
 \left\{
 \begin{aligned}
@@ -180,10 +231,12 @@ where possible correlations between \\(y_{\scriptscriptstyle{H_{2}O}}\\) and
 \\(y_{\scriptscriptstyle{MI}}\\) have been neglected (assumption of independent
 variables), and \\(i\\) is either \\(\scriptscriptstyle{H_{2}O}\\) or
 \\(\scriptscriptstyle{MI}\\). Actually, \\(\left(x_i,y_i\right)\\) can be _any_
-point of the line, including \\(\left(\bar{x},\bar{y}\right)\\) or
-\\(\left(x_{\scriptscriptstyle{H_{2}O}}-x_{\scriptscriptstyle{MI}},y_{\scriptscriptstyle{H_{2}O}}-y_{\scriptscriptstyle{MI}}\right)\\).
+point of the line, including, for instance, \\(\left(\bar{x},\bar{y}\right)\\).
+Also, note how incidentally
+\\(x_{\scriptscriptstyle{H_{2}O}}-x_{\scriptscriptstyle{MI}}\simeq1\\), which
+makes it even easier to quickly estimate the surface free energy!
 
-Of course,
+Of course, in both the cases,
 {{< katex display >}}
 \left\{
 \begin{aligned}
@@ -194,18 +247,17 @@ s_{\gamma\scriptscriptstyle{D}} & =2q\,s_q
 s_{\gamma}=2\sqrt{m^{2}\,s_{m}^{2}+q^{2}\,s_{q}^{2}}
 {{< /katex >}}
 
-
 ## Hydrophobic surfaces
 For some of the more hydrophobic surfaces, the slope of the fitted line can even
 return negative values, meaning that the surface is so hydrophobic that only the
 dispersive component is actually relevant to the surface energy calculation. In
 these cases, a slope of zero is usually assumed
 $$
-\gamma_{\scriptscriptstyle{S}}^{\scriptscriptstyle{P}}\simeq0\quad\Rightarrow\quad\gamma_{\scriptscriptstyle{S}}\simeq\gamma_{\scriptscriptstyle{S}}^{\scriptscriptstyle{D}}
+\gamma_{\scriptscriptstyle{S}}^{\scriptscriptstyle{P}}\simeq0\quad\Longrightarrow\quad\gamma_{\scriptscriptstyle{S}}\simeq\gamma_{\scriptscriptstyle{S}}^{\scriptscriptstyle{D}}
 $$
 and a horizontal line is fitted instead:
 $$
-q=\frac{y_{\scriptscriptstyle{H_{2}O}}+y_{\scriptscriptstyle{MI}}}{2}
+q=\frac{y_{\scriptscriptstyle{H_{2}O}}+y_{\scriptscriptstyle{MI}}}{2}\quad\Longrightarrow\quad s_q=\frac{1}{2}\sqrt{s_{y\scriptscriptstyle{H_{2}O}}^2+s_{y\scriptscriptstyle{MI}}^2}
 $$
 
 ## References
@@ -216,6 +268,7 @@ $$
 - [Petal effect _vs_ lotus effect](https://en.wikipedia.org/wiki/Wetting#%22Petal_effect%22_vs._%22lotus_effect%22)
 - [Surface energy](https://en.wikipedia.org/wiki/Surface_energy)
 - [Sessile drop technique](https://en.wikipedia.org/wiki/Sessile_drop_technique)
+- [Simple linear regression](https://en.wikipedia.org/wiki/Simple_linear_regression)
 
 ### Research Papers
 1. Annamalai M, Gopinadhan K, Han SA, Saha S, Park HJ, Cho EB, Kumar B, Patra A,
