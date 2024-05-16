@@ -289,7 +289,7 @@ managing JavaScript resources.
 __Mind the cache!__  
 Whichever way you chose to insert JS code into the Hugo web page, remember that,
 to see the effects of a change to the script, you may need to use the key
-combination `Ctrl+F5` to force page refresh ignoring the cache.
+combination `Ctrl+F5` or `Ctrl+Shift+R`to force page refresh ignoring the cache.
 {{< /hint >}}
 {{< hint info >}}
 __Shortcode CSS__  

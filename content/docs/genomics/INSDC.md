@@ -11,6 +11,9 @@ draft: false
 ---
 
 # The International Nucleotide Sequence Database Collaboration
+<div style="text-align: center;">
+{{< figure src="/images/parabola.png" title="parabola screenshot" width=600 >}}
+</div>
 The global availability of our current knowledge about DNA sequences and gene
 expression is made possible by the existence of large repositories like
 GeneBank, SRA, DRA, ENA, DDBJ, GEO, ArrayExpress, managed and maintained by
@@ -26,29 +29,28 @@ This post attempts to describe the structure of such organization and the
 relationships among the different points of entry to genomic information.
 
 ## INSDC DBs
-Quoting the incipit of the 2021 INSDC report (Nucleic Acids Res. 2021 Jan
+Quoting the _incipit_ of the 2021 INSDC report (Nucleic Acids Res. 2021 Jan
 8;49(D1):D121-D124. PMID: [33166387](https://pubmed.ncbi.nlm.nih.gov/33166387/)
 DOI: [10.1093/nar/gkaa967](https://academic.oup.com/nar/article/49/D1/D121/5964076?login=false)):
-> The International Nucleotide Sequence Database Collaboration (INSDC;
-> http://www.insdc.org/) is the core infrastructure for sharing nucleotide
-> sequence data (NSD) and their subsidiary information called metadata in the
-> public domain. The collaboration is comprised of __three nodes that keep the__
-> __identical information through a daily data exchange process__ that has
-> operated for over 30 years:
-> - the DNA Data Bank of Japan (DDBJ; http://www.ddbj.nig.ac.jp/) at the
->	National Institute of Genetics (NIG) in Mishima, Japan;
-> - the European Nucleotide Archive (ENA; http://www.ebi.ac.uk/ena/) at the
+> _The International Nucleotide Sequence Database Collaboration (INSDC;
+http://www.insdc.org/) is the core infrastructure for sharing nucleotide
+sequence data (NSD) and their subsidiary information called metadata in the
+public domain. The collaboration is comprised of __three nodes that keep the__
+__identical information through a daily data exchange process__ that has
+operated for over 30 years:_
+> - _the DNA Data Bank of Japan (DDBJ; http://www.ddbj.nig.ac.jp/) at the
+>	National Institute of Genetics (NIG) in Mishima, Japan;_
+> - _the European Nucleotide Archive (ENA; http://www.ebi.ac.uk/ena/) at the
 > 	European Molecular Biology Laboratory’s European Bioinformatics Institute
-> 	(EMBL-EBI) in Hinxton, UK; and
-> - GenBank (https://www.ncbi.nlm.nih.gov/genbank/) at National Center for
+> 	(EMBL-EBI) in Hinxton, UK; and_
+> - _GenBank (https://www.ncbi.nlm.nih.gov/genbank/) at National Center for
 >	Biotechnology Information (NCBI), National Library of Medicine, National
-> 	Institutes of Health (NIH) in Bethesda, Maryland, USA.
+> 	Institutes of Health (NIH) in Bethesda, Maryland, USA._
 >
-> [...]
-> The key links across these databases are Accession Numbers, i.e., the unique
-> and permanent identifiers issued by the INSDC for each submitted sequence.
-> [...]
-> The INSDC functions as the unique registry of all publicly available NSD.
+> _[...] The key links across these databases are Accession Numbers, i.e., the
+unique and permanent identifiers issued by the INSDC for each submitted
+sequence. [...] The INSDC functions as the unique registry of all publicly
+available NSD._
 
 Thus, INSDC archives nucleotide sequence data, from raw to assembled and
 annotated sequences, from around the world by supporting deposition and
@@ -61,47 +63,57 @@ NCBI), but regardless of this the same information will be transmitted within
 databases. In any case, INSDC does not claim the ownership of data, which is
 retained by the submitter.
 
-Importantly, EMBL-EBI and NCBI also run repositories---named ArrayExpress and
-Gene Expression Omnibus (GEO), respectively---meant to host _pre-NGS_ gene
-expression data, mainly coming from microarray experiments. Although neither
-NCBI’s GEO and EMBL-EBI’s ArrayExpress directly host raw nucleotide sequence
-data, it is possible to submit your NGS data to them and they will be
-automatically _brokered_ to the respective Sequence Read Archive---namely NCBI’s
-SRA or EMBL-EBI’s ENA---to be made available __with the same accession__ from
-all three INSDC DBs.
+Importantly, EMBL-EBI and NCBI also run repositories for _functional genomics_
+experiments---named ArrayExpress and Gene Expression Omnibus (GEO),
+respectively---designed to host _pre-NGS_ gene expression data, mainly coming
+from microarray experiments. Although neither NCBI’s GEO nor EMBL-EBI’s
+ArrayExpress directly host raw nucleotide sequence data, it is still possible to
+submit NGS data to these repositories, but they will _broker_ the whole data
+storage and management to their respective Sequence Read Archives---namely
+NCBI’s SRA or EMBL-EBI’s ENA---to make them available __with the same
+accession__ from all three INSDC DBs.
 
 {{< hint warning >}}
 __Alias Accession__  
-While ArrayExpress does not host any RNA-Seq data after brokering to ENA, NGS
-data submitted to GEO, and then brokered to SRA, will be also indexed by GEO
-using a so-called _GEO-alias_ accession ID that can be equivalently used to
-query INSDC DBs. In any case, NGS read brokering is ___one-way___ only, so if
-you submit first to SRA or ENA, you won't get any alias ID for your study and it
+NGS data submitted to GEO or ArrayExpress, and then brokered to SRA, will be
+also indexed in the submission database by an ID that will be referred to by SRA
+as _Study Alias_ accession ID, and which can be equivalently used to query INSDC
+DBs. In any case, NGS read brokering is ___one-way___ only, so if you directly
+submit to NCBI's SRA or ENA, you won't get any alias ID for your study and it
 won't be seen by GEO or ArrayExpress search engines.
 {{< /hint >}}
 
 <div style="text-align: center;">
 <br>
 {{< figure src="/images/genomic_DBs.png" title="INSDC's DBs" width=720 >}}
+<figcaption style="font-size: 13px;">
+Diagram of the relationships among the major DBs involved in INSDC's management
+of nucleotide sequence data (NSD) and assembled sequence data from the
+traditional, annotated archives (such as NCBI's GenBank and DDBJ). Importantly,
+the scope of INSDC is not limited to NSD. Other databases coordinated by
+INSDC---but not represented here---collect metadata about research projects
+(<em>BioProject</em> database) and physical biomaterials (<em>BioSample</em>
+database), with links to NSD. In particular, BioProjects aggregate top-level
+information of different types (complete genomes, transcriptomes, metagenomics
+projects, targeted locus studies and many more) that relates otherwise dispersed
+sequence records to coherent studies that initiate from a single organization,
+consortium or funding initiative.
+</figcaption>
 <br>
 </div>
 
 {{< hint info >}}
 __GEO-ArrayExpress Intersection__  
-As pointed out [here](https://www.ccdatalab.org/blog/gene-expression-repositories-explained)
-by Kurt Wheeler, member of
-[The Childhood Cancer Data Lab](https://www.ccdatalab.org/), within the context
-of the [refine.bio](https://www.refine.bio/) project
-> (NCBI’s GEO and EMBL-EBI’s ArrayExpress) also have a somewhat convoluted
-> relationship. ArrayExpress used to replicate data from GEO on a weekly basis,
-> so it contains a lot of data from there. This was true when we first started
-> the _refine.bio_ project, so our original idea was to only download microarray
-> data from ArrayExpress. However since then they have stopped replicating data,
-> so we now download data from the source (ArrayExpress / GEO) that it was
-> originally uploaded to, which we determine by its identifier.
+NCBI’s GEO and EMBL-EBI’s ArrayExpress also have a somewhat convoluted
+relationship. Some of the experiments and array designs in ArrayExpress have
+been imported from the GEO in the past, however this regular import has stopped
+in 2017. Imported experiments have ArrayExpress accession numbers in the format
+of `E-GEOD-n`, where `n` is the same as the number in the original GEO series
+accession (e.g., GEO accession GSE12345 would become E-GEOD-12345 in
+ArrayExpress).
 {{< /hint >}}
 
-## The SRA Data Model
+## SRA Data Model
 Six types of _metadata objects_ (or _records_) exist related to the Sequence
 Read Archive of INSDC. Their accessions can be used to identify each unique part
 of a given submission. For all of them, the first letter of their accession
@@ -118,38 +130,207 @@ _BioProject_ objects).
 	(i.e., the sequenced source material). Accessions for Samples follow the
 	regex pattern `(E|D|S)RS[0-9]{6,}` (e.g., SRS1235761). However, these IDs
 	are used (by ENA) as _Secondary Sample Accessions_, since each _Sample_
-	directly corresponds to a _BioSample_ whose ID `SAM(E|D|N)[A-Z]?[0-9]+`
-	(e.g., SAMN04384212) is taken as the primary one. If data were brokered by
-	GEO to INSDC's SRA, a different _Experiment Alias_ accession of the type
-	`GSM[0-9]+` (e.g., GSM2027569) will be also associated to each sample.
+	directly corresponds to a _BioSample_ entry whose ID
+	`SAM(E|D|N)[A-Z]?[0-9]+` (e.g., SAMN04384212) is taken as the primary one.
+	If data were brokered by GEO (or ArrayExpress) to INSDC's SRA, an additional
+	_Sample Alias_ accession ID of the type `GSM[0-9]+` (e.g., GSM2027569) will
+	be associated to each sample.
 - __Projects__/__Studies__ - Contain information on a biological research
 	project. This holds all the data generated as part of this research (often
 	coinciding with a publication). Accessions for Studies follow the regex
 	pattern `(E|D|S)RP[0-9]{6,}` (e.g., SRP068092). However, these IDs are used
 	(by ENA) as _Secondary Study Accessions_, since each _Study_ directly
-	corresponds to a _BioProject_ whose ID `PRJ(E|D|N)[A-Z][0-9]+` (e.g.,
+	corresponds to a _BioProject_ entry whose ID `PRJ(E|D|N)[A-Z][0-9]+` (e.g.,
 	PRJNA307652) is taken as the primary one. __This is the accession typically
-	used in journal publications__. If data were brokered by GEO to INSDC's SRA,
-	a _Study Alias_ accession of the type `GSE[0-9]+` (e.g., GSE76528) will be
+	used in journal publications__. If data were brokered by GEO or ArrayExpress
+	to INSDC's SRA, a _Study Alias_ accession of the type `GSE[0-9]+` (e.g.,
+	GSE76528) or `E-[A-Z]{4}-[0-9]+` (e.g., E-MTAB-12021), respectively, will be
 	also associated to the entire project.
-- __Submission__ - Metadata about the submission of the data to SRA. Accessions
+- __Submissions__ - Metadata about the submission of the data to SRA. Accessions
 	for Submissions follow the regex pattern `(E|D|S)RA[0-9]{6,}`.
 - __Analyses__ - Hold results files of analyses performed on sequencing data
 	(e.g., a genome assembly) and analysis methods. Accessions for Analyses
 	follow the regex pattern `(E|D|S)RZ[0-9]{6,}`.
 
+<div>
+<br>
+<table style="border-collapse: collapse; width: 75%; margin: auto;">
+	<thead>
+		<tr style="border: none;">
+			<th>Accession Type</th>
+			<th>Accession Format</th>
+			<th>Example</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>
+				<p>Runs</p>
+			</td>
+			<td>
+				<p><code>(E|D|S)RR[0-9]{6,}</code></p>
+			</td>
+			<td>
+				<p>SRR3085451</p>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<p>Experiments</p>
+			</td>
+			<td>
+				<p><code>(E|D|S)RX[0-9]{6,}</code></p>
+			</td>
+			<td>
+				<p>SRX1517159</p>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<div>BioSamples</div>
+				<div>Samples</div>
+				<div>GEO Alias</div>
+			</td>
+			<td>
+				<div><code>SAM(E|D|N)[A-Z]?[0-9]+</code></div>
+				<div><code>(E|D|S)RS[0-9]{6,}</code></div>
+				<div><code>GSM[0-9]+</code></div>
+			</td>
+			<td>
+				<div>SAMN04384212</div>
+				<div>SRS1235761</div>
+				<div>GSM2027569</div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<div>BioProjects</div>
+				<div>Studies</div>
+				<div>GEO Alias</div>
+				<div>AE Alias</div>
+			</td>
+			<td>
+				<div><code>PRJ(E|D|N)[A-Z][0-9]+</code></div>
+				<div><code>(E|D|S)RP[0-9]{6,}</code></div>
+				<div><code>GSE[0-9]+</code></div>
+				<div><code>E-[A-Z]{4}-[0-9]+</code></div>
+			</td>
+			<td>
+				<div>PRJNA307652</div>
+				<div>SRP068092</div>
+				<div>GSE76528</div>
+				<div>E-MTAB-12021</div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<p>Submissions</p>
+			</td>
+			<td>
+				<p><code>(E|D|S)RA[0-9]{6,}</code></p>
+			</td>
+			<td>
+				<p>...</p>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<p>Analyses</p>
+			</td>
+			<td>
+				<p><code>(E|D|S)RZ[0-9]{6,}</code></p>
+			</td>
+			<td>
+				<p>...</p>
+			</td>
+		</tr>
+	</tbody>
+</table>
+<br>
+</div>
 
+## Ontological Perspective
+An inspiring historical perspective on the origins of the INSDC initiative is
+offered by Hallam Stevens in _Globalizing Genomics: The Origins of the
+International Nucleotide Sequence Database Collaboration_ (J Hist Biol. 2018
+Dec;51(4):657-691. PMID: [28986915](https://pubmed.ncbi.nlm.nih.gov/28986915/)
+DOI: [10.1007/s10739-017-9490-y](https://link.springer.com/article/10.1007/s10739-017-9490-y)),
+a paper examining the intrinsic transnational nature of the modern genomics and
+its ontological implications relative to what DNA sequences came to be during
+the Human Genome Project.
+
+> _What constituted an "entry" or a "sequence" in the nucleotide databases was
+not obvious or given, but had to be constituted through technical and social
+work between EMBL-Bank and GenBank._
+
+> _Smith_ (1998; On the Origin of Objects) _has argued that making decisions
+about the representations and relations of objects inside software and databases
+is doing more than merely computational work. Making such decisions about how to
+structure objects inside computers, Smith says, has important implications for
+what those objects actually are __in the world__. Programming and databasing
+have __ontological__ implications. Here, it was precisely the international
+exchanges between different databases that brought these issues to the
+forefront, opening up debates about what objects __should__ look like and
+__how__ they should be represented._
+
+> _In practice, the data elements included in this "common schema" came to
+define what a sequence was a global object. Sequences were less what was
+represented at GenBank, or EMBL-Bank, or DDBJ, but rather more __what was
+exchanged in common between them__. The "same complete set of sequence
+information" that the databases were trying to provide to scientists everywhere
+in the world was defined by the common schema that was worked out between the
+databases._
+
+> _The transnational nature of the database collaboration meant that sequence
+had to become increasingly __abstracted__ from its points of origin, they had to
+become increasingly __sharable__, and they had to become __mobile__ via
+electronic media (and networks). This did not occur automatically, but was the
+product of intensive work by databases managers at GenBank, EMBL-Bank, and at
+DDBJ. It involved both negotiation, compromise, politics, but also the technical
+work of establishing how databases could actually talk to one another via
+electronic networks, translation, and standardization._
+
+In his work, Stevens examines the early parts of this international
+collaboration, from roughly 1979 to the mid-1990s. However, new issues and
+challenges have emerged in more recent years, especially related to the
+exponential growth rate of SRA, which in turn makes data handling increasingly
+complicated and expensive, so that the resilience of the entire system is
+constantly at risk (see e.g.,
+PMID: [21418618](https://pubmed.ncbi.nlm.nih.gov/21418618/),
+PMID: [22144685](https://pubmed.ncbi.nlm.nih.gov/22144685/)).
+Indeed, in February 2011, NCBI announced their plan to close the NCBI's SRA due
+to funding reduction. However, EBI and DDBJ replied by announcing that they
+would continue to support the SRA. Finally, in October 2011, NCBI announced
+continuation of funding for the SRA by NIH. No other controversies of this
+magnitude have emerged since, bur around the year 2020 NCBI has shifted SRA data
+to commercial cloud environments, which offer storage options for different use
+frequencies: _hot storage_ for highly accessed data and less expensive _cold
+storage_ for older, less accessed studies.
 
 ## References
 ENA: Guidelines and Tutorials
 https://ena-docs.readthedocs.io/en/latest/index.html
 
-Archive-Generated Files
+Archive-Generated Files
 Providing archive-generated FASTQs for runs is a means of bringing some consistency to the data we provide. By imposing a level of uniformity on these files, we can ensure users know what to expect of them and may incorporate them into pipelines with minimal friction.
 
 
-https://www.ccdatalab.org/blog/gene-expression-repositories-explained
+
 
 https://ena-docs.readthedocs.io/en/latest/submit/general-guide/accessions.html
 
 https://ena-docs.readthedocs.io/en/latest/retrieval/ena-project.html
+
+
+
+
+As pointed out [here](https://www.ccdatalab.org/blog/gene-expression-repositories-explained)
+by Kurt Wheeler, member of
+[The Childhood Cancer Data Lab](https://www.ccdatalab.org/), within the context
+of the [refine.bio](https://www.refine.bio/) project
+
+
+INSDC data are provided openly and free of charge to
+users.
+
+https://direct.mit.edu/books/book/4771/On-the-Origin-of-Objects

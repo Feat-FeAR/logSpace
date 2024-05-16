@@ -4,7 +4,7 @@ weight: 60
 bookCollapseSection: true
 ---
 
-# Genomics Tips
+# Genomics
 ```
 Work in progress
 ```
