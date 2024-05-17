@@ -157,7 +157,7 @@ _BioProject_ objects).
 
 <div>
 <br>
-<table style="border-collapse: collapse; width: 75%; margin: auto;">
+<table style="border-collapse: collapse; width: 85%; margin: auto;">
 	<thead>
 		<tr style="border: none;">
 			<th>Accession Type</th>
@@ -168,7 +168,7 @@ _BioProject_ objects).
 	<tbody>
 		<tr>
 			<td>
-				<p>Runs</p>
+				<p>Run</p>
 			</td>
 			<td>
 				<p><code>(E|D|S)RR[0-9]{6,}</code></p>
@@ -179,7 +179,7 @@ _BioProject_ objects).
 		</tr>
 		<tr>
 			<td>
-				<p>Experiments</p>
+				<p>Experiment</p>
 			</td>
 			<td>
 				<p><code>(E|D|S)RX[0-9]{6,}</code></p>
@@ -190,9 +190,9 @@ _BioProject_ objects).
 		</tr>
 		<tr>
 			<td>
-				<div>BioSamples</div>
-				<div>Samples</div>
-				<div>GEO Alias</div>
+				<div>BioSample</div>
+				<div>Sample</div>
+				<div>GEO Sample Alias</div>
 			</td>
 			<td>
 				<div><code>SAM(E|D|N)[A-Z]?[0-9]+</code></div>
@@ -207,9 +207,9 @@ _BioProject_ objects).
 		</tr>
 		<tr>
 			<td>
-				<div>BioProjects</div>
-				<div>Studies</div>
-				<div>GEO Alias</div>
+				<div>BioProject</div>
+				<div>Study</div>
+				<div>GEO Series Alias</div>
 				<div>AE Alias</div>
 			</td>
 			<td>
@@ -227,7 +227,7 @@ _BioProject_ objects).
 		</tr>
 		<tr>
 			<td>
-				<p>Submissions</p>
+				<p>Submission</p>
 			</td>
 			<td>
 				<p><code>(E|D|S)RA[0-9]{6,}</code></p>
@@ -238,7 +238,7 @@ _BioProject_ objects).
 		</tr>
 		<tr>
 			<td>
-				<p>Analyses</p>
+				<p>Analysis</p>
 			</td>
 			<td>
 				<p><code>(E|D|S)RZ[0-9]{6,}</code></p>
