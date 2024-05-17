@@ -11,9 +11,11 @@ draft: false
 ---
 
 # The International Nucleotide Sequence Database Collaboration
+
 <div style="text-align: center;">
 {{< figure src="/images/parabola.png" title="parabola screenshot" width=600 >}}
 </div>
+
 The global availability of our current knowledge about DNA sequences and gene
 expression is made possible by the existence of large repositories like
 GeneBank, SRA, DRA, ENA, DDBJ, GEO, ArrayExpress, managed and maintained by
@@ -60,8 +62,9 @@ you choose to submit your sequencing data you will receive an accession number
 with a characteristic prefix (typically, 'E' for ENA, 'D' for DDBJ, or 'S' for
 NCBI), but regardless of this the same information will be transmitted within
 24h to the other two nodes in the consortium to be stored in their local
-databases. In any case, INSDC does not claim the ownership of data, which is
-retained by the submitter.
+databases. INSDC data are then provided openly and free of charge to users. In
+any case, INSDC does not claim the ownership of data, which is retained by the
+submitter.
 
 Importantly, EMBL-EBI and NCBI also run repositories for _functional genomics_
 experiments---named ArrayExpress and Gene Expression Omnibus (GEO),
@@ -290,12 +293,12 @@ DDBJ. It involved both negotiation, compromise, politics, but also the technical
 work of establishing how databases could actually talk to one another via
 electronic networks, translation, and standardization._
 
-In his work, Stevens examines the early parts of this international
+In his work, Stevens examined the early parts of this international
 collaboration, from roughly 1979 to the mid-1990s. However, new issues and
 challenges have emerged in more recent years, especially related to the
 exponential growth rate of SRA, which in turn makes data handling increasingly
-complicated and expensive, so that the resilience of the entire system is
-constantly at risk (see e.g.,
+complicated and expensive, so that the resilience of the entire system seems to
+be constantly at risk (see e.g.,
 PMID: [21418618](https://pubmed.ncbi.nlm.nih.gov/21418618/),
 PMID: [22144685](https://pubmed.ncbi.nlm.nih.gov/22144685/)).
 Indeed, in February 2011, NCBI announced their plan to close the NCBI's SRA due
@@ -308,29 +311,56 @@ frequencies: _hot storage_ for highly accessed data and less expensive _cold
 storage_ for older, less accessed studies.
 
 ## References
-ENA: Guidelines and Tutorials
-https://ena-docs.readthedocs.io/en/latest/index.html
+### INSDC Regular Reports
+1. Cochrane G, Karsch-Mizrachi I, Nakamura Y; International Nucleotide Sequence
+	Database Collaboration. _The International Nucleotide Sequence Database
+	Collaboration._ __Nucleic Acids Res.__ 2011 Jan;39(Database issue):D15-8.
+	DOI: 10.1093/nar/gkq1150. Epub 2010 Nov 23.
+	PMID: [21106499](https://pubmed.ncbi.nlm.nih.gov/21106499/)
+1. Karsch-Mizrachi I, Nakamura Y, Cochrane G; International Nucleotide Sequence
+	Database Collaboration. _The International Nucleotide Sequence Database
+	Collaboration._ __Nucleic Acids Res.__ 2012 Jan;40(Database issue):D33-7.
+	DOI: 10.1093/nar/gkr1006. Epub 2011 Nov 12.
+	PMID: [22080546](https://pubmed.ncbi.nlm.nih.gov/22080546/)
+1. Nakamura Y, Cochrane G, Karsch-Mizrachi I; International Nucleotide Sequence
+	Database Collaboration. _The International Nucleotide Sequence Database
+	Collaboration._ __Nucleic Acids Res.__ 2013 Jan;41(Database issue):D21-4.
+	DOI: 10.1093/nar/gks1084. Epub 2012 Nov 24.
+	PMID: [23180798](https://pubmed.ncbi.nlm.nih.gov/23180798/)
+1. Cochrane G, Karsch-Mizrachi I, Takagi T; International Nucleotide Sequence
+	Database Collaboration. _The International Nucleotide Sequence Database
+	Collaboration._ __Nucleic Acids Res.__ 2016 Jan 4;44(D1):D48-50.
+	DOI: 10.1093/nar/gkv1323. Epub 2015 Dec 10.
+	PMID: [26657633](https://pubmed.ncbi.nlm.nih.gov/26657633/)
+1. Karsch-Mizrachi I, Takagi T, Cochrane G; International Nucleotide Sequence
+	Database Collaboration. _The International Nucleotide Sequence Database
+	Collaboration._ __Nucleic Acids Res.__ 2018 Jan 4;46(D1):D48-D51.
+	DOI: 10.1093/nar/gkx1097.
+	PMID: [29190397](https://pubmed.ncbi.nlm.nih.gov/29190397/)
+1. Arita M, Karsch-Mizrachi I, Cochrane G. _The International Nucleotide
+	Sequence Database Collaboration._ __Nucleic Acids Res.__ 2021 Jan
+	8;49(D1):D121-D124. DOI: 10.1093/nar/gkaa967.
+	PMID: [33166387](https://pubmed.ncbi.nlm.nih.gov/33166387/)
 
-Archive-Generated Files
-Providing archive-generated FASTQs for runs is a means of bringing some consistency to the data we provide. By imposing a level of uniformity on these files, we can ensure users know what to expect of them and may incorporate them into pipelines with minimal friction.
+### Historical - Ontological
+1. Stevens H. _Globalizing Genomics: The Origins of the International Nucleotide
+	Sequence Database Collaboration._ __J Hist Biol.__ 2018 Dec;51(4):657-691.
+	DOI: 10.1007/s10739-017-9490-y.
+	PMID: [28986915](https://pubmed.ncbi.nlm.nih.gov/28986915/)
+1. Lipman D, Flicek P, Salzberg S, Gerstein M, Knight R. _Closure of the NCBI
+	SRA and implications for the long-term future of genomics data storage._
+	__Genome Biol.__ 2011;12(3):402. DOI: 10.1186/gb-2011-12-3-402. Epub 2011
+	Mar 22. PMID: [21418618](https://pubmed.ncbi.nlm.nih.gov/21418618/)
+1. Galperin MY, Fernández-Suárez XM. _The 2012 Nucleic Acids Research Database
+	Issue and the online Molecular Biology Database Collection._ __Nucleic Acids
+	Res.__ 2012 Jan;40(Database issue):D1-8. DOI: 10.1093/nar/gkr1196. Epub 2011
+	Dec 5. PMID: [22144685](https://pubmed.ncbi.nlm.nih.gov/22144685/)
+1. Smith BC. _On the Origin of Objects._ __The MIT Press__ 1998 ISBN electronic:
+	9780262283946. DOI: https://doi.org/10.7551/mitpress/5128.001.0001
 
-
-
-
-https://ena-docs.readthedocs.io/en/latest/submit/general-guide/accessions.html
-
-https://ena-docs.readthedocs.io/en/latest/retrieval/ena-project.html
-
-
-
-
-As pointed out [here](https://www.ccdatalab.org/blog/gene-expression-repositories-explained)
-by Kurt Wheeler, member of
-[The Childhood Cancer Data Lab](https://www.ccdatalab.org/), within the context
-of the [refine.bio](https://www.refine.bio/) project
-
-
-INSDC data are provided openly and free of charge to
-users.
-
-https://direct.mit.edu/books/book/4771/On-the-Origin-of-Objects
+### Web Resources
+1. ENA Guidelines and Tutorials: https://ena-docs.readthedocs.io/en/latest/index.html
+1. ENA Accession Numbers: https://ena-docs.readthedocs.io/en/latest/submit/general-guide/accessions.html
+1. Kurt Wheeler ([The Childhood Cancer Data Lab](https://www.ccdatalab.org/),
+	[refine.bio](https://www.refine.bio/) project),
+	Gene Expression Repositories Explained: https://www.ccdatalab.org/blog/gene-expression-repositories-explained
