@@ -30,7 +30,8 @@ service_). Here we'll assuming that
 	[here](https://feat-fear.github.io/logSpace/docs/genomics/INSDC/) a quick
 	overview of the great _International Nucleotide Sequence Database
 	Collaboration_ initiative);
-1. Your raw reads are in _gzip-compressed_ FASTQ format (`.fastq.gz`).
+1. Your raw reads have already been de-multiplexed and are in _gzip-compressed_
+	FASTQ format (`.fastq.gz`).
 
 ## Register a Study
 To register a _Study_ (also referred to as _Project_) through the Webin Portal
@@ -41,7 +42,8 @@ To register a _Study_ (also referred to as _Project_) through the Webin Portal
 1. fill out the form to describe your study (most of these values can be edited
 	later if needed);
 1. press `Submit` button;
-1. make a note of two accession numbers that will be assigned to the study;
+1. save the `Webin-accessions-<time_stamp>.txt` text file or make a note of the
+	two accession numbers that will be assigned to the study;
 	- the ___BioProject___ accession starts with _PRJEB_ and is the one
 		typically used in journal publications;
 	- the ENA ___Study___ accession is an alternative accession number that
@@ -69,9 +71,10 @@ checklist.
 1. consider using the `Add custom field` box to the top-left to define
 	additional attributes not included in any checklist;
 1. click `Next` and then the `Download TSV Template` to get a spreadsheet based
-	on your selections;
+	on your selections (e.g.,
+	`Checklist_ENA-default sample checklist_xxxxxxxxxxxxx.tsv`);
 1. open the template in an appropriate spreadsheet editing program and complete
-	it by filling out __one line for each sample__;
+	it by filling out __one line for each _Sample__;
 	{{< hint info >}}
 __INFO__  
 The most fundamental attribute to any sample is its taxonomic classification
@@ -100,7 +103,8 @@ of the
 for missing value reporting.
 	{{< /hint >}}
 1. you can still add custom fields by inserting new column headers at this step;
-1. return to the `Register Samples` interface in Webin Portal and expand the
+1. once your spreadsheet content is complete, save the file, return to the
+	`Register Samples` interface in Webin Portal and expand the
 	`Upload filled spreadsheet to register samples` option. Use the
 	`Browse` button to find the spreadsheet you wish to submit, then click the
 	`Submit Completed Spreadsheet` button.
@@ -115,8 +119,8 @@ sample:
 Note that at this point you have not submitted any data, but you have laid the
 groundwork for this by providing sample metadata.
 
-## Uploading Files to ENA
-### Preparing MD5 checksum
+## Upload Reads
+### Prepare MD5 checksum
 For each file submitted to the archive you must provide an MD5 value. ENA will
 then re-compute and verify the MD5 checksum to make sure that the file transfer
 was completed successfully, without any changes to the file contents.
@@ -129,8 +133,9 @@ sure that
 1. MD5 hash is in lower case letters;
 1. file name matches the name of that file.
 
-### Upload using  FileZilla On Windows
-To upload files to your _private Webin file upload area_ using FTP
+### Tranfer by FTP
+To upload files to your _private Webin file upload area_ using FileZilla FTP
+client on Windows
 1. launch __FileZilla__;
 1. set the _binary mode_ (`Transfer` menu > `Transfer Type` > `Binary`);
 1. open the `Site Manager` menu with the button at the top-left;
@@ -177,7 +182,8 @@ Users attempting to connect from an institutional network may find that their IT
 services department has placed restrictions on their ability to connect to FTP
 services. This information could be useful in getting ENA service whitelisted.
 
-FTP is used in passive mode and connection will be opened to one of the below ports:
+FTP is used in passive mode and connection will be opened to one of the below
+ports:
 - 40000
 - 50000
 
@@ -186,12 +192,56 @@ Access to port __21__ is required for the following IP address
 - 193.62.193.143
 {{< /hint >}}
 
+## Submit Data
+To Submit Raw Reads Interactively
+1. go to the
+	[_Webin submission portal_](https://www.ebi.ac.uk/ena/submit/webin/login)
+	and log in with your Webin credentials;
+1. select the `Submit Reads` button;
+1. expand the `Download spreadsheet template for Read submission` section;
+1. choose the file format which applies to your submission (note that there are
+	different options for single and paired FASTQ files);
+1. click `Next` and then the `Download TSV Template` to get a copy of your
+	customized submission template spreadsheet;
+1. open the template in an appropriate spreadsheet editing program and complete
+	it by filling out __one line for each Experiment/Run (pair)__
+{{< hint info >}}
+__INFO__  
+Raw read files (i.e., FASTQ files) in ENA are contained by _Run_ objects, which
+point to the location of the files in an FTP directory. A _Run_ of sequencing is
+always linked with one _Experiment_ object, which describes the library
+preparation and sequencing protocol.
+_Experiments_ are linked with one _Sample_ and one _Study_, according to the
+[__ENA Metadata Model__](https://feat-fear.github.io/logSpace/docs/genomics/INSDC/).
+{{< /hint >}}
+1. When editing the spreadsheet, keep in mind that:
+	- existing column names are not meant to be edited;
+	- each row of your spreadsheet should describe the files and metadata for
+		exactly one experiment/run pair;
+	- the study and sample fields can be filled out with either ENA or
+		_BioStudies_/_BioSamples_ accessions
+	- the file name fields must exactly match the name of a file in your
+		account’s upload area;
+1. once your spreadsheet content is complete, save the file, return to the
+	`Submit Reads` interface in Webin Portal and expand the
+	`Upload filled spreadsheet template for Read submission` section. Use the
+	`Browse` button to find the spreadsheet you wish to submit, then click the
+	`Submit Completed Spreadsheet` button to have your file validated and
+	submitted.
 
-## Submit data
+Your submitted data files will then be entered into a processing pipeline which
+will check their validity before moving them to an archive. If metadata
+validation is successful, you will receive a confirmation of the assigned
+experiment and run accessions. Actually, you will receive _two_ accession
+numbers for each read submission:
+- a ___Run___ accession starting with _ERR_;
+- an ENA ___Experiment___ accession starting with _ERX_.
 
-https://ena-docs.readthedocs.io/en/latest/submit/reads.html
 
 
 ## Review submissions
 You can always review your sample submissions within the interactive submission interface.
+You can always review your read submissions within the interactive submission interface.
+You can always check the processing status of your submissions via the run reports available in Webin Portal.
+
 https://ena-docs.readthedocs.io/en/latest/submit/general-guide/submissions-portal.html
