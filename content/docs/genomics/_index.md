@@ -1,5 +1,5 @@
 ---
-title: "Genomics"
+title: "Omics Data"
 weight: 60
 bookCollapseSection: true
 ---

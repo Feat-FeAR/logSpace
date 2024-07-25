@@ -1,6 +1,6 @@
 ---
 title: "The INSDC"
-weight: 1
+weight: 10
 draft: false
 # bookFlatSection: false
 # bookToc: true

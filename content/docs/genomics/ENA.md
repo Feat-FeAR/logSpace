@@ -1,7 +1,7 @@
 ---
-title: "ENA Browser"
-weight: 2
-draft: true
+title: "The ENA Archive"
+weight: 20
+draft: false
 # bookFlatSection: false
 # bookToc: true
 # bookHidden: false
@@ -10,27 +10,27 @@ draft: true
 # bookSearchExclude: false
 ---
 
-# ENA Browser
+# The ENA Archive
 While the
 [official ENA guidelines](https://ena-docs.readthedocs.io/en/latest/index.html)
 for data submission and retrieval across the
 [European Nucleotide Archive](https://www.ebi.ac.uk/ena/browser/home) are very
-clear and extremely comprehensive, they may suffer from a slight redundancy and
-require some time to be read and mastered by the novice. In fact, even the
-average user may find it difficult to remember the exact procedures for file
-uploading from time to time.
+thorough and comprehensive, but can appear a bit fragmented and slightly
+redundant, thus requiring some time to be read and mastered by the novice. In
+fact, even the average user may have a hard time remembering the exact
+procedures for uploading and submitting files from time to time.
 
-Therefore, in case your only interest is in securing and making your RNA-Seq
-experiment available to the world (and your future self), this tutorial gives
-the essential steps for uploading a set of FASTQ files (_raw reads_) to the ENA
-repository through the _interactive submission system_ (aka the _Webin Portal
-service_). Here we'll assuming that
+In case your only interest is in securing and making your RNA-Seq experiment
+available to the world (and your future self), this tutorial gives the essential
+steps for uploading a set of FASTQ files (_raw reads_) to the ENA repository
+through the _interactive submission system_ (aka the _Webin Portal service_).
+Here we'll assuming that
 1. you have already registered a _Webin Submission Account_;
 1. you are already familiar with the _ENA Metadata Model_ (if not, you can find
 	[here](https://feat-fear.github.io/logSpace/docs/genomics/INSDC/) a quick
 	overview of the great _International Nucleotide Sequence Database
 	Collaboration_ initiative);
-1. Your raw reads have already been de-multiplexed and are in _gzip-compressed_
+1. your raw reads have already been de-multiplexed and are in _gzip-compressed_
 	FASTQ format (`.fastq.gz`).
 
 ## Register a Study
@@ -61,12 +61,12 @@ To register _Samples_ interactively (i.e., through the Webin Portal)
 	selection menu;
 1. select a checklist group and the most appropriate checklist among the
 	available options;
-	{{< hint info >}}
+{{< hint info >}}
 __NOTE__  
 In the absence of a checklist specific (and absolutely
 adherent!) to your experimental model choose the ___ENA default sample___
 checklist.
-	{{< /hint >}}
+{{< /hint >}}
 1. select _optional_ (and possibly _recommended_) fields;
 1. consider using the `Add custom field` box to the top-left to define
 	additional attributes not included in any checklist;
@@ -74,8 +74,8 @@ checklist.
 	on your selections (e.g.,
 	`Checklist_ENA-default sample checklist_xxxxxxxxxxxxx.tsv`);
 1. open the template in an appropriate spreadsheet editing program and complete
-	it by filling out __one line for each _Sample__;
-	{{< hint info >}}
+	it by filling out __one line for each *Sample*__;
+{{< hint info >}}
 __INFO__  
 The most fundamental attribute to any sample is its taxonomic classification
 (i.e.,. `tax_id` and the binomial `scientific_name` fields) according to the
@@ -84,24 +84,24 @@ are familiar with the
 [ENA’s taxonomy services](https://ena-docs.readthedocs.io/en/latest/faq/taxonomy.html)
 and use the correct taxonomy to describe your samples. E.g.,
 `tax_id: 9606` and `scientific_name: Homo sapiens` for human samples.
-	{{< /hint >}}
+{{< /hint >}}
 1. Do not remove the first three lines of the spreadsheet, but use row 3
 	(`#units`) to specify units where required by the checklist;
-	{{< hint info >}}
+{{< hint info >}}
 __INFO__  
 Use the
 [_sample checklists portal_](https://www.ebi.ac.uk/ena/browser/checklists)
 to look up the requirements and restrictions for each field. E.g.,
 [Checklist: ERC000011](https://www.ebi.ac.uk/ena/browser/view/ERC000011)
 describes the _ENA default sample checklist_.
-	{{< /hint >}}
-	{{< hint warning >}}
+{{< /hint >}}
+{{< hint warning >}}
 __WARNING__  
 If you cannot provide a value for a mandatory field within a checklist, use one
 of the
 [INDSC accepted terms](https://ena-docs.readthedocs.io/en/latest/submit/samples/missing-values.html)
 for missing value reporting.
-	{{< /hint >}}
+{{< /hint >}}
 1. you can still add custom fields by inserting new column headers at this step;
 1. once your spreadsheet content is complete, save the file, return to the
 	`Register Samples` interface in Webin Portal and expand the
@@ -120,6 +120,10 @@ Note that at this point you have not submitted any data, but you have laid the
 groundwork for this by providing sample metadata.
 
 ## Upload Reads
+When submitting data to ENA, it is often necessary to upload the data files in
+advance of submission in the FTP area associated with your account (aka _private
+Webin file upload area_). 
+
 ### Prepare MD5 checksum
 For each file submitted to the archive you must provide an MD5 value. ENA will
 then re-compute and verify the MD5 checksum to make sure that the file transfer
@@ -139,7 +143,7 @@ client on Windows
 1. launch __FileZilla__;
 1. set the _binary mode_ (`Transfer` menu > `Transfer Type` > `Binary`);
 1. open the `Site Manager` menu with the button at the top-left;
-1. use the `New Site` option;
+1. if still not set, use the `New site` option;
 1. set the following parameters:
 	- __Protocol__: `FTP - File Transfer Protocol`
 	- __Host__: `webin2.ebi.ac.uk`
@@ -193,18 +197,9 @@ Access to port __21__ is required for the following IP address
 {{< /hint >}}
 
 ## Submit Data
-To Submit Raw Reads Interactively
-1. go to the
-	[_Webin submission portal_](https://www.ebi.ac.uk/ena/submit/webin/login)
-	and log in with your Webin credentials;
-1. select the `Submit Reads` button;
-1. expand the `Download spreadsheet template for Read submission` section;
-1. choose the file format which applies to your submission (note that there are
-	different options for single and paired FASTQ files);
-1. click `Next` and then the `Download TSV Template` to get a copy of your
-	customized submission template spreadsheet;
-1. open the template in an appropriate spreadsheet editing program and complete
-	it by filling out __one line for each Experiment/Run (pair)__
+Now it's time to associate each _Run_ (i.e., FASTQ file pair) with its _Sample_
+accession and submit the data to the ENA archive.
+
 {{< hint info >}}
 __INFO__  
 Raw read files (i.e., FASTQ files) in ENA are contained by _Run_ objects, which
@@ -214,6 +209,20 @@ preparation and sequencing protocol.
 _Experiments_ are linked with one _Sample_ and one _Study_, according to the
 [__ENA Metadata Model__](https://feat-fear.github.io/logSpace/docs/genomics/INSDC/).
 {{< /hint >}}
+
+To Submit Raw Reads Interactively,
+1. go to the
+	[_Webin submission portal_](https://www.ebi.ac.uk/ena/submit/webin/login)
+	and log in with your Webin credentials;
+1. select the `Submit Reads` button;
+1. expand the `Download spreadsheet template for Read submission` section;
+1. choose the file format which applies to your submission (note that there are
+	different options for single and paired FASTQ files);
+1. click `Next` and then the `Download TSV Template` to get a copy of your
+	customized submission template spreadsheet (e.g.,
+	`fastq2_template_xxxxxxxxxxx.tsv`);
+1. open the template in an appropriate spreadsheet editing program and complete
+	it by filling out __one line for each Experiment/Run (pair)__;
 1. When editing the spreadsheet, keep in mind that:
 	- existing column names are not meant to be edited;
 	- each row of your spreadsheet should describe the files and metadata for
@@ -237,11 +246,26 @@ numbers for each read submission:
 - a ___Run___ accession starting with _ERR_;
 - an ENA ___Experiment___ accession starting with _ERX_.
 
-
-
 ## Review submissions
-You can always review your sample submissions within the interactive submission interface.
-You can always review your read submissions within the interactive submission interface.
-You can always check the processing status of your submissions via the run reports available in Webin Portal.
-
-https://ena-docs.readthedocs.io/en/latest/submit/general-guide/submissions-portal.html
+To review the content and status of your existing submissions, login to the
+[_Webin submission portal_](https://www.ebi.ac.uk/ena/submit/webin/login)
+dashboard with your Webin credentials and access reports on
+1. the content of submitted metadata objects
+	- _Studies_: `Studies Report`
+	- _Samples_: `Samples Report`
+	- Reads (_Experiments_ and _Runs_): `Runs Report`
+	- _Analyses_: `Analyses Report`
+1. the file content of _Run_ and _Analysis_ objects (the only two object types
+	which have data files associated with them rather than just metadata):
+	`Run Files Report` and `Analysis Files Report`
+1. on files which have been uploaded but not submitted yet:
+	`Unsubmitted Files Report`
+1. the post-archival processing status of submitted data files:
+`Run Processing Report` and `Analysis Processing Report`
+{{< hint info >}}
+__INFO__  
+Note that while this interface allows you to check the processing status of your
+files, in cases where there are failures you may or may not have the ability to
+fix it as a user; instead you will most likely need to contact
+the ENA [helpdesk](https://www.ebi.ac.uk/ena/browser/support).
+{{< /hint >}}
