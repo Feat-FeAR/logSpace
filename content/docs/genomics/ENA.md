@@ -15,7 +15,7 @@ While the
 [official ENA guidelines](https://ena-docs.readthedocs.io/en/latest/index.html)
 for data submission and retrieval across the
 [European Nucleotide Archive](https://www.ebi.ac.uk/ena/browser/home) are very
-thorough and comprehensive, but can appear a bit fragmented and slightly
+thorough and comprehensive, they may also appear a bit fragmented and slightly
 redundant, thus requiring some time to be read and mastered by the novice. In
 fact, even the average user may have a hard time remembering the exact
 procedures for uploading and submitting files from time to time.
@@ -25,7 +25,8 @@ available to the world (and your future self), this tutorial gives the essential
 steps for uploading a set of FASTQ files (_raw reads_) to the ENA repository
 through the _interactive submission system_ (aka the _Webin Portal service_).
 Here we'll assuming that
-1. you have already registered a _Webin Submission Account_;
+1. you have already registered a _Webin Submission Account_ (and you remember
+	where you put your credentials);
 1. you are already familiar with the _ENA Metadata Model_ (if not, you can find
 	[here](https://feat-fear.github.io/logSpace/docs/genomics/INSDC/) a quick
 	overview of the great _International Nucleotide Sequence Database
@@ -38,13 +39,12 @@ To register a _Study_ (also referred to as _Project_) through the Webin Portal
 1. go to the
 	[_Webin submission portal_](https://www.ebi.ac.uk/ena/submit/webin/login)
 	and log in with your Webin credentials;
-1. select the `Register Study` button;
-1. fill out the form to describe your study (most of these values can be edited
-	later if needed);
-1. press `Submit` button;
-1. save the `Webin-accessions-<time_stamp>.txt` text file or make a note of the
-	two accession numbers that will be assigned to the study;
-	- the ___BioProject___ accession starts with _PRJEB_ and is the one
+1. select the `Register Study` button and fill out the form to describe your
+	study (most of these values can be edited later if needed);
+1. press `Submit` button and save the `Webin-accessions-<time_stamp>.txt` text
+	file, or make a note of the two accession numbers that will be assigned to
+	the study:
+	- the ___BioProject___ accession starts with _PRJEB_ and it is the one
 		typically used in journal publications;
 	- the ENA ___Study___ accession is an alternative accession number that
 		starts with _ERP_.
