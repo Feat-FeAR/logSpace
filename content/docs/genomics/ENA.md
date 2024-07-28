@@ -56,18 +56,17 @@ To register _Samples_ interactively (i.e., through the Webin Portal)
 1. go to the
 	[_Webin submission portal_](https://www.ebi.ac.uk/ena/submit/webin/login)
 	and log in with your Webin credentials;
-1. select the `Register Samples` button;
-1. click `Download spreadsheet to register samples` to expand the checklist
+1. click the `Register Samples` button and select
+	`Download spreadsheet to register samples` to expand the checklist
 	selection menu;
-1. select a checklist group and the most appropriate checklist among the
+1. select a checklist group and then the most appropriate checklist among the
 	available options;
 {{< hint info >}}
 __NOTE__  
-In the absence of a checklist specific (and absolutely
-adherent!) to your experimental model choose the ___ENA default sample___
-checklist.
+In the absence of a checklist specific (and absolutely adherent!) to your
+experimental model, choose the ___ENA default sample___ checklist.
 {{< /hint >}}
-1. select _optional_ (and possibly _recommended_) fields;
+1. inspect _optional_ (and possibly _recommended_) fields;
 1. consider using the `Add custom field` box to the top-left to define
 	additional attributes not included in any checklist;
 1. click `Next` and then the `Download TSV Template` to get a spreadsheet based
@@ -78,14 +77,14 @@ checklist.
 {{< hint info >}}
 __INFO__  
 The most fundamental attribute to any sample is its taxonomic classification
-(i.e.,. `tax_id` and the binomial `scientific_name` fields) according to the
+(i.e., the `tax_id` and binomial `scientific_name` fields) according to the
 [NCBI Taxonomy](https://www.ncbi.nlm.nih.gov/taxonomy) database. Make sure you
 are familiar with the
 [ENA’s taxonomy services](https://ena-docs.readthedocs.io/en/latest/faq/taxonomy.html)
 and use the correct taxonomy to describe your samples. E.g.,
 `tax_id: 9606` and `scientific_name: Homo sapiens` for human samples.
 {{< /hint >}}
-1. Do not remove the first three lines of the spreadsheet, but use row 3
+1. do not remove the first three lines of the spreadsheet, but use row 3
 	(`#units`) to specify units where required by the checklist;
 {{< hint info >}}
 __INFO__  
@@ -102,8 +101,9 @@ of the
 [INDSC accepted terms](https://ena-docs.readthedocs.io/en/latest/submit/samples/missing-values.html)
 for missing value reporting.
 {{< /hint >}}
-1. you can still add custom fields by inserting new column headers at this step;
-1. once your spreadsheet content is complete, save the file, return to the
+1. you can still add custom fields at this step, just by inserting new column
+	headers;
+1. once your spreadsheet content is complete, save the file, go back to the
 	`Register Samples` interface in Webin Portal and expand the
 	`Upload filled spreadsheet to register samples` option. Use the
 	`Browse` button to find the spreadsheet you wish to submit, then click the
@@ -112,9 +112,9 @@ for missing value reporting.
 At this point your samples will be validated and, if accepted, accession numbers
 will be reported. Actually, you will receive _two_ accession numbers for each
 sample:
-- the ___BioSample___ accession starts with _SAMEA_;
-- the ENA ___Sample___ accession is an alternative accession number that starts
-	with _ERS_.
+- the ___BioSample___ accession that starts with _SAMEA_;
+- the ENA ___Sample___ accession, which is an alternative accession number that
+	starts with _ERS_.
 
 Note that at this point you have not submitted any data, but you have laid the
 groundwork for this by providing sample metadata.
