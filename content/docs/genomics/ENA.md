@@ -121,29 +121,29 @@ groundwork for this by providing sample metadata.
 
 ## Upload Reads
 When submitting data to ENA, it is often necessary to upload the data files in
-advance of submission in the FTP area associated with your account (aka _private
-Webin file upload area_). 
+advance of submission in the FTP area associated with your account (aka your
+_private Webin file upload area_). 
 
-### Prepare MD5 checksum
+### Prepare MD5 Hashes
 For each file submitted to the archive you must provide an MD5 value. ENA will
-then re-compute and verify the MD5 checksum to make sure that the file transfer
-was completed successfully, without any changes to the file contents.
-Specifically, you can register your file’s MD5 value by outputting it to a
-second (.md5) text file and uploading this along with the data file.
-Alternatively, you can make a note of the value and enter it when prompted
-during the submission process. If you make and upload your own _.md5_ file, be
-sure that
-1. it contains only the 32 digit MD5 value for a single file;
+then re-compute and verify the MD5 checksum after file upload to make sure that
+the file transfer was completed successfully, without changes to contents.
+Specifically, you can register your file’s MD5 value by redirecting the output
+of the command `md5sum <file_name>` to a second (.md5) text file and uploading
+this along with the data file. Alternatively, you can make a note of the value
+and enter it when prompted during the submission process. If you choose to make
+and upload your own _.md5_ file, be sure that
+1. it contains ___only___ the 32 digit MD5 value for a single file;
 1. MD5 hash is in lower case letters;
-1. file name matches the name of that file.
+1. its file name matches the name of the hashed file.
 
-### Tranfer by FTP
+### Transfer by FTP
 To upload files to your _private Webin file upload area_ using FileZilla FTP
-client on Windows
+client
 1. launch __FileZilla__;
 1. set the _binary mode_ (`Transfer` menu > `Transfer Type` > `Binary`);
 1. open the `Site Manager` menu with the button at the top-left;
-1. if still not set, use the `New site` option;
+1. if still unset, use the `New site` option to add the ENA host;
 1. set the following parameters:
 	- __Protocol__: `FTP - File Transfer Protocol`
 	- __Host__: `webin2.ebi.ac.uk`
@@ -160,9 +160,11 @@ client on Windows
 
 {{< hint info >}}
 __NOTE__  
-The __Webin File Uploader__ is a Java web start application provided by ENA and
-downloadable from Webin Portal which can be used to upload your files. It also
-automatically creates .md5 files and uploads them for you.
+The __Webin File Uploader__ is a Java web start application provided by ENA
+(downloadable from Webin Portal) that can be used as an alternative GUI to
+upload your files to ENA's data upload area. Compared to FileZilla, it offers
+far fewer options, but it is simpler and automatically creates .md5 files and
+uploads them for you.
 {{< /hint >}}
 {{< hint warning >}}
 __WARNING__  
@@ -170,8 +172,8 @@ The _data upload areas_ are provided as a temporary place in which data are
 held while in transit. As such, they are neither intended nor suitable for any
 longer-term storage of data. ENA expects any given data file to remain in a data
 upload area for no longer than __2 months__ before the instruction is given by
-the user to submit the file. ENA reserves the right to routinely delete any data
-files that persist in them for more than 2 months.
+the user to submit the file. Accordingly, ENA reserves the right to routinely
+delete any data files that persist in them for more than 2 months.
 
 ENA place no absolute limit within the 2-month period on the total volume of
 user data that may exist in a data upload area at any one time. However, ENA
@@ -186,7 +188,7 @@ Users attempting to connect from an institutional network may find that their IT
 services department has placed restrictions on their ability to connect to FTP
 services. This information could be useful in getting ENA service whitelisted.
 
-FTP is used in passive mode and connection will be opened to one of the below
+FTP is used in _passive mode_ and connection will be opened to one of the below
 ports:
 - 40000
 - 50000
@@ -198,7 +200,7 @@ Access to port __21__ is required for the following IP address
 
 ## Submit Data
 Now it's time to associate each _Run_ (i.e., FASTQ file pair) with its _Sample_
-accession and submit the data to the ENA archive.
+accession in order to submit the previously uploaded data to the ENA archive.
 
 {{< hint info >}}
 __INFO__  
@@ -246,7 +248,7 @@ numbers for each read submission:
 - a ___Run___ accession starting with _ERR_;
 - an ENA ___Experiment___ accession starting with _ERX_.
 
-## Review submissions
+## Review Submissions
 To review the content and status of your existing submissions, login to the
 [_Webin submission portal_](https://www.ebi.ac.uk/ena/submit/webin/login)
 dashboard with your Webin credentials and access reports on
