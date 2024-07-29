@@ -42,12 +42,14 @@ To register a _Study_ (also referred to as _Project_) through the Webin Portal
 1. select the `Register Study` button and fill out the form to describe your
 	study (most of these values can be edited later if needed);
 1. press `Submit` button and save the `Webin-accessions-<time_stamp>.txt` text
-	file, or make a note of the two accession numbers that will be assigned to
-	the study:
-	- the ___BioProject___ accession starts with _PRJEB_ and it is the one
+	file, or make a note of the accession numbers that will be assigned to your
+	study and submission:
+	- the ___BioProject___ study accession starts with _PRJEB_ and it is the one
 		typically used in journal publications;
-	- the ENA ___Study___ accession is an alternative accession number that
-		starts with _ERP_.
+	- the ENA ___Study___ accession is an alternative accession number for the
+		study that starts with _ERP_;
+	- the ENA ___Submission___ accession refers to the _submission process_
+		rather than to the study itself and it starts with _ERA_.
 1. You may return to the dashboard and select `Studies Report` to review
 	registered studies.
 
@@ -151,7 +153,7 @@ client
 	- __Encryption__: `Require explicit FTP over TLS`
 	- __Logon Type__: `Normal`
 	- As for __User__ and __Password__, the authentication is done using your
-		Webin submission account name and password.
+		Webin submission account name and password;
 1. click `Connect`;
 1. search for the file(s) you want to upload using the tree on the left panel;
 1. drag and drop the files you want to upload from the lower left panel to the
@@ -218,14 +220,14 @@ To Submit Raw Reads Interactively,
 	and log in with your Webin credentials;
 1. select the `Submit Reads` button;
 1. expand the `Download spreadsheet template for Read submission` section;
-1. choose the file format which applies to your submission (note that there are
-	different options for single and paired FASTQ files);
+1. choose the file format which applies to your _Submission_ (note that there
+	are different options for single and paired FASTQ files);
 1. click `Next` and then the `Download TSV Template` to get a copy of your
 	customized submission template spreadsheet (e.g.,
 	`fastq2_template_xxxxxxxxxxx.tsv`);
 1. open the template in an appropriate spreadsheet editing program and complete
 	it by filling out __one line for each *Experiment/Run* (pair)__;
-1. when editing the spreadsheet, keep in mind that:
+1. when editing the spreadsheet, keep in mind that
 	- existing column names are not meant to be edited;
 	- each row of your spreadsheet should describe the files and metadata for
 		exactly one _Experiment_/_Run_-pair;
@@ -237,7 +239,7 @@ To Submit Raw Reads Interactively,
 	- _file MD5_ fields (i.e., `forward_file_md5` for R1 and `reverse_file_md5`
 		for R2, in the case of PE reads) are mandatory only if you didn't use
 		the _Webin File Uploader_ or upload the checksum using a .md5 file.
-1. once your spreadsheet content is complete, save the file, return to the
+1. Once your spreadsheet content is complete, save the file, return to the
 	`Submit Reads` interface in Webin Portal and expand the
 	`Upload filled spreadsheet template for Read submission` section. Use the
 	`Browse` button to find the spreadsheet you wish to submit, then click the
@@ -248,14 +250,14 @@ Your submitted data files will then be entered into a processing pipeline which
 will check their validity before moving them to an archive. If metadata
 validation is successful, you will receive a confirmation of the assigned
 _Experiment_ and _Run_ accessions. Actually, you will receive _two_ accession
-numbers for each _Run_ submission:
+numbers for each read submission:
 - a ___Run___ accession starting with _ERR_;
 - an ___Experiment___ accession starting with _ERX_.
 
 ## Review Submissions
-To review the content and status of your existing submissions, login to the
+To review the content and status of your existing _Submissions_, login to the
 [_Webin submission portal_](https://www.ebi.ac.uk/ena/submit/webin/login)
-dashboard with your Webin credentials and access reports on
+dashboard with your Webin credentials and access reports about
 1. the content of submitted metadata objects
 	- _Studies_: `Studies Report`
 	- _Samples_: `Samples Report`
@@ -264,14 +266,14 @@ dashboard with your Webin credentials and access reports on
 1. the file content of _Run_ and _Analysis_ objects (the only two object types
 	which have data files associated with them rather than just metadata):
 	`Run Files Report` and `Analysis Files Report`
-1. on files which have been uploaded but not submitted yet:
+1. files which have been uploaded but not submitted yet:
 	`Unsubmitted Files Report`
 1. the post-archival processing status of submitted data files:
-`Run Processing Report` and `Analysis Processing Report`
+	`Run Processing Report` and `Analysis Processing Report`
 {{< hint info >}}
 __INFO__  
 Note that while this interface allows you to check the processing status of your
-files, in cases where there are failures you may or may not have the ability to
-fix it as a user; instead you will most likely need to contact
-the ENA [helpdesk](https://www.ebi.ac.uk/ena/browser/support).
+files, in cases where there are failures you may not have the ability to fix it
+as a user; instead you will most likely need to contact the ENA
+[helpdesk](https://www.ebi.ac.uk/ena/browser/support).
 {{< /hint >}}
