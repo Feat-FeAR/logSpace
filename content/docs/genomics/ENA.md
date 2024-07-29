@@ -109,15 +109,15 @@ for missing value reporting.
 	`Browse` button to find the spreadsheet you wish to submit, then click the
 	`Submit Completed Spreadsheet` button.
 
-At this point your samples will be validated and, if accepted, accession numbers
-will be reported. Actually, you will receive _two_ accession numbers for each
-sample:
+At this point your _Samples_ will be validated and, if accepted, accession
+numbers will be reported. Actually, you will receive _two_ accession numbers for
+each _Sample_:
 - the ___BioSample___ accession that starts with _SAMEA_;
 - the ENA ___Sample___ accession, which is an alternative accession number that
 	starts with _ERS_.
 
-Note that at this point you have not submitted any data, but you have laid the
-groundwork for this by providing sample metadata.
+Note that at this point __you have not submitted any data__, but you have laid
+the groundwork for this by providing _Sample_ metadata.
 
 ## Upload Reads
 When submitting data to ENA, it is often necessary to upload the data files in
@@ -204,11 +204,11 @@ accession in order to submit the previously uploaded data to the ENA archive.
 
 {{< hint info >}}
 __INFO__  
-Raw read files (i.e., FASTQ files) in ENA are contained by _Run_ objects, which
+In ENA, raw read files (i.e., FASTQ files) are contained by _Run_ objects, which
 point to the location of the files in an FTP directory. A _Run_ of sequencing is
 always linked with one _Experiment_ object, which describes the library
-preparation and sequencing protocol.
-_Experiments_ are linked with one _Sample_ and one _Study_, according to the
+preparation and sequencing protocol. In turn, _Experiments_ are linked with one
+_Sample_ and one _Study_, according to the
 [__ENA Metadata Model__](https://feat-fear.github.io/logSpace/docs/genomics/INSDC/).
 {{< /hint >}}
 
@@ -224,29 +224,33 @@ To Submit Raw Reads Interactively,
 	customized submission template spreadsheet (e.g.,
 	`fastq2_template_xxxxxxxxxxx.tsv`);
 1. open the template in an appropriate spreadsheet editing program and complete
-	it by filling out __one line for each Experiment/Run (pair)__;
-1. When editing the spreadsheet, keep in mind that:
+	it by filling out __one line for each *Experiment/Run* (pair)__;
+1. when editing the spreadsheet, keep in mind that:
 	- existing column names are not meant to be edited;
 	- each row of your spreadsheet should describe the files and metadata for
-		exactly one experiment/run pair;
-	- the study and sample fields can be filled out with either ENA or
-		_BioStudies_/_BioSamples_ accessions
-	- the file name fields must exactly match the name of a file in your
-		account’s upload area;
+		exactly one _Experiment_/_Run_-pair;
+	- `study` and `sample` fields can be filled out with either ENA or
+		_BioStudies_/_BioSamples_ accessions;
+	- _file name_ fields (i.e., `forward_file_name` for R1 and
+		`reverse_file_name` for R2, in the case of PE reads) must exactly match
+		the name of a file already present in your account’s upload area;
+	- _file MD5_ fields (i.e., `forward_file_md5` for R1 and `reverse_file_md5`
+		for R2, in the case of PE reads) are mandatory only if you didn't use
+		the _Webin File Uploader_ or upload the checksum using a .md5 file.
 1. once your spreadsheet content is complete, save the file, return to the
 	`Submit Reads` interface in Webin Portal and expand the
 	`Upload filled spreadsheet template for Read submission` section. Use the
 	`Browse` button to find the spreadsheet you wish to submit, then click the
-	`Submit Completed Spreadsheet` button to have your file validated and
+	`Submit Completed Spreadsheet` button to have your files validated and
 	submitted.
 
 Your submitted data files will then be entered into a processing pipeline which
 will check their validity before moving them to an archive. If metadata
 validation is successful, you will receive a confirmation of the assigned
-experiment and run accessions. Actually, you will receive _two_ accession
-numbers for each read submission:
+_Experiment_ and _Run_ accessions. Actually, you will receive _two_ accession
+numbers for each _Run_ submission:
 - a ___Run___ accession starting with _ERR_;
-- an ENA ___Experiment___ accession starting with _ERX_.
+- an ___Experiment___ accession starting with _ERX_.
 
 ## Review Submissions
 To review the content and status of your existing submissions, login to the
