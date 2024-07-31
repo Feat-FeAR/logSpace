@@ -19,6 +19,11 @@ transformed biosciences by providing deeper insights into the molecular
 foundations of life and disease, ultimately leading to advancements in research,
 diagnostics, and treatments.
 
+### Resources
+In this section you can find a collection of notes to the most important and
+most frequently used (by me) web resources for accessing, analyzing, and storing
+omics data.
+
 <br>
 <div style="text-align: center;">
 <table style="border-collapse: collapse; width: 85%; margin: auto; border: 0;">
@@ -29,12 +34,12 @@ diagnostics, and treatments.
     <tr>
         <td style="border: 0;">
             <a href="https://feat-fear.github.io/logSpace/docs/omics/INSDC/" target="_self">
-                {{< figure src="/images/INSDC_logo.png" title="ENA logo" width=180 >}}
+                {{< figure src="/images/INSDC_logo.png" title="ENA logo" width=190 >}}
             </a>
         </td>
         <td style="border: 0;">
             <a href="https://feat-fear.github.io/logSpace/docs/omics/ENA/" target="_self">
-                {{< figure src="/images/ENA_logo_crop.png" title="ENA logo" width=270 >}}
+                {{< figure src="/images/ENA_logo_crop.png" title="ENA logo" width=300 >}}
             </a>
         </td>
     </tr>
