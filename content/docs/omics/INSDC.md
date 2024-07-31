@@ -13,7 +13,7 @@ draft: false
 # The International Nucleotide Sequence Database Collaboration
 
 <div style="text-align: center;">
-{{< figure src="/images/parabola.png" title="parabola screenshot" width=600 >}}
+	{{< figure src="/images/INSDC_logo.png" title="ENA logo" width=400 >}}
 </div>
 
 The global availability of our current knowledge about DNA sequences and gene
