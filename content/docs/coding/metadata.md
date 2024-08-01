@@ -1,9 +1,14 @@
-+++
-title = 'Metadata'
-weight = 100
-date = 2023-12-18T23:20:42+01:00
-draft = false
-+++
+---
+title: "Metadata"
+weight: 100
+draft: false
+# bookFlatSection: false
+# bookToc: true
+# bookHidden: false
+# bookCollapseSection: false
+# bookComments: false
+# bookSearchExclude: false
+---
 
 # Metadata test page
 

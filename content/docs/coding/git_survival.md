@@ -1,9 +1,14 @@
-+++
-title = 'Git & GitHub'
-weight = 5
-draft = true
-+++
-
+---
+title: "Git & GitHub"
+weight: 10
+draft: false
+# bookFlatSection: false
+# bookToc: true
+# bookHidden: false
+# bookCollapseSection: false
+# bookComments: false
+# bookSearchExclude: false
+---
 
 # Git and GitHub
 WARNING:

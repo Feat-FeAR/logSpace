@@ -1,13 +1,18 @@
-+++
-title = 'Shallow vs deep'
-weight = 20
-date = 2023-11-17T23:20:42+01:00
-draft = true
-+++
+---
+title: "Shallow vs deep"
+weight: 30
+draft: true
+# bookFlatSection: false
+# bookToc: true
+# bookHidden: false
+# bookCollapseSection: false
+# bookComments: false
+# bookSearchExclude: false
+---
 
 # Shallow copies vs deep copies
 
-Pay fucking attention to this
+Pay fucking attention to this!
 
 ```js
 a = 5
