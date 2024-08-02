@@ -235,7 +235,7 @@ git remote add origin git@github.com:<user>/<git_repo>.git
 git add .
 git commit -m "<message>"
 ```
-Use GitHub CLI to create the repository <git_repo>, then push the first commit
+Use GitHub CLI to create the repository `<git_repo>`, then push the first commit
 ```bash
 git push --set-upstream origin main
 git push -u origin main
@@ -246,54 +246,75 @@ git push -u origin main
 
 
 ## Stage, Commit, and Push
-
+The most standard Git workflow is made up of the following few steps. After each
+one of them you can always run
 ```bash
-    # Move to the working directory
-    cd <local_dir>/<git_repo>
-    # A '(<branch_name>)' label should appear at the end of the prompt when
-    # using 'Git Bash'
-        git status # To see if you are up-to-date or not
-
-    git pull # Fetch from the remote repo and integrate with the local branch
-        git status # To check if now you are up-to-date
-
-
-    ########################### Make changes now ###########################
-    ### The best practice here is to work on just one feature per commit ###
-    ########################################################################
-
-
-    # Explore/check differences in changed files, line-by-line
-    git diff
-    # Differences for a single file (<filename> is the file path relative to the
-    # project directory, as shown by 'git status') 
-    git diff <filename>
-
-    # Add to Staging Area (i.e. update the index using the wd content to prepare
-    # the content for the next commit)
-    git add .
-        git status # To see a list of the changes staged to be committed
-
-    # Record changes to the local repository
-    git commit
-    # Fill out a 'commit message' using the default editor (e.g. Nano,
-    # Notepad++, ...), save, and quit.
-    # Alternatively, use '-m' option
-    git commit -m "Here my (short) message"
-        git log     # To check the commit(s)
-        git status  # To check if you are ahead of 'origin/main' by 1 or more
-                    # commit(s)
-
-
-    ########################### Go back to start ###########################
-    ### The best practice here is to work on just one feature per commit ###
-    ########################################################################
-
-
-    # Publish all your local commits at once (Update remote refs)
-    git push
-        git status # To check if you are up-to-date again
+git status
 ```
+to check if you are behind or ahead of 'origin/main' by any commits, or to list
+changed files or the changes staged to be committed.
+
+1. Move to the working directory (i.e., the Git local repository folder).
+    ```bash
+    cd <local_dir>/<git_repo>
+    ```
+
+1. Fetch from the remote repository and _integrate_ with the local branch.
+    ```bash
+    git pull
+    ```
+    Note that this is not a _synchronization_ procedure, since all the
+    uncommitted changes in the local branch are preserved by `git pull`.
+
+1. Make changes to one or multiple project files. The best practice here is to
+    work on just __one feature per commit__.
+
+1. Explore/check line-by-line differences in all changed files,
+    ```bash
+    git diff
+    ```
+    or within a single file, 
+    ```bash
+    git diff <filename>
+    ```
+    where `<filename>` is the file path relative to the project directory, as
+    shown by `git status`.
+
+1. Prepare the content for the next commit by adding all changed files to the
+    _staging area_,
+    ```bash
+    git add .
+    ```
+    or selectively choose single files to stage.
+    ```bash
+    git add <filename>
+    ```
+
+1. Record changes to the local repository,
+    ```bash
+    git commit
+    ```
+    then fill out a _commit message_ using the default text editor (e.g., Vim,
+    Nano, Notepad++, ...), save, and quit. Alternatively, use the option `-m` to
+    do it all in one.
+    ```bash
+    git commit -m "Here my (short) message"
+    ```
+
+1. Possibly, check the commit(s).
+    ```bash
+    git log
+    ```
+
+1. Make other changes and/or stage other files (go back to points 3 or 5,
+    respectively).
+
+1. Publish all your local commits at once (i.e., update remote refs).
+    ```bash
+    git push
+    ```
+
+
 
 
 
