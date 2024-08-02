@@ -11,15 +11,17 @@ draft: false
 ---
 
 # Git and GitHub
-WARNING:
-This is NOT:
+{{< hint warning >}}
+__This is NOT:__
 1. a full guide to Git or GitHub
 1. an introduction to Git or GitHub
 1. a glossary of Git commands
+1. a compendium of I know about Git/GitHub
 
-This is:
+__This is instead:__
 1. a collections of personal notes taken when I started learning Git
 1. a list of Git commands that I use the most
+{{< /hint >}}
 
 ## Authentication
 Basic authentication to GitHub using a simple password is deprecated and no
@@ -382,77 +384,86 @@ git status
 ```
 {{< /hint >}}
 
-
-
-
-
 ## Manage Branches
-
-```bash
-    # Create a new branch <new_branch> locally
+1. Create a new branch `<new_branch>` __locally__.
+    ```bash
     git branch <new_branch>
+    ```
 
-    # List branches 
-    git branch -l # [--list] list local branches (current one marked with a *)
-    git branch -r # [--remotes] list remote branches
-    git branch -a # [--all] list all branches
+1. List branches.
+    ```bash
+    git branch -l  # [--list]    list local branches (current one marked with *)
+    git branch -r  # [--remotes] list remote branches
+    git branch -a  # [--all]     list all branches
+    ```
 
-    # Switch to a different branch <new_branch> (if the working tree is clean)
+1. Switch to a different branch `<new_branch>` (if the working tree is clean).
+    ```bash
     git checkout <new_branch>
-    # A '(<new_branch>)' label should appear at the end of the prompt when using
-    # 'Git Bash'
+    ```
+    {{< hint info >}}
+__NOTE__  
+When checking out, the local repository changes automatically to reflect the
+(committed) content of the new current branch, but preserving all your
+still-uncommitted changes!
+    {{< /hint >}}
 
-    # Push the new branch to the remote repository for the first time
+1. Push the new branch to the remote repository for the first time.
+    ```bash
     git push --set-upstream origin <new_branch>
+    # or
     git push -u origin <new_branch>
+    ```
 
-    # Go back to main
+1. Go back to main.
+    ```bash
     git checkout main
+    ```
 
-    # Delete the branch <old_branch> locally:
-    #  - This only deletes the branch if it has already been fully merged in its
-    #    upstream branch.
-    git branch --delete <old_branch>
-    git branch -d <old_branch>
-    #  - This deletes the branch irrespective of its merged status.
-    git branch --delete --force <old_branch>
-    git branch -D <old_branch>
-        git branch --list # Check it out
+1. Delete the branch `<old_branch>` __locally__.
+    - This only deletes the branch if it has already been fully merged in its
+        upstream branch.
+        ```bash
+        git branch --delete <old_branch>
+        # or
+        git branch -d <old_branch>
+        ```
+    - This deletes the branch irrespective of its merged status.
+        ```bash
+        git branch --delete --force <old_branch>
+        # or
+        git branch -D <old_branch>
+        ```
 
-    # Delete the branch <old_branch> remotely
+1. Delete the branch `<old_branch>` __remotely__.
+    ```bash
     git push origin --delete <old_branch>
+    # or
     git push origin -d <old_branch>
-        git branch --list # Check it out
+    ```
 
-    # Merge changes from one branch into another.
-    # NOTE: 'git merge' merges the specified branch into the currently active
-    #       branch. So you need to be on the branch that you are merging into
-    #       (i.e., usually the main).
+1. Merge changes from one branch into another.
+    ```bash
     git checkout main
     git merge <new_branch>
     git push
-```
-{{< hint info >}}
-**NOTE**  
-When checking out, the local repository changes automatically to reflect the
-(committed) content of the new current branch + all your still-uncommitted
-changes!
-{{< /hint >}}
-
-
-{{< hint warning >}}
-**WARNING**  
-GitHub usually deletes a branch after merging of pull request, but this
+    ```
+    {{< hint info >}}
+__NOTE__  
+`git merge` merges the specified branch into the currently active branch. So you
+need to be on the branch that you are merging into (i.e., usually the main).
+    {{< /hint >}}
+    {{< hint warning >}}
+__WARNING__  
+GitHub usually deletes a branch after merging of a _pull request_, but this
 action will delete the branch only in the remote. To clean up your local
-references to the romote branches do this
+references to the remote branches do this:
 ```bash
 # Lists defunct branches that can be deleted/pruned 
 git remote prune origin --dry-run
-
 # Actually prune/cleanup the local references 
 git remote prune origin
-
-# Check brach status
+# Check branch status
 git branch -a
 ```
 {{< /hint >}}
