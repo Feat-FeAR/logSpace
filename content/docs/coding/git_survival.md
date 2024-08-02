@@ -314,51 +314,70 @@ changed files or the changes staged to be committed.
     git push
     ```
 
-
-
-
-
-
-
 ## Undos
-
-```bash
-    # Discard changes in working directory
+- Discard changes in working directory.
+    ```bash
     git restore <file_name>
-        git status # To see the updated list of changes
+    ```
 
-    # Unstage (remove from staging area) <file_name>
+- Unstage (i.e., remove from staging area) `<file_name>`.
+    ```bash
     git restore --staged <file_name>
-        git status # To see the updated list of staged/unstaged files
+    ```
 
-    # Remove the last commit from the local Git
+- Remove the last commit __from the local Git__.
+    ```bash
     git reset --hard HEAD^
-    # Remove multiple commits from the top
+    ```
+    Remove `--hard` to uncommit but keep the changes around for reworking.
+    ```bash
+    git reset HEAD^
+    ```
+
+- Remove from the local Git multiple commits __from the top__.
+    ```bash
     git reset --hard HEAD~<NUM>
-    # e.g.
-        git reset --hard HEAD~3 # removes the last three commits
-        git reset --hard HEAD~1 # is equivalent to HEAD^
-    # Remove "--hard" to uncommit but keep the changes around for reworking
+
+    # E.g.:
+        git reset --hard HEAD~3   # removes the last three commits
+        git reset --hard HEAD~1   # is equivalent to HEAD^
+    ```
+    Remove `--hard` to uncommit but keep the changes around for reworking.
+    ```bash
     git reset HEAD~<NUM>
-        git log     # To check the commit(s)
-        git status  # To check possible unstaged changes
+    ```
 
-    # Revert individual pushed commits (from remote)
+- Revert individual pushed commits __from remote__.
+    ```bash
     git revert <commit_hash>
-        git push
-    # Actually, this will create a new commit (needing to be pushed) which
-    # reverts the changes of <commit_hash>.
-    # NOTE: It only reverts that specific commit, and not commits that come
-    #       after that!
+    git push
+    ```
+    {{< hint info >}}
+__INFO__  
+Actually, this will create a new commit (needing to be pushed) which reverts the
+changes of `<commit_hash>`.
+    {{< /hint >}}
+    {{< hint warning >}}
+__WARNING__  
+This only reverts that specific commit, and not all other commits that come
+after that!
+    {{< /hint >}}
 
-    # Revert all the pushed commits after <oldest_commit_hash> up to and
-    # including <latest_commit_hash>
+- Revert all the pushed commits after `<oldest_commit_hash>` up to and including
+    `<latest_commit_hash>`.
+    ```bash
     git revert <oldest_commit_hash>..<latest_commit_hash>
-    # NOTE: On some versions of git it also reverts the <oldest_commit_hash>,
-    #       so double check if that commit gets reverted or not.
-        git log
-        git status
+    git push
+    ```
+    {{< hint warning >}}
+__WARNING__  
+On some versions of Git it also reverts the `<oldest_commit_hash>`, so double
+check if that commit gets reverted or not.
+```bash
+git log
+git status
 ```
+{{< /hint >}}
 
 
 
