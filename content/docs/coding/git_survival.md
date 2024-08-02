@@ -263,8 +263,11 @@ changed files or the changes staged to be committed.
     ```bash
     git pull
     ```
-    Note that this is not a _synchronization_ procedure, since all the
-    uncommitted changes in the local branch are preserved by `git pull`.
+    {{< hint info >}}
+__NOTE__  
+This is not a _synchronization_ procedure, since all the uncommitted changes in
+the local branch are preserved when you `git pull`.
+    {{< /hint >}}
 
 1. Make changes to one or multiple project files. The best practice here is to
     work on just __one feature per commit__.
