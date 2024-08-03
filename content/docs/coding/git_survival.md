@@ -186,66 +186,75 @@ git clone https://github.com/Feat-FeAR/GATTACA_beta.git     # HTTPS
 git clone git@github.com:Feat-FeAR/GATTACA_beta.git         # SSH
 ```
 
+
+
+
 ## Make a New Repository
+To create a new GitHub repository `<git_repo>` from scratch you can either use
+the __GitHub Web__ graphical interface or choose the __GitHub CLI__ as a fully
+command line alternative.
+
 ### GitHub Web
-To create a new repository `<git_repo>` from scratch, create it from the GitHub
-web site, then
-- clone it locally and work on it.
-- alternatively,
-    1. create a directory `<git_repo>` to contain the new repo and move there
-    1. create the repository locally (initialize the local object database)
+1. go to the
+    [_GitHub_](https://github.com/)
+    website and log in with your credentials;
+
+1. from `Your profile` > `Repositories` > `New` > set `<git_repo>` as name for
+    the new repository > `Create repository`.
+
+### GitHub CLI
+1. Install the __GitHub CLI__ (to be installed separately from Git);
+    ```bash
+    # Example syntax for Arch systems
+    sudo pacman -Syu github-cli
+    ```
+
+1. create the GitHub public repository `<git_repo>`.
+    ```bash
+    gh auth login  # Just the first time
+    gh repo create <git_repo> --public --source=. --remote=upstream --push
+    ```
+
+### Local Repo
+Regardless of how you chose to create the remote GitHub repository,
+
+1. either `git clone` it locally, or
+    - create a local directory `<git_repo>` to contain the new repo;
+    - move there and create the repository locally (initialize the local
+        _object database_);
         ```bash
         cd <git_repo>
         git init
         ```
-    1. initialize the remote repository on GitHub
+    - locally initialize the GitHub remote repository;
         ```bash
         git remote add origin git@github.com:<user>/<git_repo>.git
         # E.g.,:
         git remote add origin git@github.com:Feat-FeAR/Kerblam_prototype.git
         ```
-    1. write some code... and possibly a `README.md`, then _stage_ and _commit_
-        ```bash
-        git add .
-        git commit -m "<message>"
-        ```
-To make a repository from an existing folder
+
+1. write some code... and possibly a `README.md`, then _stage_ and _commit_;
+    ```bash
+    git add .
+    git commit -m "<message>"
+    ```
+
+1. push the first commit.
+    ```bash
+    git push --set-upstream origin main
+    git push -u origin main
+    ```
+
+Similarly, to make a repository from an existing `<project>` folder, create the
+GitHub repo beforehand, then
 ```bash
+cd <project>
 git init
-git remote add origin git@github.com:<user>/<git_repo>.git
+git remote add origin git@github.com:<user>/<project>.git
 git add .
 git commit -m "<message>"
+git push -u origin main     # To push the first commit only
 ```
-Create a repository `<git_repo>` from the GitHub web site and then push the
-first commit
-```bash
-git push --set-upstream origin main
-git push -u origin main
-```
-
-### GitHub CLI
-__GitHub CLI__ (to be installed separately) allows doing everything from the
-command line
-```bash
-gh auth login # Just the first time
-gh repo create <git_repo> --public --source=. --remote=upstream --push
-```
-Make a repository from an existing folder
-```bash
-git init
-git remote add origin git@github.com:<user>/<git_repo>.git
-git add .
-git commit -m "<message>"
-```
-Use GitHub CLI to create the repository `<git_repo>`, then push the first commit
-```bash
-git push --set-upstream origin main
-git push -u origin main
-```
-
-
-
-
 
 ## Stage, Commit, and Push
 The most standard Git workflow is made up of the following few steps. After each
@@ -545,7 +554,7 @@ Alerts are an extension of Markdown used to emphasize critical information. On
 GitHub, they are displayed with distinctive colors and icons to indicate the
 importance of the content. An example of all five types:
 
-
+```
 > [!NOTE]  
 > Highlights information that users should take into account, even when skimming.
 
@@ -560,4 +569,4 @@ importance of the content. An example of all five types:
 
 > [!CAUTION]
 > Negative potential consequences of an action.
-
+```
