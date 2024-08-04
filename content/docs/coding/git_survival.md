@@ -484,74 +484,88 @@ git branch -a
 ```
 {{< /hint >}}
 
-
-
-
 ## Stash and Pop
+You can use `git stash` to briefly work on something else without committing,
+but saving, your current changes.
 
-- You can use <git stash> to briefly work on something else without committing,
-    but saving, your current changes.
+- Stash the changes in a dirty working directory away.
     ```bash
-        # Stash the changes in a dirty working directory away
-        git stash
-
-        # See the stashes currently stored in the stack
-        git stash list
-
-        # See the files that changed in stash@{n}, where n is an integer from 0
-        # (i.e. the most recent stash) to the index of the oldest stored stash
-        git stash show stash@{n}
-        git stash show # equivalent to 'git stash show stash@{0}', will show you
-                       # the files that changed in your most recent stash.
-        git stash show -p stash@{n} # Line-by-line differences in changed files
-        git stash show -p # Default to the most recent stash (stash@{0})
-
-        # Reapply any of the stacked stashes (restore changes)
-        git stash apply stash@{n}
-        git stash apply # equivalent to 'git stash apply stash@{0}', will apply
-                        # the most recent stash.
-
-        # Remove a single stash from the stack
-        git stash drop stash@{n}
-
-        # Delete all of the stashes at once (clear the stack)
-        git stash clear
-
-        # Apply the stash and then immediately drop it from your stack
-        git stash pop
-
-        # When an old stash is hard to be cleanly reapplied due to the many
-        # changes occurred in time, you can type
-        git stash branch <test_branch_name>
-        # Git creates a new branch for you, checks out the commit you were on
-        # when you stashed your work, reapplies your work there, and then drops
-        # the stash if it applies successfully.
+    git stash
     ```
 
-{{< hint info >}}
-**NOTE**  
-You can save a stash on one branch, switch to another branch later, and
-try to reapply the changes (as a practical way to 'move changes' from
-one branch to another). You can also have modified and uncommitted files
-in your working directory when you apply a stash: Git gives you merge
-conflicts if anything no longer applies cleanly.
+- See the stashes currently stored in the stack.
+    ```bash
+    git stash list
+    ```
+
+- See the files that changed in `stash@{n}`, where `n` is an integer from 0
+    (i.e., the most recent stash) to the index of the oldest stored stash.
+    ```bash
+    git stash show stash@{n}
+    git stash show               # Equivalent to 'git stash show stash@{0}',
+                                 # will show you the files that changed in your 
+                                 # most recent stash.
+    
+    git stash show -p stash@{n}  # Line-by-line differences in changed files
+    git stash show -p            # Default to the most recent stash (stash@{0})
+    ```
+
+- Reapply any of the stacked stashes (restore changes).
+    ```bash
+    git stash apply stash@{n}
+    git stash apply              # Equivalent to 'git stash apply stash@{0}',
+                                 # will apply the most recent stash.
+    ```
+
+- Remove a single stash from the stack.
+    ```bash
+    git stash drop stash@{n}
+    ```
+
+- Delete all of the stashes at once (clear the stack).
+    ```bash
+    git stash clear
+    ```
+
+- Apply the stash and then immediately drop it from your stack.
+    ```bash
+    git stash pop
+    ```
+
+- When an old stash is hard to be cleanly reapplied due to the many changes
+    occurred in time, you can type
+    ```bash
+    git stash branch <test_branch_name>
+    ```
+    and Git will create a new branch `<test_branch_name>` for you, check out the
+    commit you were on when you stashed your work, reapply your work there,
+    and then drop the stash if it applies successfully.
+
+    {{< hint info >}}
+__NOTE__  
+You can save a stash on one branch, switch to another branch, and try to reapply
+the changes (as a practical way to _move changes_ from one branch to another).
+You can also have modified and uncommitted files in your working directory when
+you apply a stash: Git gives you merge conflicts if anything no longer applies
+cleanly.
+    {{< /hint >}}
+
+You may not want to stash some work or files in your working directory, but
+simply get rid of them. The `git clean` command will do this for you.
+```bash
+git clean         # Remove all the untracked files in your working directory
+git clean -f -d   # Remove any files and also any subdirectories that become
+                  # empty as a result. -f means 'force'.
+git clean -d -n   # [--dry-run] Don't actually remove anything,
+                  # just show what would be done.
+git clean -i      # Use the "interactive" flag to step through each file
+                  # individually or specify patterns for deletion interactively.
+```
+{{< hint danger >}}
+__DANGER__  
+You'll want to be pretty careful with this command, since it is designed to
+remove files from your working directory that are not tracked.
 {{< /hint >}}
-
-- You may not want to stash some work or files in your working directory, but
-    simply get rid of them. The <git clean> command will do this for you. You'll
-    want to be pretty careful with this command, since it's designed to remove
-    files from your working directory that are not tracked...
-    ```bash
-        git clean # Remove all the untracked files in your working directory
-        git clean -f -d # Remove any files and also any subdirectories that become
-                        # empty as a result. -f means 'force'.
-        git clean -d -n # [--dry-run] Don't actually remove anything,
-                        # just show what would be done.
-        git clean -i # Use the "interactive" flag to step through each file
-                     # individually or specify patterns for deletion interactively.
-    ```
-
-
 
 
 
