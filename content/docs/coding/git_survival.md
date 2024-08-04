@@ -567,14 +567,11 @@ You'll want to be pretty careful with this command, since it is designed to
 remove files from your working directory that are not tracked.
 {{< /hint >}}
 
-
-
 ## Tips
-
-Alerts are an extension of Markdown used to emphasize critical information. On
-GitHub, they are displayed with distinctive colors and icons to indicate the
-importance of the content. An example of all five types:
-
+___Alerts___ are an extension of Markdown used to emphasize critical
+information. On GitHub, Alerts (e.g., from README files) are displayed with
+distinctive colors and icons to indicate the importance of the content. An
+example of all five types:
 ```
 > [!NOTE]  
 > Highlights information that users should take into account, even when skimming.
@@ -591,3 +588,5 @@ importance of the content. An example of all five types:
 > [!CAUTION]
 > Negative potential consequences of an action.
 ```
+While [here](https://github.com/orgs/community/discussions/16925) you can find
+how they are displayed on GitHub.
