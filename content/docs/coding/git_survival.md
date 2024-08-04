@@ -12,6 +12,8 @@ draft: false
 
 # Git and GitHub
 {{< hint warning >}}
+__DISCLAIMER__  
+
 __This is NOT:__
 1. a full guide to Git or GitHub
 1. an introduction to Git or GitHub
@@ -20,7 +22,7 @@ __This is NOT:__
 
 __This is instead:__
 1. a collections of personal notes taken when I started learning Git
-1. a list of Git commands that I use the most
+1. a commented list of Git commands that I use the most
 {{< /hint >}}
 
 ## Authentication
@@ -172,6 +174,9 @@ level.
     > - [Stack Overflow](https://stackoverflow.com/questions/9976986/force-lf-eol-in-git-repo-and-working-copy)
     > - [Adaptive Patchwork](https://adaptivepatchwork.com/2012/03/01/mind-the-end-of-your-line/)
 
+
+
+
  ## Locally Clone a Repository
 Copy an existing Git repository `<git_repo_url>` into a local directory
 `<local_dir>/<git_repo>`
@@ -186,13 +191,10 @@ git clone https://github.com/Feat-FeAR/GATTACA_beta.git     # HTTPS
 git clone git@github.com:Feat-FeAR/GATTACA_beta.git         # SSH
 ```
 
-
-
-
 ## Make a New Repository
 To create a new GitHub repository `<git_repo>` from scratch you can either use
 the __GitHub Web__ graphical interface or choose the __GitHub CLI__ as a fully
-command line alternative.
+command-line alternative.
 
 ### GitHub Web
 1. go to the
@@ -406,15 +408,20 @@ git status
     git branch -a  # [--all]     list all branches
     ```
 
-1. Switch to a different branch `<new_branch>` (if the working tree is clean).
+1. Switch to a different branch `<new_branch>`, __if the working tree is clean__
+    (i.e., nothing to stage or commit).
     ```bash
     git checkout <new_branch>
     ```
     {{< hint info >}}
 __NOTE__  
-When checking out, the local repository changes automatically to reflect the
-(committed) content of the new current branch, but preserving all your
-still-uncommitted changes!
+When checking out, the local repository changes to reflect the ___committed___
+contents of the new current branch. However, if the destination branch is still
+_aligned_ with the current one (no ahead, nor behind by any commits), all your
+still-uncommitted changes will be preserved and passed to the new branch. On the
+contrary, if the two branches have already diverged, it will be necessary to
+stash uncommitted changes before checking out (see ___Stash and Pop___ section
+below).
     {{< /hint >}}
 
 1. Push the new branch to the remote repository for the first time.
