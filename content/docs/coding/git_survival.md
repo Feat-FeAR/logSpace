@@ -186,7 +186,7 @@ level.
 
 
 ## Locally Clone a Repository
-You can clone from two types of URL addresses:
+You can locally clone a repository from two types of URL addresses:
 - An __HTTPS__ URL, like `https://github.com/user/repo.git`
 - An __SSH__ URL, like `git@github.com:user/repo.git`
 
@@ -197,9 +197,9 @@ https://github.com/Feat-FeAR/GATTACA_beta.git     # HTTPS URL
 git@github.com:Feat-FeAR/GATTACA_beta.git         # SSH URL
 ```
 
-To copy an existing GitHub repository `<git_repo>` into a local directory
-`<local_dir>/<git_repo>`, get the `<git_repo_url>` from GitHub, move to the
-parent directory, and clone the repo.
+To clone (i.e., _copy_) an existing GitHub repository `<git_repo>` into a local
+directory `<local_dir>/<git_repo>`, get the `<git_repo_url>` from GitHub,
+locally move to the _supposed_ parent directory, and clone the repo.
 ```bash
 cd <local_dir>
 git clone <git_repo_url>
