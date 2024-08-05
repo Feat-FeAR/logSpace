@@ -191,14 +191,13 @@ You can clone from two types of URL addresses:
 - An __SSH__ URL, like `git@github.com:user/repo.git`
 
 To get them, go to any GitHub repository > `Code` > `copy HTTPS` or
-`copy SSH`, respectively.
-```bash
-# E.g.,
-git clone https://github.com/Feat-FeAR/GATTACA_beta.git     # HTTPS
-git clone git@github.com:Feat-FeAR/GATTACA_beta.git         # SSH
+`copy SSH`, respectively. E.g.,
+```
+https://github.com/Feat-FeAR/GATTACA_beta.git     # HTTPS URL
+git@github.com:Feat-FeAR/GATTACA_beta.git         # SSH URL
 ```
 
-So, to copy an existing GitHub repository `<git_repo>` into a local directory
+To copy an existing GitHub repository `<git_repo>` into a local directory
 `<local_dir>/<git_repo>`, get the `<git_repo_url>` from GitHub, move to the
 parent directory, and clone the repo.
 ```bash
