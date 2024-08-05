@@ -30,9 +30,11 @@ Basic authentication by simple password to access repositories on GitHub from
 the command line is deprecated and no longer works. 
 Instead, when you `git clone`, `git fetch`, `git pull`, or `git push` to a
 remote repository two protocols are supported:
+
 - __HTTPS__: you can use a classic Personal Access Token (PAT). PATs function
     like ordinary OAuth access tokens and can be used instead of a password for
     Git over HTTPS.
+
 - __SSH__: you can connect to GitHub with SSH adding a new password-protected
     SSH key to your GitHub account. This is the recommended way, because it
     allows more agile Git operations prompting authentication only once per
@@ -40,6 +42,7 @@ remote repository two protocols are supported:
 
 To configure SSH
 1. check for existing SSH keys (within `~/.ssh/`);
+
 1. if none exists (or if you want to overwrite it), create one with passphrase
     (not mandatory but always recommended);
     ```bash
@@ -61,12 +64,14 @@ To configure SSH
     # Copy the SSH public key to your clipboard from:
     cat ~/.ssh/id_ed25519.pub
     ```
+
 1. add the SSH key to your account on GitHub web site:
     `<your profile>` > `Settings` > `SSH and GPG keys` in the _Access_ section >
     `New SSH key` > add a title (usually, the device you’ll use that key from)
     and select `Authentication Key` as key type > paste your key into the _Key_
     field (including the "-C" comment) > `Add SSH key`;
-1. test your SSH connection;
+
+1. test your SSH connection.
     ```bash
     ssh -T git@github.com
     ```
@@ -76,21 +81,23 @@ To configure SSH
     provide shell access.
     ```
 
-
-
-
 ## General
 - All Git info is locally stored in the `.git` folder (i.e., the _object
-    database_). For this reason the folder of the local repository can be freely
-    moved in the personal filesystem, and Git will keep working smoothly.
+    database_), which makes any Git repository _locally self-contained_. For
+    this reason the folder of the local repository can be freely moved in the
+    personal filesystem, and Git will keep working smoothly.
+
 - The `.gitignore` file contains all the filenames to be ignored by Git: they
     won't be staged, committed, or pushed in any case, though being in the local
     repository folder.
+
 - Monitoring Git:
     ```bash
     git status   # To show the working tree status
+    git diff     # To show line-by-line differences in changed files
     git log      # To view the Commit History and hash (of the current branch)
     ```
+
 - There are 3 levels of Git configuration settings:
     - __project__: only available for the current project and stored in the
         `.git/config` file within the project's directory. This is the default
@@ -99,28 +106,38 @@ To configure SSH
         ```bash
         git config <setting> <option>
         ```
+    
     - __global__: available for all projects for the current user and stored in
         `~/.gitconfig` file.
         ```bash
         git config --global <setting> <option>
         ```
+    
     - __system__: available for all the users/projects and stored in
         `/etc/gitconfig`.
         ```bash
         git config --system <setting> <option>
         ```
+    
     {{< hint info >}}
-**NOTE**  
+__NOTE__  
 Quite obviously, __project__ overrides __global__ and __global__ overrides
 __system__.
     {{< /hint >}}
+    
     {{< hint warning >}}
-**WARNING**  
+__WARNING__  
 __Project__ configs are local to just one particular copy/clone of any given
 repo, and need to be reapplied if the repo is recloned clean from the remote;
 `git config` command changes a local file that is not sent to the remote with a
 commit/push action.
     {{< /hint >}}
+
+
+
+
+
+
 
 ## Configuration Settings
 - List and check all configuration settings:
@@ -309,6 +326,12 @@ the local branch are preserved when you `git pull`.
     ```
     where `<filename>` is the file path relative to the project directory, as
     shown by `git status`.
+    {{< hint info >}}
+__INFO__  
+Sometimes, a _line-wise diff_ is too coarse. That is where the `--color-words`
+option of `git diff` comes in very useful as it highlights the changed _words_
+using colors (_word-based diffing_).
+    {{< /hint >}}
 
 1. Prepare the content for the next commit by adding all changed files to the
     _staging area_,
@@ -319,6 +342,11 @@ the local branch are preserved when you `git pull`.
     ```bash
     git add <filename>
     ```
+    {{< hint info >}}
+__NOTE__  
+Once your modified files have been staged, you can still explore/check
+line-by-line differences within them by using `git diff --staged`.
+    {{< /hint >}}
 
 1. Record changes to the local repository,
     ```bash
