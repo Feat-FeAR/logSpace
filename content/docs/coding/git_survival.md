@@ -18,16 +18,18 @@ __This is NOT:__
 1. a full guide to Git or GitHub
 1. an introduction to Git or GitHub
 1. a glossary of Git commands
-1. a compendium of I know about Git/GitHub
+1. a compendium of what I know about Git/GitHub
 
 __This is instead:__
-1. a collections of personal notes taken when I started learning Git
+1. a collections of personal notes I took when I started learning Git
 1. a commented list of Git commands that I use the most
 {{< /hint >}}
 
 ## Authentication
-Basic authentication to GitHub using a simple password is deprecated and no
-longer works. To _clone_, _commit_, and _push_, two protocols are supported:
+Basic authentication by simple password to access repositories on GitHub from
+the command line is deprecated and no longer works. 
+Instead, when you `git clone`, `git fetch`, `git pull`, or `git push` to a
+remote repository two protocols are supported:
 - __HTTPS__: you can use a classic Personal Access Token (PAT). PATs function
     like ordinary OAuth access tokens and can be used instead of a password for
     Git over HTTPS.
@@ -39,9 +41,8 @@ longer works. To _clone_, _commit_, and _push_, two protocols are supported:
 To configure SSH
 1. check for existing SSH keys (within `~/.ssh/`);
 1. if none exists (or if you want to overwrite it), create one with passphrase
-    (not obligatory but always recommended) in this way:
+    (not mandatory but always recommended);
     ```bash
-    # Create the key through ssh-keygen
     # -t ed25519: The -t flag is used to indicate the algorithm to
     #             create the digital signature of the key pair. If your
     #             system supports it, ed25519 is the best algorithm you
@@ -65,7 +66,7 @@ To configure SSH
     `New SSH key` > add a title (usually, the device you’ll use that key from)
     and select `Authentication Key` as key type > paste your key into the _Key_
     field (including the "-C" comment) > `Add SSH key`;
-1. test your SSH connection
+1. test your SSH connection;
     ```bash
     ssh -T git@github.com
     ```
@@ -74,6 +75,9 @@ To configure SSH
     Hi <user_name>! You've successfully authenticated, but GitHub does not
     provide shell access.
     ```
+
+
+
 
 ## General
 - All Git info is locally stored in the `.git` folder (i.e., the _object
@@ -177,18 +181,29 @@ level.
 
 
 
- ## Locally Clone a Repository
-Copy an existing Git repository `<git_repo_url>` into a local directory
-`<local_dir>/<git_repo>`
+
+
+
+
+## Locally Clone a Repository
+You can clone from two types of URL addresses:
+- An __HTTPS__ URL, like `https://github.com/user/repo.git`
+- An __SSH__ URL, like `git@github.com:user/repo.git`
+
+To get them, go to any GitHub repository > `Code` > `copy HTTPS` or
+`copy SSH`, respectively.
+```bash
+# E.g.,
+git clone https://github.com/Feat-FeAR/GATTACA_beta.git     # HTTPS
+git clone git@github.com:Feat-FeAR/GATTACA_beta.git         # SSH
+```
+
+So, to copy an existing GitHub repository `<git_repo>` into a local directory
+`<local_dir>/<git_repo>`, get the `<git_repo_url>` from GitHub, move to the
+parent directory, and clone the repo.
 ```bash
 cd <local_dir>
 git clone <git_repo_url>
-```
-To get `<git_repo_url>`, go to a GitHub repository > `Code` > `copy HTTPS` or
-`copy SSH`. E.g.,
-```bash
-git clone https://github.com/Feat-FeAR/GATTACA_beta.git     # HTTPS
-git clone git@github.com:Feat-FeAR/GATTACA_beta.git         # SSH
 ```
 
 ## Make a New Repository
@@ -217,7 +232,7 @@ command-line alternative.
     gh repo create <git_repo> --public --source=. --remote=upstream --push
     ```
 
-### Local Repo
+### Git Local Repo
 Regardless of how you chose to create the remote GitHub repository,
 
 1. either `git clone` it locally, or
