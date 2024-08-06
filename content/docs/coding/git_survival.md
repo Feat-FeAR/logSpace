@@ -91,12 +91,56 @@ To configure SSH
     won't be staged, committed, or pushed in any case, though being in the local
     repository folder.
 
-- Monitoring Git:
+- At any time, you can use the following commands for monitoring Git:
     ```bash
-    git status   # To show the working tree status
-    git diff     # To show line-by-line differences in changed files
-    git log      # To view the Commit History and hash (of the current branch)
+    git status   # Shows the working tree status
+    git diff     # Shows the line-wise differences in currently uncommited files
+    git show     # Shows the last commit (hash, message, and line-wise diffs)
+    git log      # Shows the commit history and hashes (of the current branch)
     ```
+
+- You can always refer to the _most recent commit_ of the working directory by
+    using the identifier `HEAD` or `HEAD~0`, while previous commits in the
+    history can be referred to through the syntax `HEAD~<NUM>`, where `<NUM>` is
+    the commit order in history, from the top. E.g.,
+    ```bash
+    # Current still uncommited changes
+    git diff
+    git diff HEAD
+    git diff HEAD~0
+
+    # Changes recorded by the last commit
+    git show
+    git show HEAD
+    git show HEAD~0
+
+    # Changes recorded by the last commit + current still uncommited changes
+    git diff HEAD~
+    git diff HEAD~1
+
+    # Changes recorded by the second to last (i.e., penultimate) commit
+    git show HEAD~
+    git show HEAD~1
+
+    # Changes recorded by the last 2 commits + current still uncommited changes
+    git diff HEAD~~
+    git diff HEAD~2
+
+    # And so on...
+    ```
+    {{< hint info >}}
+__INFO__  
+You can also refer to commits using the unique 40-character IDs for the changes
+shown, e.g., by `git log` or `git show`.
+```
+git diff 5c19306cbe5021c51aee993a60ac7a44d8a3f8ca`
+```
+Since typing out random 40-character strings is annoying, Git lets us use just
+the first few characters (typically seven for normal size projects):
+```
+git diff 5c19306
+```
+    {{< /hint >}}
 
 - There are 3 levels of Git configuration settings:
     - __project__: only available for the current project and stored in the
