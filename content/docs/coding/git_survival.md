@@ -71,7 +71,7 @@ To configure SSH
     and select `Authentication Key` as key type > paste your key into the _Key_
     field (including the "-C" comment) > `Add SSH key`;
 
-1. test your SSH connection.
+1. test your authentication via SSH connection to GitHub.
     ```bash
     ssh -T git@github.com
     ```
@@ -94,7 +94,7 @@ To configure SSH
 - At any time, you can use the following commands for monitoring Git:
     ```bash
     git status   # Shows the working tree status
-    git diff     # Shows the line-wise differences in currently uncommited files
+    git diff     # Shows the line-wise changes in files not yet committed
     git show     # Shows the last commit (hash, message, and line-wise diffs)
     git log      # Shows the commit history and hashes (of the current branch)
     ```
@@ -115,14 +115,17 @@ To configure SSH
     git show HEAD~0
 
     # Changes recorded by the last commit + current still uncommited changes
+    # (imagine shifting the time reference 1 commit earlier)
     git diff HEAD~
     git diff HEAD~1
 
     # Changes recorded by the second to last (i.e., penultimate) commit
+    # (imagine shifting the time reference 1 commit earlier)
     git show HEAD~
     git show HEAD~1
 
     # Changes recorded by the last 2 commits + current still uncommited changes
+    # (imagine shifting the time reference 2 commits earlier)
     git diff HEAD~~
     git diff HEAD~2
 
@@ -133,12 +136,24 @@ __INFO__
 You can also refer to commits using the unique 40-character IDs (aka commit
 hashes) for the changes shown, e.g., by `git log` or `git show`.
 ```
+git diff <commit_hash>
+
+# E.g.,
 git diff 5c19306cbe5021c51aee993a60ac7a44d8a3f8ca
 ```
 Since typing out random 40-character strings is annoying, Git lets us use just
 the first few characters (typically seven for normal size projects):
 ```
 git diff 5c19306
+```
+Commit hashes are powerful, allowing users to precisely locate commits in the
+chain. For example, you can use them in combination with `diff` to inspect the
+differences between any two commits.
+```
+git diff <older_commit_hash>..<later_commit_hash>
+
+# E.g.,
+git diff 5c19306..901da28
 ```
     {{< /hint >}}
 
@@ -303,11 +318,22 @@ Regardless of how you chose to create the remote GitHub repository,
         cd <git_repo>
         git init
         ```
-    - locally initialize the GitHub remote repository;
+    - make the GitHub repository a _remote_ for the local repository;
         ```bash
         git remote add origin git@github.com:<user>/<git_repo>.git
         # E.g.,:
         git remote add origin git@github.com:Feat-FeAR/Kerblam_prototype.git
+        ```
+        {{< hint info >}}
+__NOTE__  
+`origin` is a local name used to refer to the remote repository. It could be
+called anything, but _origin_ is a convention that is often used by default in
+Git and GitHub, so it’s helpful to stick with this unless there’s a reason not
+to.
+        {{< /hint >}}
+    - check the command has worked;
+        ```bash
+         git remote -v
         ```
 
 1. write some code... and possibly a `README.md`, then _stage_ and _commit_;
@@ -353,8 +379,9 @@ changed files or the changes staged to be committed.
     ```
     {{< hint info >}}
 __NOTE__  
-This is not a _synchronization_ procedure, since all the uncommitted changes in
-the local branch are preserved when you `git pull`.
+`git pull` will _synchronize_ your local repository with the remote in terms of
+_committed changes_, leaving all the uncommitted changes possibly present in the
+local branch untouched, though.
     {{< /hint >}}
 
 1. Make changes to one or multiple project files. The best practice here is to
