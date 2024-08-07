@@ -284,13 +284,20 @@ https://github.com/Feat-FeAR/GATTACA_beta.git     # HTTPS URL
 git@github.com:Feat-FeAR/GATTACA_beta.git         # SSH URL
 ```
 
-To clone (i.e., _copy_) an existing GitHub repository `<git_repo>` into a local
+To clone (i.e., copy) an existing GitHub repository `<git_repo>` into a local
 directory `<local_dir>/<git_repo>`, get the `<git_repo_url>` from GitHub,
 locally move to the _supposed_ parent directory, and clone the repo.
 ```bash
 cd <local_dir>
 git clone <git_repo_url>
 ```
+{{< hint info >}}
+__NOTE__  
+`git clone` copies a remote repository to create a local repository with a
+_remote_ called `origin` automatically set up. Since Git uses this name by
+default, `origin` is a sensible choice when you set up remotes by hand (see
+next section).
+{{< /hint >}}
 
 ## Make a New Repository
 To create a new GitHub repository `<git_repo>` from scratch you can either use
@@ -337,10 +344,25 @@ Regardless of how you chose to create the remote GitHub repository,
         ```
         {{< hint info >}}
 __NOTE__  
-`origin` is a local name used to refer to the remote repository. It could be
+ A _remote_ is a copy of the repository that is hosted somewhere else, that we
+ can push to and pull from, and there’s no reason that you have to work with
+ only one.
+
+ For example, on some large projects you might have your own copy in
+ your own GitHub account (you’d probably call this _origin_) and also the main
+ _upstream_ project repository. You would pull from _upstream_ from time to time
+ to get the latest updates that other people have committed.
+        {{< /hint >}}
+        {{< hint info >}}
+__NOTE__  
+`origin` is a __local__ name used to refer to the remote repository. It could be
 called anything, but _origin_ is a convention that is often used by default in
 Git and GitHub, so it’s helpful to stick with this unless there’s a reason not
 to.
+
+__In any case, remember that the name you give to a remote only exists
+_locally_. It’s an alias that you choose and not something intrinsic to the
+remote repository.__
         {{< /hint >}}
     - check the command has worked;
         ```bash
