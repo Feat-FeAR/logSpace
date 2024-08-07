@@ -97,7 +97,18 @@ To configure SSH
     git diff     # Shows the line-wise changes in files not yet committed
     git show     # Shows the last commit (hash, message, and line-wise diffs)
     git log      # Shows the commit history and hashes (of the current branch)
+    git log --patch <file_name>   # Shows commit history and diffs combined
     ```
+    {{< hint info >}}
+__NOTE__  
+Use `git log --oneline` to get a compact version of the log. You can also
+combine this option with others. One useful combination adds `--graph` to
+display the commit history as a text-based graph and to indicate which commits
+are associated with the current `HEAD`, the current branch _main_, or other Git references.
+```
+git log --oneline --graph
+```
+{{< /hint >}}
 
 - You can always refer to the _most recent commit_ of the working directory by
     using the identifier `HEAD` or `HEAD~0`, while previous commits in the
