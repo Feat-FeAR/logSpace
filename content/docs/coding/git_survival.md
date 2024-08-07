@@ -130,10 +130,10 @@ To configure SSH
     ```
     {{< hint info >}}
 __INFO__  
-You can also refer to commits using the unique 40-character IDs for the changes
-shown, e.g., by `git log` or `git show`.
+You can also refer to commits using the unique 40-character IDs (aka commit
+hashes) for the changes shown, e.g., by `git log` or `git show`.
 ```
-git diff 5c19306cbe5021c51aee993a60ac7a44d8a3f8ca`
+git diff 5c19306cbe5021c51aee993a60ac7a44d8a3f8ca
 ```
 Since typing out random 40-character strings is annoying, Git lets us use just
 the first few characters (typically seven for normal size projects):
@@ -417,9 +417,15 @@ line-by-line differences within them by using `git diff --staged`.
     ```
 
 ## Undos
-- Discard changes in working directory.
+- Discard changes (not yet committed) in working directory.
     ```bash
     git restore <file_name>
+    ```
+
+- Restore an older version of `<file_name>` (go back to commit `<commit_hash>`).
+    ```bash
+    git restore -s HEAD~<NUM> <file_name>
+    git restore -s <commit_hash> <file_name>
     ```
 
 - Unstage (i.e., remove from staging area) `<file_name>`.
@@ -438,7 +444,7 @@ line-by-line differences within them by using `git diff --staged`.
 
 - Remove from the local Git multiple commits __from the top__.
     ```bash
-    git reset --hard HEAD~<NUM>
+    git reset --hard HEAD~<NUM>   # or by using the commit hash
 
     # E.g.:
         git reset --hard HEAD~3   # removes the last three commits
@@ -451,7 +457,7 @@ line-by-line differences within them by using `git diff --staged`.
 
 - Revert individual pushed commits __from remote__.
     ```bash
-    git revert <commit_hash>
+    git revert <commit_hash>      # or by using the HEAD~<NUM> syntax
     git push
     ```
     {{< hint info >}}
@@ -479,6 +485,30 @@ check if that commit gets reverted or not.
 git log
 git status
 ```
+{{< /hint >}}
+
+{{< hint info >}}
+__NOTE__  
+In case of linear (or `-<=` branching) commit chains, `git revert` and
+`git restore` can be used to produce the same results, i.e.,
+```bash
+git restore -s <commit_hash> .
+git revert <commit_hash>..HEAD
+```
+However, in the case of a branch-Y chain of this type (`=>-`)
+```
+...--F
+      \
+       G--H   <-- branch-name (HEAD)
+      /
+...--E
+
+```
+the `git restore` of commit `F` would have no issues, while `git revert` would
+go awry when attempting to undo `G` because it is a merge commit and, as such,
+it cannot be unambiguously reverted, ultimately leading to a failure.
+See [here](https://stackoverflow.com/questions/63661460/difference-between-git-restore-and-git-revert)
+for an in-depth discussion.
 {{< /hint >}}
 
 ## Manage Branches
