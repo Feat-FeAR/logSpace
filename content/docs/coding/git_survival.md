@@ -449,7 +449,8 @@ line-by-line differences within them by using `git diff --staged`.
     git restore <file_name>
     ```
 
-- Restore an older version of `<file_name>` (go back to commit `<commit_hash>`).
+- Restore an older version of `<file_name>` (go back to commit `<commit_hash>`)
+    by using `-s` (or `--source=`) option.
     ```bash
     git restore -s HEAD~<NUM> <file_name>
     git restore -s <commit_hash> <file_name>
@@ -459,6 +460,12 @@ line-by-line differences within them by using `git diff --staged`.
     ```bash
     git restore --staged <file_name>
     ```
+    {{< hint info >}}
+__INFO__  
+When using `git restore`, by default the _working tree_ is restored. Specifying
+`--staged` (`-S`) will only restore the index. Specifying both `--worktree`
+(`-W`) and `--staged` (`-S`) restores both.
+    {{< /hint >}}
 
 - Remove the last commit __from the local Git__.
     ```bash
@@ -518,9 +525,14 @@ git status
 __NOTE__  
 In case of linear (or `-<=` branching) commit chains, `git revert` and
 `git restore` can be used to produce the same results, i.e.,
-```bash
+```
 git restore -s <commit_hash> .
 git revert <commit_hash>..HEAD
+```
+or, even better,
+```
+git restore --worktree --staged -s <commit_hash> .
+git revert --no-commit <commit_hash>..HEAD
 ```
 However, in the case of a branch-Y chain of this type (`=>-`)
 ```
@@ -534,9 +546,9 @@ However, in the case of a branch-Y chain of this type (`=>-`)
 the `git restore` of commit `F` would have no issues, while `git revert` would
 go awry when attempting to undo `G` because it is a merge commit and, as such,
 it cannot be unambiguously reverted, ultimately leading to a failure.
-See [here](https://stackoverflow.com/questions/63661460/difference-between-git-restore-and-git-revert)
-for an in-depth discussion.
 {{< /hint >}}
+> **Refs and additional readings**  
+> - [Stack Overflow](https://stackoverflow.com/questions/63661460/difference-between-git-restore-and-git-revert)
 
 ## Manage Branches
 1. Create a new branch `<new_branch>` __locally__.
