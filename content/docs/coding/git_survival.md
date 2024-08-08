@@ -375,9 +375,12 @@ remote repository.__
     git commit -m "<message>"
     ```
 
-1. push the first commit.
+1. push the first commit by using the option `--set-upstream` (`-u`) to
+    associate the current branch with a _remote_ so that subsequent `git push`
+    and `git pull` can be used without any arguments.
     ```bash
     git push --set-upstream origin main
+    # or
     git push -u origin main
     ```
 
@@ -612,7 +615,9 @@ stash uncommitted changes before checking out (see ___Stash and Pop___ section
 below).
     {{< /hint >}}
 
-1. Push the new branch to the remote repository for the first time.
+1. Push the new branch to the remote repository for the first time by using the
+    option `--set-upstream` (`-u`) so that subsequent `git push` and `git pull`
+    can be used without any arguments.
     ```bash
     git push --set-upstream origin <new_branch>
     # or
