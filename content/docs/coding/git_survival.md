@@ -15,15 +15,17 @@ draft: false
 ### __DISCLAIMER__
 
 __This is NOT:__
-1. a full guide to Git (and how could it be? But you can find it
-    [here](https://git-scm.com/docs))
-1. a structured introduction to Git or GitHub ()
-1. a glossary of Git commands
-1. a compendium of what I know about Git/GitHub
+1. a full guide to Git (and how could it be? But you can find
+    [here](https://git-scm.com/docs) the official one);
+1. a structured introduction to Git or GitHub (like, e.g.,
+    [this](https://swcarpentry.github.io/git-novice/));
+1. a glossary of Git commands (as the one you can find
+    [here](https://git-scm.com/docs/git#_git_commands));
+1. a compendium of what I know about Git and GitHub.
 
 __This is instead:__
-1. a collections of personal notes I took when I started learning Git
-1. a commented list of Git commands that I use the most
+1. a collections of personal notes I took when I first started learning Git;
+1. an annotated list of the Git commands I still use the most.
 {{< /hint >}}
 
 ## Authentication
@@ -694,18 +696,19 @@ below).
     ```bash
     git checkout main
     git merge <new_branch>
+    # ...manually resolve possible conflicts...
     git push
     ```
     {{< hint info >}}
 __NOTE__  
 `git merge` merges the specified branch into the currently active branch. So you
-need to be on the branch that you are merging into (i.e., usually the main).
+need to be on the branch that you are merging into (i.e., usually the `main`).
     {{< /hint >}}
     {{< hint warning >}}
 __WARNING__  
 GitHub usually deletes a branch after merging of a _pull request_, but this
 action will delete the branch only in the remote. To clean up your local
-references to the remote branches do this:
+references to the remote branches (i.e., `remotes/origin/*`) do this:
 ```bash
 # Lists defunct branches that can be deleted/pruned 
 git remote prune origin --dry-run
