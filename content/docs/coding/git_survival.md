@@ -12,11 +12,12 @@ draft: false
 
 # Git and GitHub
 {{< hint warning >}}
-__DISCLAIMER__  
+### __DISCLAIMER__
 
 __This is NOT:__
-1. a full guide to Git or GitHub
-1. an introduction to Git or GitHub
+1. a full guide to Git (and how could it be? But you can find it
+    [here](https://git-scm.com/docs))
+1. a structured introduction to Git or GitHub ()
 1. a glossary of Git commands
 1. a compendium of what I know about Git/GitHub
 
@@ -91,14 +92,23 @@ To configure SSH
     won't be staged, committed, or pushed in any case, though being in the local
     repository folder.
 
-- At any time, you can use the following commands for monitoring Git:
+- The following operations for monitoring Git are safe to run at any time since
+    they never change anything in your local branches:
     ```bash
+    git fetch    # Updates remote-tracking branches by fetching from the remote
+                 # repository (e.g., GitHub) the most up-to-date branch pointers
     git status   # Shows the working tree status
-    git diff     # Shows the line-wise changes in files not yet committed
+    git diff     # Shows the still uncommitted (nor staged) changes in local
+                 # files, line by line 
+    git diff <branch_A> <branch_B>   # Shows the committed changes in <branch_B>
+                                     # relative to <branch_A> taken as reference
     git show     # Shows the last commit (hash, message, and line-wise diffs)
-    git log      # Shows the commit history and hashes (of the current branch)
-    git log --patch <file_name>   # Shows commit history and diffs combined
+    git log      # Shows the commit history and hashes of the current branch
+    git log --patch <file_name>      # Shows commit history and diffs combined
     ```
+    Accordingly, run `git fetch` followed by `git diff main origin/main` to see
+    which new changes for the `main` branch are currently available from the
+    remote repository. 
     {{< hint info >}}
 __NOTE__  
 Use `git log --oneline` to get a compact version of the log. You can also
@@ -376,8 +386,8 @@ remote repository.__
     ```
 
 1. push the first commit by using the option `--set-upstream` (`-u`) to
-    associate the current branch with a _remote_ so that subsequent `git push`
-    and `git pull` can be used without any arguments.
+    associate the current branch with a _remote_ so that subsequent `git push`,
+    `git fetch`, and `git pull` can be used without any arguments.
     ```bash
     git push --set-upstream origin main
     # or
@@ -409,19 +419,48 @@ changed files or the changes staged to be committed.
     cd <local_dir>/<git_repo>
     ```
 
-1. Fetch from the remote repository and _integrate_ with the local branch.
+1. Fetch from the remote repository ___and integrate___ with the local branch.
     ```bash
     git pull
+    # or
+    git fetch
+    git merge
     ```
     {{< hint info >}}
 __NOTE__  
-`git pull` will _synchronize_ your local repository with the remote in terms of
-_committed changes_, leaving all the uncommitted changes possibly present in the
-local branch untouched, though.
+Actually, `git pull` is a wrapper that runs two different Git commands in a row:
+1. `git fetch`, to update remote-tracking branches by obtaining new commits from
+    the remote GitHub repository;
+1. a second command to combine committed changes between the remote and local
+    branches.
+
+The precise nature of the second step depends on a _git config_ setting, namely
+```
+git config pull.rebase false    =>   git fetch; git merge
+git config pull.ff only         =>   git fetch; git merge --ff-only
+git config pull.rebase true     =>   git fetch; git rebase
+```
+`git config pull.rebase false` (and thus `git merge`) is the "traditional" Git
+standard approach, which runs a _fast-forward merge_ if possible (i.e., when new
+commits are in the remote branch only) and attempts a _real merge_ otherwise.
+However, a more cautious approach (possibly becoming a new standard) might be to
+set `git config pull.ff only` so that only fast-forward merges are automatically
+performed when using `git pull`, while in the case where the remote and local
+branches have diverged (i.e., both have unique commits, even if related to
+different files) one can take the time to explore changes and choose the most
+appropriate way to _manually merge_ (or _rebase_, if one wishes to be
+adventurous...) to resolve possible conflicts.
     {{< /hint >}}
 
 1. Make changes to one or multiple project files. The best practice here is to
-    work on just __one feature per commit__.
+    work on just __one feature per commit__ (aka _atomic commits_).
+    {{< hint info >}}
+__NOTE__  
+If you run `git pull` and uncommitted changes are already present in the local
+branch, Git will synchronize committed changes and leave all the uncommitted
+ones untouched if they are on files not targeted by the merge step, otherwise
+the whole procedure will be aborted.
+    {{< /hint >}}
 
 1. Explore/check line-by-line differences in all changed files,
     ```bash
@@ -441,7 +480,7 @@ using colors (_word-based diffing_).
     {{< /hint >}}
 
 1. Prepare the content for the next commit by adding all changed files to the
-    _staging area_,
+    _staging area_ (aka _index_),
     ```bash
     git add .
     ```
