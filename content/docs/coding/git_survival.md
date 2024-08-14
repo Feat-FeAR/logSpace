@@ -17,7 +17,7 @@ draft: false
 __This is NOT:__
 1. a full guide to Git (and how could it be? But you can find
     [here](https://git-scm.com/docs) the official one);
-1. a structured introduction to Git or GitHub (like, e.g.,
+1. a structured introduction to Git or GitHub to get you started (like, e.g.,
     [this](https://swcarpentry.github.io/git-novice/));
 1. a glossary of Git commands (as the one you can find
     [here](https://git-scm.com/docs/git#_git_commands));
@@ -215,50 +215,49 @@ repo, and need to be reapplied if the repo is recloned clean from the remote;
 commit/push action.
     {{< /hint >}}
 
-
-
-
-
-
-
 ## Configuration Settings
-- List and check all configuration settings:
+- List and check all configuration settings.
     ```bash
     git config -l # [--list]
     ```
+
 - Set the following global options, otherwise you'll be asked for upon the first
     commit:
     ```bash
     git config --global user.email "federicoalessandro.ruffinatti@unito.it"
     git config --global user.name "Federico Alessandro Ruffinatti"
     ```
+
 - Set ___Nano___ as the default text editor for commit messages. When you create
-a Git commit, the default editor that will be opened is ___Vim___. This can be
-very confusing for people that have never worked with it previously. However,
-default text editor can be changed in this way:
+    a Git commit, the default editor that will be opened is ___Vim___. This can
+    be very confusing for people that have never worked with it previously.
+    However, default text editor can be changed in this way:
     ```bash
     git config --global core.editor "nano"
     ```
+
 - Line ending: Git has a configuration setting called `core.autocrlf` which is
     specifically designed to make sure that, when a text file is written to the
-    repository's object database, all line endings in that text file are
-    normalized to `LF` (i.e., the standard _de facto_ eol in Git and GitHub).
-    The `core.autocrlf` setting variable can take three possible values:
-    - `core.autocrlf=false` Default behavior. Don't do anyting to eols: all
+    repository's _object database_, all line endings in that text file are
+    normalized to `LF` (i.e., the standard _de facto_ EOL in Git and GitHub).
+    The `core.autocrlf` setting variable can take three possible values.
+    - `core.autocrlf=false` __Default behavior__. Don't do anything to EOLs: all
                             types of line endings are left untouched by Git. 
-    - `core.autocrlf=true`  Line endings of text files are converted to Unix
-                            style (`LF`) when writing to the object database
-                            (e.g., by `git commit`), however `LF` are turned
-                            back into `CR` `LF` when writing out into the
+    - `core.autocrlf=true`  __Good for Windows projects__. Line endings of text
+                            files are converted to Unix style (`LF`) when
+                            writing to the _object database_ (more precisely,
+                            when files are staged into the _index_), however
+                            `LF` are turned back into `CR` `LF` when writing out
+                            into the working directory.
+    - `core.autocrlf=input` __Good for Linux projects__. Line endings of text
+                            files are converted to Unix style (`LF`) when
+                            writing to the _object database_ and no reverse
+                            conversion is performed when writing out into the
                             working directory.
-    - `core.autocrlf=input` Line endings of text files are converted to Unix
-                            style `LF` when writing to the object database
-                            (e.g., by `git commit`), and no reverse conversion
-                            is performed when writing out into the working
-                            directory.
     
-    For any Linux project use the following settings at `project level` (to be
-    execute under the local project's directory):
+    For any Linux project use the following settings at `global` or `project`
+    level (in the latter case, commands are to be executed under the local
+    working directory):
     ```bash
     git config core.autocrlf input  # See above
     git config core.eol lf          # When Git needs to change line endings to
@@ -268,21 +267,33 @@ default text editor can be changed in this way:
                                     # denote end of line.
     ```
     {{< hint info >}}
-**NOTE**  
-Since the __project__ level overrides the __global__ one, you can keep the
-default options (i.e., `core.autocrlf=false` and `core.eol=native`) at global
-level.
+__NOTE__  
+As of 2018, with Windows 10 1809, most Windows applications including
+[Notepad](https://devblogs.microsoft.com/commandline/extended-eol-in-notepad/),
+support Unix/Linux (`LF`) and Macintosh (`CR`) line endings, in addition to the
+usual Windows line terminations (`CR` `LF`). Therefore, even in the case of
+Win-Linux hybrid projects or cross-platform collaborations, using the former
+settings could be a good choice. However, if you want to avoid `CR` `LF` get
+introduced into the remote code from some Windows device, you got to ensure that
+__all of your collaborators__ had changed the default Git setting before staging
+and committing.
+
+In any case, if you need to run batch scripts, you have to use
+```
+git config core.autocrlf true
+```
+since they need `CR` `LF` line endings to run properly.
+
+For these reasons, using a `.gitattributes` is considered the best practice, as
+discussed [here](https://rehansaeed.com/gitattributes-best-practices/#line-endings).
     {{< /hint >}}
-    > **Refs and additional readings**  
+    > __Refs and additional readings__  
+    > - [Pro Git book](https://www.git-scm.com/book/en/v2/Customizing-Git-Git-Configuration#_core_autocrlf)
     > - [Stack Overflow](https://stackoverflow.com/questions/9976986/force-lf-eol-in-git-repo-and-working-copy)
+    > - [Wikipedia](https://en.wikipedia.org/wiki/Newline)
     > - [Adaptive Patchwork](https://adaptivepatchwork.com/2012/03/01/mind-the-end-of-your-line/)
-
-
-
-
-
-
-
+    > - [A. Hovhannisyan](https://www.aleksandrhovhannisyan.com/blog/crlf-vs-lf-normalizing-line-endings-in-git/)
+    > - [M. Rehan Saeed](https://rehansaeed.com/gitattributes-best-practices/)
 
 ## Locally Clone a Repository
 You can locally clone a repository from two types of URL addresses:
