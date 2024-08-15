@@ -268,24 +268,21 @@ commit/push action.
     ```
     {{< hint info >}}
 __NOTE__  
-As of 2018, with Windows 10 1809, most Windows applications including
+As of 2018, starting with Windows 10 1809, most Windows applications, including
 [Notepad](https://devblogs.microsoft.com/commandline/extended-eol-in-notepad/),
 support Unix/Linux (`LF`) and Macintosh (`CR`) line endings, in addition to the
-usual Windows line terminations (`CR` `LF`). Therefore, even in the case of
-Win-Linux hybrid projects or cross-platform collaborations, using the former
-settings could be a good choice. However, if you want to avoid `CR` `LF` get
-introduced into the remote code from some Windows device, you got to ensure that
-__all of your collaborators__ had changed the default Git setting before staging
-and committing.
+usual Windows (`CR` `LF`) line endings. Therefore, even in the case of Win-Linux
+hybrid projects or cross-platform collaborations, using the former settings
+might be a good choice... unless you need to run batch scripts, in which case
+you should use `git config core.autocrlf true`, since batch files need `CR` `LF`
+line endings to run properly. In any case, if you want to avoid `CR` `LF` being
+introduced into the remote code from some Windows device, you have to make sure
+that __all your collaborators__ have changed the default Git setting before
+starting staging and committing.
 
-In any case, if you need to run batch scripts, you have to use
-```
-git config core.autocrlf true
-```
-since they need `CR` `LF` line endings to run properly.
-
-For these reasons, using a `.gitattributes` is considered the best practice, as
-discussed [here](https://rehansaeed.com/gitattributes-best-practices/#line-endings).
+To solve all these problems (and more), using a `.gitattributes` file is
+considered the best practice, as discussed, e.g.,
+[here](https://rehansaeed.com/gitattributes-best-practices/#line-endings).
     {{< /hint >}}
     > __Refs and additional readings__  
     > - [Pro Git book](https://www.git-scm.com/book/en/v2/Customizing-Git-Git-Configuration#_core_autocrlf)
