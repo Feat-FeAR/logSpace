@@ -216,9 +216,10 @@ commit/push action.
     {{< /hint >}}
 
 ## Configuration Settings
-- List and check all configuration settings.
+- List, check, or edit all the configuration settings.
     ```bash
-    git config -l # [--list]
+    git config [--global|--system] -l # [--list]
+    git config [--global|--system] -e # [--edit]
     ```
 
 - Set the following global options, otherwise you'll be asked for upon the first
