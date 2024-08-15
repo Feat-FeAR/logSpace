@@ -228,13 +228,34 @@ commit/push action.
     git config --global user.name "Federico Alessandro Ruffinatti"
     ```
 
-- Set ___Nano___ as the default text editor for commit messages. When you create
-    a Git commit, the default editor that will be opened is ___Vim___. This can
-    be very confusing for people that have never worked with it previously.
-    However, default text editor can be changed in this way:
+- Set the default text editor for commit messages. 
     ```bash
-    git config --global core.editor "nano"
+    git config --global core.editor "<editor>"
     ```
+    ```bash
+    # Some common values for "<editor>" in Linux
+    "vim"
+    "nano"
+    "kate"
+    "gedit --wait --new-window"
+
+    # Some common values for "<editor>" in Windows
+    "'C:/Program Files/Git/usr/bin/vim.exe'"
+    "'C:/Program Files/Git/usr/bin/nano.exe'"
+    "C:/Windows/System32/notepad.exe"
+    "'C:/Program Files/Sublime Text/sublime_text.exe' -w"
+    "'C:/Program Files/Notepad++/notepad++.exe' -multiInst -notabbar -nosession -noPlugin"
+    ```
+    {{< hint info >}}
+__NOTE__  
+When you create a Git commit, the default editor that will be opened is 
+___Vim___. This can be very confusing for people that have never worked with it
+previously.
+- To __exit a session without saving your changes__, press `Esc` then type `:q!`
+    and hit `Enter`.
+- If you want to __save your changes and quit__, press `Esc` then type `:wq` and
+    hit `Enter`.
+    {{< /hint >}}
 
 - Line ending: Git has a configuration setting called `core.autocrlf` which is
     specifically designed to make sure that, when a text file is written to the
