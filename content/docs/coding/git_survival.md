@@ -12,20 +12,39 @@ draft: false
 
 # Git and GitHub
 {{< hint warning >}}
-### __DISCLAIMER__
+### __DISCLAIMER and EXTERNAL LINKS__
 
 __This is NOT:__
-1. a full guide to Git (and how could it be? But you can find
-    [here](https://git-scm.com/docs) the official one);
-1. a structured introduction to Git or GitHub to get you started (like, e.g.,
-    [this](https://swcarpentry.github.io/git-novice/));
-1. a glossary of Git commands (as the one you can find
-    [here](https://git-scm.com/docs/git#_git_commands));
-1. a compendium of what I know about Git and GitHub.
+1. __a full guide to Git.__  
+    And how could it be? However, the
+    [official Git documentation](https://git-scm.com/docs) is freely available
+    online, along with the popular
+    [Pro Git book](https://git-scm.com/book/en/v2)).
+1. __a structured and friendly introduction to Git or GitHub.__  
+    Examples include the _Version Control with Git_ lesson provided by the
+    [Software Carpentry](https://swcarpentry.github.io/git-novice/)
+    or the
+    [Happy Git and GitHub for the useR](https://happygitwithr.com/)
+    web book by Jenny Bryan.
+1. __a glossary of all Git commands.__  
+    But such a [complete list of Git commands](https://git-scm.com/docs/git#_git_commands)
+    can be easily accessed from the official website.
+1. __even a Git/GitHub cheat sheet.__  
+    Luckily, both [printable](https://training.github.com/)
+    and [interactive](https://ndpsoftware.com/git-cheatsheet.html#loc=index;)
+    Git cheatsheets are available on the web.
+1. __a list of *how to fix this mess I made with Git?*__  
+    For this purpose,
+    [Oh Shit, Git!?!](https://ohshitgit.com/) could help.
+1. __something smart, cool, and nerdy about Git...__  
+    ...such as the fictional-but-realistic
+    [Git man page generator](https://github.com/Lokaltog/git-man-page-generator)
+    or this site to make your
+    [commit history scrolling by Star Wars style](http://starlogs.net/).
 
 __This is instead:__
-1. a collections of personal notes I took when I first started learning Git;
-1. an annotated list of the Git commands I still use the most.
+1. a collection of __personal notes__ I took since I started learning Git;
+1. a sectioned and annotated list of the __Git commands I still use the most__.
 {{< /hint >}}
 
 ## Authentication
@@ -227,6 +246,13 @@ commit/push action.
     ```bash
     git config --global user.email "federicoalessandro.ruffinatti@unito.it"
     git config --global user.name "Federico Alessandro Ruffinatti"
+    ```
+
+- Set the name of the default branch created when initializing any new
+    repository. Git defaults to `master`, but you got to set it to `main` if you
+    want to conform to the GitHub standard.
+    ```bash
+    git config --global init.defaultBranch main
     ```
 
 - Set the default text editor for commit messages. 
