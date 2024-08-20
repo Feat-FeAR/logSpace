@@ -284,59 +284,79 @@ previously.
     hit `Enter`.
     {{< /hint >}}
 
-- Line ending: Git has a configuration setting called `core.autocrlf` which is
-    specifically designed to make sure that, when a text file is written to the
-    repository's _object database_, all line endings in that text file are
-    normalized to `LF` (i.e., the standard _de facto_ EOL in Git and GitHub).
-    The `core.autocrlf` setting variable can take three possible values.
+- Set up __line ending__ (EOL) setting. Git has a configuration setting called
+    `core.autocrlf` which is specifically designed to make sure that, when a
+    _text_ file is written to the repository's _object database_, all line
+    endings in that text file are normalized to `LF` (_de facto_ EOL standard in
+    Git and GitHub). The `core.autocrlf` setting variable can take three
+    possible values:
     - `core.autocrlf=false` __Default behavior__. Don't do anything to EOLs: all
                             types of line endings are left untouched by Git. 
     - `core.autocrlf=true`  __Good for Windows projects__. Line endings of text
                             files are converted to Unix style (`LF`) when
                             writing to the _object database_ (more precisely,
-                            when files are staged into the _index_), however
-                            `LF` are turned back into `CR` `LF` when writing out
-                            into the working directory.
+                            when files are staged to the _index_), however `LF`
+                            are turned back into `CR` `LF` when writing out into
+                            the working directory.
     - `core.autocrlf=input` __Good for Linux projects__. Line endings of text
                             files are converted to Unix style (`LF`) when
-                            writing to the _object database_ and no reverse
-                            conversion is performed when writing out into the
-                            working directory.
+                            writing to the _index_ and no reverse conversion is
+                            performed when writing out into the working
+                            directory.
     
-    For any Linux project use the following settings at `global` or `project`
-    level (in the latter case, commands are to be executed under the local
-    working directory):
+    In any Linux-only project you can force `LF` EOL in __every copy__
+    (working tree, index, local repo, and remote) of every text file of the
+    project by using the following settings at `project` level (commands are to
+    be executed under the local working directory):
     ```bash
-    git config core.autocrlf input  # See above
+    git config core.autocrlf input  # See above.
     git config core.eol lf          # When Git needs to change line endings to
                                     # write a file in your working directory
                                     # (e.g., by `git checkout`, `git pull`,
                                     # `git clone`) it will always use LF to
                                     # denote end of line.
+    git config core.safecrlf warn   # Git should warn about possible corruption
+                                    # of binary files (based on their mixed
+                                    # content of LF and CRLF) before committing.
+
+    git add --renormalize .         # To update EOLs of all tracked (committed)
+                                    # files in the 'local repo' according to the
+                                    # new config settings.
+    git rm --cached -r .            # Run these two commands with your 'working
+    git reset --hard                # directory clean' to update existing line
+                                    # endings in your 'working tree' taking into
+                                    # account config changes and replacing any
+                                    # potential overlooked CRLF in text files.
+
+    git ls-files --eol              # To verify that the files in your repo are
+                                    # using the correct line endings.
     ```
     {{< hint info >}}
-__NOTE__  
+__NOTE__   
 As of 2018, starting with Windows 10 1809, most Windows applications, including
 [Notepad](https://devblogs.microsoft.com/commandline/extended-eol-in-notepad/),
-support Unix/Linux (`LF`) and Macintosh (`CR`) line endings, in addition to the
-usual Windows (`CR` `LF`) line endings. Therefore, even in the case of Win-Linux
-hybrid projects or cross-platform collaborations, using the former settings
+support Unix/Linux (`LF`) and old Macintosh (`CR`) line endings, in addition to
+the usual Windows (`CR` `LF`) line endings. Therefore, even in the case of
+cross-platform collaboration projects, or Win-Linux hybrid systems sharing the
+same working directory (as in the case of _WSL_), using the former settings
 might be a good choice... unless you need to run batch scripts, in which case
-you should use `git config core.autocrlf true`, since batch files need `CR` `LF`
-line endings to run properly. In any case, if you want to avoid `CR` `LF` being
-introduced into the remote code from some Windows device, you have to make sure
-that __all your collaborators__ have changed the default Git setting before
-starting staging and committing.
+you should use `git config core.autocrlf true` and `git config core.eol native`,
+since batch files need `CR` `LF` line endings to run properly. In any case, if
+you want to avoid `CR` `LF` being introduced into the remote code from some
+Windows device, you have to make sure that __all your collaborators__ have
+changed the default Git setting (`core.autocrlf=false`) before starting staging
+and committing (not so handy when working in a large team of developers).
 
-To solve all these problems (and more), using a `.gitattributes` file is
-considered the best practice, as discussed, e.g.,
-[here](https://rehansaeed.com/gitattributes-best-practices/#line-endings).
+To solve all these problems (and more), using a `.gitattributes` file to
+encapsulate line endings within your repository is now considered the best
+practice, thus ceasing depending on everyone having the proper settings (see
+_Refs_ below).
     {{< /hint >}}
     > __Refs and additional readings__  
     > - [Pro Git book](https://www.git-scm.com/book/en/v2/Customizing-Git-Git-Configuration#_core_autocrlf)
     > - [Stack Overflow](https://stackoverflow.com/questions/9976986/force-lf-eol-in-git-repo-and-working-copy)
     > - [Wikipedia](https://en.wikipedia.org/wiki/Newline)
-    > - [Adaptive Patchwork](https://adaptivepatchwork.com/2012/03/01/mind-the-end-of-your-line/)
+    > - [Tim Clem's Adaptive Patchwork](https://adaptivepatchwork.com/2012/03/01/mind-the-end-of-your-line/)
     > - [A. Hovhannisyan](https://www.aleksandrhovhannisyan.com/blog/crlf-vs-lf-normalizing-line-endings-in-git/)
     > - [M. Rehan Saeed](https://rehansaeed.com/gitattributes-best-practices/)
 
