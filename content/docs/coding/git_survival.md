@@ -200,10 +200,10 @@ git diff 5c19306..901da28
     {{< /hint >}}
 
 - There are 3 levels of Git configuration settings:
-    - __project__: only available for the current project and stored in the
+    - __local__: only available for the current project and stored in the
         `.git/config` file within the project's directory. This is the default
-        level for each `git config` command executed under the project's
-        directory: 
+        level for each `git config` command with a _writing option_, executed
+        under the project's directory:
         ```bash
         git config <setting> <option>
         ```
@@ -222,23 +222,24 @@ git diff 5c19306..901da28
     
     {{< hint info >}}
 __NOTE__  
-Quite obviously, __project__ overrides __global__ and __global__ overrides
+Quite obviously, __local__ overrides __global__ and __global__ overrides
 __system__.
     {{< /hint >}}
     
     {{< hint warning >}}
 __WARNING__  
-__Project__ configs are local to just one particular copy/clone of any given
-repo, and need to be reapplied if the repo is recloned clean from the remote;
-`git config` command changes a local file that is not sent to the remote with a
-commit/push action.
+__Local__ configs are actually effective for just one particular copy/clone of
+any given repo, and need to be reapplied if the repo is recloned clean from the
+remote; `git config` command changes a local file that is not sent to the remote
+with a commit/push action.
     {{< /hint >}}
 
 ## Configuration Settings
-- List, check, or edit all the configuration settings.
+- List, check, or edit all the configuration settings. When no option is
+    included, the command lists the config settings of ALL three levels.
     ```bash
-    git config [--global|--system] -l # [--list]
-    git config [--global|--system] -e # [--edit]
+    git config [--local|--global|--system] -l # [--list]
+    git config [--local|--global|--system] -e # [--edit]
     ```
 
 - Set the following global options, otherwise you'll be asked for upon the first
@@ -306,8 +307,8 @@ previously.
     
     In any Linux-only project you can force `LF` EOL in __every copy__
     (working tree, index, local repo, and remote) of every text file of the
-    project by using the following settings at `project` level (commands are to
-    be executed under the local working directory):
+    project by using the following settings at `local` level (commands are to
+    be executed under the project working directory):
     ```bash
     git config core.autocrlf input  # See above.
     git config core.eol lf          # When Git needs to change line endings to
