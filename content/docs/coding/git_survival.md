@@ -126,6 +126,7 @@ To configure SSH
     git show     # Shows the last commit (hash, message, and line-wise diffs)
     git log      # Shows the commit history and hashes of the current branch
     git log --patch <file_name>      # Shows commit history and diffs combined
+    git reflog   # Shows a list of times when HEAD changed
     ```
     Accordingly, run `git fetch` followed by `git diff main origin/main` to see
     which new changes for the `main` branch are currently available from the
@@ -598,17 +599,26 @@ line-by-line differences within them by using `git diff --staged`.
     ```
 
 ## Undos
-- Discard changes (not yet committed) in working directory.
+In Git, _undo_ can mean many slightly different things.
+
+- Discard local changes (not yet staged or committed) in the _working tree_.
     ```bash
+    git checkout -- <file_name>
+    # or
     git restore <file_name>
     ```
-
-- Restore an older version of `<file_name>` (go back to commit `<commit_hash>`)
-    by using `-s` (or `--source=`) option.
-    ```bash
-    git restore -s HEAD~<NUM> <file_name>
-    git restore -s <commit_hash> <file_name>
-    ```
+    {{< hint info >}}
+__INFO__  
+The double hyphen `--` in `git checkout` means _treat everything afterwards as a
+file_, according to the full form of the command:
+```
+git checkout [<commit-like>] [<file>]
+```
+where `<commit-like>` can be a branch, a tag, a specific commit, etc. If you
+omit the `<commit-like>` argument it defaults to the current `HEAD`, but, when
+used with only the `<file>` argument, `--` is necessary for the command to know
+that you are actually omitting the first one.
+    {{< /hint >}}
 
 - Unstage (i.e., remove from staging area) `<file_name>`.
     ```bash
@@ -621,7 +631,32 @@ When using `git restore`, by default the _working tree_ is restored. Specifying
 (`-W`) and `--staged` (`-S`) restores both.
     {{< /hint >}}
 
-- Remove the last commit __from the local Git__.
+- Restore an older version of `<file_name>` (back to commit `<commit_hash>`).
+    ```bash
+    # The old version of `<file_name>` will be available from your working tree
+    # and the index as well (changes are already staged).  
+    git checkout HEAD~<NUM> <file_name>
+    git checkout <commit_hash> <file_name>
+    
+    # The old version of `<file_name>` will be available from your working tree
+    # but nothing is added to the index.
+    git restore -s HEAD~<NUM> <file_name>      # --source=
+    git restore -s <commit_hash> <file_name>   # --source=
+    ```
+
+- Restore an entire old commit.
+    ```bash
+    # By 'detached HEAD' state (no branch checked out). Exit the 'detached HEAD'
+    # state by checking out any branch (e.g., `git checkout main`)  
+    git checkout HEAD~<NUM>
+    git checkout <commit_hash>
+
+    # or, avoiding detaching the HEAD,
+    git restore -s HEAD~<NUM> .                # --source=
+    git restore -s <commit_hash> .             # --source=
+    ```
+
+- Remove the last commit __from the local Git repository__.
     ```bash
     git reset --hard HEAD^
     ```
@@ -630,28 +665,46 @@ When using `git restore`, by default the _working tree_ is restored. Specifying
     git reset HEAD^
     ```
 
-- Remove from the local Git multiple commits __from the top__.
+- Remove from the local Git repo multiple commits __from the top__.
     ```bash
-    git reset --hard HEAD~<NUM>   # or by using the commit hash
+    git reset --hard HEAD~<NUM>
+    git reset --hard <last_good_hash>
 
     # E.g.:
-        git reset --hard HEAD~3   # removes the last three commits
-        git reset --hard HEAD~1   # is equivalent to HEAD^
+        git reset --hard HEAD~3     # removes the last three commits
+        git reset --hard HEAD~1     # is equivalent to HEAD^
     ```
     Remove `--hard` to uncommit but keep the changes around for reworking.
     ```bash
     git reset HEAD~<NUM>
     ```
 
-- Revert individual pushed commits __from remote__.
+- Fix the last commit __in the local Git repository__. The `--amend` option will
+    update and replace the most recent commit with a new commit that combines
+    any staged changes with the contents of the previous commit. The `--no-edit`
+    option amends the commit without changing its commit message.
+    ```bash
+    # Make your change
+    git add .
+    git commit --amend --no-edit
+    ```
+    With nothing currently staged, `--amend` can be used to __just rewrite the
+    previous commit message__.
+    ```bash
+    git commit --amend -m "<new_message>"
+    ```
+
+- Revert individual pushed commits (i.e., _public changes_) with effect on the
+    __remote repo__.
     ```bash
     git revert <commit_hash>      # or by using the HEAD~<NUM> syntax
     git push
     ```
     {{< hint info >}}
 __INFO__  
-Actually, this will create a new commit (needing to be pushed) which reverts the
-changes of `<commit_hash>`.
+Actually, this will create a new _inverse_ commit (needing to be pushed), which
+reverts the changes of `<commit_hash>`. Since you don't rewrite any history,
+`git revert` is a safe and easy way to rollback to a previous state.
     {{< /hint >}}
     {{< hint warning >}}
 __WARNING__  
@@ -663,6 +716,16 @@ after that!
     `<latest_commit_hash>`.
     ```bash
     git revert <oldest_commit_hash>..<latest_commit_hash>
+    git push
+    ```
+    usually you want to revert up to the `HEAD` of the current branch, using the
+    the `--no-commit` flag to revert all the commits at once (otherwise you'll
+    be prompted for a message for each commit in the range, littering your
+    history with unnecessary new commits):
+    ```bash
+    git revert --no-commit <oldest_commit_hash>..HEAD
+    git commit -m "<global_revert_message>"   # ...not sure about the difference
+                                              # with `git revert --continue`
     git push
     ```
     {{< hint warning >}}
@@ -678,12 +741,8 @@ git status
 {{< hint info >}}
 __NOTE__  
 In case of linear (or `-<=` branching) commit chains, `git revert` and
-`git restore` can be used to produce the same results, i.e.,
-```
-git restore -s <commit_hash> .
-git revert <commit_hash>..HEAD
-```
-or, even better,
+`git restore` can be used to produce quite similar (sometimes even identical)
+results:
 ```
 git restore --worktree --staged -s <commit_hash> .
 git revert --no-commit <commit_hash>..HEAD
@@ -702,7 +761,9 @@ go awry when attempting to undo `G` because it is a merge commit and, as such,
 it cannot be unambiguously reverted, ultimately leading to a failure.
 {{< /hint >}}
 > **Refs and additional readings**  
-> - [Stack Overflow](https://stackoverflow.com/questions/63661460/difference-between-git-restore-and-git-revert)
+> - [Stack Overflow (1)](https://stackoverflow.com/questions/63661460/difference-between-git-restore-and-git-revert)
+> - [Stack Overflow (2)](https://stackoverflow.com/questions/4114095/how-do-i-revert-a-git-repository-to-a-previous-commit)
+> - [GitHub Blog](https://github.blog/open-source/git/how-to-undo-almost-anything-with-git/)
 
 ## Manage Branches
 1. Create a new branch `<new_branch>` __locally__.
@@ -721,6 +782,8 @@ it cannot be unambiguously reverted, ultimately leading to a failure.
     (i.e., nothing to stage or commit).
     ```bash
     git checkout <new_branch>
+    # or
+    git switch <new_branch>
     ```
     {{< hint info >}}
 __NOTE__  
@@ -745,6 +808,8 @@ below).
 1. Go back to main.
     ```bash
     git checkout main
+    # or
+    git switch main
     ```
 
 1. Delete the branch `<old_branch>` __locally__.
@@ -771,7 +836,7 @@ below).
 
 1. Merge changes from one branch into another.
     ```bash
-    git checkout main
+    git checkout main     # or 'git switch main', as usual... 
     git merge <new_branch>
     # ...manually resolve possible conflicts...
     git push
