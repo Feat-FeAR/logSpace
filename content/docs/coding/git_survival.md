@@ -608,7 +608,7 @@ In Git, _undo_ can mean many slightly different things.
     git restore <file_name>
     ```
     {{< hint info >}}
-__INFO__  
+__NOTE__  
 The double hyphen `--` in `git checkout` means _treat everything afterwards as a
 file_, according to the full form of the command:
 ```
@@ -618,6 +618,21 @@ where `<commit-like>` can be a branch, a tag, a specific commit, etc. If you
 omit the `<commit-like>` argument it defaults to the current `HEAD`, but, when
 used with only the `<file>` argument, `--` is necessary for the command to know
 that you are actually omitting the first one.
+    {{< /hint >}}
+    {{< hint info >}}
+__INFO__  
+The `git checkout` command allows you to decide _what to extract from the local
+Git repository into the working directory_, whether it is a branch, a tag, or
+another valid reference, such as a commit. This allows you to retrieve a
+specific snapshot of the project in your working copy, thus going "back in time"
+to the moment when that snapshot was saved. However, the command turned out to
+be so complicated and a source of confusion for so many users that Git
+developers finally (as of Git 2.23) split it into two separate and more focused
+commands to better clarify the two different uses of `git checkout`:
+- `git switch`, to change branches, as `git checkout <branch_name>` does (see
+    next section);
+- `git restore`, to reset files to certain revisions, as
+    `git checkout -- <file_name>` does.
     {{< /hint >}}
 
 - Unstage (i.e., remove from staging area) `<file_name>`.
