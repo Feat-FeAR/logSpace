@@ -104,10 +104,69 @@ To configure SSH
     ```
 
 ## General
-- All Git info is locally stored in the `.git` folder (i.e., the _object
-    database_), which makes any Git repository _locally self-contained_. For
-    this reason the folder of the local repository can be freely moved in the
-    personal filesystem, and Git will keep working smoothly.
+- __`--everything-is-local`__ (popular Git claim)  
+    All Git info is locally stored in the `.git` folder (with the _object
+    database_ and the _index_ living in the `.git/objects` and `.git/index`
+    subfolders respectively), which makes any Git repository _locally
+    self-contained_. Hence, the folder of the local repo can be freely moved in
+    the personal filesystem, and Git will keep working smoothly.
+
+- __`--distributed-is-the-new-centralized`__ (another Git claim)  
+    Git is a _distributed version control system_, meaning that your local
+    repository has exactly the same features and functionality as __any other
+    Git repository__. So a Git repo on a server is the same as a Git repo on
+    GitHub (granted GitHub adds additional features) which is the same as your
+    coworker's local repo. In this way, there is no _central repo_ you have to
+    have access to do your work. You can commit, branch, and party on your own
+    repo on your local machine even without internet access. Then, when you have
+    a connection again, you can push your changes to any other Git repo you have
+    access to. So, while most people treat a particular repo as the "central
+    repo", that's a process choice, not a Git requirement.
+
+- In every Git project, there are (at least) three active copies of each file,
+    stored in three different locations:
+    1. the ___working directory___, aka the ___working tree___, or the local
+        ___workspace___.  
+        Files therein are copied out of the local repo and are the only ordinary
+        read'n'write files that you can work on.
+
+    2. the ___staging area___, aka the ___index___ (a meaningless term), or
+        ___cache___ (a mostly defunct term).  
+        It is like a draft space to prepare changes before committing them and
+        making them part of the project's history. Changes added here are only a
+        _proposed_ commit, not a real one yet, so they can be modified, even if
+        already stored in a de-duplicated format.
+
+    3. the ___local repository___, loosely identifiable with the ___object
+        database___.  
+        It holds the whole project’s history, including the `HEAD` (or _current
+        commit_) copy of all files as well as all the previous commits and
+        branches since the initialization of the repo. This copy is frozen and
+        de-duplicated (i.e., it can't be changed because it is in a commit).
+
+    In addition, if using `git stash`,
+
+    4. the ___stash___.  
+        It's meant to temporarily store a snapshot of your changes without
+        committing them to the repository. Useful when you’ve made changes to a
+        branch that you aren’t ready to commit, but you need to switch to
+        another branch.
+
+    In addition, if using an hosting remote service like GitHub or GitLab, you
+    also need to consider
+
+    5. the ___remote repository___, aka ___upstream repository___, or simply
+        ___the remote___.  
+        This is a copy of your project hosted on the internet or network. It
+        allows multiple people to collaborate by pushing to and pulling from
+        this shared resource.
+
+    Accordingly, you use and modify the working tree copies, you use `git add`
+    or `git restore --staged` to create or remove the index copies, and then you
+    use `git commit` to turn the proposed next commit into an actual commit. In
+    this step, Git simply packages up the files that are in its index at that
+    time. To make that work, the initial `git checkout` (or `git switch`) step
+    first fills in Git's index.
 
 - The `.gitignore` file contains all the filenames to be ignored by Git: they
     won't be staged, committed, or pushed in any case, though being in the local
@@ -621,14 +680,14 @@ that you are actually omitting the first one.
     {{< /hint >}}
     {{< hint info >}}
 __INFO__  
-The `git checkout` command allows you to decide _what to extract from the local
-Git repository into the working directory_, whether it is a branch, a tag, or
-another valid reference, such as a commit. This allows you to retrieve a
-specific snapshot of the project in your working copy, thus going "back in time"
-to the moment when that snapshot was saved. However, the command turned out to
-be so complicated and a source of confusion for so many users that Git
-developers finally (as of Git 2.23) split it into two separate and more focused
-commands to better clarify the two different uses of `git checkout`:
+The `git checkout` command allows you to decide _what to pick out of the local
+Git repository and copy in the working directory_, whether it is a branch, a
+single file, or another valid reference, such as a commit. This allows you to
+retrieve a specific snapshot of the project in your working copy, thus going
+"back in time" to the moment when that snapshot was saved. However, the command
+turned out to be so complicated and a source of confusion for so many users that
+Git developers finally (as of Git 2.23) split it into two separate and more
+focused commands to better clarify the two different uses of `git checkout`:
 - `git switch`, to change branches, as `git checkout <branch_name>` does (see
     next section);
 - `git restore`, to reset files to certain revisions, as
@@ -882,6 +941,8 @@ but saving, your current changes.
 
 - Stash the changes in a dirty working directory away.
     ```bash
+    git stash push
+    # or simply
     git stash
     ```
 
