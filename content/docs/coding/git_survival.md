@@ -36,6 +36,12 @@ __This is NOT:__
 1. __a list of *how to fix this mess I made with Git?*__  
     For this purpose,
     [Oh Shit, Git!?!](https://ohshitgit.com/) could help.
+1. __an article explaining how Git works under the hood.__  
+    This would be a long story, but _Git from the bottom up_ by John Wiegley
+    does a good job at conveying the essential concepts clearly and succinctly.
+    Available in both
+    [PDF](http://ftp.newartisans.com/pub/git.from.bottom.up.pdf) and
+    [online](https://jwiegley.github.io/git-from-the-bottom-up/) versions.
 1. __something smart, cool, and nerdy about Git...__  
     ...such as the fictional-but-realistic
     [Git man page generator](https://github.com/Lokaltog/git-man-page-generator)
