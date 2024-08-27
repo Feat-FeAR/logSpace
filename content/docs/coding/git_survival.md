@@ -424,8 +424,8 @@ _Refs_ below).
     > - [Stack Overflow](https://stackoverflow.com/questions/9976986/force-lf-eol-in-git-repo-and-working-copy)
     > - [Wikipedia](https://en.wikipedia.org/wiki/Newline)
     > - [Tim Clem's Adaptive Patchwork](https://adaptivepatchwork.com/2012/03/01/mind-the-end-of-your-line/)
-    > - [A. Hovhannisyan](https://www.aleksandrhovhannisyan.com/blog/crlf-vs-lf-normalizing-line-endings-in-git/)
-    > - [M. Rehan Saeed](https://rehansaeed.com/gitattributes-best-practices/)
+    > - [Aleksandr Hovhannisyan's blog](https://www.aleksandrhovhannisyan.com/blog/crlf-vs-lf-normalizing-line-endings-in-git/)
+    > - [Muhammad R. Saeed's blog](https://rehansaeed.com/gitattributes-best-practices/)
 
 ## Locally Clone a Repository
 You can locally clone a repository from two types of URL addresses:
