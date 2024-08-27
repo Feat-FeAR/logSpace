@@ -524,9 +524,12 @@ remote repository.__
     git commit -m "<message>"
     ```
 
-1. push the first commit by using the option `--set-upstream` (`-u`) to
-    associate the current branch with a _remote_ so that subsequent `git push`,
-    `git fetch`, and `git pull` can be used without any arguments.
+1. if you didn't `git clone` the repo, push the first commit by using the option
+    `--set-upstream` (`-u`) to associate the current branch with a _remote_ so
+    that subsequent `git push`, `git fetch`, `git merge`, and `git pull` _can_
+    be used without any arguments (it also affects `git status`, which will then
+    report the difference between your current branch and its upstream in terms
+    of commits).
     ```bash
     git push --set-upstream origin main
     # or
@@ -560,6 +563,8 @@ changed files or the changes staged to be committed.
 
 1. Fetch from the remote repository ___and integrate___ with the local branch.
     ```bash
+    # In all the following commands, with no additional arguments, Git uses the
+    # current branch's upstream, if set (i.e., `origin main`).
     git pull
     # or
     git fetch
