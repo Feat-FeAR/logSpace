@@ -162,7 +162,7 @@ To configure SSH
     also need to consider
 
     5. the ___remote repository___, aka ___upstream repository___, or simply
-        ___the remote___.  
+        the ___remote___.  
         This is a copy of your project hosted on the internet or network. It
         allows multiple people to collaborate by pushing to and pulling from
         this shared resource.
@@ -181,8 +181,8 @@ To configure SSH
 - The following operations for monitoring Git are safe to run at any time since
     they never change anything in your local branches:
     ```bash
-    git fetch    # Updates remote-tracking branches by fetching from the remote
-                 # repository (e.g., GitHub) the most up-to-date branch pointers
+    git fetch    # Updates remote-tracking branches by obtaining the most
+                 # up-to-date commits from the remote GitHub repository
     git status   # Shows the working tree status
     git diff     # Shows the still uncommitted (nor staged) changes in local
                  # files, line by line 
@@ -448,10 +448,13 @@ git clone <git_repo_url>
 ```
 {{< hint info >}}
 __NOTE__  
-`git clone` copies a remote repository to create a local repository with a
-_remote_ called `origin` automatically set up. Since Git uses this name by
-default, `origin` is a sensible choice when you set up remotes by hand (see
-next section).
+`git clone` makes a local copy of a remote repository and automatically sets up
+a _tracking branch_ to the _remote_ using `origin` as the default name for it.
+This is the reason why, `origin` is not special, but nevertheless a sensible
+choice when you set up remotes by hand.
+
+See also next section for more info on _tracking branches_ and the `origin`
+name.
 {{< /hint >}}
 
 ## Make a New Repository
@@ -498,22 +501,13 @@ Regardless of how you chose to create the remote GitHub repository,
         git remote add origin git@github.com:Feat-FeAR/Kerblam_prototype.git
         ```
         {{< hint info >}}
-__NOTE__  
- A _remote_ is a copy of the repository that is hosted somewhere else, that we
- can push to and pull from, and there’s no reason that you have to work with
- only one.
-
- For example, on some large projects you might have your own copy in
- your own GitHub account (you’d probably call this _origin_) and also the main
- _upstream_ project repository. You would pull from _upstream_ from time to time
- to get the latest updates that other people have committed.
-        {{< /hint >}}
-        {{< hint info >}}
-__NOTE__  
-`origin` is a __local__ name used to refer to the remote repository. It could be
-called anything, but _origin_ is a convention that is often used by default in
-Git and GitHub, so it’s helpful to stick with this unless there’s a reason not
-to.
+__INFO__  
+In Git, a _remote_ is a copy of the repository that is hosted somewhere else,
+that we can _push to_ and _pull from_. To avoid entering the full address each
+time, Git allows the use of local names to refer to the _remote_. Even if in
+principle it could be called anything, `origin` is a convention that is often
+used by default in Git and GitHub (see, e.g., `git clone`), so it’s helpful to
+stick with this unless there’s a reason not to.
 
 __In any case, remember that the name you give to a remote only exists
 _locally_. It’s an alias that you choose and not something intrinsic to the
@@ -531,16 +525,32 @@ remote repository.__
     ```
 
 1. if you didn't `git clone` the repo, push the first commit by using the option
-    `--set-upstream` (`-u`) to associate the current branch with a _remote_ so
-    that subsequent `git push`, `git fetch`, `git merge`, and `git pull` _can_
-    be used without any arguments (it also affects `git status`, which will then
-    report the difference between your current branch and its upstream in terms
-    of commits).
+    `--set-upstream` (`-u`) to set up a _tracking branch_ that will associate
+    the current local branch with a _remote_ so that subsequent `git push`,
+    `git fetch`, `git merge`, and `git pull` _can_ be used without any arguments
+    (notably, it also affects `git status`, which will then report the
+    difference between your current branch and its _upstream_ in terms of
+    commits).
     ```bash
     git push --set-upstream origin main
     # or
     git push -u origin main
     ```
+    {{< hint info >}}
+__INFO__  
+A _tracking branch_ in Git is a __local__ branch that is connected to a remote
+branch (also referred to as its _upstream branch_). When you push and pull on
+that branch, it automatically pushes and pulls to the remote branch that it is
+connected with. Use this if you always pull/push from/to the same upstream
+branch, and if you don't want to use those Git commands explicitly.
+
+Remote-tracking branch names take the form `<remote>/<branch>` (e.g.,
+`origin/main`) and can be listed by `git branch -r`.
+
+Notably, _tracking branches_ can also be used in Git commands like `diff`,
+`checkout`, `merge`, etc., and, more generally, are to be considered as any
+other local branch, thus providing an handy bridge to work with the _remotes_.
+    {{< /hint >}}
 
 Similarly, to make a repository from an existing `<project>` folder, create the
 GitHub repo beforehand, then
@@ -567,10 +577,10 @@ changed files or the changes staged to be committed.
     cd <local_dir>/<git_repo>
     ```
 
-1. Fetch from the remote repository ___and integrate___ with the local branch.
+1. Fetch from the remote repository and integrate with the local branch.
     ```bash
     # In all the following commands, with no additional arguments, Git uses the
-    # current branch's upstream, if set (i.e., `origin main`).
+    # current branch's upstream, if set (i.e., `origin/main`).
     git pull
     # or
     git fetch
@@ -859,7 +869,7 @@ it cannot be unambiguously reverted, ultimately leading to a failure.
 1. List branches.
     ```bash
     git branch -l  # [--list]    list local branches (current one marked with *)
-    git branch -r  # [--remotes] list remote branches
+    git branch -r  # [--remotes] list remote-tracking branches
     git branch -a  # [--all]     list all branches
     ```
 
@@ -882,8 +892,8 @@ below).
     {{< /hint >}}
 
 1. Push the new branch to the remote repository for the first time by using the
-    option `--set-upstream` (`-u`) so that subsequent `git push` and `git pull`
-    can be used without any arguments.
+    option `--set-upstream` (`-u`) (as explained in the _Make a New Repository_
+    section).
     ```bash
     git push --set-upstream origin <new_branch>
     # or
@@ -934,8 +944,9 @@ need to be on the branch that you are merging into (i.e., usually the `main`).
     {{< hint warning >}}
 __WARNING__  
 GitHub usually deletes a branch after merging of a _pull request_, but this
-action will delete the branch only in the remote. To clean up your local
-references to the remote branches (i.e., `remotes/origin/*`) do this:
+action will only affect the branch in the remote. To also remove all the
+`remotes/origin/*` _tracking branches_ (i.e., to clean up your local references
+to the remote branches), do this:
 ```bash
 # Lists defunct branches that can be deleted/pruned 
 git remote prune origin --dry-run
