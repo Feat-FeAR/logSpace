@@ -13,9 +13,11 @@ draft: false
 # The ENA Archive
 
 <br>
+<br>
 <div style="text-align: center;">
 	{{< figure src="/images/ENA_logo_crop.png" title="ENA logo" width=500 >}}
 </div>
+<br>
 <br>
 
 While the

@@ -11,6 +11,21 @@ draft: false
 ---
 
 # Git and GitHub
+
+<div>
+<br>
+<table style="border-collapse: collapse; width: 85%; margin: auto;">
+  <tr>
+    <td style="border: none;">
+        {{< figure src="/images/Git_logo.png" title="Git logo" width=300 >}}
+    </td>
+    <td style="border: none;">
+        {{< figure src="/images/GitHub_logo.png" title="GitHub logo" width=370 >}}
+    </td>
+  </tr>
+</table>
+</div>
+
 {{< hint warning >}}
 ### __DISCLAIMER and EXTERNAL LINKS__
 
@@ -35,7 +50,8 @@ __This is NOT:__
     Git cheatsheets are available on the web.
 1. __a list of *how to fix this mess I made with Git?*__  
     For this purpose,
-    [Oh Shit, Git!?!](https://ohshitgit.com/) could help.
+    [Oh Shit, Git!?!](https://ohshitgit.com/) could help (as per the _xkcd_
+    below).
 1. __an article explaining how Git works under the hood.__  
     This would be a long story, but _Git from the bottom up_ by John Wiegley
     does a good job at conveying the essential concepts clearly and succinctly.
@@ -50,8 +66,19 @@ __This is NOT:__
 
 __This is instead:__
 1. a collection of __personal notes__ I took since I started learning Git;
-1. a sectioned and annotated list of the __Git commands I still use the most__.
+1. a sectioned and annotated list of the __Git commands and procedures I use the
+most__.
 {{< /hint >}}
+
+<div style="text-align: center;">
+    <br>
+    {{< figure
+        src="/images/how_to_git.webp"
+        title="If that doesn't fix it, git.txt contains the phone number of a friend of mine who understands git. Just wait through a few minutes of 'It's really pretty simple, just think of branches as...' and eventually you'll learn the commands that will fix everything."
+        width=300
+    >}}
+    <br>
+</div>
 
 ## Authentication
 Basic authentication by simple password to access repositories on GitHub from
@@ -173,6 +200,19 @@ To configure SSH
     this step, Git simply packages up the files that are in its index at that
     time. To make that work, the initial `git checkout` (or `git switch`) step
     first fills in Git's index.
+
+    <div style="text-align: center;">
+    {{< figure
+        src="/images/git_transports.png"
+        title="Git transport scheme"
+        width=670
+    >}}
+    <figcaption style="font-size: 13px;">
+        Scheme of the main Git actions moving information across the different
+        storage sections of a Git repository. 
+    </figcaption>
+    <br>
+    </div>
 
 - The `.gitignore` file contains all the filenames to be ignored by Git: they
     won't be staged, committed, or pushed in any case, though being in the local
@@ -1063,5 +1103,5 @@ example of all five types:
 > [!CAUTION]
 > Negative potential consequences of an action.
 ```
-While [here](https://github.com/orgs/community/discussions/16925) you can find
+While [here](https://github.com/orgs/community/discussions/16925) you can see
 how they are displayed on GitHub.

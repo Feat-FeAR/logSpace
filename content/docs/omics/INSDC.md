@@ -12,9 +12,11 @@ draft: false
 
 # The International Nucleotide Sequence Database Collaboration
 
+<br>
 <div style="text-align: center;">
 	{{< figure src="/images/INSDC_logo.png" title="ENA logo" width=400 >}}
 </div>
+<br>
 
 The global availability of our current knowledge about DNA sequences and gene
 expression is made possible by the existence of large repositories like
