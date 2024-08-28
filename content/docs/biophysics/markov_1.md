@@ -59,7 +59,9 @@ were _t_-states, while \\(93\\) were _j_-states (we always exclude the last step
 of the chain, being unsuitable for transition counting). The detailed raw counts
 (also called _occurrences_) of the four possible transitions are given in the
 _Counts_ column of the table below.
-<table>
+<div>
+<br>
+<table style="border-collapse: collapse; width: 85%; margin: auto;">
     <thead>
         <tr style="border: none;">
             <th>Transition</th>
@@ -106,6 +108,8 @@ _Counts_ column of the table below.
         </tr>
     </tbody>
 </table>
+<br>
+</div>
 
 Using the notation \\(n_{ab}\\) for the raw counts of the generic transition
 \\(a\rightarrow b\\), we have that \\(N_t=n_{tt}+n_{tj}=74\\) is the number of
