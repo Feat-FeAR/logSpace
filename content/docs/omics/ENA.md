@@ -55,12 +55,12 @@ To register a _Study_ (also referred to as _Project_) through the Webin Portal
 	study and submission:
 	- the ___BioProject___ study accession starts with _PRJEB_ and it is the one
 		typically used in journal publications;
-	- the ENA ___Study___ accession is an alternative accession number for the
-		study that starts with _ERP_;
+	- the ENA ___Study___ accession starts with _ERP_ and it is an alternative
+		accession number for the study;
 	- the ENA ___Submission___ accession refers to the _submission process_
 		rather than to the study itself and it starts with _ERA_.
 1. You may return to the dashboard and select `Studies Report` to review
-	registered studies.
+	registered studies and their accessions.
 
 ## Register Samples
 To register _Samples_ interactively (i.e., through the Webin Portal)
@@ -84,7 +84,7 @@ experimental model, choose the ___ENA default sample___ checklist.
 	on your selections (e.g.,
 	`Checklist_ENA-default sample checklist_xxxxxxxxxxxxx.tsv`);
 1. open the template in an appropriate spreadsheet editing program and complete
-	it by filling out __one line for each *Sample*__;
+	it by filling out __one line for each *Sample*__ ;
 {{< hint info >}}
 __INFO__  
 The most fundamental attribute to any sample is its taxonomic classification
@@ -120,12 +120,13 @@ for missing value reporting.
 	`Browse` button to find the spreadsheet you wish to submit, then click the
 	`Submit Completed Spreadsheet` button.
 
-At this point your _Samples_ will be validated and, if accepted, accession
-numbers will be reported. Actually, you will receive _two_ accession numbers for
-each _Sample_:
-- the ___BioSample___ accession that starts with _SAMEA_;
-- the ENA ___Sample___ accession, which is an alternative accession number that
-	starts with _ERS_.
+At this point your _Samples_ will be validated and---if accepted---accession
+numbers will be reported (possibly save them as a second
+`Webin-accessions-<time_stamp>.txt` text file). Actually, every _Sample_ will
+receive _two_ accession numbers:
+- a ___BioSample___ accession starting with _SAMEA_ (see `Samples Report`);
+- an ENA ___Sample___ accession, which is an alternative accession number
+	starting with _ERS_.
 
 Note that at this point __you have not submitted any data__, but you have laid
 the groundwork for this by providing _Sample_ metadata.
@@ -258,10 +259,16 @@ To Submit Raw Reads Interactively,
 Your submitted data files will then be entered into a processing pipeline which
 will check their validity before moving them to an archive. If metadata
 validation is successful, you will receive a confirmation of the assigned
-_Experiment_ and _Run_ accessions. Actually, you will receive _two_ accession
-numbers for each read submission:
-- a ___Run___ accession starting with _ERR_;
-- an ___Experiment___ accession starting with _ERX_.
+_Experiment_ and _Run_ accessions (possibly save them as a third
+`Webin-accessions-<time_stamp>.txt` text file). Actually, every read submission
+will receive _two_ accession numbers:
+- a ___Run___ accession starting with _ERR_ ;
+- an ___Experiment___ accession starting with _ERX_ ;
+
+even if, in this case, they are not truly equivalent accessions for the same
+_object type_, since only _Runs_ are actually associated with _data_ (i.e.,
+FASTQ) files, while _Experiments_ only contain metadata related to sequencing
+methods.
 
 ## Review Submissions
 To review the content and status of your existing _Submissions_, login to the
