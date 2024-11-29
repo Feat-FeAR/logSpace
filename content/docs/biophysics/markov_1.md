@@ -174,25 +174,13 @@ More in detail, we simulated here a chain that is 9 times as long as the origina
 So, go and move the slider above to the right and you will experience the same excitement of an entire game condensed into a few seconds!
 
 ## A bit of formalism
-A __random process__ is generally defined as a random function of time
-\\(X\\!\left(t\right)\\), that is to say a time sequence of random
-variables---even though independent variables of different nature
-(e.g., position) are still possible. Consistent with a standard notation, the
-function \\(x\\!\left(t\right)\\) is a member of an _ensemble_ (family, set,
-collection) of functions, which is denoted with an upper case letter. Thus,
-\\(X\\!\left(t\right)\\) represents the random process, while
-\\(x\\!\left(t\right)\\) is one particular member (or _realization_) of it. For
-discrete-time series we use the notation \\(X\\!\left[k\right]\\) (or
-\\(X_{k}\\)) to represent the discrete sequence of random variables and
-\\(x\\!\left[k\right]\\) (or \\(x_{k}\\)) to represent the discrete sequence of
-states of a particular realization. This occurs when either a continuous time
-variable is sampled to regularly spaced discrete points in time
-(\\(t=k\ \delta t\\), where \\(\delta t\\) is the sampling time) or when the
-process is inherently discrete, consisting in a sequence of cycles or steps (as
-in the soccer case).
+A __random process__ is generally defined as a _random function of time_ \\(X\\!\left(t\right)\\), that is to say a time sequence of random variables---even though independent variables of different nature are still possible (such as position).
+Consistent with a standard notation, the function \\(x\\!\left(t\right)\\) is a member of an _ensemble_ (family, set, collection) of functions, which is denoted with an upper case letter.
+Thus, \\(X\\!\left(t\right)\\) represents the random process, while \\(x\\!\left(t\right)\\) is one particular member (or _realization_) of it.
+For discrete-time series we use the notation \\(X\\!\left[k\right]\\) (or \\(X_{k}\\)) to represent the discrete sequence of random variables and \\(x\\!\left[k\right]\\) (or \\(x_{k}\\)) to represent the discrete sequence of states of a particular realization.
+This occurs when either a continuous time variable is regularly sampled in time (\\(t=k\ \delta t\\), where \\(\delta t\\) is the sampling time) or when the process is inherently discrete, consisting in a sequence of cycles or steps (as in our soccer example).
 
-A discrete-time (first-order) Markov random process---better known as a
-___Markov chain___---is a memoryless random process such that
+A discrete-time (first-order) Markov random process---better known as a ___Markov chain___---is a memoryless random process such that
 {{< katex display >}}
 \begin{aligned}
         & \textrm{Pr}\left(X_{k+1}=x\ |\ X_{k}=x_{k},\ X_{k-1}=x_{k-1},\ \ldots,\ X_{0}=x_{0}\right)\\
@@ -201,11 +189,9 @@ ___Markov chain___---is a memoryless random process such that
         &\forall\ k\in\mathbb{N}\quad\text{and}\quad\forall\ x,x_{k}\in S
 \end{aligned}
 {{< /katex >}}
-where \\(S\\) is the __state space__, defined as the set of all the possible
-values that the random variable \\(X\\) can take during the process. Depending
-on \\(S\\), Markov chains can be either continuous- or discrete-valued. In this
-latter case, for a system with a finite number of states (let's say \\(m\\)), it
-is convenient to define the _transition matrix_
+where \\(S\\) is the __state space__, defined as the set of all the possible values that the random variable \\(X\\) can take during the process.
+Depending on \\(S\\), Markov chains can be either continuous- or discrete-valued.
+In this latter case, for a system with a finite number of states (let's say \\(m\\)), it is convenient to define the _transition matrix_
 {{< katex display >}}
     \bm{P} = \left(p_{ab}\right)_{m\times m} =
     \begin{pmatrix}
@@ -215,14 +201,11 @@ is convenient to define the _transition matrix_
         p_{m1} & p_{m2} & \ldots & p_{mm}
     \end{pmatrix}
 {{< /katex >}}
-which is a square \\(m\\)-by-\\(m\\) matrix whose generic element is the
-transition probability from \\(a\\) to \\(b\\) (i.e., the probability of having
-a state \\(b\\), conditional on coming from a state \\(a\\)).
+which is a square \\(m\\)-by-\\(m\\) matrix whose generic element is the transition probability from \\(a\\) to \\(b\\) (i.e., the probability of having a state \\(b\\), conditional on coming from a state \\(a\\)).
 $$
 p_{ab}=\textrm{Pr}\left(X\\!\left[k+1\right]=b\ |\ X\\!\left[k\right]=a\right)
 $$
-Also, by definition, \\(\bm{P}\\) is a _stochastic matrix_, meaning that all of
-its elements are between 0 and 1 and each row must sum to 1.
+Also, by definition, \\(\bm{P}\\) is a _stochastic matrix_, meaning that all of its elements are between 0 and 1 and each row must sum to 1.
 {{< katex display >}}
 \begin{cases}
     p_{ab}\in[0,1]\\
@@ -230,11 +213,10 @@ its elements are between 0 and 1 and each row must sum to 1.
 \end{cases}
 {{< /katex >}}
 
-Markov chains are frequently assumed to be _time-homogeneous_ (aka _stationary
-Markov chains_), meaning that
+Markov chains are frequently assumed to be _time-homogeneous_ (aka _stationary Markov chains_), meaning that
 $$
 \textrm{Pr}\left(X_{k+1}=x\ |\ X_{k}=y\right) = \textrm{Pr}\left(X_{k}=x\ |\ X_{k-1}=y\right)
 $$
-for all \\(k\\). In this case, transition probabilities are independent of
-\\(k\\). However, in general, the transition matrix can change in time
-(\\(\bm{P}\\!\left[k\right]\\)), as we will see in the next chapters.
+for all \\(k\\).
+In this case, transition probabilities are independent of \\(k\\).
+However, in general, the transition matrix can change in time (\\(\bm{P}\\!\left[k\right]\\)), as we will see in the next chapters.
