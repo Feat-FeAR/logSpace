@@ -174,11 +174,11 @@ More in detail, we simulated here a chain that is 9 times as long as the origina
 So, go and move the slider above to the right and you will experience the same excitement of an entire game condensed into a few seconds!
 
 ## A bit of formalism
-A __random process__ is generally defined as a _random function of time_ \\(X\\!\left(t\right)\\), that is to say a time sequence of random variables---even though independent variables of different nature are still possible (such as position).
-Consistent with a standard notation, the function \\(x\\!\left(t\right)\\) is a member of an _ensemble_ (family, set, collection) of functions, which is denoted with an upper case letter.
+A __random process__ (or __stochastic process__) is generally defined as a _random function of time_ \\(X\\!\left(t\right)\\), that is to say a random variable evolving over time---even though independent variables of different nature (such as position) are still possible.
+Consistent with a standard notation, the function \\(x\\!\left(t\right)\\) is a member of an _ensemble_ (aka family, set, or collection) of functions, which is denoted with an upper case letter.
 Thus, \\(X\\!\left(t\right)\\) represents the random process, while \\(x\\!\left(t\right)\\) is one particular member (or _realization_) of it.
 For discrete-time series we use the notation \\(X\\!\left[k\right]\\) (or \\(X_{k}\\)) to represent the discrete sequence of random variables and \\(x\\!\left[k\right]\\) (or \\(x_{k}\\)) to represent the discrete sequence of states of a particular realization.
-This occurs when either a continuous time variable is regularly sampled in time (\\(t=k\ \delta t\\), where \\(\delta t\\) is the sampling time) or when the process is inherently discrete, consisting in a sequence of cycles or steps (as in our soccer example).
+This occurs when either a continuous time waveform is regularly sampled over time (\\(t=k\ \delta t\\), where \\(\delta t\\) is the sampling time) or when the process is inherently discrete, consisting in a sequence of cycles or steps (as in our soccer example).
 
 A discrete-time (first-order) Markov random process---better known as a ___Markov chain___---is a memoryless random process such that
 {{< katex display >}}
@@ -189,7 +189,7 @@ A discrete-time (first-order) Markov random process---better known as a ___Marko
         &\forall\ k\in\mathbb{N}\quad\text{and}\quad\forall\ x,x_{k}\in S
 \end{aligned}
 {{< /katex >}}
-where \\(S\\) is the __state space__, defined as the set of all the possible values that the random variable \\(X\\) can take during the process.
+where \\(S\\) is the __state space__, defined as the set of all possible values that the random variable \\(X\\) can take during the process.
 Depending on \\(S\\), Markov chains can be either continuous- or discrete-valued.
 In this latter case, for a system with a finite number of states (let's say \\(m\\)), it is convenient to define the _transition matrix_
 {{< katex display >}}
@@ -219,4 +219,12 @@ $$
 $$
 for all \\(k\\).
 In this case, transition probabilities are independent of \\(k\\).
-However, in general, the transition matrix can change in time (\\(\bm{P}\\!\left[k\right]\\)), as we will see in the next chapters.
+However, in general, the transition matrix can change in time (\\(\bm{P}\\!\left[k\right]\\)), as we will see in the next sections.
+
+## References
+1. Oliver C. Ibe. (2009) _Markov Processes for Stochastic Modeling_. Academic Press (Elsevier).
+1. Scott L. Miller and Donald Childers. (2004) _Probability and Random Processes - With Applications to Signal Processing and Communications_. Academic Press (Elsevier).
+1. Sheldon M. Ross. (2019) _Introduction to Probability Models - Twelfth Edition_. Academic Press (Elsevier).
+1. James Keener and James Sneyd. (2009) _Mathematical Physiology I: Cellular Physiology - Second Edition_. Springer New York, NY.
+
+

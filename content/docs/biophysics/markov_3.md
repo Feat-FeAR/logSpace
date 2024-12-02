@@ -15,7 +15,7 @@ mentioned in the previous chapter, in Markovian terms, the arrival of a gating
 stimulus can be seen as a change in the values of the transition matrix that
 increases the probability of observing the channel in any of its possible open
 states. For simplicity, again, we will assume that our K<sub>V</sub> channel
-admits only two states:
+admits only two conformational states:
 {{< katex >}}S=\left\{\text{closed},\text{open}\right\}\equiv\left\{c,o\right\}{{< /katex >}}.
 In contrast to the previous case, now the transition matrix will be a function
 of time (\\(\bm{P}\\!\left[k\right]\\)) that changes its values after the time
@@ -57,3 +57,37 @@ theoretical point of view.
 ```r {{% include "/static/codes/KV_markov_chain.R" %}} ```
 {{< kvMarkov >}}
 
+## Ensemble average
+When we are not interested in a particular realization of a stochastic process, but rather in the temporal evolution of the whole ensemble of possible random sequences, it is useful to resort to the probability distribution of the states at a given time step \\(k\\) using the related probability mass function (PMF), here defined as the row vector
+$$
+\bm{\pi}\\!\left[k\right]=\left(\pi_1\\!\left[k\right]\quad\pi_2\\!\left[k\right]\quad\pi_3\\!\left[k\right]\quad\ldots\quad\pi_m\\!\left[k\right]\right)
+$$
+whose generic element is
+$$
+\pi_a\\!\left[k\right]=\textrm{Pr}\left(X\\!\left[k\right]=a\right)\quad\forall a\in S
+$$
+and
+$$
+\sum_a \pi_{a}=1\quad\forall\ k\in\mathbb{N}
+$$
+Notably, starting from any \\(\bm{\pi}\\) vector, the transition probabilities contained in \\(\bm{P}\\) can be used to calculate the PMF at later times.
+For example, in the case of an ion channel with just two possible conformational states \\(\left\\{c,o\right\\}\\), we can easily account for all the ways to get to \\(\pi_c\\) or \\(\pi_o\\) in one step, so that
+{{< katex display >}}
+\begin{aligned}
+	\bm{\pi}\!\left[k+1\right] & = \left(\pi_c\!\left[k+1\right]\quad\pi_o\!\left[k+1\right]\right)\\
+							   & = \left(\pi_c\!\left[k\right]p_{cc}\!+\!\pi_o\!\left[k\right]p_{oc}\quad\pi_c\!\left[k\right]p_{co}\!+\!\pi_o\!\left[k\right]p_{oo}\right)\\
+							   & = \bm{\pi}\!\left[k\right]\bm{P}
+\end{aligned}
+{{< /katex >}}
+In fact, the last vector equation holds unchanged whatever the (countable) dimension of \\(S\\).
+It tells us that, to calculate the distribution of states of the system at the next step, we just need to apply (via matrix product) the transition matrix to the probability distribution of states.
+Hence, to evolve the system by two steps it will be sufficient to apply the \\(\bm{P}\\) matrix twice,
+$$
+\bm{\pi}\\!\left[k+2\right]=\bm{\pi}\\!\left[k\right]\bm{P}\bm{P}=\bm{\pi}\\!\left[k\right]\bm{P}^2
+$$
+and so on.
+More generally, it holds that
+$$
+\bm{\pi}\\!\left[k\right]=\bm{\pi}\\!\left[0\right]\bm{P}^k
+$$
+which is why \\(\bm{P}\\) and \\(\bm{P}^k\\) are also referred to as the \\(1\\)-step and \\(k\\)-step transition probability matrices, respectively.
