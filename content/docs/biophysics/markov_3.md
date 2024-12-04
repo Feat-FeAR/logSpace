@@ -8,20 +8,13 @@ draft = false
 # K<sub>V</sub> Markov Chain
 
 ## System design
-What if we wanted to model the behavior of a gated channel during its
-activation? For example, the current through a voltage-dependent potassium
-channel (K<sub>V</sub>) during the application of a depolarization step? As
-mentioned in the previous chapter, in Markovian terms, the arrival of a gating
-stimulus can be seen as a change in the values of the transition matrix that
-increases the probability of observing the channel in any of its possible open
-states. For simplicity, again, we will assume that our K<sub>V</sub> channel
-admits only two conformational states:
+What if we wanted to model the behavior of a gated channel during its activation?
+An example could be the current through a voltage-dependent potassium channel (K<sub>V</sub>) during the application of a depolarization step in a voltage clamp experiment.
+As mentioned in the previous chapter, the arrival of a gating stimulus can be seen, in Markovian terms, as a change in the values of the transition matrix, ultimately increasing the probability of observing the channel in any of its possible open states.
+For simplicity, again, we will assume that our K<sub>V</sub> channel admits only two conformational states:
 {{< katex >}}S=\left\{\text{closed},\text{open}\right\}\equiv\left\{c,o\right\}{{< /katex >}}.
-In contrast to the previous case, now the transition matrix will be a function
-of time (\\(\bm{P}\\!\left[k\right]\\)) that changes its values after the time
-step \\(k_{0}=200\\) of application of the depolarizing stimulus. Given the step
-shape of our gating voltage, it is reasonable to imagine an instantaneous
-transition between the two possible configuration of the transition matrix.
+However, in contrast to the previous case, now the transition matrix will be a function of time (\\(\bm{P}\\!\left[k\right]\\)) that changes its values after the time step \\(k_{0}=200\\) of application of the depolarizing stimulus.
+Given the step shape of our gating voltage, it is reasonable to imagine an instantaneous transition between the two possible configurations of the transition matrix.
 {{< katex display >}}
 \bm{P}\!\left[k\right]=\left\{
 \begin{aligned}
@@ -40,25 +33,36 @@ transition between the two possible configuration of the transition matrix.
 \right.
 {{< /katex >}}
 
-Another thing we might be interested in is the behavior at whole-cell level. In
-other words, starting from the characterization of a single-channel current, is
-it possible to infer the _macroscopic current_ that we would see using a
-traditional whole-cell voltage-clamp configuration when a large number of
-channels of the same type are functionally expressed in the membrane? From a
-computational point of view, the answer is rather straightforward since the
-macroscopic current is nothing more than the sum of all the elementary currents.
-Thus, we can simply simulate the process a number of times equal to the number
-of channels that we expect to be expressed in membrane and then sum all the
-realizations---each representing a single channel---point by point in time. At
-the end of this section we will also try to address this question from a
-theoretical point of view.
+Another thing we might be interested in is the behavior at whole-cell level.
+In other words, we ask whether it is possible, starting from the characterization of a single-channel current, to infer the _macroscopic current_ that we would see using a whole-cell voltage-clamp configuration to record the overall current flowing through a large number of channels of the same type.
+From a computational point of view, the answer is rather straightforward since the macroscopic current is nothing more than the sum of all the elementary currents.
+Thus, we can simply simulate the process a number of times equal to the number of channels that we expect to be expressed in membrane and then sum all the realizations---each representing a single channel---point by point in time.
+At the end of this section we will also try to address this question from a theoretical point of view and we will find that, in most cases, it is not necessary to have a large set of realizations to gain information about the ensemble.
+We only need one or even none.
 
 ## Simulate channel activation
+The following __R__ script draws heavily from the previous one, iterating the same "chain builder loop" \\(M=10^3\\) times to represent one thousand independent K<sub>V</sub> channels, subject to the same depolarizing step starting at step \\(k\\).
+For this, two different transition matrices are initially defined and appropriately selected as a function of time.
+All single channel traces are stored in the same data set, each as a different row.
+Finally, the `iTrace` functions (from the `r4tcpl` package) is used to simultaneously draw three representative realizations (single channel currents) and the ensemble sum (whole-cell macroscopic voltage-activated potassium current).
 ```r {{% include "/static/codes/KV_markov_chain.R" %}} ```
 {{< kvMarkov >}}
 
-## Ensemble average
-When we are not interested in a particular realization of a stochastic process, but rather in the temporal evolution of the whole ensemble of possible random sequences, it is useful to resort to the probability distribution of the states at a given time step \\(k\\) using the related probability mass function (PMF), here defined as the row vector
+Clicking the `Generate Currents` button multiple times will result in ever-changing single channel traces, yet generating the same whole-cell current!
+__This should give a fairly good sense of the key transition from the stochasticity of the individual channels to the determinism of the whole cell__.
+
+Some other features of electrophysiological interest deserve attention:
+1. __The particular time course of a macroscopic current is determined by single-channel kinetics.__
+Even though the onset of the depolarizing step is instantaneous---and so is the switching between the two transition matrices---the macroscopic current exhibits a gradual increase.
+An even more _slowly activating_ potassium current can be simulated simply by further lowering the \\(p_{co}\\) transition probability.
+2. __Reaching the maximal macroscopic current level does not necessarily imply that all channels are open.__
+Looking at the whole-cell current, could you tell how many channels are open simultaneously, on average, at I<sub>max</sub>?
+3. __Likewise, you cannot rule out that, even in the absence of the gating stimulus, you have some channels open.__
+The small initial transient visible in the macroscopic current trace is clearly an artifact coming from the fact that, by code design, all our Markov chains started with zero (all channels are closed for \\(k=0\\)).
+Nevertheless, this allows us to better appreciate the small _leakage_ through K<sub>V</sub> under hyperpolarization conditions.  
+
+## Evolving the system
+When we are only interested in the temporal evolution of the whole ensemble, rather than in the particular realizations of the stochastic process, it is useful to resort to the probability distribution of the states at a given time step \\(k\\) using the related probability mass function (PMF), here defined as the row vector
 $$
 \bm{\pi}\\!\left[k\right]=\left(\pi_1\\!\left[k\right]\quad\pi_2\\!\left[k\right]\quad\pi_3\\!\left[k\right]\quad\ldots\quad\pi_m\\!\left[k\right]\right)
 $$
@@ -68,9 +72,9 @@ $$
 $$
 and
 $$
-\sum_a \pi_{a}=1\quad\forall\ k\in\mathbb{N}
+\sum_{a\in S} \pi_{a}=1\quad\forall\ k\in\mathbb{N}
 $$
-Notably, starting from any \\(\bm{\pi}\\) vector, the transition probabilities contained in \\(\bm{P}\\) can be used to calculate the PMF at later times.
+Notably, even in this case, starting from any \\(\bm{\pi}\\) vector, the transition probabilities contained in \\(\bm{P}\\) can be used to calculate the PMF at later times.
 For example, in the case of an ion channel with just two possible conformational states \\(\left\\{c,o\right\\}\\), we can easily account for all the ways to get to \\(\pi_c\\) or \\(\pi_o\\) in one step, so that
 {{< katex display >}}
 \begin{aligned}
@@ -80,7 +84,7 @@ For example, in the case of an ion channel with just two possible conformational
 \end{aligned}
 {{< /katex >}}
 In fact, the last vector equation holds unchanged whatever the (countable) dimension of \\(S\\).
-It tells us that, to calculate the distribution of states of the system at the next step, we just need to apply (via matrix product) the transition matrix to the probability distribution of states.
+It tells us that, in order to calculate the distribution of states of the system at the next step, we just need to apply (via matrix product) the transition matrix to the probability distribution of states.
 Hence, to evolve the system by two steps it will be sufficient to apply the \\(\bm{P}\\) matrix twice,
 $$
 \bm{\pi}\\!\left[k+2\right]=\bm{\pi}\\!\left[k\right]\bm{P}\bm{P}=\bm{\pi}\\!\left[k\right]\bm{P}^2
@@ -91,3 +95,99 @@ $$
 \bm{\pi}\\!\left[k\right]=\bm{\pi}\\!\left[0\right]\bm{P}^k
 $$
 which is why \\(\bm{P}\\) and \\(\bm{P}^k\\) are also referred to as the \\(1\\)-step and \\(k\\)-step transition probability matrices, respectively.
+We can also notice that the general element of \\(P^k\\) is
+{{< katex display >}}
+p^{\left(k\right)}_{ab}=\sum_{\alpha_{1}\,\alpha_{2}\,\ldots\,\alpha_{n-1}} p_{a\alpha_{1}}\;p_{\alpha_{1}\alpha_{2}}\;\ldots\;p_{\alpha_{n-1}b}
+{{< /katex >}}
+namely, the sum of the probabilities of getting from \\(a\\) to \\(b\\) in \\(k\\) steps by following all possible trajectories.
+This way of representing higher-order transition probabilities should also make the following result---known as the __Chapman-Kolmogorov Equation__---quite reasonable.
+{{< katex display >}}
+p^{\left(k+h\right)}_{ab}=\sum_{\alpha} p^{\left(k\right)}_{a\alpha}\;p^{\left(h\right)}_{\alpha b}
+{{< /katex >}}
+
+## The ensemble average
+Given the PMF, the ensemble average can be calculated at each instant simply as the expected value of the stochastic process \\(X\\!\left[k\right]\\)
+$$
+\mu\\!\left[k\right]=E\left[X\\!\left[k\right]\right]=\sum_{a\in S}a\\,\pi_{a}\\!\left[k\right]
+$$
+
+## Stationary state and ergodicity
+In our model of K<sub>V</sub> channel, the system (i.e., the macroscopic current) tends to reach a steady state over time (both in the hyper- and de-polarization phases).
+The steady state distribution \\(\bm{\pi}_\infty\\) can thus be viewed as
+{{< katex display >}}
+\bm{\pi}_\infty=\lim_{k\rightarrow\infty}\bm{\pi}\!\left[k\right]=\lim_{k\rightarrow\infty}\bm{\pi}\!\left[0\right]\bm{P}^{k}
+{{< /katex >}}
+
+If we try to compute \\(\bm{\pi}_\infty\\) by running the __R__ code 
+```r
+library(matpow)
+matpow(TM_depol, k = 1e3, squaring = T)$prod1
+```
+we see that the limiting form of \\(\bm{P}^k\\) (as \\(k\rightarrow\infty\\)) converges to a matrix whose rows are all identical,
+```r
+          closed      open
+closed 0.3333333 0.6666667
+open   0.3333333 0.6666667
+```
+thus meaning that the limiting PMF \\(\bm{\pi}_\infty\\) will always be the same---and equal to any row of final transition matrix---regardless of the initial distribution \\(\bm{\pi}\\!\left[0\right]\\).
+{{< katex display >}}
+\bm{\pi}_\infty=\left(0.33\quad 0.66\right)
+{{< /katex >}}
+
+__The interpretation is straightforward: for a long enough waiting time, the system will settle into a configuration with---on average---⅔ of the K<sub>V</sub> channels open and ⅓ closed.__
+
+On the other hand, one might also reasonably think that, if each channel spends \\(q\\%\\) of its time in the conductive state, at any given instant of the steady state the number of channels we expect to find open will be, on average, \\(q\\%\\) of the total.
+In other words, the relative amount of open states in a single channel current trace, should be equal to the proportion of open channels at population level (at a fixed instant of the steady state).
+In this case, this insight is absolutely true (at least for long observation times and large ensembles) and it is an indication of an important property of the stochastic system called __ergodicity__.
+```r
+# Rebuild a chain using 'N <- 1e5' as chain length, then compute the steady
+# state as the relative amount of "open" states for a single channel (after the
+# onset of the depolarization step)
+N_O <- sum(current[200:N] > 0.5)
+N_O/(N-200) # returns [1] 0.6657916
+
+# or simply as the time average of one realization (since we are using
+# normalized current levels in {0,1})
+mean(current[200:N]) # returns [1] 0.665827
+```
+
+More generally, an _ergodic stochastic process_ is a stationary process in which every member of the ensemble exhibits the same statistical behavior as the ensemble.
+This implies that it is possible to determine the statistical behavior of the ensemble by examining only one typical sample function.
+In particular, if the time average of one realization is equal to the ensemble average, then we say that the random process is _ergodic in the mean_.
+And this holds for both continuous and discrete random processes.
+$$
+E\left[X\\!\left(t\right)\right]=\langle x\\!\left(t\right)\rangle\equiv\lim_{T\rightarrow\infty}\frac{1}{T}\int_{0}^{T} x\\!\left(t\right)dt
+$$
+$$
+E\left[X\\!\left[k\right]\right]=\langle x\\!\left[k\right]\rangle\equiv\lim_{N\rightarrow\infty}\frac{1}{N}\sum_{k=1}^{N} x\\!\left[k\right]
+$$
+
+
+
+
+Such a Markov chain is said to have a unique steady state distribution, π.
+
+
+should depend on the starting state.
+In general, there are several different manners in which a Markov chain’s state
+distribution can behave as k→∞. In some cases, limk→∞ π(k) does not exist. Such
+would be the case when the process tends to oscillate between two or more states.
+A second possibility, as in Example 9.7, is that limk→∞ π(k) does in fact converge
+
+to a fixed distribution, but the form of this limiting distribution depends on the
+starting distribution. The last case is when limk→∞ π(k) = π. That is, the state
+distribution converges to some fixed distribution, π, and the form of π is independent
+of the starting distribution.
+
+
+that is to say that there exists a point where the distribution becomes stationary (i.e., independent of time).
+$$
+\pi\\!\left[k\right]=\pi\\!\left[k+1\right]
+$$
+or, in vector terms,
+$$
+\pi=\pi\\,\bm{P}
+$$
+In other words, the stationary PMF is the (left) eigenvector of the transition matrix, that corresponds to the eigenvalue \\(\lambda=1\\).
+
+

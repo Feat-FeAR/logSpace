@@ -111,7 +111,7 @@ p_{tj}=\lim_{N_t\rightarrow\infty}\nu_{tj}=\lim_{N_t\rightarrow\infty}\frac{n_{t
 $$
 or, if you prefer,
 $$
-\nu_{tj}=\frac{n_{tj}}{N_t}=\frac{n_{tj}}{\sum_k n_{tk}}\quad\underset{N_t\rightarrow\infty}{\longrightarrow}\quad p_{tj}
+\nu_{tj}=\frac{n_{tj}}{N_t}=\frac{n_{tj}}{\sum_a n_{ta}}\quad\underset{N_t\rightarrow\infty}{\longrightarrow}\quad p_{tj}
 $$
 gives the probability that a pass by a Toro player will be intercepted by the opposing team.
 
@@ -213,7 +213,7 @@ Also, by definition, \\(\bm{P}\\) is a _stochastic matrix_, meaning that all of 
 \end{cases}
 {{< /katex >}}
 
-Markov chains are frequently assumed to be _time-homogeneous_ (aka _stationary Markov chains_), meaning that
+Markov chains are frequently assumed to be _time-homogeneous_ (aka _stationary Markov chains_), meaning that they are invariant to time shifts, so that
 $$
 \textrm{Pr}\left(X_{k+1}=x\ |\ X_{k}=y\right) = \textrm{Pr}\left(X_{k}=x\ |\ X_{k-1}=y\right)
 $$
@@ -225,6 +225,5 @@ However, in general, the transition matrix can change in time (\\(\bm{P}\\!\left
 1. Oliver C. Ibe. (2009) _Markov Processes for Stochastic Modeling_. Academic Press (Elsevier).
 1. Scott L. Miller and Donald Childers. (2004) _Probability and Random Processes - With Applications to Signal Processing and Communications_. Academic Press (Elsevier).
 1. Sheldon M. Ross. (2019) _Introduction to Probability Models - Twelfth Edition_. Academic Press (Elsevier).
-1. James Keener and James Sneyd. (2009) _Mathematical Physiology I: Cellular Physiology - Second Edition_. Springer New York, NY.
-
-
+1. L. Favella and M. T. Reineri (1993) _Teoria dell'informazione e della trasmissione - Informazioni discrete_. Levrotto & Bella. (Italian only)
+1. James Keener and James Sneyd. (2009) _Mathematical Physiology I: Cellular Physiology - Second Edition_. Springer.

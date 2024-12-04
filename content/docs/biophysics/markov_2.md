@@ -97,10 +97,9 @@ i^{\prime}\\!\left(t\right)=\frac{d\ i\\!\left(t\right)}{dt} \longrightarrow i^{
 $$
 The plot below shows an example signal (top) aligned with its time derivative (bottom).
 As we expected, opening events give rise to upward spikes in \\(i^{\prime}\\), while closing events correspond to downward spikes.
-
-
-
-
+<div style="text-align: center;">
+{{< figure src="/images/single_channel_current_diff.png" title="A single channel current trace and its time derivative" width=700 >}}
+</div>
 
 Using a strategy similar to the previous one, we now set two thresholds for the derivative function, one at \\(i^{\prime}=+0.5\\) and the other at \\(i^{\prime}=-0.5\\), so that all the points _beyond_ these lines can be confidently counted as opening and closing events, respectively.
 
