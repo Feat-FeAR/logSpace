@@ -49,7 +49,7 @@ Finally, the `iTrace` functions (from the `r4tcpl` package) is used to simultane
 {{< kvMarkov >}}
 
 Clicking the `Generate Currents` button multiple times will result in ever-changing single channel traces, yet generating the same whole-cell current!
-__This should give a fairly good sense of the key transition from the stochasticity of the individual channels to the determinism of the whole cell__.
+This should give a fairly good sense of the __key transition from the stochastic behavior of the individual channels to the determinism observed at whole-cell level__.
 
 Some other features of electrophysiological interest deserve attention:
 1. __The particular time course of a macroscopic current is determined by single-channel kinetics.__
@@ -62,20 +62,20 @@ The small initial transient visible in the macroscopic current trace is clearly 
 Nevertheless, this allows us to better appreciate the small _leakage_ through K<sub>V</sub> under hyperpolarization conditions.  
 
 ## Evolving the system
-When we are only interested in the temporal evolution of the whole ensemble, rather than in the particular realizations of the stochastic process, it is useful to resort to the probability distribution of the states at a given time step \\(k\\) using the related probability mass function (PMF), here defined as the row vector
+When we are only interested in the temporal evolution of the whole ensemble---rather than in some particular realizations of the stochastic process---it is useful to resort to the probability distribution of states at a given time step \\(k\\) by using the related _probability mass function_ (PMF), here defined as the row vector
 $$
 \bm{\pi}\\!\left[k\right]=\left(\pi_1\\!\left[k\right]\quad\pi_2\\!\left[k\right]\quad\pi_3\\!\left[k\right]\quad\ldots\quad\pi_m\\!\left[k\right]\right)
 $$
-whose generic element is
+whose generic element
 $$
 \pi_a\\!\left[k\right]=\textrm{Pr}\left(X\\!\left[k\right]=a\right)\quad\forall a\in S
 $$
-and
+is the probability of being in state \\(a\\) the time \\(k\\) and, clearily,
 $$
 \sum_{a\in S} \pi_{a}=1\quad\forall\ k\in\mathbb{N}
 $$
 Notably, even in this case, starting from any \\(\bm{\pi}\\) vector, the transition probabilities contained in \\(\bm{P}\\) can be used to calculate the PMF at later times.
-For example, in the case of an ion channel with just two possible conformational states \\(\left\\{c,o\right\\}\\), we can easily account for all the ways to get to \\(\pi_c\\) or \\(\pi_o\\) in one step, so that
+For example, in the case of an ion channel with just two possible conformational states \\(\left\\{c,o\right\\}\\), we can easily account for _all the ways_ to get to each one of them in one step just by applying basic multiplication and addition rules for `AND` and `OR` probability composition, respectively, so that
 {{< katex display >}}
 \begin{aligned}
 	\bm{\pi}\!\left[k+1\right] & = \left(\pi_c\!\left[k+1\right]\quad\pi_o\!\left[k+1\right]\right)\\
@@ -94,7 +94,8 @@ More generally, it holds that
 $$
 \bm{\pi}\\!\left[k\right]=\bm{\pi}\\!\left[0\right]\bm{P}^k
 $$
-which is why \\(\bm{P}\\) and \\(\bm{P}^k\\) are also referred to as the \\(1\\)-step and \\(k\\)-step transition probability matrices, respectively.
+which is why \\(\bm{P}\\) and \\(\bm{P}^k\\) are also referred to as the \\(1\\)-step and \\(k\\)-step transition probability matrices (or _operators_), respectively.
+It can be shown that \\(\bm{P}^k\\) is still a stochastic matrix.
 We can also notice that the general element of \\(P^k\\) is
 {{< katex display >}}
 p^{\left(k\right)}_{ab}=\sum_{\alpha_{1}\,\alpha_{2}\,\ldots\,\alpha_{n-1}} p_{a\alpha_{1}}\;p_{\alpha_{1}\alpha_{2}}\;\ldots\;p_{\alpha_{n-1}b}
@@ -105,40 +106,45 @@ This way of representing higher-order transition probabilities should also make 
 p^{\left(k+h\right)}_{ab}=\sum_{\alpha} p^{\left(k\right)}_{a\alpha}\;p^{\left(h\right)}_{\alpha b}
 {{< /katex >}}
 
-## The ensemble average
-Given the PMF, the ensemble average can be calculated at each instant simply as the expected value of the stochastic process \\(X\\!\left[k\right]\\)
+Most importantly, we notice that---given a PMF and the transition operator \\(\bm{P}\\)---the __ensemble average__ can be calculated at each instant \\(k\\) simply as the expected value of the stochastic process \\(X\\!\left[k\right]\\)
 $$
-\mu\\!\left[k\right]=E\left[X\\!\left[k\right]\right]=\sum_{a\in S}a\\,\pi_{a}\\!\left[k\right]
+E\left[X\\!\left[k\right]\right]=\sum_{a\in S}a\\,\pi_{a}\\!\left[k\right]
 $$
+This function of time represents the evolution of the ensemble and can be viewed as a normalized and "noiseless" version of the macroscopic current previously calculated as the sum of multiple single-channel traces.
 
 ## Stationary state and ergodicity
 In our model of K<sub>V</sub> channel, the system (i.e., the macroscopic current) tends to reach a steady state over time (both in the hyper- and de-polarization phases).
-The steady state distribution \\(\bm{\pi}_\infty\\) can thus be viewed as
+This is a fairly common behavior of many Markov chains.
+The steady state distribution \\(\bm{\hat{\pi}}\\) can thus be viewed as
 {{< katex display >}}
-\bm{\pi}_\infty=\lim_{k\rightarrow\infty}\bm{\pi}\!\left[k\right]=\lim_{k\rightarrow\infty}\bm{\pi}\!\left[0\right]\bm{P}^{k}
+\bm{\hat{\pi}}\equiv\lim_{k\rightarrow\infty}\bm{\pi}\!\left[k\right]=\lim_{k\rightarrow\infty}\bm{\pi}\!\left[0\right]\bm{P}^{k}
 {{< /katex >}}
 
-If we try to compute \\(\bm{\pi}_\infty\\) by running the __R__ code 
+If we try to compute the limiting form of the transition matrix in __R__ by running 
 ```r
-library(matpow)
-matpow(TM_depol, k = 1e3, squaring = T)$prod1
+matpow::matpow(TM_depol, k=1e3, squaring=T)$prod1
 ```
-we see that the limiting form of \\(\bm{P}^k\\) (as \\(k\rightarrow\infty\\)) converges to a matrix whose rows are all identical,
+we see that \\(\bm{P}^k\\), as \\(k\rightarrow\infty\\), converges to a matrix whose rows are all identical,
 ```r
           closed      open
 closed 0.3333333 0.6666667
 open   0.3333333 0.6666667
 ```
-thus meaning that the limiting PMF \\(\bm{\pi}_\infty\\) will always be the same---and equal to any row of final transition matrix---regardless of the initial distribution \\(\bm{\pi}\\!\left[0\right]\\).
+thus meaning that \\(\bm{\hat{\pi}}=\bm{\pi}\\!\left[0\right]\bm{P}^{k\rightarrow\infty}\\) will always be the same---and equal to any row of final transition matrix---regardless of the initial distribution \\(\bm{\pi}\\!\left[0\right]\\):
 {{< katex display >}}
-\bm{\pi}_\infty=\left(0.33\quad 0.66\right)
+\bm{\hat{\pi}}=\left(\hat{\pi}_c\quad\hat{\pi}_o\right)=\left(0.33\quad 0.66\right)
 {{< /katex >}}
 
-__The interpretation is straightforward: for a long enough waiting time, the system will settle into a configuration with---on average---⅔ of the K<sub>V</sub> channels open and ⅓ closed.__
+The interpretation of this is straightforward: __for a long enough waiting time, the system will settle into a configuration with---on average---⅔ of the K<sub>V</sub> channels open and ⅓ closed.__
+The expected macroscopic current level will be then
+{{< katex display >}}
+I_{max}=M\left(i_{c}\,\hat{\pi}_{c}+i_{o}\,\hat{\pi}_{o}\right)=i_{o}\,\hat{\pi}_{o}\,M
+{{< /katex >}}
+that, in our simulation, gave \\(I_{max}=666\\) normalized units of current, since \\(i_o=1\\) normalized units and \\(M=10^3\\) K<sub>V</sub> channels.
 
 On the other hand, one might also reasonably think that, if each channel spends \\(q\\%\\) of its time in the conductive state, at any given instant of the steady state the number of channels we expect to find open will be, on average, \\(q\\%\\) of the total.
 In other words, the relative amount of open states in a single channel current trace, should be equal to the proportion of open channels at population level (at a fixed instant of the steady state).
-In this case, this insight is absolutely true (at least for long observation times and large ensembles) and it is an indication of an important property of the stochastic system called __ergodicity__.
+In our case, this insight is absolutely true (at least for long observation times and large ensembles) and it is indication of an important property of the stochastic system called __ergodicity__.
 ```r
 # Rebuild a chain using 'N <- 1e5' as chain length, then compute the steady
 # state as the relative amount of "open" states for a single channel (after the
@@ -162,32 +168,64 @@ $$
 E\left[X\\!\left[k\right]\right]=\langle x\\!\left[k\right]\rangle\equiv\lim_{N\rightarrow\infty}\frac{1}{N}\sum_{k=1}^{N} x\\!\left[k\right]
 $$
 
-
-
-
-Such a Markov chain is said to have a unique steady state distribution, π.
-
-
-should depend on the starting state.
-In general, there are several different manners in which a Markov chain’s state
-distribution can behave as k→∞. In some cases, limk→∞ π(k) does not exist. Such
-would be the case when the process tends to oscillate between two or more states.
-A second possibility, as in Example 9.7, is that limk→∞ π(k) does in fact converge
-
-to a fixed distribution, but the form of this limiting distribution depends on the
-starting distribution. The last case is when limk→∞ π(k) = π. That is, the state
-distribution converges to some fixed distribution, π, and the form of π is independent
-of the starting distribution.
-
-
-that is to say that there exists a point where the distribution becomes stationary (i.e., independent of time).
+In general, nothing can be said about the existence and uniqueness of the stationary distribution of a Markov chain, but __when the chain is ergodic then we can be sure that \\(\bm{\hat{\pi}}\\) exists and is unique__ (i.e., it does not depend on the initial distribution).
+In these cases, the limiting distribution can be obtained in exact form and in a direct manner---i.e., without the need to multiply \\(\bm{P}\\) by itself many times until an acceptable approximation of \\(\lim_{k\rightarrow\infty}\bm{P}^{k}\\) is obtained, or to statistically analyze the behavior of a realization over long observation times.
+Just consider that, by definition of stationary distribution, there must exist a point where the distribution becomes independent of time
 $$
-\pi\\!\left[k\right]=\pi\\!\left[k+1\right]
+\bm{\hat{\pi}}\\!\left[k+1\right]=\bm{\hat{\pi}}\\!\left[k\right]
 $$
 or, in vector terms,
 $$
-\pi=\pi\\,\bm{P}
+\bm{\hat{\pi}}\\,\bm{P}=\bm{\hat{\pi}}
 $$
-In other words, the stationary PMF is the (left) eigenvector of the transition matrix, that corresponds to the eigenvalue \\(\lambda=1\\).
+In other words, __the stationary PMF is the (left) eigenvector of the transition matrix, that corresponds to the eigenvalue \\(\lambda=1\\)__.
 
+The eigenvalue equation corresponds to the system of algebraic equations
+{{< katex display >}}
+\sum_{a=1}^{m}\hat{\pi}_{a}\,p_{ab}=\hat{\pi}_{b}\qquad\textrm{where}\ b\in\left\{1,2,\ldots,m\right\}
+{{< /katex >}}
+which, in the case of a system with only 2 states, reduces to
 
+{{< katex display >}}
+\left\{
+\begin{aligned}
+	\hat{\pi}_{1}\,p_{11} + \hat{\pi}_{2}\,p_{21} & =\hat{\pi}_{1}\\
+	\hat{\pi}_{1}\,p_{12} + \hat{\pi}_{2}\,p_{22} & =\hat{\pi}_{2}
+\end{aligned}
+\right.
+{{< /katex >}}
+{{< katex display >}}
+\left\{
+\begin{aligned}
+	\hat{\pi}_{1}\left(1-p_{12}\right) + \hat{\pi}_{2}\,p_{21} & =\hat{\pi}_{1}\\
+	\hat{\pi}_{1}\,p_{12} + \hat{\pi}_{2}\left(1-p_{21}\right) & =\hat{\pi}_{2}
+\end{aligned}
+\right.
+{{< /katex >}}
+{{< katex display >}}
+\left\{
+\begin{aligned}
+	-\hat{\pi}_{1}\,p_{12} + \hat{\pi}_{2}\,p_{21} & =0\\
+	\hat{\pi}_{1}\,p_{12} - \hat{\pi}_{2}\,p_{21}  & =0
+\end{aligned}
+\right.
+{{< /katex >}}
+which is an homogeneous linear system with 1-dimensional infinite solutions of the form
+{{< katex display >}}
+\bm{\hat{\pi}}=\left(\hat{\pi}_{1}\quad\hat{\pi}_{2}\right)=\left(\beta\quad\beta\,\frac{p_{12}}{p_{21}}\right)\qquad\textrm{with}\ \beta\in\mathbb{R}
+{{< /katex >}}
+however, because of the normalization constraint of any PMF,  
+{{< katex display >}}
+\beta+\beta\,\frac{p_{12}}{p_{21}}=1\ \Rightarrow\ \beta=\frac{p_{21}}{p_{21}+p_{12}}
+{{< /katex >}}
+and then
+{{< katex display >}}
+\bm{\hat{\pi}}=\left(\hat{\pi}_{1}\quad\hat{\pi}_{2}\right)=\left(\frac{p_{21}}{p_{21}+p_{12}}\quad\frac{p_{12}}{p_{21}+p_{12}}\right)
+{{< /katex >}}
+which is the general solution for the 2-state ergodic system.
+This solution only involves the ratio between the off-diagonal elements of the transition matrix and, if applied to our channel problem, it leads to
+{{< katex display >}}
+\bm{\hat{\pi}}=\left(\hat{\pi}_{1}\quad\hat{\pi}_{2}\right)=\left(\frac{p_{oc}}{p_{oc}+p_{co}}\quad\frac{p_{co}}{p_{oc}+p_{co}}\right) =\left(\frac{0.01}{0.01+0.02}\quad\frac{0.02}{0.01+0.02}\right)=\left(\frac{1}{3}\quad\frac{2}{3}\right)
+{{< /katex >}}
+which confirm what we already found by an approximate approach.
+On the conceptual side, the fact that the final distribution of open and closed channel in the system only depends on the ratio of the opening and closing probabilities is very reasonable, yet not trivial.
