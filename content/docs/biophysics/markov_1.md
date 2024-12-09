@@ -173,7 +173,7 @@ Instead, a new _realization_ would be obtained, absolutely different from the pr
 More in detail, we simulated here a chain that is 9 times as long as the original one, thus representing a _possible_ full game without stoppage or extra time, made up of 90 endless minutes of boring idle play.
 So, go and move the slider above to the right and you will experience the same excitement of an entire game condensed into a few seconds!
 
-## A bit of formalism
+## Introducing the formalism
 A __random process__ (or __stochastic process__) is generally defined as a _random function of time_ \\(X\\!\left(t\right)\\), that is to say a random variable evolving over time---even though independent variables of different nature (such as position) are still possible.
 Consistent with a standard notation, the function \\(x\\!\left(t\right)\\) is a member of an _ensemble_ (aka family, set, or collection) of functions, which is denoted with an upper case letter.
 Thus, \\(X\\!\left(t\right)\\) represents the random process, while \\(x\\!\left(t\right)\\) is one particular member (or _realization_) of it.
@@ -183,8 +183,8 @@ This occurs when either a continuous time waveform is regularly sampled over tim
 A discrete-time (first-order) Markov random process---better known as a ___Markov chain___---is a memoryless random process such that
 {{< katex display >}}
 \begin{aligned}
-        & \textrm{Pr}\left(X_{k+1}=x\ |\ X_{k}=x_{k},\ X_{k-1}=x_{k-1},\ \ldots,\ X_{0}=x_{0}\right)\\
-    =\  & \textrm{Pr}\left(X_{k+1}=x\ |\ X_{k}=x_{k}\right)\\
+        & \textrm{Pr}\!\left(X_{k+1}=x\ |\ X_{k}=x_{k},\ X_{k-1}=x_{k-1},\ \ldots,\ X_{0}=x_{0}\right)\\
+    =\  & \textrm{Pr}\!\left(X_{k+1}=x\ |\ X_{k}=x_{k}\right)\\
         &\\
         &\forall\ k\in\mathbb{N}\quad\text{and}\quad\forall\ x,x_{k}\in S
 \end{aligned}
@@ -203,7 +203,7 @@ In this latter case, for a system with a finite number of states (let's say \\(m
 {{< /katex >}}
 which is a square \\(m\\)-by-\\(m\\) matrix whose generic element is the transition probability from \\(a\\) to \\(b\\) (i.e., the probability of having a state \\(b\\), conditional on coming from a state \\(a\\)).
 $$
-p_{ab}=\textrm{Pr}\left(X\\!\left[k+1\right]=b\ |\ X\\!\left[k\right]=a\right)
+p_{ab}=\textrm{Pr}\\!\left(X\\!\left[k+1\right]=b\ |\ X\\!\left[k\right]=a\right)
 $$
 Also, by definition, \\(\bm{P}\\) is a _stochastic matrix_, meaning that all of its elements are between 0 and 1 and each row must sum to 1.
 {{< katex display >}}
@@ -215,7 +215,7 @@ Also, by definition, \\(\bm{P}\\) is a _stochastic matrix_, meaning that all of 
 
 Markov chains are frequently assumed to be _time-homogeneous_ (aka _stationary Markov chains_), meaning that they are invariant to time shifts, so that
 $$
-\textrm{Pr}\left(X_{k+1}=x\ |\ X_{k}=y\right) = \textrm{Pr}\left(X_{k}=x\ |\ X_{k-1}=y\right)
+\textrm{Pr}\\!\left(X_{k+1}=x\ |\ X_{k}=y\right) = \textrm{Pr}\\!\left(X_{k}=x\ |\ X_{k-1}=y\right)
 $$
 for all \\(k\\).
 In this case, transition probabilities are independent of \\(k\\).
