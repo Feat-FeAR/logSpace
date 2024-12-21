@@ -1,9 +1,14 @@
-+++
-title = 'K_V Markov Chain'
-weight = 30
-date = 2023-12-14T02:20:42+01:00
-draft = false
-+++
+---
+title: "K_V Markov Chain"
+weight: 30
+draft: false
+# bookFlatSection: false
+# bookToc: true
+# bookHidden: false
+# bookCollapseSection: false
+# bookComments: false
+# bookSearchExclude: false
+---
 
 # K<sub>V</sub> Markov Chain
 

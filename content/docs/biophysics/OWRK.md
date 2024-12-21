@@ -1,9 +1,14 @@
-+++
-title = 'Surface Energy by OWRK'
-weight = 300
-date = 2024-01-22T10:08:42+01:00
-draft = false
-+++
+---
+title: "Surface Energy by OWRK"
+weight: 300
+draft: false
+# bookFlatSection: false
+# bookToc: true
+# bookHidden: false
+# bookCollapseSection: false
+# bookComments: false
+# bookSearchExclude: false
+---
 
 # Surface Free Energy - The OWRK method
 

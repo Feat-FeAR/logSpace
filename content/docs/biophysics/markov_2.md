@@ -1,9 +1,14 @@
-+++
-title = 'K_2P Markov Chain'
-weight = 20
-date = 2023-12-07T17:20:42+01:00
-draft = false
-+++
+---
+title: "K_2P Markov Chain"
+weight: 20
+draft: false
+# bookFlatSection: false
+# bookToc: true
+# bookHidden: false
+# bookCollapseSection: false
+# bookComments: false
+# bookSearchExclude: false
+---
 
 # K<sub>2P</sub> Markov Chain
 

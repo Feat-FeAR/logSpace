@@ -1,7 +1,14 @@
-+++
-title = 'Hugo'
-draft = false
-+++
+---
+title: "Hugo"
+weight: 10
+draft: false
+# bookFlatSection: false
+# bookToc: true
+# bookHidden: false
+# bookCollapseSection: false
+# bookComments: false
+# bookSearchExclude: false
+---
 
 # Hugo
 __Hugo__ is a fast and easy-to-use static website generator written in __Go__
@@ -132,7 +139,9 @@ new blank page already provided with a suitable front matter.
 # Add a new page to your site
 hugo new content <section_name>/<filename>.md
 ```
-The full list of the available front matter variables can be found
+Front matter metadata can be written in any of the serialization formats JSON,
+TOML, or YAML, and must be placed at the top of each content file. The full list
+of the available front matter variables can be found
 [here](https://gohugo.io/content-management/front-matter/#front-matter-variables).
 Just keep in mind that, by default, Hugo sorts page collections by:
 1. Page `weight`

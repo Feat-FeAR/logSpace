@@ -1,9 +1,14 @@
-+++
-title = 'Soccer Markov Chain'
-weight = 10
-date = 2023-12-01T23:20:42+01:00
-draft = false
-+++
+---
+title: "Soccer Markov Chain"
+weight: 10
+draft: false
+# bookFlatSection: false
+# bookToc: true
+# bookHidden: false
+# bookCollapseSection: false
+# bookComments: false
+# bookSearchExclude: false
+---
 
 # Soccer Markov Chain
 Markov chains are out there.

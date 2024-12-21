@@ -1,7 +1,14 @@
-+++
-title = 'R'
-draft = false
-+++
+---
+title: "R"
+weight: 20
+draft: false
+# bookFlatSection: false
+# bookToc: true
+# bookHidden: false
+# bookCollapseSection: false
+# bookComments: false
+# bookSearchExclude: false
+---
 
 # R
 
