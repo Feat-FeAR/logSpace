@@ -1,6 +1,6 @@
 ---
 title: "The ENA Archive"
-weight: 20
+weight: 60
 draft: false
 # bookFlatSection: false
 # bookToc: true
