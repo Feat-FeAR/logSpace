@@ -46,9 +46,49 @@ To follow through again, that means that during transcription of this forward-st
 
 {{< hint warning >}}
 __WARNING__  
-Be careful in applying what happens during Illumina paired-end sequencing---where we end up with R1/R2 (forward/reverse) reads---to the use of forward/reverse when talking about transcripts, genomes, etc., since they are almost unrelated concepts.
-In paired-end sequencing the original molecule is denatured and one strand is sequenced from the 5' end while the other strand is similarly sequenced from its 5' end.
-So the paired end sequencing is actually from different strands but, unless you use some _stranded_ library prep kit, the original molecule could come from either the forward or reverse strand of the genome/transcriptome/etc. (i.e., information about the source strand is lost).
+Be careful in applying what happens during Illumina paired-end RNA sequencing---where we end up with R1/R2 (forward/reverse) reads---to the use of forward/reverse when talking about transcripts, genomes, etc., since they are two almost unrelated concepts.
+In paired-end sequencing the original molecule is denatured (i.e., strands get separated) before applying to the flow cell, then one strand is sequenced from the 5' end while the other strand is similarly sequenced from its 5' end.
+So the paired end sequencing is actually from different strands but, unless you use some _stranded library_ prep kit during cDNA synthesis, information about the source strand is lost (the original RNA molecule could be from either the forward or reverse strand of the genome/transcriptome).
 On the contrary, stranded libraries preserve strand information, making it possible to resolve overlapping genes or antisense transcription.
 In this case, people could talk about using the "forward read strand from the reverse biological strand", etc.
+{{< /hint >}}
+
+
+## RNA maturation process
+RNA _maturation_, also known as RNA _processing_, is a series of modifications that _precursor mRNA_ (aka _pre-mRNA_ or _primary transcript_) undergoes to become a _mature mRNA_ molecule ready for translation in the course of protein synthesis.
+
+In eukaryotic cells, post-transcription modifications for the production of a mature mRNA molecule occurs inside the nucleus and involve the following 3 main steps.
+
+1. __Capping of the 5' end:__ a 7-methylguanosine cap is added to the 5' end of the pre-mRNA.
+5'- and 3'-terminal end modifications increase mRNA stability (protect from enzymatic degradation), facilitate export from the nucleus, and aid in ribosome recognition during translation.
+
+1. __Polyadenylation of the 3' end:__ a poly(A) tail (a string of adenine nucleotides) is added to the 3' end of the pre-mRNA by the poly(A) polymerase enzyme.
+The length of the poly(A) tail varies, but is typically 50-250 nucleotides in most eukaryotes.
+Enzymes like deadenylases can gradually shorten the tail, leading to mRNA degradation, hence Longer poly(A) tails generally increase mRNA lifespan.
+This process regulates mRNA turnover and gene expression.
+
+1. __RNA Splicing of the introns:__ introns (non-coding regions) are removed, and exons (coding regions) are joined together.
+RNA spicing is carried out by the _spliceosome_, a large ribonucleoprotein (a complex of small nuclear RNAs, snRNAs, and proteins) which cleaves the RNA at the splicing site and recombines the exons of the RNA.
+In this step, _alternative splicing_ can occur, allowing one gene to produce multiple protein variants.
+
+The mature mRNA is finally transported via the nuclear pore complex out of the nucleus into the cytoplasm, where will be used in translation.
+
+<br>
+<div style="text-align: center;">
+{{< figure src="/images/RNA_maturation.png" title="mRNA maturation process" width=720 >}}
+<figcaption style="font-size: 13px;">
+Figure by Thomas Shafee - Shafee T, Lowe R (2017). "Eukaryotic and prokaryotic gene structure". WikiJournal of Medicine 4 (1). DOI:10.15347/wjm/2017.002. ISSN 20024436., CC BY 4.0, https://commons.wikimedia.org/w/index.php?curid=39495317
+</figcaption>
+</div>
+<br>
+
+{{< hint info >}}
+__NOTE__  
+
+In __prokaryotes__, transcription and translation occur simultaneously in the cytoplasm, so RNA maturation is minimal or non-existent.
+For instance, prokaryotic cells generally do not append poly(A) tails to their mRNAs, which are inherently less stable and processed differently.
+Furthermore, when polyadenylation occurs in bacteria, it usually promotes RNA degradation, rather than stability.
+
+On the contrary, in __eukaryotes__ the poly(A) tail is a defining feature of most mRNAs, with the sole exception of histone mRNAs, the only mRNAs that lack a poly(A) tail.
+Notably, many __long non-coding RNAs__ (lncRNAs) also undergo splicing and have a poly(A) tail in their mature form, which, however---as in the case of bacteria---may promote transcript degradation rather than stability.
 {{< /hint >}}
