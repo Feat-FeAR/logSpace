@@ -1,0 +1,33 @@
+<!-- Shortcode for the Recipe Book of physiological solutions -->
+
+<!-- Access the JSON ('./data/RecipeBook.json') -->
+<script>
+    const recipeBook = {{ $.Site.Data.RecipeBook }};
+</script>
+<!-- Import the JS script -->
+<script defer
+        language="javascript"
+        type="text/javascript"
+        src='{{ "js/recipe_selector.js" | urlize | relURL }}'>
+</script>
+
+<!-- Recipe Selector and Final Volume fields as drop-down menus -->
+<h2>Select a Recipe</h2>
+<div id="controls">
+    <label for="recipe-select">Solution:</label>
+    <select id="recipe-select">
+        <option value="">-- Choose a Solution --</option>
+    </select>
+
+    <label for="volume-select">Final Volume:</label>
+    <select id="volume-select">
+        <option value="100">100 mL</option>
+        <option value="250">250 mL</option>
+        <option value="500" selected>500 mL</option>
+        <option value="1000">1 L</option>
+    </select>
+</div>
+
+<div id="recipe-description"></div>
+<div id="recipe-list"></div>
+<button id="clear-btn">Clear All</button>

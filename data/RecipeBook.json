@@ -1,0 +1,19 @@
+{
+    "recipe_A": {
+        "description": "A simple buffer solution.",
+        "ingredient_1": [50, "mM", 5, "g"],
+        "ingredient_2": [144, "uM", 7.2, "g"],
+        "ingredient_3": ["pH", 7.4]
+    },
+    "recipe_B": {
+        "description": "A complex buffer used in molecular biology.",
+        "ingredient_1": [50, "mM", 5, "g"],
+        "ingredient_2": [144, "uM", 7.2, "g"],
+        "ingredient_3": [15, "mM", 3.2, "mL"],
+        "ingredient_4": ["pH", 7.4]
+    },
+    "recipe_C": {
+        "ingredient_1": [100, "mM", 10, "g"],
+        "ingredient_2": [200, "uM", 14.4, "g"]
+    }
+}
