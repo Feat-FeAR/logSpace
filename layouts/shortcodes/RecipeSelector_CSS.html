@@ -72,23 +72,24 @@
         transition: 0.3s ease-in-out;
     }
 
-    /* Set field spaces as relative proportions by 'flex' attribute */
+    /* Set field spacing as relative proportions by 'flex' attribute */
     .ingredient-name {
+        flex: 1;
         font-weight: bold;
-        flex: 2;
-        min-width: 120px;
+        min-width: 100px;
     }
     .ingredient-concentration {
-        flex: 2;
+        flex: 1;
+        font-style: oblique;
         text-align: right;
-        padding-right: 50px;
         min-width: 100px;
     }
     .ingredient-quantity {
-        flex: 6;
-        text-align: left;
-        padding-left: 20px;
-        min-width: 100px;
+        flex: 4;
+        text-align: right;
+        padding-right: 300px;
+        min-width: 400px;
+        color: rgb(124, 167, 238);
     }
 
     /* 'Clear All' button spacing and size */
