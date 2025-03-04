@@ -29,10 +29,11 @@ function updateIngredientList() {
     // Display description if available
     if (ingredients.description) {
         recipeDescription.textContent = ingredients.description;
+        recipeDescription.style.display = "block"; // Show the description
     } else {
-        recipeDescription.textContent = ""; // Clear if no description
+        recipeDescription.style.display = "none"; // Hide if no description
     }
-
+    
     // Generate ingredient list
     Object.keys(ingredients).forEach(ingredient => {
         if (ingredient === "description") return; // Skip description key
@@ -44,8 +45,7 @@ function updateIngredientList() {
             values[2] = (values[2] * scaleFactor).toFixed(2); // Scale and format to 2 decimals
         }
 
-        const ingredientText = `${ingredient.replace("_", " ")}: ${values.join(" ")}`;
-
+        // Create elements for structured layout
         const div = document.createElement("div");
         div.classList.add("ingredient");
 
@@ -53,15 +53,29 @@ function updateIngredientList() {
         checkbox.type = "checkbox";
         checkbox.classList.add("ingredient-checkbox");
 
-        const label = document.createElement("label");
-        label.textContent = ingredientText;
+        // 'innerHTML' to render HTML <sub> and <sup> properly
+        const nameSpan = document.createElement("span");
+        nameSpan.classList.add("ingredient-name");
+        nameSpan.innerHTML = ingredient.replace("_", " ");
 
+        const concentrationSpan = document.createElement("span");
+        concentrationSpan.classList.add("ingredient-concentration");
+        concentrationSpan.textContent = values.slice(0, 2).join(" ");
+
+        const quantitySpan = document.createElement("span");
+        quantitySpan.classList.add("ingredient-quantity");
+        quantitySpan.textContent = values.slice(2).join(" ");
+
+        // Append elements
         div.appendChild(checkbox);
-        div.appendChild(label);
+        div.appendChild(nameSpan);
+        div.appendChild(concentrationSpan);
+        div.appendChild(quantitySpan);
         recipeList.appendChild(div);
     });
 
-    clearBtn.style.display = "block"; // Show button when a recipe is selected
+    // Show button when a recipe is selected
+    clearBtn.style.display = "block";
 }
 
 // Handle recipe selection

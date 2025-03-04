@@ -15,5 +15,11 @@
     "recipe_C": {
         "ingredient_1": [100, "mM", 10, "g"],
         "ingredient_2": [200, "uM", 14.4, "g"]
+    },
+    "SICA": {
+        "description": "Standard intracellular solution.",
+        "NaCl": [4, "mM", 10, "g"],
+        "KCl": [140, "mM", 14.4, "g"],
+        "MgCl<sub>2</sub>": [2, "mM", 0.4, "g"]
     }
 }

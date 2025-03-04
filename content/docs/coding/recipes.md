@@ -12,4 +12,5 @@ draft: true
 
 # Recipe book of physiological solutions
 
+{{< RecipeSelector_CSS >}}
 {{< RecipeSelector >}}
