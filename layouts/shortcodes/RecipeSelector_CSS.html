@@ -37,24 +37,68 @@
         border-radius: 5px; /* Slightly rounded corners */
     }
 
+
+
+
     /* Make checkbox bigger and indent items */
     input[type="checkbox"] {
         transform: scale(2);
         cursor: pointer;
         margin-left: 30px;
         margin-right: 20px;
-        position: relative;
     }
     /* Wider (but invisible) touch area */
     input[type="checkbox"]::before {
         content: "";
-        position: absolute;
         width: 500px; /* Whole line clickable */
         height: 30px;
         left: -10px;
         top: -10px;
         background: transparent;
     }
+
+
+
+
+
+    /* Increase vertical spacing among items */
+    .ingredient {
+        display: flex;
+        align-items: center;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        padding: 10px 0; /* Internal spacing */
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    /* Overlay effect */
+    .ingredient:hover {
+        background-color: rgba(83, 122, 143, 0.2);
+        border-radius: 5px;
+        transition: 0.3s ease-in-out;
+    }
+    
+    /* Set field spacing as relative proportions by 'flex' attribute */
+    .ingredient-name {
+        flex: 1;
+        font-weight: bold;
+        min-width: 100px;
+    }
+    .ingredient-concentration {
+        flex: 1;
+        font-style: oblique;
+        text-align: right;
+        min-width: 100px;
+    }
+    .ingredient-quantity {
+        flex: 4;
+        text-align: right;
+        padding-right: 300px;
+        min-width: 400px;
+        color: rgb(124, 167, 238);
+    }
+
+
+
 
 
     /* 'Clear All' button spacing and size */
