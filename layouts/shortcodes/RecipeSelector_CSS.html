@@ -38,6 +38,21 @@
     }
 
 
+    /* Increase vertical spacing among items */
+    .ingredient {
+        display: flex;
+        align-items: center;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        padding: 10px 0; /* Internal spacing */
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    /* Overlay effect */
+    .ingredient:hover {
+        background-color: rgba(83, 122, 143, 0.2);
+        border-radius: 5px;
+        transition: 0.3s ease-in-out;
+    }
     
     /* Set field spacing as relative proportions by 'flex' attribute */
     .ingredient-name {
