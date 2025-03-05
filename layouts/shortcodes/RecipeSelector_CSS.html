@@ -46,9 +46,9 @@
         cursor: pointer;
         margin-left: 30px;
         margin-right: 20px;
-        display: inline-block !important;
-        visibility: visible !important;
-        opacity: 1 !important;
+        display: inline-block !important; /* Force checkboxes to be visible (mobile) */
+        visibility: visible !important; /* Force checkboxes to be visible (mobile) */
+        opacity: 1 !important; /* Force checkboxes to be visible (mobile) */
     }
     /* Wider (but invisible) touch area */
     input[type="checkbox"]::before {
@@ -58,9 +58,9 @@
         left: -10px;
         top: -10px;
         background: transparent;
-        display: inline-block !important;
-        visibility: visible !important;
-        opacity: 1 !important;
+        display: inline-block !important; /* Force checkboxes to be visible (mobile) */
+        visibility: visible !important; /* Force checkboxes to be visible (mobile) */
+        opacity: 1 !important; /* Force checkboxes to be visible (mobile) */
     }
 
 
@@ -75,6 +75,8 @@
         margin-bottom: 10px;
         padding: 10px 0; /* Internal spacing */
         border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        overflow: visible !important; /* Avoid parent container clip checkboxes */
+        position: relative !important; /* Avoid parent container clip checkboxes */
     }
     /* Overlay effect */
     .ingredient:hover {
