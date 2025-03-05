@@ -13,7 +13,7 @@
     }
     select {
         padding: 6px;
-        border: 1px solid #ccc;
+        border: 1px solid #acacac;
         border-radius: 4px;
         font-size: 16px;
         margin-bottom: 15px;
@@ -31,50 +31,31 @@
         display: none; /* Hidden by default */
         font-style: italic;
         background-color: rgba(255, 255, 255, 0.1);
-        border: 1px solid #ddd;
+        border: 1px solid #acacac;
+        max-width: 540px;
         padding: 10px; /* Internal spacing */
         margin: 20px 0; /* Space above and below */
         border-radius: 5px; /* Slightly rounded corners */
     }
 
-
-
-
-    /* Make checkbox bigger and indent items */
+    /* Make checkboxes bigger and indent items */
     input[type="checkbox"] {
         transform: scale(2);
         cursor: pointer;
         margin-left: 30px;
-        margin-right: 20px;
-        display: inline-block !important; /* Force checkboxes to be visible (mobile) */
-        visibility: visible !important; /* Force checkboxes to be visible (mobile) */
-        opacity: 1 !important; /* Force checkboxes to be visible (mobile) */
-        appearance: auto !important;
+        margin-right: 30px;
+        display: inline-block !important; /* Force checkbox visibility (mobile) */
+        visibility: visible !important; /* Force checkbox visibility (mobile) */
+        opacity: 1 !important; /* Force checkbox visibility (mobile) */
+        appearance: auto !important; /* Force checkbox visibility (mobile) */
         -webkit-appearance: auto !important; /* Safari fix */
     }
-    /* Wider (but invisible) touch area */
-    input[type="checkbox"]::before {
-        content: "";
-        width: 500px; /* Whole line clickable */
-        height: 30px;
-        left: -10px;
-        top: -10px;
-        background: transparent;
-        display: inline-block !important; /* Force checkboxes to be visible (mobile) */
-        visibility: visible !important; /* Force checkboxes to be visible (mobile) */
-        opacity: 1 !important; /* Force checkboxes to be visible (mobile) */
-        appearance: auto !important;
-        -webkit-appearance: auto !important; /* Safari fix */
-    }
-
-
-
-
 
     /* Increase vertical spacing among items */
     .ingredient {
         display: flex;
         align-items: center;
+        max-width: 540px;
         margin-top: 10px;
         margin-bottom: 10px;
         padding: 10px 0; /* Internal spacing */
@@ -86,33 +67,30 @@
     .ingredient:hover {
         background-color: rgba(83, 122, 143, 0.2);
         border-radius: 5px;
-        transition: 0.3s ease-in-out;
+        transition: 0.2s ease-in-out;
     }
     
     /* Set field spacing as relative proportions by 'flex' attribute */
     .ingredient-name {
         flex: 1;
         font-weight: bold;
-        min-width: 100px;
+        text-align: left;
+        min-width: 80px;
     }
     .ingredient-concentration {
         flex: 1;
         font-style: oblique;
         text-align: right;
-        min-width: 100px;
+        min-width: 80px;
     }
     .ingredient-quantity {
-        flex: 4;
+        flex: 2;
         text-align: right;
-        padding-right: 300px;
-        min-width: 400px;
+        padding-right: 30px;
+        min-width: 80px;
         color: rgb(124, 167, 238);
     }
-
-
-
-
-
+    
     /* 'Clear All' button spacing and size */
     #clear-btn {
         display: none; /* hidden by default */
