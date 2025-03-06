@@ -42,9 +42,10 @@ function updateIngredientList() {
 
         // If the ingredient has a quantity (3rd element in the array), scale it
         if (values.length >= 3 && typeof values[2] === "number") {
-            values[2] = (values[2] * scaleFactor).toFixed(2); // Scale and format to 2 decimals
+            // Scale and keep up to 3 meaningful decimal places
+            values[2] = parseFloat((values[2] * scaleFactor).toFixed(3)).toString();
         }
-
+        
         // Create elements for structured layout
         const div = document.createElement("div");
         div.classList.add("ingredient");

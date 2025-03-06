@@ -1,25 +1,62 @@
 {
-    "recipe_A": {
+    "Tyrode Standard": {
         "description": "A simple buffer solution.",
-        "ingredient_1": [50, "mM", 5, "g"],
-        "ingredient_2": [144, "uM", 7.2, "g"],
-        "ingredient_3": ["pH", 7.4]
+        "NaCl": [154, "mM", 4.5, "g"],
+        "KCl": [4, "mM", 0.149, "g"],
+        "MgCl<sub>2</sub>": [1, "mM", 250, "μL (2M)"],
+        "Glucose": [5.5, "mM", 0.496, "g"],
+        "HEPES": [5, "mM", 0.595, "g"],
+        "CaCl<sub>2</sub>": [2, "mM", 0.147, "g"],
+        "NaOH": ["pH", 7.34]
     },
-    "recipe_B": {
-        "description": "A complex buffer used in molecular biology.",
-        "ingredient_1": [50, "mM", 5, "g"],
-        "ingredient_2": [144, "uM", 7.2, "g"],
-        "ingredient_3": [15, "mM", 3.2, "mL"],
-        "ingredient_4": ["pH", 7.4]
+    "Tyrode HK⁺ (10 mM)": {
+        "description": "A simple buffer solution.",
+        "NaCl": [148, "mM", 4.325, "g"],
+        "KCl": [10, "mM", 0.373, "g"],
+        "MgCl<sub>2</sub>": [1, "mM", 250, "μL (2M)"],
+        "Glucose": [5.5, "mM", 0.496, "g"],
+        "HEPES": [5, "mM", 0.595, "g"],
+        "CaCl<sub>2</sub>": [2, "mM", 0.147, "g"],
+        "NaOH": ["pH", 7.34]
     },
-    "recipe_C": {
-        "ingredient_1": [100, "mM", 10, "g"],
-        "ingredient_2": [200, "uM", 14.4, "g"]
+    "Tyrode HK⁺ (40 mM)": {
+        "description": "A simple buffer solution.",
+        "NaCl": [118, "mM", 3.448, "g"],
+        "KCl": [40, "mM", 1.491, "g"],
+        "MgCl<sub>2</sub>": [1, "mM", 250, "μL (2M)"],
+        "Glucose": [5.5, "mM", 0.496, "g"],
+        "HEPES": [5, "mM", 0.595, "g"],
+        "CaCl<sub>2</sub>": [2, "mM", 0.147, "g"],
+        "NaOH": ["pH", 7.34]
     },
-    "SICA": {
-        "description": "Standard intracellular solution.",
-        "NaCl": [4, "mM", 10, "g"],
-        "KCl": [140, "mM", 14.4, "g"],
-        "MgCl<sub>2</sub>": [2, "mM", 0.4, "g"]
+    "Tyrode HK⁺ (70 mM)": {
+        "description": "A simple buffer solution.",
+        "NaCl": [88, "mM", 2.571, "g"],
+        "KCl": [70, "mM", 2.61, "g"],
+        "MgCl<sub>2</sub>": [1, "mM", 250, "μL (2M)"],
+        "Glucose": [5.5, "mM", 0.496, "g"],
+        "HEPES": [5, "mM", 0.595, "g"],
+        "CaCl<sub>2</sub>": [2, "mM", 0.147, "g"],
+        "NaOH": ["pH", 7.34]
+    },
+    "Tyrode HK⁺ (150 mM)": {
+        "description": "A simple buffer solution.",
+        "NaCl": [8, "mM", 0.234, "g"],
+        "KCl": [150, "mM", 5.592, "g"],
+        "MgCl<sub>2</sub>": [1, "mM", 250, "μL (2M)"],
+        "Glucose": [5.5, "mM", 0.496, "g"],
+        "HEPES": [5, "mM", 0.595, "g"],
+        "CaCl<sub>2</sub>": [2, "mM", 0.147, "g"],
+        "NaOH": ["pH", 7.34]
+    },
+    "Tyrode 0 Ca²⁺ - 0.5 EGTA": {
+        "description": "A simple buffer solution.",
+        "NaCl": [154, "mM", 4.5, "g"],
+        "KCl": [4, "mM", 0.149, "g"],
+        "MgCl<sub>2</sub>": [1, "mM", 250, "μL (2M)"],
+        "Glucose": [5.5, "mM", 0.496, "g"],
+        "HEPES": [5, "mM", 0.595, "g"],
+        "EGTA": [0.5, "mM", 0.095, "g"],
+        "NaOH": ["pH", 7.34]
     }
 }
