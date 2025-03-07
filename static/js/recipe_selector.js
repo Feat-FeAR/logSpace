@@ -13,7 +13,7 @@ Object.keys(recipeBook).forEach(recipe => {
     if (recipe !== "molecular_weights") {
         let option = document.createElement("option");
         option.value = recipe;
-        option.textContent = recipe.replace("_", " "); // Formatting
+        option.textContent = recipe.replace(/_/g, " "); // Formatting
         recipeSelect.appendChild(option);
     }
 });
@@ -37,14 +37,12 @@ function updateIngredientList() {
     }
     
     // Generate ingredient list
-    Object.keys(ingredients).forEach(ingredient => {
+    Object.entries(ingredients).forEach(([ingredient, values]) => {
         if (ingredient === "description") return; // Skip description key
-
-        let values = ingredients[ingredient]; // Get concentration or pH
-
+        
         // Handle pH values directly (no calculation needed)
-        if (Array.isArray(values)) {
-            let iName = `${ingredient.replace("_", " ")}`;
+        if (Array.isArray(values) && values[0] === "pH") {
+            let iName = `${ingredient.replace(/_/g, " ")}`;
             let pHText = `${values.join(" ")}`;
             createIngredientElement(iName, pHText, "");
         } else {
@@ -57,7 +55,7 @@ function updateIngredientList() {
                 // Convert to g and keep up to 3 meaningful decimal places
                 mass = parseFloat((mass / 1e3).toFixed(3)).toString();
 
-                let iName = `${ingredient.replace("_", " ")}`;
+                let iName = `${ingredient.replace(/_/g, " ")}`;
                 let iConc = `${concentration} mM`;
                 let iMass = `${mass} g`;
                 createIngredientElement(iName, iConc, iMass);
