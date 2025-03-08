@@ -24,7 +24,7 @@ function updateIngredientList() {
 
     const ingredients = recipeBook[currentRecipe];
     const molecularWeights = recipeBook.molecular_weights;
-    const selectedVolume = parseInt(volumeSelect.value) / 1e3; // in L
+    const selectedVolume = parseInt(volumeSelect.value); // (mL)
 
     recipeList.innerHTML = ""; // Clear previous ingredients
 
@@ -45,15 +45,21 @@ function updateIngredientList() {
             let iName = `${ingredient.replace(/_/g, " ")}`;
             let pHText = `${values.join(" ")}`;
             createIngredientElement(iName, pHText, "");
+        } else if (ingredient === "MgCl<sub>2</sub>") {
+            let concentration = values;
+            let iName = `${ingredient.replace(/_/g, " ")}`;
+            let iConc = `${concentration} mM`;
+            let iVol = `${(concentration * selectedVolume)/2} μL (2M)\n${(concentration * selectedVolume)/5} μL (5M)`;
+            createIngredientElement(iName, iConc, iVol);
         } else {
             // Calculate mass if molecular weight exists
             if (molecularWeights[ingredient]) {
-                let concentration = values; // in mM == mmol/L
-                let molecularWeight = molecularWeights[ingredient]; // g/mol
-                let mass = (concentration * molecularWeight * selectedVolume);
+                let concentration = values; // (mM == mmol/L)
+                let molecularWeight = molecularWeights[ingredient]; // (g/mol)
+                let mass = (concentration * molecularWeight * selectedVolume); // (μg)
                 
                 // Convert to g and keep up to 3 meaningful decimal places
-                mass = parseFloat((mass / 1e3).toFixed(3)).toString();
+                mass = parseFloat((mass * 1e-6).toFixed(3)).toString();
 
                 let iName = `${ingredient.replace(/_/g, " ")}`;
                 let iConc = `${concentration} mM`;
