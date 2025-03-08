@@ -12,5 +12,9 @@ draft: false
 
 # Recipe book of physiological solutions
 
+## Select a Recipe
 {{< RecipeSelector_CSS >}}
 {{< RecipeSelector >}}
+
+## Reference Molecular Weights
+{{< ShowMW >}}

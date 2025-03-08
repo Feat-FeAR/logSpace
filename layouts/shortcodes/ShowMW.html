@@ -1,0 +1,24 @@
+<!-- Shortcode for the MW report in Recipe Book of Physiological Solutions -->
+
+<!-- Access the JSON ('./data/RecipeBook.json') -->
+<script>
+    const recipeBook = {{ $.Site.Data.RecipeBook }};
+</script>
+<!-- Import the JS script -->
+<script defer
+        language="javascript"
+        type="text/javascript"
+        src='{{ "js/show_mw.js" | urlize | relURL }}'>
+</script>
+
+<table id="molecular-weight-table">
+    <thead>
+        <tr>
+            <th>Ingredient</th>
+            <th>MW (g/mol)</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Table rows will be inserted here by JavaScript -->
+    </tbody>
+</table>

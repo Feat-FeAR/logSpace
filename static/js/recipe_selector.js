@@ -78,7 +78,7 @@ function createIngredientElement(iName, iConc, iMass) {
     checkbox.type = "checkbox";
     checkbox.classList.add("ingredient-checkbox");
 
-    // 'innerHTML' instead of 'textContent' to render HTML <sub> and <sup> properly
+    // 'innerHTML' instead of 'textContent' to render HTML <sub> and <sup>
     const nameSpan = document.createElement("span");
     nameSpan.classList.add("ingredient-name");
     nameSpan.innerHTML = iName;
