@@ -17,4 +17,9 @@ draft: false
 {{< RecipeSelector >}}
 
 ## Reference Molecular Weights
+Based on ingredient concentrations ({{< katex >}}c{{< /katex >}}) and the final volume (\\(V\\)) selected by the user, masses above are calculated dynamically as
+$$
+m{\scriptscriptstyle\left(g\right)}=c{\scriptscriptstyle\left(mM\right)}\cdot MW{\scriptscriptstyle\left(g/mol\right)}\cdot V{\scriptscriptstyle\left(mL\right)}\cdot 10^{-6}{\scriptscriptstyle\left(g/\mu g\right)}
+$$
+using the molecular weight values (\\(MW\\)) reported below.
 {{< ShowMW >}}
