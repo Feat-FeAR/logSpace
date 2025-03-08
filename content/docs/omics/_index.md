@@ -1,6 +1,6 @@
 ---
-title: "Omics Data"
-weight: 60
+title: "Omics"
+weight: 20
 bookCollapseSection: true
 ---
 

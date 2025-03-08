@@ -1,6 +1,6 @@
 ---
 title: "SetUps"
-weight: 30
+weight: 40
 bookCollapseSection: true
 ---
 

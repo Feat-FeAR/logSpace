@@ -1,6 +1,6 @@
 ---
 title: "Functional"
-weight: 20
+weight: 30
 draft: false
 # bookFlatSection: false
 # bookToc: true

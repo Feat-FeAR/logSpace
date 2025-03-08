@@ -1,6 +1,6 @@
 ---
 title: "Hugo"
-weight: 10
+weight: 20
 draft: false
 # bookFlatSection: false
 # bookToc: true
@@ -14,7 +14,7 @@ draft: false
 __Hugo__ is a fast and easy-to-use static website generator written in __Go__
 that renders a complete HTML website (just like _The log_Space_ you are browsing
 right now) starting from content and templates written in __Markdown__
-(such as [the source of this page](https://github.com/Feat-FeAR/logSpace/blob/main/content/docs/setups/hugo.md?plain=1)).
+(such as [the source of this page](https://github.com/Feat-FeAR/logSpace/blob/main/content/docs/devel/hugo.md?plain=1)).
 
 This is a concise tutorial on how to make a website via __Hugo__, working in a
 pure Windows environment. To this purpose, all of the following commands are

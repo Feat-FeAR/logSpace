@@ -1,10 +1,10 @@
 ---
-title: "Coding"
-weight: 20
+title: "Devel"
+weight: 30
 bookCollapseSection: true
 ---
 
-# Code thinking
+# Software Development
 
 ```
 Work in progress

@@ -1,6 +1,6 @@
 ---
 title: "Recipes"
-weight: 200
+weight: 10
 draft: false
 # bookFlatSection: false
 # bookToc: true

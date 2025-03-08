@@ -1,6 +1,6 @@
 ---
 title: "R"
-weight: 20
+weight: 10
 draft: false
 # bookFlatSection: false
 # bookToc: true
