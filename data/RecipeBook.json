@@ -10,7 +10,7 @@
         "KAsp": 180.20
     },
     "Tyrode_Standard": {
-        "description": "Tyrode's solution is a simple physiological buffer solution that mimics the ion concentrations of extracellular fluid. Tyrode’s solution is relatively simple compared to other physiological buffers, especially compared to solutions like Ringer's solution, Krebs-Henseleit buffer, or artificial cerebrospinal fluid. It contains only a few essential ions and a buffering system to maintain pH, making it one of the more basic extracellular solutions used in physiological experiments.",
+        "description": "Tyrode's solution is a simple physiological buffer solution that mimics the ionic concentrations of interstitial fluid. It is one of the most basic extracellular solutions used in physiological experiments, containing only a few essential ions and a buffer system to maintain pH.",
         "NaCl": 154,
         "KCl": 4,
         "MgCl<sub>2</sub>": 1,
@@ -20,7 +20,7 @@
         "NaOH": ["pH", 7.34]
     },
     "Tyrode_HK⁺_10_mM": {
-        "description": "A simple buffer solution.",
+        "description": "A variation of the standard Tyrode's solution with a higher concentration of potassium. Compared to the standard 4 mM potassium, this extracellular solution induces a depolarization of about 25 mV in a membrane permeable only to K<sup>+</sup> with intracellular [K<sup>+</sup>]=150 mM (from -96.8 mV to -72.3 mV).",
         "NaCl": 148,
         "KCl": 10,
         "MgCl<sub>2</sub>": 1,
@@ -30,7 +30,7 @@
         "NaOH": ["pH", 7.34]
     },
     "Tyrode_HK⁺_40_mM": {
-        "description": "A simple buffer solution.",
+        "description": "A variation of the standard Tyrode's solution with a higher concentration of potassium. Compared to the standard 4 mM potassium, this extracellular solution induces a depolarization of about 62 mV in a membrane permeable only to K<sup>+</sup> with intracellular [K<sup>+</sup>]=150 mM (from -96.8 mV to -35.3 mV).",
         "NaCl": 118,
         "KCl": 40,
         "MgCl<sub>2</sub>": 1,
@@ -40,7 +40,7 @@
         "NaOH": ["pH", 7.34]
     },
     "Tyrode_HK⁺_70_mM": {
-        "description": "A simple buffer solution.",
+        "description": "A variation of the standard Tyrode's solution with a higher concentration of potassium. Compared to the standard 4 mM potassium, this extracellular solution induces a depolarization of about 76 mV in a membrane permeable only to K<sup>+</sup> with intracellular [K<sup>+</sup>]=150 mM (from -96.8 mV to -20.3 mV).",
         "NaCl": 88,
         "KCl": 70,
         "MgCl<sub>2</sub>": 1,
@@ -50,7 +50,7 @@
         "NaOH": ["pH", 7.34]
     },
     "Tyrode_HK⁺_150_mM": {
-        "description": "A simple buffer solution.",
+        "description": "A variation of the standard Tyrode's solution with maximal potassium concentration. Compared to the standard 4 mM potassium, this extracellular solution induces a strong depolarization of about 97 mV, which neutralizes the electrical potential across a membrane permeable only to K<sup>+</sup> with intracellular [K<sup>+</sup>]=150 mM (from -96.8 mV to 0 mV).",
         "NaCl": 8,
         "KCl": 150,
         "MgCl<sub>2</sub>": 1,
@@ -60,7 +60,7 @@
         "NaOH": ["pH", 7.34]
     },
     "Tyrode_0_Ca²⁺_-_0.5_EGTA": {
-        "description": "A simple buffer solution.",
+        "description": "A variation of the standard Tyrode's solution without calcium.",
         "NaCl": 154,
         "KCl": 4,
         "MgCl<sub>2</sub>": 1,

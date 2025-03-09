@@ -29,8 +29,9 @@ function updateIngredientList() {
     recipeList.innerHTML = ""; // Clear previous ingredients
 
     // Display description if available
+    // Use 'innerHTML' instead of 'textContent' to render HTML <sub> and <sup>
     if (ingredients.description) {
-        recipeDescription.textContent = ingredients.description;
+        recipeDescription.innerHTML = ingredients.description;
         recipeDescription.style.display = "block"; // Show the description
     } else {
         recipeDescription.style.display = "none"; // Hide if no description
