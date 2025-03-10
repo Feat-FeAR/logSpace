@@ -7,7 +7,8 @@
         "HEPES": 238.30,
         "CaCl<sub>2</sub>": 147.02,
         "EGTA": 380.35,
-        "KAsp": 180.20
+        "KAsp": 180.20,
+        "Na<sub>2</sub>ATP": 551.14
     },
     "Tyrode_Standard": {
         "description": "Tyrode's solution is a simple physiological buffer solution that mimics the ionic concentrations of interstitial fluid. It is one of the most basic extracellular solutions used in physiological experiments, containing only a few essential ions and a buffer system to maintain pH.",
@@ -68,5 +69,24 @@
         "HEPES": 5,
         "EGTA": 0.5,
         "NaOH": ["pH", 7.34]
+    },
+    "SIKA_0_EGTA": {
+        "description": "Standard intracellular solution with potassium and contaminating calcium.",
+        "KCl": 15,
+        "MgCl<sub>2</sub>": 3,
+        "HEPES": 5,
+        "KAsp": 118,
+        "Na<sub>2</sub>ATP": 5,
+        "KOH": ["pH", 7.00]
+    },
+    "SIKA_1.1_EGTA": {
+        "description": "Standard intracellular solution with potassium and 0 mM calcium.",
+        "KCl": 15,
+        "MgCl<sub>2</sub>": 3,
+        "HEPES": 5,
+        "KAsp": 118,
+        "EGTA": 1.1,
+        "Na<sub>2</sub>ATP": 5,
+        "KOH": ["pH", 7.00]
     }
 }
