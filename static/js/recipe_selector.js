@@ -1,4 +1,4 @@
-// JavaScript code for the RecipeSelector shortcode
+// JavaScript code for the 'RecipeSelector.html' shortcode
 
 const recipeSelect = document.getElementById("recipe-select");
 const volumeSelect = document.getElementById("volume-select");
@@ -6,9 +6,9 @@ const recipeDescription = document.getElementById("recipe-description");
 const recipeList = document.getElementById("recipe-list");
 const clearBtn = document.getElementById("clear-btn");
 
-let currentRecipe = null; // Store the selected recipe
+let currentRecipe = null;
 
-// Populate recipe dropdown
+// Populate recipe dropdown (see 'const recipeBook' in RecipeSelector.html)
 Object.keys(recipeBook).forEach(recipe => {
     if (recipe !== "molecular_weights") {
         let option = document.createElement("option");
@@ -20,7 +20,7 @@ Object.keys(recipeBook).forEach(recipe => {
 
 // Function to update ingredient list
 function updateIngredientList() {
-    if (!currentRecipe) return;
+    if (!currentRecipe) return; // When no recipe is selected
 
     const ingredients = recipeBook[currentRecipe];
     const molecularWeights = recipeBook.molecular_weights;
@@ -39,21 +39,23 @@ function updateIngredientList() {
     
     // Generate ingredient list
     Object.entries(ingredients).forEach(([ingredient, values]) => {
-        if (ingredient === "description") return; // Skip description key
+        // Skip description key
+        if (ingredient === "description") return;
         
         // Handle pH values directly (no calculation needed)
         if (Array.isArray(values) && values[0] === "pH") {
             let iName = `${ingredient.replace(/_/g, " ")}`;
             let pHText = `${values.join(" ")}`;
             createIngredientElement(iName, pHText, "");
+        // Handle liquid ingredients
         } else if (ingredient === "MgCl<sub>2</sub>") {
-            let concentration = values;
+            let concentration = values; // (mM == mmol/L)
             let iName = `${ingredient.replace(/_/g, " ")}`;
             let iConc = `${concentration} mM`;
             let iVol = `${(concentration * selectedVolume)/2} μL (2M)\n${(concentration * selectedVolume)/5} μL (5M)`;
             createIngredientElement(iName, iConc, iVol);
+        // Handle salts (calculate mass if molecular weight exists)
         } else {
-            // Calculate mass if molecular weight exists
             if (molecularWeights[ingredient]) {
                 let concentration = values; // (mM == mmol/L)
                 let molecularWeight = molecularWeights[ingredient]; // (g/mol)
