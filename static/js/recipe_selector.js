@@ -44,19 +44,26 @@ function updateIngredientList() {
         
         // Handle pH values directly (no calculation needed)
         if (Array.isArray(values) && values[0] === "pH") {
+            
             let iName = `${ingredient.replace(/_/g, " ")}`;
             let pHText = `${values.join(" ")}`;
+
             createIngredientElement(iName, pHText, "");
+        
         // Handle liquid ingredients
         } else if (ingredient === "MgCl<sub>2</sub>") {
+            
             let concentration = values; // (mM == mmol/L)
             let iName = `${ingredient.replace(/_/g, " ")}`;
             let iConc = `${concentration} mM`;
             let iVol = `${(concentration * selectedVolume)/2} μL (2M)\n${(concentration * selectedVolume)/5} μL (5M)`;
+            
             createIngredientElement(iName, iConc, iVol);
+        
         // Handle salts (calculate mass if molecular weight exists)
         } else {
             if (molecularWeights[ingredient]) {
+                
                 let concentration = values; // (mM == mmol/L)
                 let molecularWeight = molecularWeights[ingredient]; // (g/mol)
                 let mass = (concentration * molecularWeight * selectedVolume); // (μg)
@@ -67,7 +74,9 @@ function updateIngredientList() {
                 let iName = `${ingredient.replace(/_/g, " ")}`;
                 let iConc = `${concentration} mM`;
                 let iMass = `${mass} g`;
+                
                 createIngredientElement(iName, iConc, iMass);
+            
             } else {
                 console.warn(`Molecular weight missing for: ${ingredient}`);
             }
