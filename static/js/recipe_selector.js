@@ -56,7 +56,7 @@ function updateIngredientList() {
             let concentration = values; // (mM == mmol/L)
             let iName = `${ingredient.replace(/_/g, " ")}`;
             let iConc = `${concentration} mM`;
-            let iVol = `${(concentration * selectedVolume)/2} μL (2M)\n${(concentration * selectedVolume)/5} μL (5M)`;
+            let iVol = `${(concentration * selectedVolume)/2} μL <sub>(2M)</sub>\n${(concentration * selectedVolume)/5} μL <sub>(5M)</sub>`;
             
             createIngredientElement(iName, iConc, iVol);
         
@@ -107,7 +107,7 @@ function createIngredientElement(iName, iConc, iMass) {
 
     const quantitySpan = document.createElement("span");
     quantitySpan.classList.add("ingredient-quantity");
-    quantitySpan.textContent = iMass;
+    quantitySpan.innerHTML = iMass;
 
     // Append elements
     div.appendChild(checkbox);
