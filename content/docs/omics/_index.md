@@ -33,12 +33,12 @@ omics data.
     </colgroup>
     <tr>
         <td style="border: 0;">
-            <a href="https://feat-fear.github.io/logSpace/docs/omics/INSDC/" target="_self">
+            <a href="INSDC/">
                 {{< figure src="/images/INSDC_logo.png" title="ENA logo" width=190 >}}
             </a>
         </td>
         <td style="border: 0;">
-            <a href="https://feat-fear.github.io/logSpace/docs/omics/ENA/" target="_self">
+            <a href="ENA/">
                 {{< figure src="/images/ENA_logo_crop.png" title="ENA logo" width=300 >}}
             </a>
         </td>

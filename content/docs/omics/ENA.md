@@ -37,9 +37,8 @@ Here we'll assuming that
 1. you have already registered a _Webin Submission Account_ (and you remember
 	where you put your credentials);
 1. you are already familiar with the _ENA Metadata Model_ (if not, you can find
-	[here](https://feat-fear.github.io/logSpace/docs/omics/INSDC/) a quick
-	overview of the great _International Nucleotide Sequence Database
-	Collaboration_ initiative);
+	[here](../INSDC/) a quick overview of the great _International Nucleotide
+	Sequence Database Collaboration_ initiative);
 1. your raw reads have already been de-multiplexed and are in _gzip-compressed_
 	FASTQ format (`.fastq.gz`).
 
@@ -221,7 +220,7 @@ point to the location of the files in an FTP directory. A _Run_ of sequencing is
 always linked with one _Experiment_ object, which describes the library
 preparation and sequencing protocol. In turn, _Experiments_ are linked with one
 _Sample_ and one _Study_, according to the
-[__ENA Metadata Model__](https://feat-fear.github.io/logSpace/docs/omics/INSDC/).
+[__ENA Metadata Model__](../INSDC/).
 {{< /hint >}}
 
 To Submit Raw Reads Interactively,
