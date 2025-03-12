@@ -8,6 +8,17 @@ weight: 10
 # The log_Space
 
 <style>
+    /*
+    Alternatively, you can use Google Fonts to load the font from their servers.
+    No need to host the TTF file yourself.
+    @import url('https://fonts.googleapis.com/css2?family=Megrim&display=swap');
+    */
+    @font-face {
+        font-family: 'Megrim';
+        src: url('fonts/Megrim-Regular.ttf') format('truetype');
+        font-weight: normal;
+        font-style: normal;
+    }
     body {
         text-align: center;
         margin: 20px;
@@ -16,7 +27,7 @@ weight: 10
         display: grid;
         grid-template-columns: repeat(2, 1fr); /* 2 columns */
         grid-template-rows: repeat(3, auto); /* 3 rows */
-        gap: 20px;
+        gap: 30px;
         max-width: 700px;
         margin: auto;
         margin-top: 50px;
@@ -26,9 +37,11 @@ weight: 10
         flex-direction: column;
         align-items: center;
     }
-    .grid-item .label {
-        font-size: 24px;
+    .label {
+        font-family: "Megrim", system-ui; /* with fallback option */
+        font-size: 28px;
         font-weight: bold;
+        font-style: normal;
         align-self: flex-start; /* Aligns the label to the left */
     }
     .grid-item a {
@@ -45,7 +58,6 @@ weight: 10
     .grid-item img:hover {
         transform: scale(1.05); /* Slight zoom effect */
     }
-
 </style>
 
 <div class="grid-container">
