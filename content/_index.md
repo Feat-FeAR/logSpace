@@ -38,8 +38,8 @@ weight: 10
         align-items: center;
     }
     .label {
-        font-family: "Megrim", system-ui; /* with fallback option */
-        font-size: 28px;
+        font-family: "Megrim", system-ui; /* With fallback option */
+        font-size: clamp(22px, 3vw, 28px); /* Responsive font size */
         font-weight: bold;
         font-style: normal;
         align-self: flex-start; /* Aligns the label to the left */
