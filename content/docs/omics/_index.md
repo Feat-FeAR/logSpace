@@ -5,6 +5,10 @@ bookCollapseSection: true
 ---
 
 # Omics Data
+
+{{< SubIndexGenerator_CSS >}}
+{{< SubIndexGenerator >}}
+
 Omics data refer to the __large-scale datasets__ generated from the study of the
 different types of biological molecules that make up an organism, by the use of
 __high-throughput technologies__, such as sequencing, mass spectrometry, and

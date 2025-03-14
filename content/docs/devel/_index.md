@@ -6,6 +6,5 @@ bookCollapseSection: true
 
 # Software Development
 
-```
-Work in progress
-```
+{{< SubIndexGenerator_CSS >}}
+{{< SubIndexGenerator >}}

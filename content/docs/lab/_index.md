@@ -6,6 +6,5 @@ bookCollapseSection: true
 
 # Laboratory Tools
 
-```
-Work in progress
-```
+{{< SubIndexGenerator_CSS >}}
+{{< SubIndexGenerator >}}

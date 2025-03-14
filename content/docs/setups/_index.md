@@ -8,3 +8,6 @@ bookCollapseSection: true
 
 This section is a collection of step-by-step tutorial on how to set up things to
 get the work done.
+
+{{< SubIndexGenerator_CSS >}}
+{{< SubIndexGenerator >}}

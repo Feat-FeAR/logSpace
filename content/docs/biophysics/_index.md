@@ -6,6 +6,5 @@ bookCollapseSection: true
 
 # Biophysics Notes
 
-```
-Work in progress
-```
+{{< SubIndexGenerator_CSS >}}
+{{< SubIndexGenerator >}}
