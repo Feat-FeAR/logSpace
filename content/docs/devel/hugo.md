@@ -14,7 +14,9 @@ draft: false
 __Hugo__ is a fast and easy-to-use static website generator written in __Go__
 that renders a complete HTML website (just like _The log_Space_ you are browsing
 right now) starting from content and templates written in __Markdown__
-(such as [the source of this page](https://github.com/Feat-FeAR/logSpace/blob/main/content/docs/devel/hugo.md?plain=1)).
+(such as [the source of this page](https://github.com/Feat-FeAR/logSpace/blob/main/content/docs/devel/hugo.md?plain=1)). Since Hugo generates static HTML files, it
+is a great choice if you need a lightweight, high-performance website without 
+the complexity of CMS, database, and related server-side processing.
 
 This is a concise tutorial on how to make a website via __Hugo__, working in a
 pure Windows environment. To this purpose, all of the following commands are
@@ -35,6 +37,7 @@ Throughout this tutorial, the working directory `.` will always represent the
 _site root directory_.
 {{< /hint >}}
 
+---
 ---
 ## Prerequisites
 ### PowerShell
@@ -72,6 +75,7 @@ winget install Hugo.Hugo.Extended
 ```
 
 ---
+---
 ## Create a Hugo site
 Run these commands to create a new Hugo web site and run it on `localhost:1313`.
 See the official quick-start guide
@@ -96,6 +100,7 @@ echo "theme = 'ananke'" >> hugo.toml
 hugo server
 ```
 
+---
 ---
 ## Host on GitHub Pages
 Deploy Hugo as a _GitHub Pages_ site and automate the whole building process
@@ -128,6 +133,7 @@ __In the future, whenever you push a change from your local repository, GitHub
 will automatically rebuild your site and deploy the changes__.
 
 ---
+---
 ## Add content
 ### Blank pages
 __Markdown__ is the standard content format supported by __Hugo__. You can put
@@ -155,6 +161,7 @@ float to the top, while heavier items sink to the bottom. Unweighted or
 zero-weighted elements are placed at the end of the collection. Both the `date`
 and `weight` fields are optional.
 
+---
 ### Markdown
 To add __Markdown__ text to existing pages:
 1. Open the `.md` file with your editor (notice that the `draft` value in the
@@ -171,6 +178,7 @@ front matter could be _true_).
 and change content. All the saved changes will be reflected on the site in real
 time, without the need to refresh your browser each time!__.
 
+---
 ### HTML
 Beyond __Markdown__, you can insert __HTML__ directly inside Markdown files in
 `./content`. However, from version 0.6, __Hugo__ uses _Goldmark_ for Markdown
@@ -186,7 +194,6 @@ modification (but your indented code will follow Markdown formatting as usual).
 You could also save your content files as `.html`, but then you’ll have to write
 everything in HTML.
 
----
 ---
 ### JavaScript
 __JavaScript__ code can be inserted _inline_ into the Markdown simply using the
@@ -228,23 +235,21 @@ to override the content of the original.
     # For instance (if using the 'hugo-book' theme)
     cd <project_root>
     New-Item -Type dir ./layouts/partials/docs
-    cp `
-    	./themes/hugo-book/layouts/partials/docs/header.html `
-    	./layouts/partials/docs/header.html
+    cp ./themes/hugo-book/layouts/partials/docs/header.html ./layouts/partials/docs/header.html
     ```
 1. Add the following line to the bottom of the file.
-```html
-<script defer
-        language="javascript"
-        type="text/javascript"
-        src='{{ "js/popUp_test.js" | urlize | relURL }}'>
-</script>
-```
-Here, the location of the __JS__ script must be the path relative to
+    ```html
+    <script defer
+            language="javascript"
+            type="text/javascript"
+            src='{{ "js/popUp_test.js" | urlize | relURL }}'>
+    </script>
+    ```
+    Here, the location of the __JS__ script must be the path relative to
 `./static/`, since all the files therein will be copied with no modification,
 _as-is_, to the `./public` directory when building the site.
 
-{{< hint warning >}}
+    {{< hint warning >}}
 __Mind the slashes!__  
 Never include a leading slash to locate the source file when using the `relURL`
 function, otherwise the resulting URL will be incorrect when the `baseURL`
@@ -252,14 +257,14 @@ includes a subdirectory (such as those you are assigned to by default when
 deploying through __GitHub Pages__!)! See documentation about
 [`relURL`](https://gohugo.io/functions/urls/relurl/)
 and [`urlize`](https://gohugo.io/functions/urls/urlize/).
-{{< /hint >}}
+    {{< /hint >}}
 
-Now you can use the __JS__ functions from within any page of the site as shown
+1. Now you can use the __JS__ functions from within any page of the site as shown
 here below.
-```html
-<!-- Example of imported JS script that displays a simple popup message -->
-<button onclick="showPopup_fromThere()">Click me</button>
-```
+    ```html
+    <!-- Example of imported JS script that displays a simple popup message -->
+    <button onclick="showPopup_fromThere()">Click me</button>
+    ```
 
 #### Local import
 Alternatively, you can build a cool Hugo _shortcode_ in order to flexibly embed
@@ -301,13 +306,14 @@ to see the effects of a change to the script, you may need to use the key
 combination `Ctrl+F5` or `Ctrl+Shift+R`to force page refresh ignoring the cache.
 {{< /hint >}}
 {{< hint info >}}
-__Shortcode CSS__  
+__CSS Shortcode__  
 Using the same procedure described in the _Local Import_ subsection, you can
 also include portions of HTML code containing only `<style>` tags via shortcode,
 in order to apply alternative CSS locally (i.e., on individual web pages).
+Nevertheless, best practices provide for a different strategy, as outlined in
+one of the next paragraphs.
 {{< /hint >}}
 
----
 ---
 ### JSON / YAML
 It’s often a good idea to outsource the data in their own files. To access
@@ -335,22 +341,23 @@ It’s often a good idea to outsource the data in their own files. To access
     {{</* shortcode_name */>}}
     ```
 
+---
 ### Images
 In theory, embedding images to a Hugo page is very straightforward. Just put
 your images somewhere into the `./static` directory
 (e.g., `./static/images/fig1.png`), then choose one of these three methods
 1. embedding via Markdown (very basic syntax, does not provide further options)
     ```markdown
-    ![Alternative Text](/images/fig1.png "Mouseover Title")
+    ![Alternative Text](images/fig1.png "Mouseover Title")
     ```
 1. embedding via HTML `<figure>` and `<img>` tags (with all their attributes)
     ```html
-    <img src="/images/fig1.png" alt="Alternative Text" class="img-responsive">
+    <img src="images/fig1.png" alt="Alternative Text" class="img-responsive">
     ```
 1. via Hugo’s built-in `figure` shortcode (whose parameters can be found
 [here](https://gohugo.io/content-management/shortcodes/#figure))
     ```go
-    {{</* figure src="/images/fig1.png" title="Mouseover Title" */>}}
+    {{</* figure src="images/fig1.png" title="Mouseover Title" */>}}
     ```
 Here, the location of the image file must be the path relative to `./static`,
 since all the files therein will be copied with no modification, _as-is_, to the
@@ -372,6 +379,70 @@ wherever needed, also allowing for location different from `./static`
 (see e.g., [this issue](https://github.com/gohugoio/hugo/issues/4562)).
 {{< /hint >}}
 
+---
+### Fonts
+#### Local fonts
+To add custom fonts to a Hugo website, just put your TTF, (or WOFF, or WOFF2)
+file into the `./static/fonts` directory, then, when using `@font-face` in your
+CSS, you can refer to the font simply as `fonts/my_custom_font_name.ttf`. Just
+like with the images, the location of the font file must be the path relative
+to `./static`, since all the files therein are directly copied to the `./public`
+directory when building the site.
+```css
+/* Load TTF font */
+@font-face {
+    font-family: 'MyCustomFont';
+    src: url('fonts/my_custom_font_name.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* Apply the font to some text element */
+.text_element {
+    /* Fall back to system-ui if MyCustomFont fails to load */
+    font-family: 'MyCustomFont', system-ui;
+    font-size: 18px;
+    font-weight: bold;
+}
+```
+{{< hint info >}}
+`font-family`  
+To find the correct _font-family name_ (which could differ from filename), just
+open the font file and look at the font name at the top of the window.
+{{< /hint >}}
+
+#### Google Fonts
+The previous method works offline and doesn't rely on external services.
+Alternatively, you can use [Google Fonts](https://fonts.google.com/) to load the
+font from their servers. This way you won't need to host the TTF file yourself.
+Just go to [Google Fonts](https://fonts.google.com/), select a font you like, choose `Get embed code` and copy either the `<link>` tag
+```html
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=MyCustomFont&display=swap" rel="stylesheet">
+```
+or the `@import` statement
+```css
+@import url('https://fonts.googleapis.com/css2?family=MyCustomFont&display=swap');
+```
+and apply it in your CSS as in the previous case.
+```css
+/* Apply the font to some text element */
+.text_element {
+    /* Fall back to system-ui if MyCustomFont fails to load */
+    font-family: 'MyCustomFont', system-ui;
+    font-size: 18px;
+    font-weight: bold;
+}
+```
+{{< hint info >}}
+__Local Google Fonts__  
+Google Fonts also provides a `Download all` option that allows the user to
+download the font files locally for complete offline management. In this case,
+refer to the previous subsection.
+{{< /hint >}}
+
+---
 ### LaTeX
 __LaTeX__ math typesetting is not natively supported by __Hugo__, but it can be
 enabled by including the JavaScript LaTeX renderer
@@ -405,6 +476,7 @@ _display-style_.
         \qquad \forall\\,\xi\in\mathbb{R}
 \\]
 
+---
 ### Code blocks
 Code blocks can be directly included inside any Markdown document just copying
 the code into a properly backquoted section. However, if you want to keep the
@@ -435,6 +507,7 @@ Markdown _before_ building. Although the location here proposed
 acceptable.
 {{< /hint >}}
 
+---
 ### Specials
 Depending on the chosen theme, there could be a number of available predefined
 shortcodes that can be used to include special blocks--not natively supported
@@ -480,6 +553,7 @@ __Danger hint__
 There is actually nothing really dangerous about all this...
 {{< /hint >}}
 
+---
 ---
 ## Themes
 ### Install a new theme
@@ -528,6 +602,7 @@ Git submodule you need to:
 1. Commit `git commit -m "Removed submodule <name>"`.
 1. Delete the now untracked submodule files `rm -rf <path_to_submodule>`.
 
+---
 ---
 ## Release
 If _GitHub Actions_ have been properly set, __GitHub will automatically rebuild

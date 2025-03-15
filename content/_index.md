@@ -65,31 +65,31 @@ weight: 10
     <div class="grid-item">
         <div class="label">Biophysics</div>
         <a href="docs/biophysics/">
-            {{< figure src="/images/Index_Biophysics.webp" title="Index_Biophysics" >}}
+            {{< figure src="images/Index_Biophysics.webp" title="Index_Biophysics" >}}
         </a>
     </div>
     <div class="grid-item">
         <div class="label">Omics</div>
         <a href="docs/omics/">
-            {{< figure src="/images/Index_Omics.webp" title="Index_Omics" >}}
+            {{< figure src="images/Index_Omics.webp" title="Index_Omics" >}}
         </a>
     </div>
     <div class="grid-item">
         <div class="label">Devel</div>
         <a href="docs/devel/">
-            {{< figure src="/images/Index_Devel.webp" title="Index_Devel" >}}
+            {{< figure src="images/Index_Devel.webp" title="Index_Devel" >}}
         </a>
     </div>
     <div class="grid-item">
         <div class="label">SetUps</div>
         <a href="docs/setups/">
-            {{< figure src="/images/Index_SetUps.webp" title="Index_SetUps" >}}
+            {{< figure src="images/Index_SetUps.webp" title="Index_SetUps" >}}
         </a>
     </div>
     <div class="grid-item">
         <div class="label">Lab</div>
         <a href="docs/lab/">
-            {{< figure src="/images/Index_Lab.webp" title="Index_Lab" >}}
+            {{< figure src="images/Index_Lab.webp" title="Index_Lab" >}}
         </a>
     </div>
 </div>
