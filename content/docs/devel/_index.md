@@ -6,5 +6,5 @@ bookCollapseSection: true
 
 # Software Development
 
-{{< SubIndexGenerator_CSS >}}
+
 {{< SubIndexGenerator >}}

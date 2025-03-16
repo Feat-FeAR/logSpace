@@ -311,8 +311,50 @@ Using the same procedure described in the _Local Import_ subsection, you can
 also include portions of HTML code containing only `<style>` tags via shortcode,
 in order to apply alternative CSS locally (i.e., on individual web pages).
 Nevertheless, best practices provide for a different strategy, as outlined in
-one of the next paragraphs.
+the next paragraph.
 {{< /hint >}}
+
+---
+### CSS
+Just like JS files, CSS files can be loaded either globally or locally,
+depending on whether you want to impact the style of all pages or only some.
+
+In both case, place your CSS files inside `./static/css/` and reference it
+from
+ baseof.html inside the <head> section, typically located in:
+`/layouts/_default/baseof.html`
+
+
+
+
+#### Global loading
+Link in your template (`layouts/_default/baseof.html` or `layouts/partials/head.html`
+```html
+<link rel="stylesheet" href='{{ "css/main.css" | urlize | relURL }}'>
+```
+
+#### Local loading
+If you have CSS that should only load on specific pages, you can dynamically include styles only when needed, instead of loading them globally in your head.html.
+
+1. Modify `layouts/_default/baseof.html` (or `head.html`) to load CSS conditionally
+based on the presence of a Front Matter parameter (e.g., `customcss`)
+```html
+<!-- CSS loading logic -->
+{{ if .Params.customcss }}
+  <link rel="stylesheet" href="{{ .Params.customcss | urlize | relURL }}">
+{{ end }}
+```
+2. Add a `customcss` parameter in the Front Matter of every page you want to
+load the CSS
+```yaml
+---
+title: "My Blog Post"
+customcss: "css/blog.css"  # Define the specific CSS file for this page
+---
+```
+
+
+
 
 ---
 ### JSON / YAML

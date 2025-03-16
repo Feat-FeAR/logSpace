@@ -6,7 +6,7 @@ bookCollapseSection: true
 
 # Omics Data
 
-{{< SubIndexGenerator_CSS >}}
+
 {{< SubIndexGenerator >}}
 
 Omics data refer to the __large-scale datasets__ generated from the study of the

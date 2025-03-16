@@ -1,0 +1,3 @@
+{{ if .Params.customcss }}
+  <link rel="stylesheet" href="{{ .Params.customcss | urlize | relURL }}">
+{{ end }}
