@@ -2,13 +2,10 @@
 title: "Omics"
 weight: 20
 bookCollapseSection: true
+customcss: "css/sub-index.css"
 ---
 
 # Omics Data
-
-
-{{< SubIndexGenerator >}}
-
 Omics data refer to the __large-scale datasets__ generated from the study of the
 different types of biological molecules that make up an organism, by the use of
 __high-throughput technologies__, such as sequencing, mass spectrometry, and
@@ -23,7 +20,7 @@ transformed biosciences by providing deeper insights into the molecular
 foundations of life and disease, ultimately leading to advancements in research,
 diagnostics, and treatments.
 
-### Resources
+## Resources
 In this section you can find a collection of notes to the most important and
 most frequently used (by me) web resources for accessing, analyzing, and storing
 omics data.
@@ -51,3 +48,5 @@ omics data.
 </table>
 </div>
 <br>
+
+{{< SubIndexGenerator >}}

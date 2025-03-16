@@ -1,3 +1,4 @@
+<!-- Conditional loading of page-specific CSS -->
 {{ if .Params.customcss }}
-  <link rel="stylesheet" href="{{ .Params.customcss | urlize | relURL }}">
+    <link rel="stylesheet" href="{{ .Params.customcss | urlize | relURL }}">
 {{ end }}

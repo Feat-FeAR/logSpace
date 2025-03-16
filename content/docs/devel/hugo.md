@@ -290,14 +290,18 @@ The latter designed specifically for insertion of elements in the `<head>` by th
           <link rel="stylesheet" href="{{ .Params.customcss | urlize | relURL }}">
         {{ end }}
         ```
-        Then, add the chosen parameter in the front matter of every page you want to
-load the CSS
+        Then, add that parameter in the front matter of every page you want to
+load a custom CSS.
         ```yaml
         ---
-        title: "My Blog Post"
-        customcss: "css/blog.css"  # Define the specific CSS file for this page
+        title: "page_title"
+        customcss: "css/my-custom.css"  # the specific CSS file for this page
         ---
         ```
+        {{< hint warning >}}
+__Mind the slashes again!__  
+Since the value of the front matter parameter `customcss` is directly fed to the `relURL` function, remember not to include any leading slash to locate the source CSS file!
+        {{< /hint >}}
 
 ---
 ### JSON / YAML

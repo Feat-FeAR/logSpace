@@ -8,12 +8,12 @@ draft: false
 # bookCollapseSection: false
 # bookComments: false
 # bookSearchExclude: false
+customcss: "css/recipe-selector.css"
 ---
 
 # Recipe book of physiological solutions
 
 ## Select a Recipe
-{{< RecipeSelector_CSS >}}
 {{< RecipeSelector >}}
 
 ## Reference Molecular Weights

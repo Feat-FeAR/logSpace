@@ -1,6 +1,6 @@
 ---
 title: "Metadata"
-weight: 100
+weight: 0
 draft: false
 # bookFlatSection: false
 # bookToc: true
@@ -8,13 +8,13 @@ draft: false
 # bookCollapseSection: false
 # bookComments: false
 # bookSearchExclude: false
+customcss: "css/mdm.css"
 ---
 
 # Metadata test page
 
 From this page you can generate, fill in, and export a JSON-formatted metadata file to attach to your experimental data when they are archived.
 
-{{< MDM_CSS >}}
 {{< DateOperator >}}
 {{< Notes >}}
 {{< getValues >}}
