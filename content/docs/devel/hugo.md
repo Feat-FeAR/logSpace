@@ -11,30 +11,19 @@ draft: false
 ---
 
 # Hugo
-__Hugo__ is a fast and easy-to-use static website generator written in __Go__
-that renders a complete HTML website (just like _The log_Space_ you are browsing
-right now) starting from content and templates written in __Markdown__
-(such as [the source of this page](https://github.com/Feat-FeAR/logSpace/blob/main/content/docs/devel/hugo.md?plain=1)). Since Hugo generates static HTML files, it
-is a great choice if you need a lightweight, high-performance website without 
-the complexity of CMS, database, and related server-side processing.
+__Hugo__ is a fast and easy-to-use static website generator written in __Go__ that renders a complete HTML website (just like the one you are browsing right now) starting from content and templates written in __Markdown__ (such as [the source of this page](https://github.com/Feat-FeAR/logSpace/blob/main/content/docs/devel/hugo.md?plain=1)).
+Since Hugo generates static HTML files, it is a great choice if you need a lightweight, high-performance website, without the complexity of CMS, databases, and related server-side processing.
 
-This is a concise tutorial on how to make a website via __Hugo__, working in a
-pure Windows environment. To this purpose, all of the following commands are
-intended to be issued from `PowerShell` (tested on _PowerShell v7.3.9_ and
-above) and __NOT__ from `Windows PowerShell`, which is a different application
-(😱). Nevertheless, most of these commands also apply without any modifications
-to a pure Linux/Bash environment, the only exceptions being those few overtly
-Win-specific commands such as `winget` (the Microsoft’s official package manager
-for Windows) or `Set-Location` (to change drive letter).
+This is a concise tutorial on how to make a website via __Hugo__, working in a pure Windows environment.
+To this purpose, all of the following commands are intended to be issued from `PowerShell` (tested on _PowerShell v7.3.9_ and above) and __NOT__ from `Windows PowerShell`, which is a different application
+(😱).
+Nevertheless, most of these commands also apply without any modifications to a pure Linux/Bash environment, the only exceptions being those few overtly Win-specific commands such as `winget` (the Microsoft’s official package manager for Windows) or `Set-Location` (to change drive letter).
 
-In any case, when running __Hugo__ in a Windows environment, my advice is to use
-__PS__ as the CLI instead of __WSL__, since, with my _ManjaroWSL2_, the change
-detector for the real-time rendering of the site never worked that well.
+In any case, when running __Hugo__ in a Windows environment, my advice is to use __PS__ as the CLI instead of __WSL__, since, at least with my _ManjaroWSL2_, the change detector for the real-time rendering of the site never worked that well.
 
 {{< hint warning >}}
 __Working Directory__  
-Throughout this tutorial, the working directory `.` will always represent the
-_site root directory_.
+Throughout this tutorial, the working directory `.` will always represent the _site root directory_.
 {{< /hint >}}
 
 ---
@@ -62,10 +51,7 @@ ssh-keygen -t ed25519 -C "your_mail_here"
 # Copy the SSH public key to your clipboard from here
 cat $HOME/.ssh/id_ed25519.pub
 ```
-Finally add the SSH key to your account from the __GitHub__ web site:
-_Settings_ > _SSH and GPG keys_ > _New SSH key_ > add a title (usually, the
-device you will use that key from) > select _Authentication Key_ as key type >
-paste your key into the _Key_ field (including the `-C` comment) > _Add SSH key_.
+Finally add the SSH key to your account from the __GitHub__ web site: _Settings_ > _SSH and GPG keys_ > _New SSH key_ > add a title (usually, the device you will use that key from) > select _Authentication Key_ as key type > paste your key into the _Key_ field (including the `-C` comment) > _Add SSH key_.
 
 ### Hugo
 Install __Hugo__ (_extended edition_).
@@ -78,8 +64,7 @@ winget install Hugo.Hugo.Extended
 ---
 ## Create a Hugo site
 Run these commands to create a new Hugo web site and run it on `localhost:1313`.
-See the official quick-start guide
-[here](https://gohugo.io/getting-started/quick-start/).
+See the official quick-start guide [here](https://gohugo.io/getting-started/quick-start/).
 ```sh
 # Move to the directory that will contain the site directory
 Set-Location <drive:>
@@ -103,11 +88,9 @@ hugo server
 ---
 ---
 ## Host on GitHub Pages
-Deploy Hugo as a _GitHub Pages_ site and automate the whole building process
-with _GitHub Actions_. Full guide [here](https://gohugo.io/hosting-and-deployment/hosting-on-github/).
-1. Go to __GitHub__ and create a GitHub repository using the same name of your
-Hugo site (better to add no _README file_, no `.gitignore`, and no license in
-this step, but do it later).
+Deploy Hugo as a _GitHub Pages_ site and automate the whole building process with _GitHub Actions_.
+Full guide [here](https://gohugo.io/hosting-and-deployment/hosting-on-github/).
+1. Go to __GitHub__ and create a GitHub repository using the same name of your Hugo site (better to add no _README file_, no `.gitignore`, and no license in this step, but do it later).
 1. Push your local repository to GitHub.
     ```sh
     # Push your local repository to GitHub
@@ -115,57 +98,44 @@ this step, but do it later).
     git branch -M main
     git push -u origin main
     ```
-1. From the main menu of the GitHub repository, choose _Settings_ > _Pages_. In
-_Build and deployment_ section, change the _Source_ to `GitHub Actions` (the
-change is immediate; you do not have to press a "Save" button).
-1. `mkdir .github/workflows` in your local repository and copy [this](https://github.com/Feat-FeAR/logSpace/blob/main/.github/workflows/hugo.yaml)
-YAML file there.
-1. Stage, commit (e.g., `-m "Add workflow"`), and push your local repository to
-__GitHub__.
-1. When __GitHub__ has finished building and deploying your site, the color of
-the status indicator in GitHub’s _Actions_ menu will change to green.
-1. Clicking on the commit message and under the _deploy_ step, you will see a
-link to your live site.
-1. Also, use that link to update the `baseURL` field in your `hugo.toml`
-configuration file.
+1. From the main menu of the GitHub repository, choose _Settings_ > _Pages_.
+In _Build and deployment_ section, change the _Source_ to `GitHub Actions` (the change is immediate; you do not have to press a "Save" button).
+1. `mkdir .github/workflows` in your local repository and copy [this](https://github.com/Feat-FeAR/logSpace/blob/main/.github/workflows/hugo.yaml) YAML file there.
+1. Stage, commit (e.g., `-m "Add workflow"`), and push your local repository to __GitHub__.
+1. When __GitHub__ has finished building and deploying your site, the color of the status indicator in GitHub’s _Actions_ menu will change to green.
+1. Clicking on the commit message and under the _deploy_ step, you will see a link to your live site.
+1. Also, use that link to update the `baseURL` field in your `hugo.toml` configuration file.
 
-__In the future, whenever you push a change from your local repository, GitHub
-will automatically rebuild your site and deploy the changes__.
+__In the future, whenever you push a change from your local repository, GitHub will automatically rebuild your site and deploy the changes__.
 
 ---
 ---
 ## Add content
 ### Blank pages
-__Markdown__ is the standard content format supported by __Hugo__. You can put
-any file type into your `./content/*` directories, but __Hugo__ uses the markup
-front matter value (if set) or the file extension to determine if the file needs
-to be processed. As an alternative you can use the following command to get a
-new blank page already provided with a suitable front matter.
+__Markdown__ is the standard content format supported by __Hugo__.
+You can put any file type into your `./content/*` directories, but __Hugo__ uses the markup front matter value (if set) or the file extension to determine if the file needs to be processed.
+As an alternative you can use the following command to get a new blank page already provided with a suitable front matter.
 ```sh
 # Add a new page to your site
 hugo new content <section_name>/<filename>.md
 ```
-Front matter metadata can be written in any of the serialization formats JSON,
-TOML, or YAML, and must be placed at the top of each content file. The full list
-of the available front matter variables can be found
-[here](https://gohugo.io/content-management/front-matter/#front-matter-variables).
+Front matter metadata can be written in any of the serialization formats JSON, TOML, or YAML, and must be placed at the top of each content file.
+The full list of the available front matter variables can be found [here](https://gohugo.io/content-management/front-matter/#front-matter-variables).
 Just keep in mind that, by default, Hugo sorts page collections by:
-1. Page `weight`
-1. Page `date` (descending)
-1. Page `linkTitle`, falling back to page `title`
-1. Page file path if the page is backed by a file
+1. page `weight`;
+1. page `date` (descending);
+1. page `linkTitle`, falling back to page `title`;
+1. page file path if the page is backed by a file.
 
-In particular, page `weight` controls the position of a page within a collection
-that is sorted by weight. Assign weights using non-zero integers. Lighter items
-float to the top, while heavier items sink to the bottom. Unweighted or
-zero-weighted elements are placed at the end of the collection. Both the `date`
-and `weight` fields are optional.
+In particular, page `weight` controls the position of a page within a collection that is sorted by weight. Assign weights using non-zero integers.
+Lighter items float to the top, while heavier items sink to the bottom.
+Unweighted or zero-weighted elements are placed at the end of the collection.
+Both the `date` and `weight` fields are optional.
 
 ---
 ### Markdown
 To add __Markdown__ text to existing pages:
-1. Open the `.md` file with your editor (notice that the `draft` value in the
-front matter could be _true_).
+1. Open the `.md` file with your editor (notice that the `draft` value in the front matter could be _true_).
 1. Add some Markdown to the body of the post.
 1. Save the file, then start Hugo’s development server to build the site. 
     ```sh
@@ -173,31 +143,25 @@ front matter could be _true_).
     hugo server --buildDrafts
     hugo server -D
     ```
-1. View your site locally at the URL displayed in your terminal
-(`localhost:1313`). __Keep the development server running as you continue to add
-and change content. All the saved changes will be reflected on the site in real
-time, without the need to refresh your browser each time!__.
+1. View your site locally at the URL displayed in your terminal (`localhost:1313`). __Keep the development server running as you continue to add and change content.
+All the saved changes will be reflected on the site in real time, without the need to refresh your browser each time!__.
 
 ---
 ### HTML
-Beyond __Markdown__, you can insert __HTML__ directly inside Markdown files in
-`./content`. However, from version 0.6, __Hugo__ uses _Goldmark_ for Markdown
-that--for security reasons--wipes HTML code by default. So, if you use HTML
-frequently in your site, you can add this to your `hugo.toml`:
+Beyond __Markdown__, you can insert __HTML__ directly inside Markdown files in `./content/`.
+However, from version 0.6, __Hugo__ uses _Goldmark_ for Markdown that---for security reasons---wipes HTML code by default.
+So, if you use HTML frequently in your site, you can add this to your `hugo.toml`:
 ```toml
 # Allow HTML in md files
 [markup.goldmark.renderer]
   unsafe = true
 ```
-By doing so, the HTML code in your `.md` files will be rendered without
-modification (but your indented code will follow Markdown formatting as usual).
-You could also save your content files as `.html`, but then you’ll have to write
-everything in HTML.
+By doing so, the HTML code in your `.md` files will be rendered without modification (but your indented code will follow Markdown formatting as usual).
+You could also save your content files as `.html`, but then you’ll have to write everything in HTML.
 
 ---
 ### JavaScript
-__JavaScript__ code can be inserted _inline_ into the Markdown simply using the
-HTML `<script>` tag.
+__JavaScript__ code can be inserted _inline_ into the Markdown simply using the HTML `<script>` tag.
 ```html
 <!-- Example of inline JS script that displays a simple popup message --> 
 <button onclick="showPopup_fromHere()">Click me</button>
@@ -216,28 +180,21 @@ The previous example results in this interactive button:
     }
 </script>
 
-However you can also source any `.js` script previously saved in the `./static`
-subfolder in two different ways, depending on whether you want to load it from
-every page of the site or only as needed.
+However you can also source any `.js` script previously saved in the `./static` subfolder in two different ways, depending on whether you want to load it from every page of the site or only as needed.
 
 #### Global import
-If you plan to use the script extensively it is best to have every page on the
-site import it.
-1. Save your __JS__ scripts as `.js` files and put them in the `./static/js`
-subfolder (e.g., `./static/js/popUp_test.js`).
-1. Now you need a file that is going to be included in each page of the final
-HTML. Typical choices are `header.html`, `footer.html`, or similar _partial
-templates_ you can find in `./themes/<theme_name>/layouts/partials` subfolder
-(even if their exact location may depend on the particular theme you are using).
-1. Once located, copy this file to _your_ `./layouts/partials` folder, in order
-to override the content of the original.
+If you plan to use the script extensively it is best to have every page on the site import it.
+1. Save your __JS__ scripts as `.js` files and put them in the `./static/js` subfolder (e.g., `./static/js/popUp_test.js`).
+1. Now you need a file that is going to be included in each page of the final HTML document.
+Typical choices are `header.html`, `footer.html`, or similar _partial templates_ you can find in `./themes/<theme_name>/layouts/partials` subfolder (even if their exact location may depend on the particular theme you are using).
+1. Once located, copy this file to _your_ `./layouts/partials` folder in order to override the content of the original.
     ```sh
     # For instance (if using the 'hugo-book' theme)
     cd <project_root>
     New-Item -Type dir ./layouts/partials/docs
     cp ./themes/hugo-book/layouts/partials/docs/header.html ./layouts/partials/docs/header.html
     ```
-1. Add the following line to the bottom of the file.
+1. Add the following `<script>` block to the bottom of the file.
     ```html
     <script defer
             language="javascript"
@@ -245,32 +202,21 @@ to override the content of the original.
             src='{{ "js/popUp_test.js" | urlize | relURL }}'>
     </script>
     ```
-    Here, the location of the __JS__ script must be the path relative to
-`./static/`, since all the files therein will be copied with no modification,
-_as-is_, to the `./public` directory when building the site.
-
+    Here, the location of the __JS__ script must be the path relative to `./static/`, since all the files therein will be copied with no modification, _as-is_, to the `./public` directory when building the site.
     {{< hint warning >}}
 __Mind the slashes!__  
-Never include a leading slash to locate the source file when using the `relURL`
-function, otherwise the resulting URL will be incorrect when the `baseURL`
-includes a subdirectory (such as those you are assigned to by default when
-deploying through __GitHub Pages__!)! See documentation about
-[`relURL`](https://gohugo.io/functions/urls/relurl/)
-and [`urlize`](https://gohugo.io/functions/urls/urlize/).
+Never include a leading slash to locate the source file when using the `relURL` function, otherwise the resulting URL will be incorrect when the `baseURL` includes a subdirectory (such as those you are assigned to by default when deploying through __GitHub Pages__)!
+See full documentation about [`relURL`](https://gohugo.io/functions/urls/relurl/) and [`urlize`](https://gohugo.io/functions/urls/urlize/).
     {{< /hint >}}
-
-1. Now you can use the __JS__ functions from within any page of the site as shown
-here below.
+1. Now you can use the __JS__ functions from within any page of the site as shown here below.
     ```html
     <!-- Example of imported JS script that displays a simple popup message -->
     <button onclick="showPopup_fromThere()">Click me</button>
     ```
 
 #### Local import
-Alternatively, you can build a cool Hugo _shortcode_ in order to flexibly embed
-the script in Markdown syntax only on pages where it is actually needed.
-1. Write a short HTML that sources the JS script (and possibly add some other
-useful HTML elements).
+Alternatively, you can build a cool Hugo _shortcode_ in order to flexibly embed the script in Markdown syntax only on pages where it is actually needed.
+1. Write a short HTML that sources the JS script (and possibly add some other useful HTML elements).
     ```html
     <!-- Example of JS script to import via shortcode -->
     <script defer
@@ -282,79 +228,76 @@ useful HTML elements).
         Click me
     </button>
     ```
-1. Save it into the `./layouts/shortcodes` subfolder
-(e.g., `./layouts/shortcodes/js_test.html`).
+    {{< hint info >}}
+`defer`  
+In shortcodes containing `<script>` it is always best to use the `defer` attribute to ensure that the entire HTML is parsed before executing the script.
+In this way the script can be included anywhere in the document body without the need to explicitly look at the `DOMContentLoaded` event, because the script will only run after the DOM (i.e., the Document Object Model) is fully built.
+    {{< /hint >}}
+1. Save it into the `./layouts/shortcodes` subfolder (e.g., `./layouts/shortcodes/js_test.html`).
 1. Now, you can reference this HTML chunk anywhere just by its name, using:
     ```go
     {{</* js_test */>}}
     ```
+    
 In both cases, the final result will be an interactive button like this:
 
 {{< js_test >}}
 
 {{< hint info >}}
 __js.Build__  
-For more advanced purposes, the latest __Hugo__ releases provide the `./assets`
-subdirectory (in place of `./static`) and the
-[`js.Build`](https://gohugo.io/hugo-pipes/js/) function as an advanced tool for
-managing JavaScript resources.
+For more advanced purposes, the latest __Hugo__ releases provide the `./assets` subdirectory (in place of `./static`) and the [`js.Build`](https://gohugo.io/hugo-pipes/js/) function as an advanced tool for managing JavaScript resources.
 {{< /hint >}}
 {{< hint info >}}
 __Mind the cache!__  
-Whichever way you chose to insert JS code into the Hugo web page, remember that,
-to see the effects of a change to the script, you may need to use the key
-combination `Ctrl+F5` or `Ctrl+Shift+R`to force page refresh ignoring the cache.
+Whichever way you chose to insert JS code into the Hugo web page, remember that, to see the effects of a change to the script, you may need to use the key combination `Ctrl+F5` or `Ctrl+Shift+R`to force page refresh ignoring the cache.
 {{< /hint >}}
 {{< hint info >}}
 __CSS Shortcode__  
-Using the same procedure described in the _Local Import_ subsection, you can
-also include portions of HTML code containing only `<style>` tags via shortcode,
-in order to apply alternative CSS locally (i.e., on individual web pages).
-Nevertheless, best practices provide for a different strategy, as outlined in
-the next paragraph.
+Using the same procedure described in the _Local Import_ subsection, you can even use shortcodes to include portions of HTML code containing only `<style>` tags in order to locally apply alternative CSS.
+However, this would end up with the insertion of a `<style>` block directly into the `<body>` of the published document, which---although working in most cases---is generally considered a bad practice, since HTML specifications recommend `<style>` tags be always placed in the `<head>`.
+
+The next section shows how to include custom CSS in a Hugo web site in a way that complies with the __general recommendations of using the `<link>` element inside the `<head>` section of the HTML document__.
 {{< /hint >}}
 
 ---
 ### CSS
-Just like JS files, CSS files can be loaded either globally or locally,
-depending on whether you want to impact the style of all pages or only some.
-
-In both case, place your CSS files inside `./static/css/` and reference it
-from
- baseof.html inside the <head> section, typically located in:
-`/layouts/_default/baseof.html`
-
-
-
-
-#### Global loading
-Link in your template (`layouts/_default/baseof.html` or `layouts/partials/head.html`
-```html
-<link rel="stylesheet" href='{{ "css/main.css" | urlize | relURL }}'>
+Just like JS files, CSS files can be loaded either globally or locally, depending on whether you want to impact the style of all pages or only some.
+1. In both cases, place your CSS files inside `./static/css/`.
+1. Find a template that allows you to inject code into the `<head>` of each HTML page.
+{{< hint info >}}
+__Templates for__ `<head>`  
+A typical choice is `baseof.html`, the Hugo’s base template that acts as the foundation for all pages by defining the overall HTML structure (`<head>`, `<header>`, `<footer>`).
+`baseof.html` is usually found in `./themes/<theme_name>/layouts/_default/` but, again, its exact location may depend on the particular theme you are using.
+Inside the `<head>` section of `baseof.html` you can find one or more blocks that include other templates from `./themes/<theme_name>/layouts/partials/`, which can be used for CSS loading as well.
+In the case of the _Hugo Book_ theme, we have
+```go
+  {{ partial "docs/html-head" . }}
+  {{ partial "docs/inject/head" . }}
 ```
-
-#### Local loading
-If you have CSS that should only load on specific pages, you can dynamically include styles only when needed, instead of loading them globally in your head.html.
-
-1. Modify `layouts/_default/baseof.html` (or `head.html`) to load CSS conditionally
-based on the presence of a Front Matter parameter (e.g., `customcss`)
-```html
-<!-- CSS loading logic -->
-{{ if .Params.customcss }}
-  <link rel="stylesheet" href="{{ .Params.customcss | urlize | relURL }}">
-{{ end }}
-```
-2. Add a `customcss` parameter in the Front Matter of every page you want to
+pointing at `./themes/hugo-book/layouts/partials/docs/html-head.html` and `./themes/hugo-book/layouts/partials/docs/inject/head.html`, respectively.
+The latter designed specifically for insertion of elements in the `<head>` by the user.
+{{< /hint >}}
+1. Once located, copy this template file to _your_ `./layouts/` folder (preserving possible subfolder structure) in order to override the content of the original.
+1. Edit the copy of the template file by adding the `<link>` to the desired CSS.
+    - For a _global loading_, just add
+        ```html
+        <link rel="stylesheet" href='{{ "css/my-custom.css" | urlize | relURL }}'>
+        ```
+    - For a _local loading_, you can dynamically include styles only when needed by loading CSS conditionally based on the presence of a front matter parameter (e.g., `customcss`).
+        ```html
+        <!-- CSS loading logic in the template -->
+        {{ if .Params.customcss }}
+          <link rel="stylesheet" href="{{ .Params.customcss | urlize | relURL }}">
+        {{ end }}
+        ```
+        Then, add the chosen parameter in the front matter of every page you want to
 load the CSS
-```yaml
----
-title: "My Blog Post"
-customcss: "css/blog.css"  # Define the specific CSS file for this page
----
-```
-
-
-
+        ```yaml
+        ---
+        title: "My Blog Post"
+        customcss: "css/blog.css"  # Define the specific CSS file for this page
+        ---
+        ```
 
 ---
 ### JSON / YAML
