@@ -12,18 +12,13 @@ draft: true
 
 # Patch Clamp Configurations
 
+## Membrane Resistance and Capacitance - The RC Circuit
+Cells are frequently modeled as electrical circuits composed of resistors and capacitors due to the properties of their membrane.
 
-
-
-
-
-## Membrane Resistance (RM) and Membrane Capacitance (CM) - The RC Circuit
-
-Cells are frequently modeled as electrical circuits composed of resistors and capacitors due to their membrane properties. The cell membrane is primarily a lipid bilayer, which acts as an electrical insulator, separating ions in the extracellular space from ions and charged proteins in the cytoplasm.
-
-Because of this, it behaves like a capacitor. To alter the voltage across this membrane, it must first be charged, according with the relationship defining electrical capacity Vm = Q / CM
-
-However, some of the proteins embedded within this membrane form ion-permeable channels, reducing the membrane's resistance (Rm) and enabling electrical currents to flow across the lipid bilayer.
+The cell membrane is primarily a lipid bilayer, which acts as an electrical insulator, separating ions in the extracellular space from ions and charged proteins in the cytoplasm.
+Because of this, it behaves like a capacitor.
+Thus, to alter the voltage across this membrane, it must first be charged, according to the definition of electrical capacity V = Q/C.
+However, embedded in this membrane, there are also some transmembrane proteins that form ion-permeable channels reducing the membrane's resistance (R) and enabling electrical currents to flow across the lipid bilayer.
 
 The parallel arrangement of membrane resistance and capacitance constitutes an RC circuit, widely used in electronics for filtering frequencies.
 
