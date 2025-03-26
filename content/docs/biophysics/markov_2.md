@@ -1,6 +1,6 @@
 ---
 title: "K_2P Markov Chain"
-weight: 20
+weight: 60
 draft: false
 # bookFlatSection: false
 # bookToc: true

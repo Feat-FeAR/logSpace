@@ -1,6 +1,6 @@
 ---
 title: "Patch configurations"
-weight: 0
+weight: 20
 draft: true
 # bookFlatSection: false
 # bookToc: true
