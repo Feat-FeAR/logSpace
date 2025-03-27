@@ -1,0 +1,23 @@
+<!-- Shortcode for the 'Parallel RC circuit plotter' -->
+
+<!-- Include the Plotly.js library from a Content Delivery Network (CDN) -->
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+<!-- Import the JS script -->
+<script defer
+		language="javascript"
+		type="text/javascript"
+		src='{{ "js/RC-plotter.js" | urlize | relURL }}'>
+</script>
+
+<br />
+<label for="slider">R<sub>0</sub> </label>
+<input type="range" id="slider" min="0" max="5" step="0.05" value="1">
+<span id="sliderValue">1.0 MΩ</span>
+
+<br />
+<br />
+<div class="plot-container">
+    <div id="plot1"></div>  <!-- Plot for v(t) -->
+    <div id="plot2"></div>  <!-- Plot for i(t) -->
+</div>

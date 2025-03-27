@@ -175,3 +175,6 @@ For the current expression, just remember that a decaying exponential function c
 $$
 \lim_{\tau\rightarrow 0^{+}} \frac{1}{\tau}\\,e^{-t/\tau} = \delta\\!\left(t\right)\quad\quad t\ge 0
 $$
+
+## Interactive plot
+{{< RC-plotter >}}
