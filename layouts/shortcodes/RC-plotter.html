@@ -13,11 +13,15 @@
 <br />
 <label for="slider">R<sub>0</sub> </label>
 <input type="range" id="slider" min="0" max="5" step="0.05" value="1">
-<span id="sliderValue">1.0 MΩ</span>
+<span id="sliderValue">1.00 MΩ</span>
 
 <br />
 <br />
 <div class="plot-container">
-    <div id="plot1"></div>  <!-- Plot for v(t) -->
-    <div id="plot2"></div>  <!-- Plot for i(t) -->
+	<div class="plot-wrapper">
+		<div id="plot1"></div> <!-- Plot for v(t) -->
+	</div>
+	<div class="plot-wrapper">
+		<div id="plot2"></div> <!-- Plot for i(t) -->
+	</div>
 </div>

@@ -58,8 +58,20 @@ function generateCurrentData(r0) {
 
 // Function to update both plots
 function updatePlots(r0) {
-    let iData = generateCurrentData(r0);
-    let vData = generateVoltageData(r0);
+    /*
+    Tried using '{ responsive: true }' to adapt plots to screen size but,
+    in combination with 'scaleanchor' and 'scaleratio' for fixed aspect ratio,
+    cannot get rid of annoying visual flickering when using r0 slider.
+    So went with a more basic approach: plot width is defined as a percentage
+    relative to the current page width, and it is applied whenever plots are
+    updated (by page refreshing or r0 sliding).
+    */
+    // Refer to <div class="book-page"> from theme's 'baseof.html' file
+    const contentWidth = document.querySelector(".book-page").offsetWidth;
+    const plotWidth = contentWidth * 0.9;
+
+    const iData = generateCurrentData(r0);
+    const vData = generateVoltageData(r0);
 
     // Update first plot (v(t))
     Plotly.react(plot1Div, [{
@@ -77,9 +89,9 @@ function updatePlots(r0) {
         },
         xaxis: { title: 'time (ms)', range: [-10, 40] },
         yaxis: { title: 'v<sub>p</sub> (mV)', range: [0, 25] },
-        width: 700,  // Manually set width
-        height: 300  // Adjust height
-    });
+        width: plotWidth,
+        height: plotWidth * 0.5 // fixed aspect ratio
+    }, { responsive: false }); // disable auto-resize
 
     // Update second plot (i(t))
     Plotly.react(plot2Div, [{
@@ -97,9 +109,9 @@ function updatePlots(r0) {
         },
         xaxis: { title: 'time (ms)', range: [-10, 40] }, 
         yaxis: { title: 'i (nA)', range: [0, 20] },
-        width: 700,  // Manually set width
-        height: 400  // Adjust height
-    });
+        width: plotWidth,
+        height: plotWidth * 0.8 // Fixed aspect ratio
+    }, { responsive: false }); // disable auto-resize
 }
 
 // Initial plot update

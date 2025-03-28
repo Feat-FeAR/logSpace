@@ -1,0 +1,22 @@
+/* CSS for the RC-plotter */
+
+ /* Adjust width and prevent from getting too big on large screens */
+#slider {
+    width: 80%; 
+    max-width: 300px;
+}
+#sliderValue {
+	margin-left: 10px;
+}
+
+/* Centering plots */
+.plot-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.plot-wrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
