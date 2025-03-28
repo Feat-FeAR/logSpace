@@ -81,16 +81,19 @@ function updatePlots(r0) {
         mode: 'lines',
         line: { color: 'red' }
     }], {
+        /*
         title: {
             text: `Voltage drop across parallel`,
             y: 0.80,
             yanchor: 'top',
             pad: { t: 5 }
         },
+        */
         xaxis: { title: 'time (ms)', range: [-10, 40] },
-        yaxis: { title: 'v<sub>p</sub> (mV)', range: [0, 25] },
+        yaxis: { title: 'v<sub>p</sub> (mV)', range: [0, 22] },
         width: plotWidth,
-        height: plotWidth * 0.5 // fixed aspect ratio
+        height: plotWidth * 0.5, // fixed aspect ratio
+        margin: { l: 80, r: 50, t: 40, b: 50 }
     }, { responsive: false }); // disable auto-resize
 
     // Update second plot (i(t))
@@ -101,16 +104,19 @@ function updatePlots(r0) {
         mode: 'lines',
         line: { color: 'blue' }
     }], {
+        /*
         title: {
             text: `Total current`,
-            y: 0.85,
+            y: 0.90,
             yanchor: 'top',
             pad: { t: 5 }
         },
+        */
         xaxis: { title: 'time (ms)', range: [-10, 40] }, 
-        yaxis: { title: 'i (nA)', range: [0, 20] },
+        yaxis: { title: 'i (nA)', range: [0, 22] },
         width: plotWidth,
-        height: plotWidth * 0.8 // Fixed aspect ratio
+        height: plotWidth * 0.8, // Fixed aspect ratio
+        margin: { l: 80, r: 50, t: 50, b: 80 }
     }, { responsive: false }); // disable auto-resize
 }
 
@@ -120,6 +126,6 @@ updatePlots(parseFloat(slider.value));
 // Update plots on slider change
 slider.addEventListener("input", () => {
     let r0 = parseFloat(slider.value);
-    sliderValue.textContent = `${r0.toFixed(1)} MΩ`;
+    sliderValue.textContent = `${r0.toFixed(2)} MΩ`;
     updatePlots(r0);  // Update the plots with the new r0 value
 });
