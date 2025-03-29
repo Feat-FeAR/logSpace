@@ -59,12 +59,12 @@ function generateCurrentData(r0) {
 // Function to update both plots
 function updatePlots(r0) {
     /*
-    Tried using '{ responsive: true }' to adapt plots to screen size but,
-    in combination with 'scaleanchor' and 'scaleratio' for fixed aspect ratio,
-    cannot get rid of annoying visual flickering when using r0 slider.
-    So went with a more basic approach: plot width is defined as a percentage
-    relative to the current page width, and it is applied whenever plots are
-    updated (by page refreshing or r0 sliding).
+    Tried using '{ responsive: true }' to adapt plots to window size but, in
+    combination with 'scaleanchor' and 'scaleratio' for fixing the aspect ratio,
+    cannot get rid of annoying visual flickering when using r0 slider. So went
+    with a more basic approach: plot width is computed as a percentage relative
+    to the *current* page width every time plots are updated (by page refreshing
+    or r0 sliding). Simple and effective even on mobile.
     */
     // Refer to <div class="book-page"> from theme's 'baseof.html' file
     const contentWidth = document.querySelector(".book-page").offsetWidth;
