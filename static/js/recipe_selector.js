@@ -26,7 +26,10 @@ function updateIngredientList() {
     const molecularWeights = recipeBook.molecular_weights;
     const selectedVolume = parseInt(volumeSelect.value); // (mL)
 
-    recipeList.innerHTML = ""; // Clear previous ingredients
+    // Clear previous ingredients and reset overall osmolarity
+    recipeList.innerHTML = "";
+    let osmolarityIdeal = 0;
+    let osmolarityReal = 0;
 
     // Display description if available
     // Use 'innerHTML' instead of 'textContent' to render HTML <sub> and <sup>
@@ -36,36 +39,56 @@ function updateIngredientList() {
     } else {
         recipeDescription.style.display = "none"; // Hide if no description
     }
-    
+
+    // Get entries, discard description, and sort pH to the end
+    /*
+    .sort() method sorts arrays in-place, based on the value returned by a
+    generic comparator function provided by the user:
+        return a negative number → a comes before b
+        return zero → a and b stay the same
+        return a positive number → b comes before a
+    Then, under the hood, .sort() applies an efficient sorting algorithm (e.g.,
+    Timsort) using that comparison criterium many times to figure out what
+    belongs before/after.
+    */
+    const ingredientEntries = Object.entries(ingredients)
+        .filter(([key]) => key !== "description")
+        .sort(([keyA, valA], [keyB, valB]) => {
+            const isAph = Array.isArray(valA) && valA[0] === "pH";
+            const isBph = Array.isArray(valB) && valB[0] === "pH";
+        return isAph - isBph;
+    });
+
     // Generate ingredient list
-    Object.entries(ingredients).forEach(([ingredient, values]) => {
-        // Skip description key
-        if (ingredient === "description") return;
-        
-        // Handle pH values directly (no calculation needed)
-        if (Array.isArray(values) && values[0] === "pH") {
+    ingredientEntries.forEach(([ingredient, value]) => {
+
+        // Handle pH value directly (no calculation needed)
+        if (Array.isArray(value) && value[0] === "pH") {
             
             let iName = `${ingredient.replace(/_/g, " ")}`;
-            let pHText = `${values.join(" ")}`;
+            let pHText = `${value.join(" ")}`;
 
             createIngredientElement(iName, pHText, "");
-        
+
         // Handle liquid ingredients
         } else if (ingredient === "MgCl<sub>2</sub>") {
-            
-            let concentration = values; // (mM == mmol/L)
+            let concentration = value; // (mM == mmol/L)
             let iName = `${ingredient.replace(/_/g, " ")}`;
             let iConc = `${concentration} mM`;
             let iVol = `${(concentration * selectedVolume)/2} μL <sub>(2M)</sub>\n${(concentration * selectedVolume)/5} μL <sub>(5M)</sub>`;
-            
+
             createIngredientElement(iName, iConc, iVol);
-        
+
+            let nFactor = molecularWeights[ingredient][1]; // ideal factor
+            let osmoCoeff = molecularWeights[ingredient][2]; // deviation
+            osmolarityIdeal += concentration * nFactor;
+            osmolarityReal += concentration * nFactor * osmoCoeff;
+
         // Handle salts (calculate mass if molecular weight exists)
         } else {
             if (molecularWeights[ingredient]) {
-                
-                let concentration = values; // (mM == mmol/L)
-                let molecularWeight = molecularWeights[ingredient]; // (g/mol)
+                let concentration = value; // (mM == mmol/L)
+                let molecularWeight = molecularWeights[ingredient][0]; // (g/mol)
                 let mass = (concentration * molecularWeight * selectedVolume); // (μg)
                 
                 // Convert to g and keep up to 3 meaningful decimal places
@@ -76,15 +99,23 @@ function updateIngredientList() {
                 let iMass = `${mass} g`;
                 
                 createIngredientElement(iName, iConc, iMass);
-            
+
+                let nFactor = molecularWeights[ingredient][1]; // ideal factor
+                let osmoCoeff = molecularWeights[ingredient][2]; // deviation
+                osmolarityIdeal += concentration * nFactor;
+                osmolarityReal += concentration * nFactor * osmoCoeff;
             } else {
                 console.warn(`Molecular weight missing for: ${ingredient}`);
             }
         }
     });
 
-    // Show button when a recipe is selected
+    // Show button and update osmolarity display when a recipe is selected
     clearBtn.style.display = "block";
+    document.getElementById("ideal-osmo-text").textContent = `Ideal osmolarity: `;
+    document.getElementById("ideal-osmo-number").textContent = `${osmolarityIdeal.toFixed(2)} mOsm/L`;
+    document.getElementById("real-osmo-text").textContent = `Real osmolarity: `;
+    document.getElementById("real-osmo-number").textContent = `${osmolarityReal.toFixed(2)} mOsm/L`;
 }
 
 // Function to create ingredient elements with structured layout

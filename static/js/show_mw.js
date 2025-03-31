@@ -7,7 +7,7 @@ function generateMolecularWeightTable() {
     // (see 'const recipeBook' in ShowMW.html)
     const molecularWeights = recipeBook.molecular_weights;
 
-    for (let ingredient in molecularWeights) {
+    for (const ingredient in molecularWeights) {
         let row = document.createElement("tr");
 
         // 'innerHTML' instead of 'textContent' to render HTML <sub> and <sup>
@@ -15,10 +15,18 @@ function generateMolecularWeightTable() {
         ingredientCell.innerHTML = ingredient;
 
         let weightCell = document.createElement("td");
-        weightCell.textContent = molecularWeights[ingredient];
+        weightCell.textContent = molecularWeights[ingredient][0].toFixed(2);
+
+        let vanthoffCell = document.createElement("td");
+        vanthoffCell.textContent = molecularWeights[ingredient][1];
+
+        let osmoCoeffCell = document.createElement("td");
+        osmoCoeffCell.textContent = molecularWeights[ingredient][2].toFixed(2);
 
         row.appendChild(ingredientCell);
         row.appendChild(weightCell);
+        row.appendChild(vanthoffCell);
+        row.appendChild(osmoCoeffCell);
         tableBody.appendChild(row);
     }
 }
