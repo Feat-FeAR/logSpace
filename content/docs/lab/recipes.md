@@ -12,12 +12,11 @@ customcss: "css/recipe-selector.css"
 ---
 
 # Recipe book of physiological solutions
-
 ## Select a Recipe
-{{< RecipeSelector >}}
+{{< recipe-selector >}}
 
 ## Table of Values
-{{< ShowMW >}}
+{{< show-mw >}}
 
 ## Calculation Notes
 {{< katex >}}{{< /katex >}}
@@ -46,9 +45,13 @@ Values for \\(\varphi\\) in the table above refer to saline solutions of physiol
 {{< hint warning >}}
 WARNING  
 ...in practice it is quite impossible to determine \\(\varphi_k\\) for each individual solute \\(k\\) within a solution that is made of many type of solutes, like the ones in our recipe book.
-Therefore, to measure the ___real___ osmolarity, it is best using an osmometer.
+Therefore, to measure the ___real___ osmolarity, the only effective way it is usually using an osmometer.
 {{< /hint >}}
 
+{{< hint warning >}}
+EGTA  
+in both ways of calculating osmolarity, the possible chelating effects of EGTA are not roughly quantified by setting phi to zero, so that calcium sequestration and addition of the chelator offset each other. Given the typical low concentrations of the calcium ion and chelator, this flat rate does not usually introduce important errors.
+{{< /hint >}}
 
 In addition, we should also consider that the degree of dissociation \\(\alpha\\) is the fraction of the original solute molecules that have _actually dissociated_, and for _weak electrolytes_ this value is \\(<1\\).
 In these cases, we can imagine that out of each mole of solute, \\(\alpha\\) moles dissociate, giving rise to \\(n\varphi\\) osmoles, while \\(1-\alpha\\) moles keep their molecules intact, eventually leading to
@@ -61,6 +64,13 @@ Van't Hoff factors allow for a more general estimation of the _real osmolarity_
 O_{\text{real}}=\sum_k i_{_{k}}\,C_{_{k}}
 {{< /katex >}}
 Notably, for all the ingredients listed in the recipes of electrophysiologic interest, it is quite reasonable to assume complete dissociation (\\(\alpha=1 \Rightarrow i=n\varphi\\)) thus making the two expressions for \\(O_{\text{real}}\\) essentially equivalent.
+
+{{< hint warning >}}
+WARNING  
+...in practice it is quite impossible to determine \\(\varphi_k\\) for each individual solute \\(k\\) within a solution that is made of many type of solutes, like the ones in our recipe book.
+Therefore, to measure the ___real___ osmolarity, the only effective way it is usually using an osmometer.
+{{< /hint >}}
+
 
 ## References
 - [Osmotic Concentration - Wiki](https://en.wikipedia.org/wiki/Osmotic_concentration)

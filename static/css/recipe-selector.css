@@ -1,4 +1,7 @@
-/* CSS for the Recipe Selector */
+/* 
+CSS for the Recipe Selector and the Molecular Weight Viewer
+included in page "Recipe Book of Physiological Solutions"
+*/
 
 /* Arrange dropdown menus */
 #controls {
@@ -127,11 +130,11 @@ input[type="checkbox"] {
     min-width: 80px;
 }
 .osmo-text {
-    font-size: clamp(12px, 2vw, 14px);
+    font-size: clamp(12px, 2vw, 14px); /* Responsive font size */
 }
 .osmo-number {
     font-style: oblique;
-    font-size: clamp(14px, 3vw, 18px);
+    font-size: clamp(14px, 3vw, 18px); /* Responsive font size */
 }
 
 /* Basic table formatting */

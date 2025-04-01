@@ -1,4 +1,7 @@
-// JavaScript code for the 'RecipeSelector.html' shortcode
+/*
+JavaScript code for the Recipe Selector
+called from the "recipe-selector.html" shortcode
+*/
 
 const recipeSelect = document.getElementById("recipe-select");
 const volumeSelect = document.getElementById("volume-select");
@@ -8,7 +11,7 @@ const clearBtn = document.getElementById("clear-btn");
 
 let currentRecipe = null;
 
-// Populate recipe dropdown (see 'const recipeBook' in RecipeSelector.html)
+// Populate recipe dropdown (see 'const recipeBook' in recipe-selector.html)
 Object.keys(recipeBook).forEach(recipe => {
     if (recipe !== "molecular_weights") {
         let option = document.createElement("option");
