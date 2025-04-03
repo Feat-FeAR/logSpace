@@ -145,3 +145,6 @@ th {
 td {
     text-align: right;
 }
+.center-text {
+    text-align: center;
+}

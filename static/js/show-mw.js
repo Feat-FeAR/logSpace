@@ -20,15 +20,17 @@ function generateMolecularWeightTable() {
         let weightCell = document.createElement("td");
         weightCell.textContent = molecularWeights[ingredient][0].toFixed(2);
 
-        let vanthoffCell = document.createElement("td");
-        vanthoffCell.textContent = molecularWeights[ingredient][1];
+        let nFactorCell = document.createElement("td");
+        nFactorCell.classList.add("center-text");
+        nFactorCell.textContent = molecularWeights[ingredient][1];
 
         let osmoCoeffCell = document.createElement("td");
+        osmoCoeffCell.classList.add("center-text");
         osmoCoeffCell.textContent = molecularWeights[ingredient][2].toFixed(2);
 
         row.appendChild(ingredientCell);
         row.appendChild(weightCell);
-        row.appendChild(vanthoffCell);
+        row.appendChild(nFactorCell);
         row.appendChild(osmoCoeffCell);
         tableBody.appendChild(row);
     }
