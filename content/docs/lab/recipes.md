@@ -19,13 +19,20 @@ customcss: "css/recipe-selector.css"
 {{< show-mw >}}
 
 ## Calculation Notes
+### Masses
 {{< katex >}}{{< /katex >}}
 Ingredient masses are calculated dynamically as
 $$
 m{\scriptscriptstyle\left(g\right)}=C{\scriptscriptstyle\left(mM\right)}\cdot MW{\scriptscriptstyle\left(g/mol\right)}\cdot V{\scriptscriptstyle\left(mL\right)}\cdot 10^{-6}{\scriptscriptstyle\left(g/\mu g\right)}
 $$
 based on the molar concentrations \\(C\\) given in the recipe, the final volume \\(V\\) selected by the user, and the molecular weights \\(MW\\) reported in the table above.
+{{< hint warning >}}
+__Always check your hydration level!__  
+Different molecular weights can be found on the market for the same commercial substance, depending on its level of hydration.
+So, before applying the recipe verbatim, always check the specifications of your chemicals!
+{{< /hint >}}
 
+### Osmolarity
 Solution osmolarity---i.e., the concentration of the _osmotically active solute particles_ in the solution---is dynamically estimated in two ways.
 The _ideal osmolarity_ is
 {{< katex display >}}
