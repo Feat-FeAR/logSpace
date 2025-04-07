@@ -12,7 +12,6 @@ customcss: "css/mdm.css"
 ---
 
 # Metadata test page
-
 From this page you can generate, fill in, and export a JSON-formatted metadata file to attach to your experimental data when they are archived.
 
 {{< DateOperator >}}
