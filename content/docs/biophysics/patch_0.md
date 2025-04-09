@@ -15,9 +15,7 @@ customcss: "css/rc-plotter.css"
 A _first order resistor–capacitor circuit_ (__RC circuit__) is an electric circuit composed of one resistor and one capacitor and is the simplest type of RC circuit.
 
 Series configurations are by far the most studied, as they constitute _high-pass_ and _low-pass_ filters capable of acting on a voltage input.
-
 In contrast, the parallel RC circuit is generally of less interest because the output voltage is equal to the input voltage and the circuit acts as a filter on a _current input_ instead of a voltage input.
-
 Nevertheless, an analysis of the parallel RC circuit is very useful for the quantitative understanding of the current signals observed in the different voltage clamp configurations.
 {{< hint info >}}
 __Case notation__  
@@ -59,7 +57,7 @@ which is a _first-order inhomogeneous linear ODE in standard form_.
 The previous equation is quite general, in that it describes the behavior of \\(v_p\\) over time in response to ___any___ input signal \\(v\\!\left(t\right)\\).
 Depending on the form of the forcing function \\(v\\!\left(t\right)\\), solving this equation is a problem of varying complexity.
 However, in the case of a piecewise function like the voltage step, things are considerably simplified.
-Indeed, if we assume that our input voltage is
+Indeed, if we assume that our voltage input is
 {{< katex display >}}
 v\!\left(t\right)=V\,\theta\!\left(t\right)
 {{< /katex >}}
