@@ -73,7 +73,7 @@ function updateIngredientList() {
 
             createIngredientElement(iName, pHText, "");
 
-        // Handle liquid ingredients
+        // Handle liquid ingredients (stock solutions)
         } else if (ingredient === "MgCl<sub>2</sub>") {
             let concentration = value; // (mM == mmol/L)
             let iName = `${ingredient.replace(/_/g, " ")}`;
@@ -87,8 +87,9 @@ function updateIngredientList() {
             osmolarityIdeal += concentration * nFactor;
             osmolarityReal += concentration * nFactor * osmoCoeff;
 
-        // Handle salts (calculate mass if molecular weight exists)
+        // Handle salts (powder components)
         } else {
+            // Calculate mass if molecular weight exists
             if (molecularWeights[ingredient]) {
                 let concentration = value; // (mM == mmol/L)
                 let molecularWeight = molecularWeights[ingredient][0]; // (g/mol)
@@ -151,13 +152,13 @@ function createIngredientElement(iName, iConc, iMass) {
     recipeList.appendChild(div);
 }
 
-// Handle recipe selection
+// Update ingredients upon recipe selection
 recipeSelect.addEventListener("change", function() {
     currentRecipe = this.value;
     updateIngredientList();
 });
 
-// Handle volume selection (update ingredients)
+// Update ingredients upon volume selection
 volumeSelect.addEventListener("change", updateIngredientList);
 
 // Clear all checkboxes
