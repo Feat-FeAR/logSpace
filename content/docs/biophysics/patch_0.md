@@ -263,30 +263,61 @@ which enables us using Ohm’s Law in phasor domain:
 {{< /katex >}}
 and the following _transfer function_
 {{< katex display >}}
-\bar{H}_{_{R}}\!\left(j\omega\right)=\frac{\bar{I}_{_{R}}}{\bar{I}_{i}}=\frac{1}{1+j\omega RC}=\frac{1}{1+j\frac{\omega}{\omega_{_{H}}}}
+\bar{H}_{_{R}}\!\left(j\omega\right)=\frac{\bar{I}_{_{R}}}{\bar{I}_{i}}=\frac{1}{1+j\omega RC}=\frac{1}{1+j\frac{\omega}{\omega_{_{T}}}}
 {{< /katex >}}
-where the cutting (angular) frequency \\(\omega_{_{H}}=\frac{1}{RC}\\) has been introduced.
-Modulus and angle can be drawn to describe the output signal in terms of gain and phase shift, respectively, as a function of the linear frequency {{< katex >}}\nu=\frac{\omega}{2\pi}{{< /katex >}}:
+where the cutoff (angular) frequency \\(\omega_{_{T}}=\frac{1}{RC}\\) has been introduced.
+Modulus and argument (aka _angle_) can be drawn to describe the output signal in terms of gain and phase shift, respectively, as a function of the ordinary frequency {{< katex >}}\nu=\frac{\omega}{2\pi}{{< /katex >}}:
 {{< katex display >}}
-\frac{I_{_{R}}}{I_{i}}=\left|\bar{H}_{_{R}}\right|=\frac{1}{\sqrt{1+\left(\frac{\nu}{\nu_{_{H}}}\right)^{2}}}
+\frac{I_{_{R}}}{I_{i}}=\left|\bar{H}_{_{R}}\right|=\frac{1}{\sqrt{1+\left(\frac{\nu}{\nu_{_{T}}}\right)^{2}}}
 {{< /katex >}}
 {{< katex display >}}
-\phi_{_{R}}=\arg\!\left(\bar{H}_{_{R}}\right)=-\arctan\!\left(\frac{\nu}{\nu_{_H}}\right)
+\phi_{_{R}}=\arg\!\left(\bar{H}_{_{R}}\right)=-\arctan\!\left(\frac{\nu}{\nu_{_T}}\right)
 {{< /katex >}}
-which is the frequency response of a __low-pass filter__.
+which is the classical frequency response of a first order RC __low-pass filter__.
 - For the capacitive branch we get the following current output
 {{< katex display >}}
 \bar{I}_{_{C}}=j\omega C\,\bar{V}_{p}=\frac{j\omega RC}{1+j\omega RC}\,\bar{I}_{i}
 {{< /katex >}}
 and the following transfer function
 {{< katex display >}}
-\bar{H}_{_{C}}\!\left(j\omega\right)=\frac{\bar{I}_{_{C}}}{\bar{I}_{i}}=\frac{j\omega RC}{1+j\omega RC}=\frac{1}{1-j\frac{\omega_{_{L}}}{\omega}}
+\bar{H}_{_{C}}\!\left(j\omega\right)=\frac{\bar{I}_{_{C}}}{\bar{I}_{i}}=\frac{j\omega RC}{1+j\omega RC}=\frac{1}{1-j\frac{\omega_{_{T}}}{\omega}}
 {{< /katex >}}
-In this case, gain and phase shift as a function of frequency \\(\nu\\) are given by
+The following expressions show the gain and phase shift as a function of frequency \\(\nu\\).
 {{< katex display >}}
-\frac{I_{_{C}}}{I_{i}}=\left|\bar{H}_{_{C}}\right|=\frac{1}{\sqrt{1+\left(\frac{\nu_{_{L}}}{\nu}\right)^{2}}}
+\frac{I_{_{C}}}{I_{i}}=\left|\bar{H}_{_{C}}\right|=\frac{1}{\sqrt{1+\left(\frac{\nu_{_{T}}}{\nu}\right)^{2}}}
 {{< /katex >}}
 {{< katex display >}}
-\phi_{_{C}}=\arg\!\left(\bar{H}_{_{C}}\right)=\arctan\left(\frac{\nu_{_{L}}}{\nu}\right)
+\phi_{_{C}}=\arg\!\left(\bar{H}_{_{C}}\right)=\arctan\left(\frac{\nu_{_{T}}}{\nu}\right)
 {{< /katex >}}
-which is the frequency response of a __high-pass filter__.
+which is the classical frequency response of a first order RC __high-pass filter__.
+
+In the above calculation, just remember that any complex number
+{{< katex display >}}
+z = x + j\,y\quad\quad\text{where}\ 
+\begin{cases}
+	x\!\!\! & = & \mathcal{Re}\!\left(z\right) \\
+	y\!\!\! & = & \mathcal{Im}\!\left(z\right)
+\end{cases}
+{{< /katex >}}
+can be rewritten in polar coordinates as
+{{< katex display >}}
+z=\left|z\right|e^{j\arg\left(z\right)}
+{{< /katex >}}
+where
+{{< katex display >}} 
+\begin{cases}
+\left|z\right|\!\!\! 		& = & \sqrt{x^{2}+y^{2}}\quad\quad\forall\ x,y\in\mathbb{R} \\
+\arg\!\left(z\right)\!\!\! 	& = & \arctan\!\left(\frac{y}{x}\right)\quad\quad\text{if}\ \ x>0
+\end{cases}
+{{< /katex >}}
+(where the last \\(\text{if}\\) clause is because the general function that calculates the principal value of the argument is the _two-argument arctangent function_ [`atan2`](https://en.wikipedia.org/wiki/Atan2)).
+Based on this, it is also easy to show the property
+{{< katex display >}}
+\arg\!\left(z^{-1}\right)=-\arg\!\left(z\right)
+{{< /katex >}}
+which turns out to be very useful for calculating phase shift.
+
+## References
+- [RC circuit](https://en.wikipedia.org/wiki/RC_circuit). _Wikipedia, The Free Encyclopedia_.
+- [Phasor](https://en.wikipedia.org/wiki/Phasor). _Wikipedia, The Free Encyclopedia_.
+- [Transfer function](https://en.wikipedia.org/wiki/Transfer_function#Signal_processing). _Wikipedia, The Free Encyclopedia_.

@@ -79,7 +79,7 @@ function updatePlots(r0) {
         y: vData.v,
         type: 'scatter',
         mode: 'lines',
-        line: { color: 'red' }
+        line: { color: '#73a0d0' }
     }], {
         /*
         title: {
@@ -102,7 +102,7 @@ function updatePlots(r0) {
         y: iData.i,
         type: 'scatter',
         mode: 'lines',
-        line: { color: 'blue' }
+        line: { color: '#e65f5c' }
     }], {
         /*
         title: {
