@@ -40,20 +40,29 @@ function generateVoltageData(r0) {
 function generateCurrentData(r0) {
     let t = []; // time
     let i = []; // total current
+    let iR = []; // resistive component
+    let iC = []; // capacitive component
 
     for (let j = -10; j <= 40; j += 0.1) {
         t.push(j);
-
         let iValue;
+        let iRValue;
+        let iCValue;
         if (r0 === 0) {
             iValue = (Math.abs(j) < 1e-5) ? 100 : (V/R) * Heaviside(j);
+            iRValue = (V/R) * Heaviside(j)
+            iCValue = (Math.abs(j) < 1e-5) ? 100 : 0 * Heaviside(j);
         } else {
             let expTerm = Math.exp(-j / (C*R*r0 / (r0 + R)));
             iValue = (V/(R + r0)) * (1 + (R/r0)*expTerm) * Heaviside(j);
+            iRValue = (V/(R + r0)) * (1 - expTerm) * Heaviside(j);
+            iCValue = (V/r0) * expTerm * Heaviside(j);
         }
         i.push(iValue);
+        iR.push(iRValue);
+        iC.push(iCValue);
     }
-    return { t, i };
+    return { t, i, iR, iC };
 }
 
 // Function to update both plots
@@ -97,13 +106,31 @@ function updatePlots(r0) {
     }, { responsive: false }); // disable auto-resize
 
     // Update second plot (i(t))
-    Plotly.react(plot2Div, [{
-        x: iData.t,
-        y: iData.i,
-        type: 'scatter',
-        mode: 'lines',
-        line: { color: '#e65f5c' }
-    }], {
+    Plotly.react(plot2Div, [
+        {
+            x: iData.t,
+            y: iData.iR,
+            name: 'i<sub>R</sub>',
+            type: 'scatter',
+            mode: 'lines',
+            line: { color: '#9388a3', dash: 'dot' }
+        },
+        {
+            x: iData.t,
+            y: iData.iC,
+            name: 'i<sub>C</sub>',
+            type: 'scatter',
+            mode: 'lines',
+            line: { color: '#9388a3', dash: 'dash' }
+        },
+        {
+            x: iData.t,
+            y: iData.i,
+            name: 'i',
+            type: 'scatter',
+            mode: 'lines',
+            line: { color: '#e65f5c' }
+        }], {
         /*
         title: {
             text: `Total current`,
