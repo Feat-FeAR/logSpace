@@ -118,3 +118,11 @@ Approximately 5 pF stray capacitance to ground.
 
 
 Lea Goetz and Christian Wilms. [Understanding the cell as an electrical circuit](https://www.scientifica.uk.com/learning-zone/understanding-the-cell-as-an-electrical-circuit) @ Scientifica Ltd, Uckfield, UK
+
+https://mappinglab.com/blog/3171.html
+
+https://www.researchgate.net/publication/51559409_Measurement_of_the_membrane_potential_in_small_cells_using_patch_clamp_methods
+
+https://link.springer.com/chapter/10.1007/978-1-4939-6713-1_3
+
+https://www.google.com/search?sca_esv=3b736228b17ed96f&rlz=1C1UEAD_itIT956IT956&udm=2&sxsrf=AHTn8zo7zOJbRsurBXNDl96FRuqCACAb2A:1742291864265&q=patch+clamp+configurations+equivalent+circuit&spell=1&sa=X&ved=2ahUKEwi9kqj9rpOMAxVp4QIHHQ2nHGEQBSgAegQIBxAB&biw=1920&bih=919&dpr=1#vhid=jBRN_Yepu5T81M&vssid=mosaic

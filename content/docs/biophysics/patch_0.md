@@ -14,18 +14,24 @@ customcss: "css/rc-plotter.css"
 # Parallel RC circuit
 A _first order resistor–capacitor circuit_ (__RC circuit__) is an electric circuit composed of one resistor and one capacitor, that is the simplest type of RC circuit.
 
-Series configurations are by far the most studied, as they constitute _high-pass_ and _low-pass_ filters capable of acting on a _voltage input_.
-By contrast, the parallel RC circuit is generally of less interest because the output voltage is equal to the input voltage and the circuit acts as a filter on a _current input_ instead of a voltage input.
+Series configurations are by far the most studied, as they constitute _low-pass_ and _high-pass_ filters capable of acting on a _voltage input_ (circuit diagrams **a** and **b**, respectively).
+By contrast, the parallel RC circuit is generally of less interest because the output voltage is equal to the input voltage and the circuit acts as a filter on a _current input_ instead of a voltage input (diagram **c** below).
+<div style="text-align: center;">
+{{< figure src="/images/rc_all-circuits.png" title="All RC circuits" width=600 >}}
+</div>
 Nevertheless, analyzing the parallel RC circuit turns out to be very useful for the quantitative understanding of the current signals observed in the different voltage clamp configurations.
+
+## Real voltage generator
 {{< hint info >}}
 __Case notation__  
 The convention whereby capital letters represent constant values, while lowercase letters represent quantities that vary over time is adopted throughout the section.
 {{< /hint >}}
-
-## Real voltage generator
 What follows is a general discussion of the current and voltage dynamics in a __parallel RC circuit in response to a voltage step from a real voltage generator__, meaning an ideal voltage source with an internal series resistance \\(R_{_{0}}\\), as shown in the figure below.
+<div style="text-align: center;">
+{{< figure src="/images/rc_parallel-real.png" title="Parallel RC circuit" width=450 >}}
+</div>
 
-Let's start by applying the two Kirchhoff's laws to our circuit, without making any particular assumptions about the input signal \\(v\\):
+Let's start by applying the two Kirchhoff's laws to the circuit, without making any particular assumptions about the input signal \\(v\\):
 {{< katex display >}}
 \begin{cases}
 	v\!\!\! & = & R{_{_0}}i + v_p \\
@@ -179,30 +185,30 @@ $$
 {{< RC-plotter >}}
 
 ## Ideal current generator
-In the case where the RC parallel circuit is connected to a _current generator_ instead of a voltage generator, the previous equation
+In the case where the RC parallel circuit is connected to an _ideal current generator_ instead of a voltage generator, the previous equation
 {{< katex display >}}
 i\!\left(t\right) = \frac{v_p}{R}+C\,\frac{dv_p}{dt}
 {{< /katex >}}
-holds true, with the difference that now the known term is the current
+still holds true, with the difference that now the known term is the current
 {{< katex display >}}
 i\!\left(t\right)=I\,\theta\!\left(t\right)
 {{< /katex >}}
-and the unknown is the voltage drop \\(v_p\\) across the parallel circuit (which is equal to the voltage rise \\(v\\) across the current generator, needed to produce the desired current \\(i\\)).
+while the unknown term is the voltage drop \\(v_p\\) across the parallel circuit (which is just equal to the voltage rise \\(v\\) across the current generator, needed to produce the desired current \\(i\\)).
 
 As previously shown, the general solution to such an ODE is
 {{< katex display >}}
 v_p\!\left(t\right)=k\,e^{-t/\tau}+\bar{v}_{p}
 {{< /katex >}}
-where now the time constant is \\(\tau=RC\\).
+where the time constant is now \\(\tau=RC\\).
 Focusing on the non-trivial domain \\(t>0\\), the particular solution of the inhomogeneous equation can be determined by analyzing the steady state at \\(t\rightarrow\infty \Rightarrow \frac{dv_p}{dt}=0\\):
 {{< katex display >}}
 \bar{v}_{p}=RI
 {{< /katex >}}
-while the constant of integration \\(k\\) is then obtained by imposing the initial condition that at time \\(t=0\\) the voltage across the parallel is zero (i.e., the capacitor is still discharged):
+Then, the constant of integration \\(k\\) is obtained by imposing the initial condition that at time \\(t=0\\) the voltage across the parallel is zero (i.e., the capacitor is still discharged):
 {{< katex display >}}
 k=-RI
 {{< /katex >}}
-Overall, this leads to the following final form for the voltage across the parallel
+Overall, this leads to the following final form for the voltage drop across the parallel
 {{< katex display >}}
 \boxed{v_p\!\left(t\right)=RI\left(1-e^{-t/\tau}\right)}
 {{< /katex >}}
@@ -213,7 +219,7 @@ i{_{_R}} 	& = \frac{v_p}{R} = I\left(1-e^{-t/\tau}\right) \\
 i{_{_C}}	& = C\,\frac{dv_p}{dt} = CRI\,\frac{1}{\tau}\,e^{-t/\tau} = I\,e^{-t/\tau}
 \end{aligned}
 {{< /katex >}}
-which add to \\(I\ \forall t\\), as expected.
+which add up to \\(I\ \forall t\\), as expected.
 
 ### Comments
 - In this case, there are no extreme capacitive transients, neither in terms of current (whose flow is controlled by the ideal generator) nor in terms of voltage at the capacitor terminals (which charges progressively at the pace set by the generator).
@@ -223,32 +229,37 @@ which add to \\(I\ \forall t\\), as expected.
 
 ### Frequency filtering
 As mentioned at the beginning of the chapter, in AC systems, the parallel RC circuit acts as a _frequency filter on a current input_ in the same way in which a series RC circuit acts on a voltage input.
-This can be conveniently shown by means of _phasors_ (i.e., the _symbolic method_ for steady-state sinusoidal analysis).
-
+This can be conveniently shown by means of _phasors_ (i.e., the _symbolic method_ for steady-state sinusoidal analysis), for which the techniques for solving DC circuits can be applied to linear AC circuits.
 {{< hint info >}}
 __Complex notation__  
 Any generic voltage or current quantity sinusoidally oscillating over time
 
 $$
-x\\!\left(t\right)=X\cos(\omega t + \theta)
+x\\!\left(t\right)=X\cos(\omega t + \varphi)
 $$
 
-can be turned into a complex number by adding an imaginary term (let \\(j\\) be the imaginary unit):
+can be turned into a complex number by adding a 90-degree phase-shifted imaginary term (let \\(j\\) be the imaginary unit):
 
 $$
-\bar{X}=X\left[\cos(\omega t+\theta)+j\sin(\omega t+\theta)\right]=X\\,e^{j(\omega t+\theta)}=X\\,e^{j\theta}e^{j\omega t}
+\bar{X}=X\left[\cos(\omega t+\varphi)+j\sin(\omega t+\varphi)\right]=X\\,e^{j(\omega t+\varphi)}=X\\,e^{j\varphi}e^{j\omega t}
 $$
 
-Although these complex quantities clearly represent signals that vary over time, their amplitude \\(X\\) and initial phase \\(\theta\\) are assumed to be time-invariant.
-For this reason, they are always denoted by capital letters and a bar is used to distinguish the overall complex quantity from its modulus.
-However, since the angular frequency \\(\omega\\) is always fixed, phasors offer a more compact and lightweight notation:
+Although these complex quantities clearly represent signals that vary over time, their amplitude \\(X\\) and initial phase \\(\varphi\\) are assumed to be time-invariant.
+For this reason, they are usually denoted by _capital letters_ and a bar is used to distinguish the overall complex quantity from its modulus.
+Moreover, since the angular frequency \\(\omega\\) is always fixed, phasors are introduced to offer a more compact and lightweight notation:
 
 $$
-\bar{X}=X\angle\theta
+\bar{X}=X\angle\varphi
+$$
+
+Also, by using phasor notation, multiplication of complex numbers (e.g., a phasor and a complex impedance, or a phasor and a transfer function, but not two phasors, since in that case \\(\omega\\) would change!!) become straightforward:
+
+$$
+\bar{X}\cdot\bar{Y}=XY\angle\\!\left(\varphi_{\_{X}}+\varphi_{\_{Y}}\right)
 $$
 {{< /hint >}}
 
-The complex impedance of the parallel elements is
+Within this framework, the complex impedance of the parallel elements is
 $$
 \bar{Z}=\left(\frac{1}{R}+j\omega C\right)^{-1}=\frac{R}{1+j\omega RC}
 $$
@@ -256,42 +267,52 @@ which enables us using Ohm’s Law in phasor domain:
 {{< katex display >}}
 \bar{V}_{p}=\bar{Z}\cdot\bar{I}_{i}
 {{< /katex >}}
+where \\(\bar{I}_{i}\\) denotes the _input_ current signal.
 
-- For the resistive branch we get the following current output
+Notably, just like the same series RC circuit can act as a high-pass or low-pass filter for the input voltage depending on the element at whose ends the potential drop is measured, __the parallel RC circuit acts as either a high-pass or low-pass filter for the input _current_ depending on the branch of the parallel in which the current is measured__.
+- For the resistive branch we get the following current output:
 {{< katex display >}}
-\bar{I}_{_{R}}=\frac{1}{R}\bar{V}_{p}=\frac{\bar{I}_{i}}{1+j\omega RC}
+\bar{I}_{_{R}}=\frac{1}{R}\bar{V}_{p}=\frac{1}{1+j\omega RC}\,\bar{I}_{i}
 {{< /katex >}}
-and the following _transfer function_
+and the following transfer function (or _frequency response_):
 {{< katex display >}}
 \bar{H}_{_{R}}\!\left(j\omega\right)=\frac{\bar{I}_{_{R}}}{\bar{I}_{i}}=\frac{1}{1+j\omega RC}=\frac{1}{1+j\frac{\omega}{\omega_{_{T}}}}
 {{< /katex >}}
 where the cutoff (angular) frequency \\(\omega_{_{T}}=\frac{1}{RC}\\) has been introduced.
 Modulus and argument (aka _angle_) can be drawn to describe the output signal in terms of gain and phase shift, respectively, as a function of the ordinary frequency {{< katex >}}\nu=\frac{\omega}{2\pi}{{< /katex >}}:
 {{< katex display >}}
-\frac{I_{_{R}}}{I_{i}}=\left|\bar{H}_{_{R}}\right|=\frac{1}{\sqrt{1+\left(\frac{\nu}{\nu_{_{T}}}\right)^{2}}}
+G_{_{R}}\!\left(\nu\right)=\frac{I_{_{R}}}{I_{i}}=\left|\bar{H}_{_{R}}\right|=\frac{1}{\sqrt{1+\left(\frac{\nu}{\nu_{_{T}}}\right)^{2}}}
 {{< /katex >}}
 {{< katex display >}}
-\phi_{_{R}}=\arg\!\left(\bar{H}_{_{R}}\right)=-\arctan\!\left(\frac{\nu}{\nu_{_T}}\right)
+\phi_{_{R}}\!\left(\nu\right)=\arg\!\left(\bar{H}_{_{R}}\right)=-\arctan\!\left(\frac{\nu}{\nu_{_T}}\right)
 {{< /katex >}}
 which is the classical frequency response of a first order RC __low-pass filter__.
-- For the capacitive branch we get the following current output
+By using phasor notation, gain and phase expressions may be combined into one expression representing the output ({{< katex >}}\varphi_{_{i}}{{< /katex >}} indicates the possible _initial phase_ of the input):
+{{< katex display >}}
+\bar{I}_{_{R}}=I_{_{i}}G_{_{R}}\,\angle\!\left(\phi_{_{R}}+\varphi_{_{i}}\right)
+{{< /katex >}}
+- For the capacitive branch we get the following current output:
 {{< katex display >}}
 \bar{I}_{_{C}}=j\omega C\,\bar{V}_{p}=\frac{j\omega RC}{1+j\omega RC}\,\bar{I}_{i}
 {{< /katex >}}
-and the following transfer function
+and the following transfer function:
 {{< katex display >}}
 \bar{H}_{_{C}}\!\left(j\omega\right)=\frac{\bar{I}_{_{C}}}{\bar{I}_{i}}=\frac{j\omega RC}{1+j\omega RC}=\frac{1}{1-j\frac{\omega_{_{T}}}{\omega}}
 {{< /katex >}}
-The following expressions show the gain and phase shift as a function of frequency \\(\nu\\).
+Thus, in this case, gain and phase shift can be written as
 {{< katex display >}}
-\frac{I_{_{C}}}{I_{i}}=\left|\bar{H}_{_{C}}\right|=\frac{1}{\sqrt{1+\left(\frac{\nu_{_{T}}}{\nu}\right)^{2}}}
+G_{_{C}}\!\left(\nu\right)=\frac{I_{_{C}}}{I_{i}}=\left|\bar{H}_{_{C}}\right|=\frac{1}{\sqrt{1+\left(\frac{\nu_{_{T}}}{\nu}\right)^{2}}}
 {{< /katex >}}
 {{< katex display >}}
-\phi_{_{C}}=\arg\!\left(\bar{H}_{_{C}}\right)=\arctan\left(\frac{\nu_{_{T}}}{\nu}\right)
+\phi_{_{C}}\!\left(\nu\right)=\arg\!\left(\bar{H}_{_{C}}\right)=\arctan\left(\frac{\nu_{_{T}}}{\nu}\right)
 {{< /katex >}}
 which is the classical frequency response of a first order RC __high-pass filter__.
-
-In the above calculation, just remember that any complex number
+Finally, in phasor notation, output can be obtained as
+{{< katex display >}}
+\bar{I}_{_{C}}=I_{_{i}}G_{_{C}}\,\angle\!\left(\phi_{_{C}}+\varphi_{_{i}}\right)
+{{< /katex >}}
+---
+In the calculation above, just remember that any complex number
 {{< katex display >}}
 z = x + j\,y\quad\quad\text{where}\ 
 \begin{cases}
@@ -311,12 +332,15 @@ where
 \end{cases}
 {{< /katex >}}
 (where the last \\(\text{if}\\) clause is because the general function that calculates the principal value of the argument is the _two-argument arctangent function_ [`atan2`](https://en.wikipedia.org/wiki/Atan2)).
-Based on this, it is also easy to show the property
+Based on this, it is easy to show two properties which turn out to be very useful when calculating gain and phase shift, respectively:
+{{< katex display >}}
+\left|\frac{z}{w}\right|=\frac{\left|z\right|}{\left|w\right|}
+{{< /katex >}}
 {{< katex display >}}
 \arg\!\left(z^{-1}\right)=-\arg\!\left(z\right)
 {{< /katex >}}
-which turns out to be very useful for calculating phase shift.
 
+---
 ## References
 - [RC circuit](https://en.wikipedia.org/wiki/RC_circuit). _Wikipedia, The Free Encyclopedia_.
 - [Phasor](https://en.wikipedia.org/wiki/Phasor). _Wikipedia, The Free Encyclopedia_.
