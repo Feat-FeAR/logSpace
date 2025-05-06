@@ -100,7 +100,7 @@ v_p\\!\left(t\right)=k\\,e^{-t/\tau}
 $$
 where the \\(R_{eq}C\\) time constant has been rewritten as \\(\tau\\) in the last step.
 
-To find the general solution of the inhomogeneous equation we now need to find one of its _particular solutions_ (\\(\bar{v}_p\\)), which can be conveniently done by considering the steady state at \\(t\rightarrow\infty\\), where \\(\frac{dv_p}{dt}=0\\) and therefore 
+To find the general solution of the inhomogeneous equation we now need to find one of its _particular solutions_ (\\(\bar{v}_p\\)), which can be conveniently done by considering the steady state at \\(t\rightarrow\infty\\), where \\(\frac{dv_p}{dt}=0\\) and therefore
 {{< katex display >}}
 \bar{v}_p=V\,\frac{R_{eq}}{R_{_{0}}}
 {{< /katex >}}
@@ -315,7 +315,7 @@ Finally, in phasor notation, output can be obtained as
 ---
 In the calculation above, just remember that any complex number
 {{< katex display >}}
-z = x + j\,y\quad\quad\text{where}
+z = x + j\,y\quad\quad\text{where}\enspace
 \begin{cases}
 	x\!\!\! & = & \mathcal{Re}\!\left(z\right) \\
 	y\!\!\! & = & \mathcal{Im}\!\left(z\right)
@@ -326,7 +326,7 @@ can be rewritten in polar coordinates as
 z=\left|z\right|e^{j\arg\left(z\right)}
 {{< /katex >}}
 where
-{{< katex display >}} 
+{{< katex display >}}
 \begin{cases}
 	\left|z\right|\!\!\! 		& = & \sqrt{x^{2}+y^{2}}\quad\quad\forall\ x,y\in\mathbb{R} \\
 	\arg\!\left(z\right)\!\!\! 	& = & \arctan\!\left(\frac{y}{x}\right)\quad\quad\text{if}\ \ x>0
