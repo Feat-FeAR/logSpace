@@ -311,6 +311,7 @@ Finally, in phasor notation, output can be obtained as
 {{< katex display >}}
 \bar{I}_{_{C}}=I_{_{i}}G_{_{C}}\,\angle\!\left(\phi_{_{C}}+\varphi_{_{i}}\right)
 {{< /katex >}}
+
 ---
 In the calculation above, just remember that any complex number
 {{< katex display >}}
@@ -327,8 +328,8 @@ z=\left|z\right|e^{j\arg\left(z\right)}
 where
 {{< katex display >}} 
 \begin{cases}
-\left|z\right|\!\!\! 		& = & \sqrt{x^{2}+y^{2}}\quad\quad\forall\ x,y\in\mathbb{R} \\
-\arg\!\left(z\right)\!\!\! 	& = & \arctan\!\left(\frac{y}{x}\right)\quad\quad\text{if}\ \ x>0
+	\left|z\right|\!\!\! 		& = & \sqrt{x^{2}+y^{2}}\quad\quad\forall\ x,y\in\mathbb{R} \\
+	\arg\!\left(z\right)\!\!\! 	& = & \arctan\!\left(\frac{y}{x}\right)\quad\quad\text{if}\ \ x>0
 \end{cases}
 {{< /katex >}}
 (where the last \\(\text{if}\\) clause is because the general function that calculates the principal value of the argument is the _two-argument arctangent function_ [`atan2`](https://en.wikipedia.org/wiki/Atan2)).
