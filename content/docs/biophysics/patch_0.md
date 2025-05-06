@@ -341,7 +341,8 @@ Based on this, it is easy to show two properties which turn out to be very usefu
 {{< /katex >}}
 
 ---
-## References
-- [RC circuit](https://en.wikipedia.org/wiki/RC_circuit). _Wikipedia, The Free Encyclopedia_.
-- [Phasor](https://en.wikipedia.org/wiki/Phasor). _Wikipedia, The Free Encyclopedia_.
-- [Transfer function](https://en.wikipedia.org/wiki/Transfer_function#Signal_processing). _Wikipedia, The Free Encyclopedia_.
+> ## References
+> - [RC circuit](https://en.wikipedia.org/wiki/RC_circuit). _Wikipedia, The Free Encyclopedia_.
+> - [Phasor](https://en.wikipedia.org/wiki/Phasor). _Wikipedia, The Free Encyclopedia_.
+> - [Transfer function](https://en.wikipedia.org/wiki/Transfer_function#Signal_processing). _Wikipedia, The Free Encyclopedia_.
+> - [Frequency response](https://en.wikipedia.org/wiki/Frequency_response). _Wikipedia, The Free Encyclopedia_.

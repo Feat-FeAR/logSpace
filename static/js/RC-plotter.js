@@ -101,8 +101,8 @@ function updatePlots(r0) {
         xaxis: { title: 'time (ms)', range: [-10, 40] },
         yaxis: { title: 'v<sub>p</sub> (mV)', range: [0, 22] },
         width: plotWidth,
-        height: plotWidth * 0.5, // fixed aspect ratio
-        margin: { l: 80, r: 50, t: 40, b: 50 }
+        height: plotWidth * 0.4, // fixed aspect ratio
+        margin: { l: 70, r: 40, t: 30, b: 50 }
     }, { responsive: false }); // disable auto-resize
 
     // Update second plot (i(t))
@@ -139,11 +139,19 @@ function updatePlots(r0) {
             pad: { t: 5 }
         },
         */
+        legend: {
+            x: 1, y: 1,
+            xanchor: 'right',
+            yanchor: 'top',
+            bgcolor: 'rgba(255,255,255,0.8)',
+            bordercolor: '#9388a3',
+            borderwidth: 0
+        },
         xaxis: { title: 'time (ms)', range: [-10, 40] }, 
         yaxis: { title: 'i (nA)', range: [0, 22] },
         width: plotWidth,
-        height: plotWidth * 0.8, // Fixed aspect ratio
-        margin: { l: 80, r: 50, t: 50, b: 80 }
+        height: plotWidth * 0.7, // Fixed aspect ratio
+        margin: { l: 70, r: 40, t: 50, b: 80 }
     }, { responsive: false }); // disable auto-resize
 }
 
