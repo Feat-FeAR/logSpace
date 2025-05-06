@@ -316,8 +316,8 @@ In the calculation above, just remember that any complex number
 {{< katex display >}}
 z = x + j\,y\quad\quad\text{where}\ 
 \begin{cases}
-	x\!\!\! & = & \mathcal{Re}\!\left(z\right) \\
-	y\!\!\! & = & \mathcal{Im}\!\left(z\right)
+	x\!\!\! & = & \mathfrak{Re}\!\left(z\right) \\
+	y\!\!\! & = & \mathfrak{Im}\!\left(z\right)
 \end{cases}
 {{< /katex >}}
 can be rewritten in polar coordinates as
