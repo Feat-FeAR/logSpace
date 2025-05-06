@@ -315,10 +315,10 @@ Finally, in phasor notation, output can be obtained as
 ---
 In the calculation above, just remember that any complex number
 {{< katex display >}}
-z = x + j\,y\quad\quad\text{where}\ 
+z = x + j\,y\quad
 \begin{cases}
-	x\!\!\! & = & \text{Re}\!\left(z\right) \\
-	y\!\!\! & = & \text{Im}\!\left(z\right)
+	x\!\!\! & = & \mathcal{Re}\!\left(z\right) \\
+	y\!\!\! & = & \mathcal{Im}\!\left(z\right)
 \end{cases}
 {{< /katex >}}
 can be rewritten in polar coordinates as
