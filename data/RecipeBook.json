@@ -8,7 +8,28 @@
         "CaCl<sub>2</sub>": [147.02, 3, 0.86],
         "EGTA": [380.35, 0, 0],
         "KAsp": [171.19, 2, 0.95],
-        "Na<sub>2</sub>ATP": [551.14, 3, 0.90]
+        "Na<sub>2</sub>ATP": [551.14, 3, 0.90],
+        "Choline Chloride": [139.62, 2, 0.96]
+    },
+    "PSS_-_Physiological_Salt_Solution": {
+        "description": "A variation of the standard Tyrode's solution, with a lower osmolarity value that more closely match the physiological salinity of the extracellular fluid.",
+        "NaCl": 135,
+        "KCl": 6,
+        "MgCl<sub>2</sub>": 1,
+        "Glucose": 10,
+        "HEPES": 10,
+        "CaCl<sub>2</sub>": 1.5,
+        "NaOH": ["pH", 7.4]
+    },
+    "PSS_0_Na⁺_-_Choline": {
+        "description": "A 0Na⁺-variation of the standard PSS, where sodium has been completely replaced by choline.",
+        "Choline Chloride": 135,
+        "KCl": 6,
+        "MgCl<sub>2</sub>": 1,
+        "Glucose": 10,
+        "HEPES": 10,
+        "CaCl<sub>2</sub>": 1.5,
+        "KOH": ["pH", 7.4]
     },
     "Tyrode_Standard": {
         "description": "Tyrode's solution is a simple physiological buffer solution that mimics the ionic concentrations of interstitial fluid. It is one of the most basic extracellular solutions used in physiological experiments, containing only a few essential ions and a buffer system to maintain pH.",
