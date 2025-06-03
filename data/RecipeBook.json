@@ -9,7 +9,8 @@
         "EGTA": [380.35, 0, 0],
         "KAsp": [171.19, 2, 0.95],
         "Na<sub>2</sub>ATP": [551.14, 3, 0.90],
-        "Choline Chloride": [139.62, 2, 0.96]
+        "Choline Chloride": [139.62, 2, 0.96],
+        "NMDG": [195.21, 2, 0.92]
     },
     "PSS_-_Physiological_Salt_Solution": {
         "description": "A variation of the standard Tyrode's solution, with a lower osmolarity value that more closely match the physiological salinity of the extracellular fluid.",
@@ -20,6 +21,16 @@
         "HEPES": 10,
         "CaCl<sub>2</sub>": 1.5,
         "NaOH": ["pH", 7.4]
+    },
+    "PSS_0_Na⁺_-_NMDG": {
+        "description": "A 0Na⁺-variation of the standard PSS, where sodium has been completely replaced by N-Methyl-D-glucamine (NMDG).",
+        "NMDG": 135,
+        "KCl": 6,
+        "MgCl<sub>2</sub>": 1,
+        "Glucose": 10,
+        "HEPES": 10,
+        "CaCl<sub>2</sub>": 1.5,
+        "KOH": ["pH", 7.4]
     },
     "PSS_0_Na⁺_-_Choline": {
         "description": "A 0Na⁺-variation of the standard PSS, where sodium has been completely replaced by choline.",
