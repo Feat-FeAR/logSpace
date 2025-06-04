@@ -22,16 +22,28 @@ function generateMolecularWeightTable() {
 
         let nFactorCell = document.createElement("td");
         nFactorCell.classList.add("center-text");
-        nFactorCell.textContent = molecularWeights[ingredient][1];
+        let nFactor = molecularWeights[ingredient][1];
+        let nFactorNote = molecularWeights[ingredient][4];
+        let spanFactor = document.createElement("span");
+        spanFactor.textContent = nFactor;
+        let spanNote = document.createElement("span");
+        spanNote.classList.add("small‐note");
+        spanNote.textContent = nFactorNote != null ? nFactorNote : "";
+        nFactorCell.append(spanFactor, spanNote);
 
         let osmoCoeffCell = document.createElement("td");
         osmoCoeffCell.classList.add("center-text");
         osmoCoeffCell.textContent = molecularWeights[ingredient][2].toFixed(2);
 
+        let fullNameCell = document.createElement("td");
+        fullNameCell.classList.add("left-text");
+        fullNameCell.textContent = molecularWeights[ingredient][3];
+
         row.appendChild(ingredientCell);
         row.appendChild(weightCell);
         row.appendChild(nFactorCell);
         row.appendChild(osmoCoeffCell);
+        row.appendChild(fullNameCell);
         tableBody.appendChild(row);
     }
 }

@@ -1,24 +1,24 @@
 {
     "molecular_weights": {
-        "NaCl": [58.44, 2, 0.93],
-        "KCl": [74.55, 2, 0.92],
-        "MgCl<sub>2</sub>": [95.21, 3, 0.89],
-        "Glucose": [180.16, 1, 1.01],
-        "HEPES": [238.30, 1, 1.00],
-        "CaCl<sub>2</sub>": [147.02, 3, 0.86],
-        "EGTA": [380.35, 0, 0],
-        "KAsp": [171.19, 2, 0.95],
-        "Na<sub>2</sub>ATP": [551.14, 3, 0.90],
-        "Choline Chloride": [139.62, 2, 0.96],
-        "NMDG": [195.21, 1, 1],
-        "HCl": [36.46, 1, 1]
+        "NaCl": [58.44, 2, 0.93, "Sodium chloride"],
+        "KCl": [74.55, 2, 0.92, "Potassium chloride"],
+        "MgCl<sub>2</sub>": [95.21, 3, 0.89, "Magnesium chloride"],
+        "Gluc": [180.16, 1, 1.01, "Glucose"],
+        "HEPES": [238.30, 1, 1.00,"4-(2-hydroxyethyl)-1-piperazineethanesulfonic acid", "*"],
+        "CaCl<sub>2</sub>": [147.02, 3, 0.86, "Calcium chloride"],
+        "EGTA": [380.35, 0, 0, "Ethylene glycol-bis(β-aminoethyl ether)-N,N,N',N'-tetraacetic acid", "**"],
+        "KAsp": [171.19, 2, 0.95, "L-Aspartic acid potassium salt"],
+        "Na<sub>2</sub>ATP": [551.14, 3, 0.90, "Adenosine 5′-triphosphate disodium salt hydrate"],
+        "CholCl": [139.62, 2, 0.96, "Choline chloride"],
+        "NMDG": [195.21, 1, 1.00, "N-Methyl-D-glucamine", "*"],
+        "HCl": [36.46, 1, 1.00, "Hydrogen chloride", "*"]
     },
     "PSS_-_Physiological_Salt_Solution": {
         "description": "A variation of the standard Tyrode's solution, with a lower osmolarity value that more closely match the physiological salinity of the extracellular fluid.",
         "NaCl": 135,
         "KCl": 6,
         "MgCl<sub>2</sub>": 1,
-        "Glucose": 10,
+        "Gluc": 10,
         "HEPES": 10,
         "CaCl<sub>2</sub>": 1.5,
         "NaOH": ["pH", 7.4]
@@ -29,17 +29,17 @@
         "HCl": 135,
         "KCl": 6,
         "MgCl<sub>2</sub>": 1,
-        "Glucose": 10,
+        "Gluc": 10,
         "HEPES": 10,
         "CaCl<sub>2</sub>": 1.5,
         "KOH/HCl": ["pH", 7.4]
     },
     "PSS_0_Na⁺_-_Choline": {
         "description": "A 0Na⁺-variation of the standard PSS, where sodium has been completely replaced by choline.",
-        "Choline Chloride": 135,
+        "CholCl": 135,
         "KCl": 6,
         "MgCl<sub>2</sub>": 1,
-        "Glucose": 10,
+        "Gluc": 10,
         "HEPES": 10,
         "CaCl<sub>2</sub>": 1.5,
         "KOH": ["pH", 7.4]
@@ -49,7 +49,7 @@
         "NaCl": 154,
         "KCl": 4,
         "MgCl<sub>2</sub>": 1,
-        "Glucose": 5.5,
+        "Gluc": 5.5,
         "HEPES": 5,
         "CaCl<sub>2</sub>": 2,
         "NaOH": ["pH", 7.34]
@@ -59,7 +59,7 @@
         "NaCl": 148,
         "KCl": 10,
         "MgCl<sub>2</sub>": 1,
-        "Glucose": 5.5,
+        "Gluc": 5.5,
         "HEPES": 5,
         "CaCl<sub>2</sub>": 2,
         "NaOH": ["pH", 7.34]
@@ -69,7 +69,7 @@
         "NaCl": 118,
         "KCl": 40,
         "MgCl<sub>2</sub>": 1,
-        "Glucose": 5.5,
+        "Gluc": 5.5,
         "HEPES": 5,
         "CaCl<sub>2</sub>": 2,
         "NaOH": ["pH", 7.34]
@@ -79,7 +79,7 @@
         "NaCl": 88,
         "KCl": 70,
         "MgCl<sub>2</sub>": 1,
-        "Glucose": 5.5,
+        "Gluc": 5.5,
         "HEPES": 5,
         "CaCl<sub>2</sub>": 2,
         "NaOH": ["pH", 7.34]
@@ -89,7 +89,7 @@
         "NaCl": 8,
         "KCl": 150,
         "MgCl<sub>2</sub>": 1,
-        "Glucose": 5.5,
+        "Gluc": 5.5,
         "HEPES": 5,
         "CaCl<sub>2</sub>": 2,
         "NaOH": ["pH", 7.34]
@@ -99,7 +99,7 @@
         "NaCl": 154,
         "KCl": 4,
         "MgCl<sub>2</sub>": 1,
-        "Glucose": 5.5,
+        "Gluc": 5.5,
         "HEPES": 5,
         "EGTA": 0.5,
         "NaOH": ["pH", 7.34]

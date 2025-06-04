@@ -148,3 +148,12 @@ td {
 .center-text {
     text-align: center;
 }
+.left-text {
+    text-align: left;
+    font-style: oblique;
+    font-size: 13px;
+}
+.small‐note {
+  vertical-align: super;
+  font-size: 0.7em;
+}
