@@ -74,7 +74,7 @@ function updateIngredientList() {
             createIngredientElement(iName, pHText, "");
 
         // Handle liquid ingredients (stock solutions)
-        } else if (ingredient === "MgCl<sub>2</sub>") {
+        } else if (ingredient === "MgCl<sub>2</sub>" || ingredient === "HCl") {
             let concentration = value; // (mM == mmol/L)
             let iName = `${ingredient.replace(/_/g, " ")}`;
             let iConc = `${concentration} mM`;
