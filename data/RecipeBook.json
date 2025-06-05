@@ -95,7 +95,7 @@
         "NaOH": ["pH", 7.34]
     },
     "Tyrode_0_Ca²⁺_-_0.5_EGTA": {
-        "description": "A variation of the standard Tyrode's solution without calcium.",
+        "description": "A 0-Ca²⁺ variation of the standard Tyrode's solution in which EGTA is used to sequester contaminating calcium.",
         "NaCl": 154,
         "KCl": 4,
         "MgCl<sub>2</sub>": 1,
@@ -114,7 +114,7 @@
         "KOH": ["pH", 7.00]
     },
     "SIKA_1.1_EGTA": {
-        "description": "Standard intracellular solution with potassium and 0 mM calcium.",
+        "description": "Standard intracellular solution with potassium and 0 mM calcium (contaminating calcium sequestered by EGTA).",
         "KCl": 15,
         "MgCl<sub>2</sub>": 3,
         "HEPES": 5,

@@ -49,14 +49,8 @@ Unfortunately---being related to the statistical probability that some cations a
 \\(\varphi\\) values in the table above are given for each solute at the physiological concentrations at which they are found in the extracellular fluids of mammals, at 37 °C, as generally agreed upon in the literature, however...
 {{< hint warning >}}
 __Experimental osmolarity__  
-Osmotic coefficients must be taken with caution because in practice it is quite impossible to determine \\(\varphi_{_k}\\) for each individual solute \\(k\\) within a composite solution---like the ones in our recipe book.
+...osmotic coefficients must be taken with caution because in practice it is quite impossible to determine \\(\varphi_{_k}\\) for each individual solute \\(k\\) within a composite solution---like the ones in our recipe book.
 So, please, always remember that __the only effective way to measure the _real_ osmolarity of a solution is by using an osmometer.__
-{{< /hint >}}
-
-{{< hint warning >}}
-__The EGTA approximation__  
-In either way of calculating osmolarity, the chelating effects of EGTA are only roughly quantified by setting \\(n\\) to zero, so that the osmotic effects of calcium sequestration and chelator addition offset each other.
-This is strictly true only when every free calcium ion is bound by an EGTA molecule and no EGTA molecule remains free, however, given the typical low concentrations of both \\(\text{Ca}^{2+}\\) ions and EGTA, this _lump-sum_ usually does not introduce major errors.
 {{< /hint >}}
 
 On top of that, we should also consider the _degree of dissociation_ \\(\alpha\\), that is the fraction of the original solute molecules that have _actually_ dissociated.
@@ -70,7 +64,25 @@ Van't Hoff factors---albeit with all the limitations and estimation difficulties
 {{< katex display >}}
 O_{\text{real}}=\sum_k i_{_{k}}\,C_{_{k}}
 {{< /katex >}}
-Notably, for all the ingredients in our recipes of electrophysiological interest, it is quite reasonable to assume complete dissociation (\\(\alpha=1 \Rightarrow i=n\varphi\\)), thus making the two expressions for \\(O_{\text{real}}\\) essentially the same.
+Notably, for most of the ingredients in our recipes of electrophysiological interest (the exceptions being some weak acids and bases such as HEPES and NMDG, respectively), it is quite reasonable to assume complete dissociation (\\(\alpha=1 \Rightarrow i=n\varphi\\)), thus making the two expressions for \\(O_{\text{real}}\\) essentially the same.
+
+### * Acid-Base Conventions
+Technically, both \\(\text{OH}^{-}\\) and \\(\text{H}^{+}\\) (or more correctly, \\(\text{H}_{3}\text{O}^{+}\\)) are osmotically active species, contributing to osmotic pressure like any other dissolved ion or molecule that does not freely permeate membranes.
+However, this contribution is usually negligible because---under physiological conditions---the concentration of both \\(\text{OH}^{-}\\) and \\(\text{H}^{+}\\) ions is extremely low.
+At pH 7.4:
+{{< katex display >}}
+\left[\text{H}^{+}\right] = 10^{-7.4}\ \text{mol/L} = 4\cdot 10^{-8}\ \text{M} = 4\cdot 10^{-5}\ \text{mM}
+{{< /katex >}}
+meaning that its osmolar contribution is about 0.00001% of total osmolarity, which is orders of magnitude below practical detection or physiological relevance.
+In order to observe non-negligible effects on osmolarity---let's say \\(\geq 1\ \text{mOsm/L}\\)---you need very acidic (\\(\text{pH} \leq 3\\)) or very alkaline (\\(\text{pH} \geq 11\\)) solutions.
+
+Since we always work at a controlled pH of \\(\sim 7\\), it is fair to assume that all acids and bases that we add to our physiological solutions contribute to osmolarity only in proportion to their own concentration (i.e., with a van't Hoff factor \\(= 1\\)).
+This is because they either dissociate only weakly (such as HEPES) or because the \\(\text{OH}^{-}/\text{H}^{+}\\) ions they release are neutralized by the concomitant addition of an acid/base, whose contribution to total osmolarity will be considered separately (see, for example, the NMDG-HCl pair in PSS recipe).
+For all this ingredients, for convenience of calculation, we set \\(n=1\\) and \\(\varphi=1\\).
+
+### ** EGTA Approximation
+In either way of calculating osmolarity (real and ideal), the chelating effects of EGTA are only roughly quantified by setting \\(n\\) to zero, so that the osmotic effects of calcium sequestration and chelator addition offset each other.
+This is strictly true only when _every_ EGTA molecule actually binds a calcium ion (i.e., no EGTA molecule remains free), however, given the typical low concentrations of both \\(\text{Ca}^{2+}\\) ions and EGTA, this _lump-sum_ usually does not introduce major errors.
 
 ## References
 ### General

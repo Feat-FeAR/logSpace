@@ -20,17 +20,16 @@ function generateMolecularWeightTable() {
         let weightCell = document.createElement("td");
         weightCell.textContent = molecularWeights[ingredient][0].toFixed(2);
 
-        let nFactorCell = document.createElement("td");
-        nFactorCell.classList.add("center-text");
-        let nFactor = molecularWeights[ingredient][1];
-        let nFactorNote = molecularWeights[ingredient][4];
         let spanFactor = document.createElement("span");
-        spanFactor.textContent = nFactor;
+        spanFactor.textContent = molecularWeights[ingredient][1];
         let spanNote = document.createElement("span");
         spanNote.classList.add("small‐note");
+        let nFactorNote = molecularWeights[ingredient][4];
         spanNote.textContent = nFactorNote != null ? nFactorNote : "";
+        let nFactorCell = document.createElement("td");
+        nFactorCell.classList.add("center-text");
         nFactorCell.append(spanFactor, spanNote);
-
+        
         let osmoCoeffCell = document.createElement("td");
         osmoCoeffCell.classList.add("center-text");
         osmoCoeffCell.textContent = molecularWeights[ingredient][2].toFixed(2);
