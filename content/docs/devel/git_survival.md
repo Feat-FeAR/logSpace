@@ -496,80 +496,114 @@ See also next section for more info on _tracking branches_ and the `origin`
 name.
 {{< /hint >}}
 
-## Make a New Repository
+## Make a New Empty Repository
 To create a new GitHub repository `<git_repo>` from scratch you can either use
 the __GitHub Web__ graphical interface or choose the __GitHub CLI__ as a fully
 command-line alternative.
 
 ### GitHub Web
-1. go to the
+1. Go to the
     [_GitHub_](https://github.com/)
     website and log in with your credentials;
 
-1. from `Your profile` > `Repositories` > `New` > set `<git_repo>` as name for
-    the new repository > `Create repository`.
+1. From `Your profile` > `Repositories` > `New` > set `<git_repo>` as name for
+    the new repository > `Create repository`;
+
+1. Copy the `git_repo_url` to clone the empty repository locally.
+    ```bash
+    git clone <git_repo_url>
+    ```
+
+1. Now you are ready to _stage_, _commit_, and _push_ from within the newly
+    created `<git_repo>` directory (see next section).
 
 ### GitHub CLI
-1. Install the __GitHub CLI__ (to be installed separately from Git);
+1. Install the __GitHub CLI__ (to be installed separately from Git) and log in;
     ```bash
     # Example syntax for Arch systems
     sudo pacman -Syu github-cli
+    
+    # To be done just once
+    gh auth login
     ```
 
-1. create the GitHub public repository `<git_repo>`.
+1. Create an empty GitHub public repository named `<git_repo>`;
     ```bash
-    gh auth login  # Just the first time
-    gh repo create <git_repo> --public --source=. --remote=upstream --push
+    gh repo create <git_repo> --public
     ```
 
-### Git Local Repo
-Regardless of how you chose to create the remote GitHub repository,
+1. Check it out on GitHub and copy the `git_repo_url` to clone the empty
+    repository locally;
+    ```bash
+    git clone <git_repo_url>
+    ```
 
-1. either `git clone` it locally, or
-    - create a local directory `<git_repo>` to contain the new repo;
-    - move there and create the repository locally (initialize the local
-        _object database_);
-        ```bash
-        cd <git_repo>
-        git init
-        ```
-    - make the GitHub repository a _remote_ for the local repository;
-        ```bash
-        git remote add origin git@github.com:<user>/<git_repo>.git
-        # E.g.,:
-        git remote add origin git@github.com:Feat-FeAR/Kerblam_prototype.git
-        ```
-        {{< hint info >}}
+1. Now you are ready to _stage_, _commit_, and _push_ from within the newly
+    created `<git_repo>` directory (see next section).
+
+## Make a Repo from a Local Folder
+Follow these steps to make a local Git repository from an existing project folder.
+
+1. Make the project directory and move into it; 
+    ```bash
+    mkdir <git_repo>
+    cd <git_repo>
+    ```
+
+1. Create the repository locally (i.e., initialize the local _object database_);
+    ```bash
+    git init
+    git branch -m main # to override the default name 'master'
+    # OR, in one single step,
+    git init -b main
+    ```
+
+1. Add some files (e.g., code files, `README.md`, `.gitignore`), then _stage_
+    and _commit_;
+    ```bash
+    git add .
+    git commit -m "<message>"
+    ```
+
+This way, you have a fully functional local Git repository. The next steps will
+show you how to connect it to a remote GitHub repository. Also in this case you
+can choose between the __GitHub Web__ graphical interface and the __GitHub CLI__.
+
+### GitHub Web
+1. Create the GitHub repo from the
+    [_GitHub_](https://github.com/)
+    website:  `Your profile` > `Repositories` > `New` > set `<git_repo>` as name for
+    the new repository > `Create repository`;
+
+1. Make the GitHub repository a _remote_ for the local repository;
+    ```bash
+    git remote add origin git@github.com:<user>/<git_repo>.git
+    # E.g.,:
+    git remote add origin git@github.com:Feat-FeAR/Kerblam_prototype.git
+    # Check the command has worked
+    git remote -v
+    ```
+    {{< hint info >}}
 __INFO__  
 In Git, a _remote_ is a copy of the repository that is hosted somewhere else,
 that we can _push to_ and _pull from_. To avoid entering the full address each
 time, Git allows the use of local names to refer to the _remote_. Even if in
 principle it could be called anything, `origin` is a convention that is often
 used by default in Git and GitHub (see, e.g., `git clone`), so it’s helpful to
-stick with this unless there’s a reason not to.
+stick with this unless there’s a reason not to. However, pay attention...
+`upstream` is another name sometimes used for the _remote_.
 
 __In any case, remember that the name you give to a remote only exists
 _locally_. It’s an alias that you choose and not something intrinsic to the
 remote repository.__
-        {{< /hint >}}
-    - check the command has worked;
-        ```bash
-         git remote -v
-        ```
+    {{< /hint >}}
 
-1. write some code... and possibly a `README.md`, then _stage_ and _commit_;
-    ```bash
-    git add .
-    git commit -m "<message>"
-    ```
-
-1. if you didn't `git clone` the repo, push the first commit by using the option
-    `--set-upstream` (`-u`) to set up a _tracking branch_ that will associate
-    the current local branch with a _remote_ so that subsequent `git push`,
-    `git fetch`, `git merge`, and `git pull` _can_ be used without any arguments
-    (notably, it also affects `git status`, which will then report the
-    difference between your current branch and its _upstream_ in terms of
-    commits).
+1. Push the first commit by using the option `--set-upstream` (`-u`) to set up
+    a _tracking branch_ that will associate the current local branch with a
+    _remote_ so that subsequent `git push`, `git fetch`, `git merge`, and
+    `git pull` _can_ be used without any arguments (notably, it also affects
+    `git status`, which will then report the difference between your current
+    branch and its _upstream_ in terms of commits).
     ```bash
     git push --set-upstream origin main
     # or
@@ -591,16 +625,21 @@ Notably, _tracking branches_ can also be used in Git commands like `diff`,
 other local branch, thus providing an handy bridge to work with the _remotes_.
     {{< /hint >}}
 
-Similarly, to make a repository from an existing `<project>` folder, create the
-GitHub repo beforehand, then
-```bash
-cd <project>
-git init
-git remote add origin git@github.com:<user>/<project>.git
-git add .
-git commit -m "<message>"
-git push -u origin main     # To push the first commit only
-```
+### GitHub CLI
+1. Use __GitHub CLI__ to create a GitHub public repository (named `<git_repo>`)
+    based on the content of the local repo, make it a _remote_ for the local
+    repository, and push the committed changes in one single step.
+    ```bash
+    gh repo create <git_repo> --public --source=. --remote=origin --push
+    ```
+    {{< hint info >}}
+__NOTE__  
+In all these examples, the local project directory and the remote repository
+have always the same name (`<git_repo>`), but this is not actually necessary. In
+fact, there is no such thing as a "repository name" in Git, and the name of the
+GitHub repository does not necessarily have to be the same as the name of the
+project directory.
+{{< /hint >}}
 
 ## Stage, Commit, and Push
 The most standard Git workflow is made up of the following few steps. After each
