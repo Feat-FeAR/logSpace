@@ -174,6 +174,10 @@ Normally, a _DEBUG trap_ only runs in the main shell execution context.
 With `-o functrace` (a.k.a. `set -T`) enabled, the _DEBUG_ (and _RETURN_) trap is also inherited by functions and subshells (and thus by command substitutions and process substitutions).
 In practice, `-o functrace` does to the _DEBUG trap_ what `-o errtrace` does to the _ERR trap_, i.e., your trap fires everywhere, not just top-level.
 
+
+
+
+
 ### Other traps
 Other interesting traps are:
 ```bash
@@ -182,9 +186,49 @@ trap '<handler_command>' RETURN
 trap '<handler_command>' HUP
 ```
 
-###  IFS variable 
+### IFS variable
+Another setting typically associated with the Strict Mode involves the redefinition of the `IFS` in this way:
+```bash
+IFS=$'\n\t'
+```
+The `IFS` variable---which stands for _Internal Field Separator_---defines what Bash calls word splitting.
+By default, Bash sets the IFS to `$' \n\t'` (space, newline, tab), which can produce a lot of mis-parsing related to white-space handling issues, another well-known pain in the ass in Bash scripting...
+Setting `IFS` to `$'\n\t'` means that word splitting will happen only on newlines and tab characters, a generally desired splitting behavior.
+Try, e.g., this minimal script dealing with arrays:
+```bash
+#!/bin/bash
+names=(
+    "Beatrix Kiddo"
+    "Clint Eastwood Jr."
+    "James Alan Hetfield"
+    "Federico Alessandro Ruffinatti"
+)
+
+echo "With default IFS value..."
+for name in ${names[@]}; do
+  echo "$name"
+done
+
+echo
+echo "With strict-mode IFS value..."
+IFS=$'\n\t'
+for name in ${names[@]}; do
+  echo "$name"
+done
+```
+Another apparently trivial, but actually tricky task in Bash is looping through files with spaces in their names or paths.
+```bash
+IFS=$'\n'
+for filename in $(find . -maxdepth 1 -type f | sort)
+do
+    echo "$filename found!"
+done
+```
+
+
 
 ### Stricter than strict
+
 
 ## References
 http://redsymbol.net/
