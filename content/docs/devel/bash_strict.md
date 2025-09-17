@@ -14,7 +14,7 @@ draft: false
 ## The issue
 Unlike all widely used general-purpose programming languages, by default, __Bash ignores errors in scripts__ and continues executing even after a command fails (i.e., returns a non-zero exit status).
 Such an _over-forgiving_ behavior may lead to silent failures or hard-to-debug code.
-To overcome this problem, a best-practice configuration---known as the "Strict Mode"---has emerged in the mid 2010s to makes shell scripts more robust, predictable, and safer, especially in production environments.
+To overcome this problem, an unofficial best-practice configuration---known as the "Strict Mode"---[has emerged in the mid 2010s](http://redsymbol.net/articles/unofficial-bash-strict-mode/) to makes shell scripts more robust, predictable, and safer, especially in production environments.
 
 ## Settings
 Actually, a few variations of the Strict Mode exist out there, depending on developer preferences.
@@ -174,17 +174,28 @@ Normally, a _DEBUG trap_ only runs in the main shell execution context.
 With `-o functrace` (a.k.a. `set -T`) enabled, the _DEBUG_ (and _RETURN_) trap is also inherited by functions and subshells (and thus by command substitutions and process substitutions).
 In practice, `-o functrace` does to the _DEBUG trap_ what `-o errtrace` does to the _ERR trap_, i.e., your trap fires everywhere, not just top-level.
 
-
-
-
-
 ### Other traps
-Other interesting traps are:
-```bash
-trap '<handler_command>' EXIT
-trap '<handler_command>' RETURN
-trap '<handler_command>' HUP
-```
+Other interesting traps commonly used in Bash scripts are set for:
+- __EXIT__: fires once when the shell process exits, but not if you `kill -9` (SIGKILL)
+    ```bash
+    trap '<handler_command>' EXIT
+    ```
+- __RETURN__: fires when a function or a sourced script finishes
+    ```bash
+    trap '<handler_command>' RETURN
+    ```
+- __INT__: fires when you press Ctrl-C (SIGINT)
+    ```bash
+    trap '<handler_command>' INT
+    ```
+- __TERM__: fires for the default signal used by `kill` (SIGTERM)
+    ```bash
+    trap '<handler_command>' TERM
+    ```
+- __HUP__: fires when a terminal closes (SIGHUP)
+    ```bash
+    trap '<handler_command>' HUP
+    ```
 
 ### IFS variable
 Another setting typically associated with the Strict Mode involves the redefinition of the `IFS` in this way:
@@ -217,22 +228,26 @@ for name in ${names[@]}; do
 done
 ```
 Another apparently trivial, but actually tricky task in Bash is looping through files with spaces in their names or paths.
+To do this you have to set a more stringent `IFS`, as in this example:
 ```bash
-IFS=$'\n'
+OIFS="$IFS" # Store default IFS
+IFS=$'\n'   # Define a new IFS
 for filename in $(find . -maxdepth 1 -type f | sort)
 do
     echo "$filename found!"
 done
+IFS="$OIFS" # Restore default IFS
 ```
-
-
+Personally, I tend not to include this setting by default in my scripts, but rather to enable it temporarily when strictly necessary (as in the previous example).
+Instead, I prefer to explicitly handle the issue of white spaces with the appropriate use of single and double quotes---when possible---for the sake of portability and to avoid getting used to a coding practice that is too far from the original nature of Bash.
 
 ### Stricter than strict
-
+If at this point you think that Strict Mode is for sticklers, keep in mind that there are [many developers](https://mywiki.wooledge.org/BashFAQ/105) that are _stricter than the Strict Mode_ and simply reject most of the aforementioned options (`set -e` in particular) deeming their behavior "quite unpredictable" or "unreliable" in certain edge cases.
 
 ## References
-http://redsymbol.net/
-http://redsymbol.net/articles/unofficial-bash-strict-mode/
-https://mywiki.wooledge.org/BashFAQ/105
-[Aaron Maxwell](http://redsymbol.net/articles/unofficial-bash-strict-mode/).
-
+- [Aaron Maxwell Blog](http://redsymbol.net/)
+- [Aaron Maxwell Blog - Bash Strict Mode](http://redsymbol.net/articles/unofficial-bash-strict-mode/)
+- [Lhunath's Bash Guide](https://mywiki.wooledge.org/BashGuide)
+- [Lhunath's Bash Guide FAQ](https://mywiki.wooledge.org/BashFAQ)
+- [Lhunath's Bash Guide FAQ#105](https://mywiki.wooledge.org/BashFAQ/105)
+- [FVu's Wiki - Bash: Error handling](https://fvue.nl/wiki/Bash:_Error_handling)
