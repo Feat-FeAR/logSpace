@@ -12,23 +12,21 @@ draft: false
 
 # Soccer Markov Chain
 Markov chains are out there.
-They are everywhere around you, so much so that you can build one even before knowing what they actually are!
-Let me show you...
+They are everywhere around you, and you come across them so commonly that it is easy to build one even before you know what they really are...
 
 ## Draw the raw chain
-Let's go to __YouTube__ and search for a soccer match.
-Any is fine, but ideally we would like to find the footage of a _whole_ game in order to pick up a sequence that is long enough and well representative of the average game dynamics, rather than just an extract of few short and exceptional actions.
+Go to __YouTube__ and search for a soccer match.
+Any is fine, but ideally we would like to find the footage of a _whole_ game in order to pick up a sequence long enough to be representative of the _average game dynamics_ (rather than just a summary of a few short, exceptional actions).
 
 For the occasion, I chose the so-called [_Derby della Mole_ number 142](https://www.youtube.com/watch?v=5kKGW5EOJNg&t=995s), i.e., the _Serie A_ match between Juventus and Torino held on March 20, 2016, which ended 4-1 in favor of Juventus (which is no surprise to anyone, not even to me, who doesn't follow soccer).
-Referee Rizzoli whistles the start of the game at video time 6:45, with kickoff set for Juventus (and without questioning the significance of the preceding minutes of the clip...).
-As I watch the game, I note down _ball possession_, simply by writing either _j_ or _t_ at each interception or ball pass, depending on whether the ball comes to a Juve or Toro player, respectively.
+Referee Rizzoli whistles the start of the game at video time 6:45, with kickoff set for Juventus and, as I watch the game, I note down _ball possession_, simply by writing either _j_ or _t_ at each interception or ball pass, depending on whether the ball comes to a Juve or Toro player, respectively.
 
 Here is the sequence resulting from the first 10 minutes of game play:
 ```
 jjtjjtjjttttjtttjjjjttttjjjjjjjjtttjttjjtjjjjjjjtjjtjjjjjjtttjtttjjjjjjtjtjjtjjtttttttjttjjtjtjtjtjjjtttjtjtjjttttjtttttttjjjjjjjjjjtttttjtttjttjjjjjjjjjtjjttttjjjjjjjj
 ```
-Well, you can think of this ugly sequence of letters as a _chain of events_ somehow connected to each other (which is pretty much what my mind sees whenever someone makes me watch a soccer game).
-This chain is made up of several ___time steps___, with each step taking only one of the two possible values in our system---either _j_ or _t_---also referred to as the possible ___states___ allowed by the process.
+Well, you can think of this ugly sequence of letters as a _chain of events_ somehow connected to each other.
+The chain is made up of several ___time steps___, with each step taking only one of the two possible values in our system---either _j_ or _t_---also referred to as the possible ___states___ allowed by the process.
 Finally, the pass from one state to another is what we call a ___transition___. Specifically, when dealing with just two states, only four different transitions are possible, in this case being
 - \\(t\rightarrow t\quad\\) passes completed by Torino
 - \\(t\rightarrow j\quad\\) Torino passes intercepted by Juventus
@@ -37,8 +35,8 @@ Finally, the pass from one state to another is what we call a ___transition___. 
 
 What we are looking at is definitely __not a deterministic system__.
 On the contrary, the whole game is a __stochastic process__, both in terms of its final result (which justifies the existence of a soccer betting ecosystem), but also in its more marginal aspects, such as the one represented by our putative Markov chain, namely ball possession.
-You cannot predict which of the two teams will control the ball on, e.g., the 250th pass---and even knowing who kicked off does not add any information.
-Nevertheless, in most cases, the sequence of passes is not _completely random_ (in the sense of equiprobability), but state transitions are governed by specific __probability distributions__ that will make some pass sequences (_actions_) more likely than others, ultimately favoring one of the two teams.
+You cannot predict which of the two teams will control the ball on, e.g., the 254<sup>th</sup> pass---and even knowing who kicked off does not add any information.
+Nevertheless, in most cases, the sequence of passes is not _completely random_ (in the sense of _equiprobability_) since state transitions are governed by specific __probability distributions__ that will make some pass sequences (i.e., _actions_ !) more likely than others, ultimately favoring one of the two teams.
 Now we will try to get an estimate of such probabilities.
 
 ## Compute some basic stats
@@ -98,7 +96,7 @@ The detailed raw counts (also called _occurrences_) of the four possible transit
 
 Using the notation \\(n_{ab}\\) for the raw counts of the generic transition \\(a\rightarrow b\\), we have that \\(N_t=n_{tt}+n_{tj}=74\\) is the number of times the ball was touched by a Toro player, while \\(N_j=n_{jj}+n_{jt}=93\\) is the number of times the ball was touched by a Juventus player.
 Of course, \\(N=N_t+N_j=167\\) represents the overall length of the chain.
-The total number of transitions occurred from the same given state can be used to normalize transition counts and get the more informative _transition frequencies_ \\(\nu\\), which are shown in the _Frequency_ column of the previous table.
+The total number of transitions occurred from a particular state can be used to normalize transition counts and get the more informative _transition frequencies_ \\(\nu\\), which are shown in the _Frequency_ column of the previous table.
 E.g., for the \\(t\rightarrow j\\) transition we have 
 $$
 \nu_{tj}=\frac{n_{tj}}{N_t}=\frac{n_{tj}}{n_{tt}+n_{tj}}=\frac{31}{74}\approx0.4189
@@ -109,18 +107,18 @@ It is important to note that, because of this normalization choice, \\(\nu_{tj}\
 Overall, it is nice to see that players of both teams (in an attempt to justify their zillion-euro super salaries) actually made every effort to keep their _completion rate_ above 50% (i.e., completed passes are more common than interceptions), even though Juventus seems to provide a superior _passing accuracy_ (67% _vs._ 58%).
 
 ## Moving to probabilities
-For very long chains, that is to say for game observation times that tend to infinity (kind of Dante's circle of hell for Italian males who refused in life to be soccer fans), the empirical transition frequencies will tend more and more accurately to the related theoretical probabilities, according to the _frequentist interpretation_ of probability.
+For very long chains, that is to say for game observation times that tend to infinity (kind of Dante's circle of hell for Italian males who have ignored soccer in their lives), the empirical transition frequencies will tend more and more accurately to the related theoretical probabilities, according to the _frequentist interpretation_ of probability.
 Namely,
 $$
-p_{tj}=\lim_{N_t\rightarrow\infty}\nu_{tj}=\lim_{N_t\rightarrow\infty}\frac{n_{tj}}{N_t}
+\lim_{N_t\rightarrow\infty}\frac{n_{tj}}{N_t}=\lim_{N_t\rightarrow\infty}\nu_{tj}=p_{tj}
 $$
 or, if you prefer,
 $$
-\nu_{tj}=\frac{n_{tj}}{N_t}=\frac{n_{tj}}{\sum_a n_{ta}}\quad\underset{N_t\rightarrow\infty}{\longrightarrow}\quad p_{tj}
+\frac{n_{tj}}{N_t}=\nu_{tj}\quad\underset{N_t\rightarrow\infty}{\longrightarrow}\quad p_{tj}
 $$
 gives the probability that a pass by a Toro player will be intercepted by the opposing team.
 
-Nevertheless, if all we have are the first 10 minutes of the game, the empirical frequencies shown in the previous table are also our best estimates of the four theoretical probabilities.
+However, if all we have are the first 10 minutes of the game, the empirical frequencies shown in the previous table are also our best estimates of the four theoretical probabilities.
 These numbers are usually assembled into one single algebraic structure, called the _transition matrix_, which features the probabilities for all the possible ordered pairs of starting and arrival states, indexed by rows and columns, respectively.
 
 |                   |...to \\(t\\)|...to \\(j\\)|
@@ -141,7 +139,7 @@ In matrix algebra notation, the transition matrix \\(\bm{P}\\) associated with o
     \end{pmatrix}
 {{< /katex >}}
 
-Also note that---by the way the transition matrix is built---__each row of \\(\bm{P}\\) must necessarily sum to 1__, being it the _probability distribution_ of states at the next step, when moving from a given starting state.
+Also note that---by the way the transition matrix is built---__each row of \\(\bm{P}\\) must necessarily sum to 1__, being it the _probability distribution of states at the next step, when moving from a given starting state_.
 For instance, in our case the first line of \\(\bm{P}\\) tells us with what probability a Toro pass will either succeed or be intercepted---and yet we already know that one of the two things has to happen, which is why the sum of the row's values must always be 1.
 
 ## The Markovian hypothesis
@@ -159,8 +157,8 @@ For the same reason, any Markov chain can be represented by a ___state diagram__
 {{< figure src="/images/2_states_toro-juve.png" title="Juve-Toro Markov Chain" width=600 >}}
 </div>
 
-Certainly, doubts may arise as to whether the system we have chosen really meets the Markovian hypothesis and it could be therefore properly modeled by a Markov chain.
-If we think, for example, that the outcome of a pass could be not only a function of the team currently holding the ball, but it could also depend on where the ball comes from (was it gently received from a teammate or was it frantically stolen from an opponent?), then the Markovian hypothesis would fail, or rather we should resort to a _higher-order_ model.
+Of course, doubts may arise as to whether the system we have chosen really satisfies the Markovian hypothesis and can therefore be properly modeled by a Markov chain.
+If we think, for example, that the outcome of a pass could be not only a function of the team currently holding the ball, but it could also depend on where the ball comes from (i.e., was it gently received from a teammate or was it frantically stolen from an opponent?), then the Markovian hypothesis would fail, or rather we should resort to a _higher-order_ model.
 The point is that any model is by definition a simplification of reality, usually intended to draw out some fundamental aspects of the phenomenon, at the expense of other aspects that may be considered secondary.
 Therefore, the correct question should be about how relevant second-order (or, more generally, higher-order) effects are to the description of the system we are interested in.
 
@@ -175,8 +173,7 @@ By running the simulation again, it is extremely unlikely to get the same sequen
 And by "extremely unlikely" I mean _much much more_ unlikely than Torino winning the championship.
 Instead, a new _realization_ would be obtained, absolutely different from the previous one, but still similar to it in its underlying stochastic structure, being based on the same transition probabilities between states (i.e., on the same transition matrix).
 
-More in detail, we simulated here a chain that is 9 times as long as the original one, thus representing a _possible_ full game without stoppage or extra time, made up of 90 endless minutes of boring idle play.
-So, go and move the slider above to the right and you will experience the same excitement of an entire game condensed into a few seconds!
+More in detail, we simulated here a chain that is 9 times as long as the original one, thus representing a _plausible_ full game, without stoppage or extra time: just 90 endless minutes of boring idle play.
 
 ## Introducing the formalism
 A __random process__ (or __stochastic process__) is generally defined as a _random function of time_ \\(X\\!\left(t\right)\\), that is to say a random variable evolving over time---even though independent variables of different nature (such as position) are still possible.
