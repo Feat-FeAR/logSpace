@@ -1,5 +1,13 @@
 <!-- Shortcode for the DateOperator MetaDataMaker (MDM) field -->
 
+<!--
+NOTE: MDM relies on every value-producing field having `class="metaValue"`, plus
+`data-meta-group` and `data-meta-key` attributes (while `data-meta-unit` is
+optional), as required by `getAllMetaValues()` logic for compiling the final
+JSON object.
+See 'DESIGN NOTE' in 'MDM_getValues.js'
+-->
+
 <!-- Access the JSON ('./data/TCPL.json') -->
 <script>
     const tcpLab = {{ $.Site.Data.TCPL }};
@@ -12,42 +20,45 @@
 </script>
 
 <!-- Date field as a calendar selector -->
-<h2>Date</h2>
+<h2>General</h2>
+<h3>Time</h3>
 <div class="stdMetaField">
-    <label class="metaLabel"
-           for="today_date">
+    <label class="metaLabel" for="today_date">
         Date:
     </label>
     <input type="date"
            id="today_date"
            value=""
            class="metaValue"
-           data-meta-info="Date">
+           data-meta-info="Date"
+           data-meta-group="general"
+           data-meta-key="date">
 </div>
 
 <!-- Operator field as a drop-down menu, with [+] and [-] buttons to add and
     remove operators, and the 'Guest' option for custom operator values -->
-<h2>Operator(s)</h2>
+<h3>Operator(s)</h3>
 <button class="stdMetaField smallButton"
         onclick="addOp()">
     [ + ]
 </button>
 <button class="smallButton"
         onclick="removeOp()">
-    [ -- ]
+    [ − ]
 </button>
 <!-- Nested <div> to accommodate multiple drop-down menus -->
 <div id="opFields"
      class="stdMetaField">
     <div> <!-- For a single Drop-down menu -->
-        <label class="metaLabel"
-               for="dropdown_operator1">
+        <label class="metaLabel" for="dropdown_operator1">
             Op. 1:
         </label>
         <select id="dropdown_operator1"
                 onchange="toggleCustomInput(this)"
                 class="metaValue"
-                data-meta-info="Operator 1">
+                data-meta-info="Operator 1"
+                data-meta-group="general"
+                data-meta-key="operator_1">
             <!-- Automatically generate drop-down menu options by JS -->
             <!-- see generateFieldOptions() JavaScript function-->
         </select>

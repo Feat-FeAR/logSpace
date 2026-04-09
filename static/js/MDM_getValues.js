@@ -1,82 +1,115 @@
 /*
 DESIGN NOTE
 -----------
-Within the MetaData Maker (MDM) framework, all HTML tags generating useful
-values--such as <select> and <input>--are tagged by the `class="metaValue"`.
-That attribute will be used by the `getAllMetaValues()` function to identify and
-list all the value-generating fields in the document. In addition, those same
-elements are provided with custom data attributes, which are attributes that you
-can define yourself and start with the prefix `data-`. These attributes are not
-intended for styling, but store additional information about the element, and
-they are often used to associate metadata with specific elements for scripting
-purposes. In MDM, we use the custom attribute `data-meta-info="..."` to store
-the name of the key that will be used in the final object data structure to
-store the `.value` from that same tag. In particular, the method
-`.dataset.metaInfo` is used to retrieve the value of these custom data
-attribute. Notice that, according to the JavaScript naming conventions for
-properties, the `data-` prefix is removed when accessing the attribute and the
-attribute name is converted from kebab-case (e.g., data-meta-info) to camelCase
-(e.g., metaInfo).
+Within MetaDataMaker (MDM), every field that must be exported to JSON must have
+`class="metaValue"`. `getAllMetaValues()` scans the document for that class and
+reads the value of each matching element (`<input>`, `<select>`, `<textarea>`,
+etc.). This is the core contract that makes a form field visible to MDM.
+
+In addition, MDM uses HTML `data-*` custom attributes to attach extra-metadata
+to each field. These user-defined attributes starting with the prefix `data-`
+are not intended for styling, but, being accessible in JS through
+`element.dataset.*`, are often used for scripting purposes to associate
+additional information with specific HTML elements. In MDM, they are used to
+store the name of the keys that will be used in the final object data structure.
+
+Specifically:
+ - `data-meta-group`: parent block/group name for nested JSON exports;
+ - `data-meta-key`: field key inside that group;
+ - `data-meta-unit`: optional measurement unit associated with the stored value;
+ - `data-meta-info`: human-facing label layer (for future UI automation).
+
+Notice that, according to the JavaScript naming conventions for properties, the
+`data-` prefix is removed when accessing the attribute and the attribute name is
+systematically converted from kebab-case (e.g., data-meta-info) to camelCase
+(e.g., metaInfo -> element.dataset.metaInfo).
 */
 
 function getAllMetaValues() {
     // Select all elements with the class "metaValue"
-    const elements = document.getElementsByClassName("metaValue");
+    const elements = document.querySelectorAll(".metaValue");
 
-    // Create an object to store values and metadata
-    const metaValues = {};
+    // Create an object to store metadata
+    const metadata = {
+        schema_version: "0.9.0",
+        generated_by: "MetaDataMaker",
+        generated_at: new Date().toISOString(),
+        general: {
+            operators: []
+        }
+    };
 
     // Loop through the elements
-    for (let i = 0; i < elements.length; i++) {
-        const element = elements[i];
+    elements.forEach(element => {
+        // Get keys and values
+        const metaInfo = element.dataset.metaInfo || "";
+        const group = element.dataset.metaGroup || "general";
+        const key = element.dataset.metaKey || element.id;
+        const unit = element.dataset.metaUnit || null;
 
-        // Get the value and data-meta-info attribute
-        let metaData = element.dataset.metaInfo;
         let value;
-        if (element.value === 'GUEST') {    
-            // Extract the trailing digits from a string by a regular expression 
+
+        if (element.value === "GUEST") {
             const opNum = element.id.match(/\d+$/)[0];
-            value = document.getElementById(`guest_operator${opNum}`).value;
+            const guestField = document.getElementById(`guest_operator${opNum}`);
+            value = guestField.value === "" ? null : guestField.value;
+        } else if (element.type === "checkbox") {
+            value = element.checked;
+        } else if (element.type === "number") {
+            value = element.value === "" ? null : Number(element.value);
         } else {
-            value = element.value;
+            value = element.value === "" ? null : element.value;
         }
 
-        // Check if the key was set
-        if (metaData === undefined) {
-            throw new Error('Undefined \'data-meta-info\' attribute for element ' + i);
+        // Operators as an array
+        if (key.startsWith("operator")) {
+            if (value !== null && value !== "") {
+                metadata.general.operators.push(value);
+            }
+            return;
         }
-        // Check if the key is duplicated
-        if (metaValues[metaData] != undefined) {
-            metaData = metaData + '_' + i;
+
+        // Create the group in the JSON if still does not exist
+        if (!(group in metadata)) {
+            metadata[group] = {};
         }
-        // Store value and metaData as a key:value pair inside 'metaValues'
-        metaValues[metaData] = value;
+
+        // Store the metadata
+        if (unit) {
+            metadata[group][key] = {
+                value: value,
+                unit: unit
+            };
+        } else {
+            metadata[group][key] = value;
+        }
+    });
+
+    if (metadata.general.operators.length === 0) {
+        metadata.general.operators = null;
     }
+
     // Return the object
-    return metaValues;
+    return metadata;
 }
 
 function downloadJsonData() {
     // Get the data
-    const metaValues = getAllMetaValues();
+    const metadata = getAllMetaValues();
 
     // Convert the object to a JSON string
-    // The third parameter (2) is for indentation
-    const jsonData = JSON.stringify(metaValues, null, 2);
+    // The third parameter (4) is for indentation
+    const jsonString = JSON.stringify(metadata, null, 4);
 
     // Create a Blob containing the JSON data
-    const blob = new Blob([jsonData], { type: "application/json" });
-
+    const blob = new Blob([jsonString], { type: "application/json" });
+    
     // Create a download link
-    const fileName = "metaValues.json";
-    if (window.navigator && window.navigator.msSaveOrOpenBlob) {
-        // Support for Internet Explorer and older versions of Microsoft Edge
-        window.navigator.msSaveOrOpenBlob(blob, fileName);
-    } else {
-        // Other browsers
-        const link = document.createElement("a");
-        link.href = URL.createObjectURL(blob);
-        link.download = fileName;
-        link.click();
-    }
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "metadata.json";
+    a.click();
+
+    URL.revokeObjectURL(url);
 }

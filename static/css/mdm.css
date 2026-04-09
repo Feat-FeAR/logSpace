@@ -34,6 +34,10 @@ select {
     margin-left: 10px;
 }
 
+.shortText {
+    width: 150px;
+}
+
 /* smallButton class-specific style */
 button.smallButton {
     padding: 4px 10px;
@@ -46,4 +50,39 @@ button.smallButton {
 
 button.smallButton:hover {
     background-color: rgba(83, 122, 143, 0.5);
+}
+
+/* Generic numeric inputs */
+input[type="number"] {
+    width: 80px;
+    padding: 6px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    margin-bottom: 15px;
+    margin-left: 10px;
+}
+
+/* Generic text inputs */
+input[type="text"] {
+    width: 200px;
+    padding: 6px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    margin-bottom: 15px;
+    margin-left: 10px;
+}
+
+/* Checkbox spacing */
+input[type="checkbox"] {
+    margin-left: 10px;
+    margin-bottom: 20px;
+    transform: scale(1.2);
+}
+
+.unitLabel {
+    margin-left: 8px;
+    font-size: 14px;
+    color: #a8a8a8;
 }

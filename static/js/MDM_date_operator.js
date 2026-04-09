@@ -32,14 +32,15 @@ function addOp() {
     const op_section = document.getElementById("opFields");
     const new_field = document.createElement("div");
     new_field.innerHTML = `
-        <label class="metaLabel"
-               for="dropdown_operator${opCounter}">
+        <label class="metaLabel" for="dropdown_operator${opCounter}">
             Op. ${opCounter}:
         </label>
         <select id="dropdown_operator${opCounter}"
                 onchange="toggleCustomInput(this)"
                 class="metaValue"
-                data-meta-info="Operator ${opCounter}">
+                data-meta-info="Operator ${opCounter}"
+                data-meta-group="general"
+                data-meta-key="operator_${opCounter}">
         </select>
         <input type="text"
                id="guest_operator${opCounter}"
