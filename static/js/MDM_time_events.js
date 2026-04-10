@@ -15,7 +15,6 @@ function getCurrentStimuli() {
             stimuli.push(value);
         }
     }
-
     return stimuli;
 }
 
@@ -72,10 +71,7 @@ function addStimulus() {
         </label>
         <input type="text"
                id="stimulus_${stimulusCounter}"
-               class="metaValue"
-               data-meta-info="Stimulus ${stimulusCounter}"
-               data-meta-group="events"
-               data-meta-key="stimulus_${stimulusCounter}"
+               class="auxiliary"
                placeholder="S${stimulusCounter}">
     `;
 
