@@ -1,0 +1,86 @@
+<!-- Shortcode for the TimeEvents MetaDataMaker (MDM) field -->
+
+<!-- Import the JS script -->
+<script defer
+        language="javascript"
+        type="text/javascript"
+        src='{{ "js/MDM_time_events.js" | urlize | relURL }}'>
+</script>
+
+<h2>Time Events</h2>
+<h3>Stimulus Panel</h3>
+<button class="stdMetaField smallButton"
+        type="button"
+        onclick="addStimulus()">
+    [ + ]
+</button>
+<button class="smallButton"
+        type="button"
+        onclick="removeStimulus()">
+    [ − ]
+</button>
+
+<div id="stimulusFields"
+     class="stdMetaField">
+    <div>
+        <label class="metaLabel" for="stimulus_1">
+            Stimulus 1:
+        </label>
+        <input type="text"
+               id="stimulus_1"
+               class="metaValue"
+               data-meta-info="Stimulus 1"
+               data-meta-group="events"
+               data-meta-key="stimulus_1"
+               placeholder="S1">
+    </div>
+</div>
+
+<h3>Clampex Files Association</h3>
+<button class="stdMetaField smallButton"
+        type="button"
+        onclick="addFileEventRow()">
+    [ + ]
+</button>
+<button class="smallButton"
+        type="button"
+        onclick="removeFileEventRow()">
+    [ − ]
+</button>
+<button class="smallButton"
+        type="button"
+        onclick="document.getElementById('local_files_picker').click()">
+    Select Files
+</button>
+
+<input type="file"
+       id="local_files_picker"
+       multiple
+       style="display: none;"
+       onchange="populateFilesFromSelection(this.files)">
+
+<div id="fileEventFields"
+     class="stdMetaField">
+    <div class="fileEventRow">
+        <label class="metaLabel" for="name_file_1">
+            File 1:
+        </label>
+        <input type="text"
+               id="name_file_1"
+               class="metaValue"
+               data-meta-info="File 1 Name"
+               data-meta-group="events"
+               data-meta-key="name_file_1"
+               placeholder="filename.ext">
+
+        <label class="metaLabel" for="stimulus_file_1">
+            Stimulus:
+        </label>
+        <select id="stimulus_file_1"
+                class="metaValue"
+                data-meta-info="File 1 Stimulus"
+                data-meta-group="events"
+                data-meta-key="stimulus_file_1">
+        </select>
+    </div>
+</div>
