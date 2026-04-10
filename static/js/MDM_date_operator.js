@@ -45,7 +45,7 @@ function addOp() {
         <input type="text"
                id="guest_operator${opCounter}"
                placeholder="Name Surname"
-               style="display: none;">
+               class="hidden">
     `;
     op_section.appendChild(new_field);
     // Generate the options for the newly created field
