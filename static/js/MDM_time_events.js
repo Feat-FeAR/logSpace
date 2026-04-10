@@ -147,7 +147,20 @@ function removeFileEventRow() {
 
 // Populate rows automatically from files selected on the local filesystem
 function populateFilesFromSelection(fileList) {
-    for (let i = 0; i < fileList.length; i++) {
+    if (!fileList || fileList.length === 0) return;
+
+    let startIndex = 0;
+
+    const firstFileInput = document.getElementById("name_file_1");
+
+    // Reuse the first row only if it exists and is still empty
+    if (firstFileInput && firstFileInput.value.trim() === "") {
+        firstFileInput.value = fileList[0].name;
+        startIndex = 1;
+    }
+
+    // Add new rows for all remaining selected files
+    for (let i = startIndex; i < fileList.length; i++) {
         addFileEventRow(fileList[i].name);
     }
 
