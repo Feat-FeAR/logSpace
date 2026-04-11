@@ -36,12 +36,12 @@
 <h3>Clampex Files Association</h3>
 <button class="stdMetaField smallButton"
         type="button"
-        onclick="addFileEventRow()">
+        onclick="addProtocolRow()">
     [ + ]
 </button>
 <button class="smallButton"
         type="button"
-        onclick="removeFileEventRow()">
+        onclick="removeProtocolRow()">
     [ − ]
 </button>
 <button class="smallButton"
@@ -57,42 +57,42 @@
        style="display: none;"
        onchange="populateFilesFromSelection(this.files)">
 
-<div id="fileEventFields"
-     class="stdMetaField">
-    <div class="fileEventRow">
-        <label class="metaLabel" for="name_file_1">
+<!-- Nested <div> to accommodate multiple fileProtocolRow's -->
+<div id="fileProtocolFields" class="stdMetaField">
+    <div class="fileProtocolRow"> <!-- For a single fileProtocolRow -->
+        <label class="metaLabel" for="name_proto-file_1">
             File 1:
         </label>
         <input type="text"
-               id="name_file_1"
+               id="name_proto-file_1"
                class="metaValue"
-               data-meta-info="File 1 Name"
-               data-meta-group="events"
-               data-meta-key="name_file_1"
+               data-meta-info="Protocol File Name 1"
+               data-meta-group="protocol_applications"
+               data-meta-key="name_proto-file_1"
                placeholder="filename.ext">
 
-        <label class="metaLabel" for="stimulus_file_1">
+        <label class="metaLabel" for="stimulus_proto-file_1">
             Stimulus:
         </label>
-        <select id="stimulus_file_1"
+        <select id="stimulus_proto-file_1"
                 class="metaValue"
-                data-meta-info="File 1 Stimulus"
-                data-meta-group="events"
-                data-meta-key="stimulus_file_1">
+                data-meta-info="Protocol File Stimulus 1"
+                data-meta-group="protocol_applications"
+                data-meta-key="stimulus_proto-file_1">
         </select>
 
-        <label class="metaLabel" for="time_file_1">
+        <label class="metaLabel" for="time_proto-file_1">
             Time:
         </label>
         <div class="inputWithUnit">
             <input type="number"
                    step="any"
                    inputmode="decimal"
-                   id="time_file_1"
+                   id="time_proto-file_1"
                    class="metaValue withUnit"
-                   data-meta-info="Event Time"
-                   data-meta-group="events"
-                   data-meta-key="time_file_1"
+                   data-meta-info="Protocol File Time 1"
+                   data-meta-group="protocol_applications"
+                   data-meta-key="time_proto-file_1"
                    data-meta-unit="s">
         </div>
     </div>

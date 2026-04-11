@@ -1,7 +1,7 @@
 // JavaScript code for the TimeEvents MetaDataMaker (MDM) shortcode
 
-let stimulusCounter = 2;    // next stimulus index
-let fileEventCounter = 2;   // next file row index
+let stimulusCounter = 2;     // next stimulus index
+let protoFileCounter = 2;    // next file row index
 
 // Return the list of currently defined stimulus names.
 // Empty fields are ignored. If nothing valid is present, fall back to S1.
@@ -53,7 +53,7 @@ function populateStimulusDropdown(selectId) {
 
 // Refresh all file-row dropdowns after stimulus changes
 function refreshAllStimulusDropdowns() {
-    const dropdowns = document.querySelectorAll('#fileEventFields select');
+    const dropdowns = document.querySelectorAll('#fileProtocolFields select');
     for (let i = 0; i < dropdowns.length; i++) {
         populateStimulusDropdown(dropdowns[i].id);
     }
@@ -77,7 +77,7 @@ function addStimulus() {
 
     section.appendChild(newField);
 
-    // As soon as the new field changes, update all file-event dropdowns
+    // As soon as the new field changes, update all file-stimulus dropdowns
     const newInput = newField.querySelector("input");
     newInput.addEventListener("input", refreshAllStimulusDropdowns);
 
@@ -95,64 +95,62 @@ function removeStimulus() {
     }
 }
 
-// Add one file/event association row
-function addFileEventRow(fileName = "") {
-    const section = document.getElementById("fileEventFields");
+// Add one protocol-stimulus association row
+function addProtocolRow(fileName = "") {
+    const section = document.getElementById("fileProtocolFields");
     const newRow = document.createElement("div");
-    newRow.className = "fileEventRow";
+    newRow.className = "fileProtocolRow";
 
     newRow.innerHTML = `
-        <label class="metaLabel"
-               for="name_file_${fileEventCounter}">
-            File ${fileEventCounter}:
+        <label class="metaLabel" for="name_proto-file_${protoFileCounter}">
+            File ${protoFileCounter}:
         </label>
         <input type="text"
-               id="name_file_${fileEventCounter}"
+               id="name_proto-file_${protoFileCounter}"
                class="metaValue"
-               data-meta-info="File ${fileEventCounter} Name"
-               data-meta-group="events"
-               data-meta-key="name_file_${fileEventCounter}"
+               data-meta-info="Protocol File Name ${protoFileCounter}"
+               data-meta-group="protocol_applications"
+               data-meta-key="name_proto-file_${protoFileCounter}"
                placeholder="filename.ext"
                value="${escapeHtmlAttribute(fileName)}">
 
-        <label class="metaLabel"
-               for="stimulus_file_${fileEventCounter}">
+        <label class="metaLabel" for="stimulus_proto-file_${protoFileCounter}">
             Stimulus:
         </label>
-        <select id="stimulus_file_${fileEventCounter}"
+        <select id="stimulus_proto-file_${protoFileCounter}"
                 class="metaValue"
-                data-meta-info="File ${fileEventCounter} Stimulus"
-                data-meta-group="events"
-                data-meta-key="stimulus_file_${fileEventCounter}">
+                data-meta-info="Protocol File Stimulus ${protoFileCounter}"
+                data-meta-group="protocol_applications"
+                data-meta-key="stimulus_proto-file_${protoFileCounter}">
         </select>
 
-        <label class="metaLabel" for="time_file_${fileEventCounter}">
+        <label class="metaLabel" for="time_proto-file_${protoFileCounter}">
             Time:
         </label>
         <div class="inputWithUnit">
             <input type="number"
                    step="any"
                    inputmode="decimal"
-                   id="time_file_${fileEventCounter}"
+                   id="time_proto-file_${protoFileCounter}"
                    class="metaValue withUnit"
-                   data-meta-info="Event Time"
-                   data-meta-group="events"
-                   data-meta-key="time_file_${fileEventCounter}"
+                   data-meta-info="Protocol File Time ${protoFileCounter}"
+                   data-meta-group="protocol_applications"
+                   data-meta-key="time_proto-file_${protoFileCounter}"
                    data-meta-unit="s">
         </div>
     `;
 
     section.appendChild(newRow);
-    populateStimulusDropdown(`stimulus_file_${fileEventCounter}`);
+    populateStimulusDropdown(`stimulus_proto-file_${protoFileCounter}`);
     injectUnits(newRow);
-    fileEventCounter++;
+    protoFileCounter++;
 }
 
-// Remove the last file/event association row
-function removeFileEventRow() {
-    if (fileEventCounter > 2) {
-        fileEventCounter--;
-        const section = document.getElementById("fileEventFields");
+// Remove the last protocol-stimulus association row
+function removeProtocolRow() {
+    if (protoFileCounter > 2) {
+        protoFileCounter--;
+        const section = document.getElementById("fileProtocolFields");
         section.removeChild(section.lastElementChild);
     }
 }
@@ -163,7 +161,7 @@ function populateFilesFromSelection(fileList) {
 
     let startIndex = 0;
 
-    const firstFileInput = document.getElementById("name_file_1");
+    const firstFileInput = document.getElementById("name_proto-file_1");
 
     // Reuse the first row only if it exists and is still empty
     if (firstFileInput && firstFileInput.value.trim() === "") {
@@ -173,7 +171,7 @@ function populateFilesFromSelection(fileList) {
 
     // Add new rows for all remaining selected files
     for (let i = startIndex; i < fileList.length; i++) {
-        addFileEventRow(fileList[i].name);
+        addProtocolRow(fileList[i].name);
     }
 
     // Reset input so selecting the same files again still triggers onchange
@@ -217,6 +215,6 @@ document.addEventListener("DOMContentLoaded", function () {
         firstStimulusInput.addEventListener("input", refreshAllStimulusDropdowns);
     }
 
-    populateStimulusDropdown("stimulus_file_1");
+    populateStimulusDropdown("stimulus_proto-file_1");
     injectUnits();
 });

@@ -46,12 +46,12 @@ function getAllMetaValues() {
         },
         time_events: {
             changes: [],
-            events: []
+            protocol_applications: []
         }
     };
 
-    // Temporary store for file-event rows
-    const timeEventRows = {};
+    // Temporary store for file-Protocol rows
+    const protocolRows = {};
 
     // Loop through the elements
     elements.forEach(element => {
@@ -83,15 +83,15 @@ function getAllMetaValues() {
             return;
         }
 
-        // Special handling for TimeEvents rows
-        if (group === "events") {
+        // Special handling for fileProtocolRow's
+        if (group === "protocol_applications") {
             const match = key.match(/_(\d+)$/);
             if (!match) return;
 
             const rowIndex = match[1];
 
-            if (!(rowIndex in timeEventRows)) {
-                timeEventRows[rowIndex] = {
+            if (!(rowIndex in protocolRows)) {
+                protocolRows[rowIndex] = {
                     file: null,
                     stimulus: null,
                     time: {
@@ -101,12 +101,12 @@ function getAllMetaValues() {
                 };
             }
 
-            if (key.startsWith("name_file_")) {
-                timeEventRows[rowIndex].file = value;
-            } else if (key.startsWith("stimulus_file_")) {
-                timeEventRows[rowIndex].stimulus = value;
-            } else if (key.startsWith("time_file_")) {
-                timeEventRows[rowIndex].time = unit
+            if (key.startsWith("name_proto-file_")) {
+                protocolRows[rowIndex].file = value;
+            } else if (key.startsWith("stimulus_proto-file_")) {
+                protocolRows[rowIndex].stimulus = value;
+            } else if (key.startsWith("time_proto-file_")) {
+                protocolRows[rowIndex].time = unit
                     ? { value: value, unit: unit }
                     : value;
             }
@@ -134,13 +134,13 @@ function getAllMetaValues() {
         metadata.general.operators = null;
     }
 
-    // Finalize nested TimeEvents rows as an ordered array
-    metadata.time_events.events = Object.keys(timeEventRows)
+    // Finalize nested Protocol rows as an ordered array
+    metadata.time_events.protocol_applications = Object.keys(protocolRows)
         .sort((a, b) => Number(a) - Number(b))
-        .map(index => timeEventRows[index]);
-    
-    if (metadata.time_events.events.length === 0) {
-        metadata.time_events.events = null;
+        .map(index => protocolRows[index]);
+
+    if (metadata.time_events.protocol_applications.length === 0) {
+        metadata.time_events.protocol_applications = null;
     }
 
     // Return the object
