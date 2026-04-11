@@ -129,19 +129,22 @@ function addFileEventRow(fileName = "") {
         <label class="metaLabel" for="time_file_${fileEventCounter}">
             Time:
         </label>
-        <input type="number"
-               step="any"
-               inputmode="decimal"
-               id="time_file_${fileEventCounter}"
-               class="metaValue withUnit"
-               data-meta-info="Event Time"
-               data-meta-group="patch_clamp"
-               data-meta-key="time_file_${fileEventCounter}"
-               data-meta-unit="s">
+        <div class="inputWithUnit">
+            <input type="number"
+                   step="any"
+                   inputmode="decimal"
+                   id="time_file_${fileEventCounter}"
+                   class="metaValue withUnit"
+                   data-meta-info="Event Time"
+                   data-meta-group="events"
+                   data-meta-key="time_file_${fileEventCounter}"
+                   data-meta-unit="s">
+        </div>
     `;
 
     section.appendChild(newRow);
     populateStimulusDropdown(`stimulus_file_${fileEventCounter}`);
+    injectUnits(newRow);
     fileEventCounter++;
 }
 
@@ -186,6 +189,26 @@ function escapeHtmlAttribute(str) {
         .replace(/>/g, "&gt;");
 }
 
+// Auto-generate units from 'data-meta-unit' HTML attribute
+function injectUnits(root = document) {
+    const fields = root.querySelectorAll(".withUnit");
+
+    fields.forEach(field => {
+        const unit = field.dataset.metaUnit;
+        if (!unit) return;
+
+        const wrapper = field.parentElement;
+        // Safety: avoid duplicate insertion
+        if (!wrapper || wrapper.querySelector(".unitInside")) return;
+
+        const span = document.createElement("span");
+        span.className = "unitInside";
+        span.textContent = unit;
+
+        wrapper.appendChild(span);
+    });
+}
+
 // Initialize at page startup
 document.addEventListener("DOMContentLoaded", function () {
     // Keep dropdowns synchronized when Stimulus 1 is edited
@@ -193,7 +216,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (firstStimulusInput) {
         firstStimulusInput.addEventListener("input", refreshAllStimulusDropdowns);
     }
-    
-    // Populate the first file-event dropdown
+
     populateStimulusDropdown("stimulus_file_1");
+    injectUnits();
 });

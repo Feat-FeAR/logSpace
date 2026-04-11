@@ -67,6 +67,34 @@ input[type="number"] {
     margin-left: 10px;
 }
 
+/* Override in the presence of Units of Measure */
+.inputWithUnit input[type="number"] {
+    padding-right: 35px;
+    width: 110px;
+}
+
+.inputWithUnit input:disabled + .unitInside,
+.inputWithUnit input:disabled ~ .unitInside {
+    opacity: 0.4;
+}
+
+.inputWithUnit {
+    position: relative;
+    display: inline-block;
+}
+
+/* The unit text inside the input */
+.unitInside {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-80%);
+    font-size: 14px;
+    color: rgba(255,255,255,0.6);
+    pointer-events: none;
+    white-space: nowrap;
+}
+
 /* Generic text inputs */
 input[type="text"] {
     width: 200px;
@@ -85,8 +113,3 @@ input[type="checkbox"] {
     transform: scale(1.2);
 }
 
-.unitLabel {
-    margin-left: 8px;
-    font-size: 14px;
-    color: #a8a8a8;
-}

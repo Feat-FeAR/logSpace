@@ -29,10 +29,15 @@ document.addEventListener("DOMContentLoaded", function () {
         const unit = field.dataset.metaUnit;
         if (!unit) return;
 
+        const wrapper = field.parentElement;
+
+        // Safety: avoid duplicate insertion
+        if (wrapper.querySelector(".unitInside")) return;
+
         const span = document.createElement("span");
-        span.className = "unitLabel";
+        span.className = "unitInside";
         span.textContent = unit;
 
-        field.parentNode.appendChild(span);
+        wrapper.appendChild(span);
     });
 });
