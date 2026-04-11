@@ -30,6 +30,13 @@ function getAllMetaValues() {
     const elements = document.querySelectorAll(".metaValue");
 
     // Create an object to store metadata
+    /*
+    Note on schema semantic versioning:
+    MAJOR.MINOR.PATCH
+        PATCH (1.0.0 → 1.0.1): bug fixes, no structure change
+        MINOR (1.0.0 → 1.1.0): new fields added (backward compatible)
+        MAJOR (1.0.0 → 2.0.0): breaking changes (renamed keys, structure change)
+    */
     const metadata = {
         schema_version: "0.9.0",
         generated_by: "MetaDataMaker",
