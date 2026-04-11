@@ -43,8 +43,15 @@ function getAllMetaValues() {
         generated_at: new Date().toISOString(),
         general: {
             operators: []
+        },
+        time_events: {
+            changes: [],
+            events: []
         }
     };
+
+    // Temporary store for file-event rows
+    const timeEventRows = {};
 
     // Loop through the elements
     elements.forEach(element => {
@@ -76,6 +83,37 @@ function getAllMetaValues() {
             return;
         }
 
+        // Special handling for TimeEvents rows
+        if (group === "events") {
+            const match = key.match(/_(\d+)$/);
+            if (!match) return;
+
+            const rowIndex = match[1];
+
+            if (!(rowIndex in timeEventRows)) {
+                timeEventRows[rowIndex] = {
+                    file: null,
+                    stimulus: null,
+                    time: {
+                        value: null,
+                        unit: "s"
+                    }
+                };
+            }
+
+            if (key.startsWith("name_file_")) {
+                timeEventRows[rowIndex].file = value;
+            } else if (key.startsWith("stimulus_file_")) {
+                timeEventRows[rowIndex].stimulus = value;
+            } else if (key.startsWith("time_file_")) {
+                timeEventRows[rowIndex].time = unit
+                    ? { value: value, unit: unit }
+                    : value;
+            }
+
+            return;
+        }
+
         // Create the group in the JSON if still does not exist
         if (!(group in metadata)) {
             metadata[group] = {};
@@ -94,6 +132,15 @@ function getAllMetaValues() {
 
     if (metadata.general.operators.length === 0) {
         metadata.general.operators = null;
+    }
+
+    // Finalize nested TimeEvents rows as an ordered array
+    metadata.time_events.events = Object.keys(timeEventRows)
+        .sort((a, b) => Number(a) - Number(b))
+        .map(index => timeEventRows[index]);
+    
+    if (metadata.time_events.events.length === 0) {
+        metadata.time_events.events = null;
     }
 
     // Return the object
