@@ -1,12 +1,10 @@
 {
     "member": [
-        "",
         "Federico Alessandro Ruffinatti",
         "Mirko Elia",
         "Aldo Emanuel Pinto"
     ],
     "experiment_type": [
-        "---",
         "Calcium Imaging",
         "Patch Clamp",
         "Wound Healing",

@@ -9,13 +9,23 @@ function generateFieldOptions(field_Id, optionArray) {
     const dropdown = document.getElementById(field_Id);
     dropdown.innerHTML = ''; // Clear previous options
 
-    // Add predefined options
+    // Add placeholder option
+    const placeholder = document.createElement("option");
+    placeholder.value = "";
+    placeholder.text = "--";
+    placeholder.disabled = true;
+    placeholder.selected = true;
+
+    dropdown.appendChild(placeholder);
+
+    // Add real options
     for (let i = 0; i < optionArray.length; i++) {
         const option = document.createElement("option");
         option.value = optionArray[i];
         option.text = optionArray[i];
         dropdown.appendChild(option);
     }
+    
     // Add a "Guest" option
     const otherOption = document.createElement("option");
     otherOption.value = "GUEST";
