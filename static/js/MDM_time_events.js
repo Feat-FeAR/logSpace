@@ -26,7 +26,7 @@ function populateStimulusDropdown(selectId) {
     const currentValue = dropdown.value;
     const stimuli = getCurrentStimuli();
 
-    dropdown.innerHTML = "";
+    dropdown.innerHTML = ""; // Clear previous options
 
     // Add placeholder option
     const placeholder = document.createElement("option");
@@ -125,6 +125,19 @@ function addFileEventRow(fileName = "") {
                 data-meta-group="events"
                 data-meta-key="stimulus_file_${fileEventCounter}">
         </select>
+
+        <label class="metaLabel" for="time_file_${fileEventCounter}">
+            Time:
+        </label>
+        <input type="number"
+               step="any"
+               inputmode="decimal"
+               id="time_file_${fileEventCounter}"
+               class="metaValue withUnit"
+               data-meta-info="Event Time"
+               data-meta-group="patch_clamp"
+               data-meta-key="time_file_${fileEventCounter}"
+               data-meta-unit="s">
     `;
 
     section.appendChild(newRow);
