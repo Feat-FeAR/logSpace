@@ -1,37 +1,11 @@
-<!-- Shortcode for the TimeEvents MetaDataMaker (MDM) field -->
+<!-- Shortcode for the TimeProtocolEvents MetaDataMaker (MDM) field -->
 
 <!-- Import the JS script -->
 <script defer
         language="javascript"
         type="text/javascript"
-        src='{{ "js/MDM_time_events.js" | urlize | relURL }}'>
+        src='{{ "js/MDM_time_protocol_events.js" | urlize | relURL }}'>
 </script>
-
-<h2>Time Events</h2>
-<h3>Stimulus Panel</h3>
-<button class="stdMetaField smallButton"
-        type="button"
-        onclick="addStimulus()">
-    [ + ]
-</button>
-<button class="smallButton"
-        type="button"
-        onclick="removeStimulus()">
-    [ − ]
-</button>
-
-<div id="stimulusFields"
-     class="stdMetaField">
-    <div>
-        <label class="metaLabel" for="stimulus_1">
-            Stimulus 1:
-        </label>
-        <input type="text"
-               id="stimulus_1"
-               class="auxiliary"
-               placeholder="S1">
-    </div>
-</div>
 
 <h3>Clampex Files Association</h3>
 <button class="stdMetaField smallButton"

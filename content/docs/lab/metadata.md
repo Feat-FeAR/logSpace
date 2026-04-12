@@ -17,6 +17,7 @@ From this page you can generate, fill in, and export a JSON-formatted metadata f
 {{< MDM_DateOperator >}}
 {{< MDM_CellCultures >}}
 {{< MDM_PatchClamp >}}
-{{< MDM_TimeEvents >}}
+{{< MDM_TimeStimuli >}}
+{{< MDM_TimeProtocolEvents >}}
 {{< MDM_Notes >}}
 {{< MDM_getValues >}}
