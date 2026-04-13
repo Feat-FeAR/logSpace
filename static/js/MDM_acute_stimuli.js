@@ -1,4 +1,4 @@
-// JavaScript code for the TimeStimuli MetaDataMaker (MDM) shortcode
+// JavaScript code for the AcuteStimuli MetaDataMaker (MDM) shortcode
 
 let stimulusCounter = 2; // next stimulus index
 

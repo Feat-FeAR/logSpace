@@ -79,7 +79,7 @@ function addProtocolRow(fileName = "") {
 
     section.appendChild(newRow);
 
-    // Fill this row's dropdown using the API from 'MDM_time_stimuli.js' script
+    // Fill this row's dropdown using the API from 'MDM_acute_stimuli.js' script
     window.MDMStimuli.populateStimulusDropdown(`stimulus_proto-file_${protoFileCounter}`);
 
     // Add visible unit for the newly created numeric field
