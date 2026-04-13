@@ -20,19 +20,19 @@
 </button>
 <button class="smallButton"
         type="button"
-        onclick="document.getElementById('local_files_picker').click()">
+        onclick="document.getElementById('local_files_picker_proto').click()">
     Select Files
 </button>
 
 <!-- Hidden file input to auto-create rows from local file names -->
 <input type="file"
-       id="local_files_picker"
+       id="local_files_picker_proto"
        multiple
        style="display: none;"
        onchange="populateFilesFromSelection(this.files)">
 
 <!-- Nested <div> to accommodate multiple fileProtocolRow's -->
-<div id="fileProtocolFields" class="stdMetaField">
+<div id="fileProtocolFields" class="stdMetaField stimulusEventFields">
     <div class="fileProtocolRow"> <!-- For a single fileProtocolRow -->
         <label class="metaLabel" for="name_proto-file_1">
             File 1:

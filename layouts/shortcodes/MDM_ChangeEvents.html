@@ -1,0 +1,76 @@
+<!-- Shortcode for the ChangeEvents MetaDataMaker (MDM) field -->
+
+<!-- Import the JS script -->
+<script defer
+        language="javascript"
+        type="text/javascript"
+        src='{{ "js/MDM_change_events.js" | urlize | relURL }}'>
+</script>
+
+<h3>AxoScope Files Association</h3>
+<!-- Full trace filename -->
+<button class="stdMetaField smallButton"
+        type="button"
+        onclick="document.getElementById('local_files_picker_change').click()">
+    Select File
+</button>
+<input type="file"
+       id="local_files_picker_change"
+       multiple
+       style="display: none;"
+       onchange="setFileFromSelection(this.files)">
+
+<div class="stdMetaField">
+    <label class="metaLabel" for="full_trace_file">
+        Full Trace File:
+    </label>
+    <input type="text"
+           id="full_trace_file"
+           class="metaValue"
+           data-meta-info="Full Trace File:"
+           data-meta-group="stimulus_changes"
+           data-meta-key="full_trace_file"
+           placeholder="filename.ext">
+</div>
+
+<!-- List of Stimulus Changes -->
+<button class="stdMetaField smallButton"
+        type="button"
+        onclick="addChangeRow()">
+    [ + ]
+</button>
+<button class="smallButton"
+        type="button"
+        onclick="removeChangeRow()">
+    [ − ]
+</button>
+
+<!-- Nested <div> to accommodate multiple changeRow's -->
+<div id="changeFields" class="stdMetaField stimulusEventFields">
+    <div class="changeRow"> <!-- For a single changeRow -->
+        <label class="metaLabel" for="time_change_1">
+            Time:
+        </label>
+        <div class="inputWithUnit">
+            <input type="number"
+                   step="any"
+                   inputmode="decimal"
+                   id="time_change_1"
+                   class="metaValue withUnit"
+                   data-meta-info="Change Time 1"
+                   data-meta-group="stimulus_changes"
+                   data-meta-key="time_change_1"
+                   data-meta-unit="s">
+        </div>
+
+        <label class="metaLabel" for="name_change_1">
+            Change to Stimulus:
+        </label>
+        <select id="name_change_1"
+                class="metaValue"
+                data-meta-info="New Stimulus 1"
+                data-meta-group="stimulus_changes"
+                data-meta-key="to_stimulus_1">
+        </select>
+    </div>
+</div>

@@ -45,13 +45,15 @@ function getAllMetaValues() {
             operators: []
         },
         time_events: {
-            changes: [],
+            full_time_course: null,
+            stimulus_changes: [],
             protocol_applications: []
         }
     };
 
-    // Temporary store for file-Protocol rows
+    // Temporary store for time-event rows
     const protocolRows = {};
+    const changeRows = {};
 
     // Loop through the elements
     elements.forEach(element => {
@@ -114,12 +116,46 @@ function getAllMetaValues() {
             return;
         }
 
+        // Special handling for changeRow's
+        if (group === "stimulus_changes") {
+
+            if (key === 'full_trace_file') {
+                metadata.time_events.full_time_course = value;
+                return;
+            }
+
+            const match = key.match(/_(\d+)$/);
+            if (!match) return;
+
+            const rowIndex = match[1];
+
+            if (!(rowIndex in changeRows)) {
+                changeRows[rowIndex] = {
+                    time: {
+                        value: null,
+                        unit: "s"
+                    },
+                    stimulus: null
+                };
+            }
+
+            if (key.startsWith("to_stimulus_")) {
+                changeRows[rowIndex].stimulus = value;
+            } else if (key.startsWith("time_change_")) {
+                changeRows[rowIndex].time = unit
+                    ? { value: value, unit: unit }
+                    : value;
+            }
+
+            return;
+        }
+
         // Create the group in the JSON if still does not exist
         if (!(group in metadata)) {
             metadata[group] = {};
         }
 
-        // Store the metadata
+        // Store the standard metadata
         if (unit) {
             metadata[group][key] = {
                 value: value,
@@ -134,6 +170,9 @@ function getAllMetaValues() {
         metadata.general.operators = null;
     }
 
+
+
+
     // Finalize nested Protocol rows as an ordered array
     metadata.time_events.protocol_applications = Object.keys(protocolRows)
         .sort((a, b) => Number(a) - Number(b))
@@ -142,6 +181,19 @@ function getAllMetaValues() {
     if (metadata.time_events.protocol_applications.length === 0) {
         metadata.time_events.protocol_applications = null;
     }
+
+
+
+    metadata.time_events.stimulus_changes = Object.keys(changeRows)
+        .sort((a, b) => Number(a) - Number(b))
+        .map(index => changeRows[index]);
+
+    if (metadata.time_events.stimulus_changes.length === 0) {
+        metadata.time_events.stimulus_changes = null;
+    }
+
+
+
 
     // Return the object
     return metadata;

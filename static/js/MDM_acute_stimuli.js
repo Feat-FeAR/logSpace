@@ -49,9 +49,10 @@ function populateStimulusDropdown(selectId) {
     }
 }
 
-// Refresh all file-row dropdowns after stimulus changes
+// Refresh all stimulus dropdowns after stimulus changes. 'stimulusEventFields'
+// class is used to target both TimeProtocolEvents and ChangeEvents modules.
 function refreshAllStimulusDropdowns() {
-    const dropdowns = document.querySelectorAll('#fileProtocolFields select');
+    const dropdowns = document.querySelectorAll('.stimulusEventFields select');
     for (let i = 0; i < dropdowns.length; i++) {
         populateStimulusDropdown(dropdowns[i].id);
     }
@@ -74,7 +75,7 @@ function addStimulus() {
 
     section.appendChild(newField);
 
-    // As soon as the new field changes, update all file-stimulus dropdowns
+    // As soon as the new field changes, update all stimulus dropdowns
     const newInput = newField.querySelector("input");
     newInput.addEventListener("input", refreshAllStimulusDropdowns);
 
