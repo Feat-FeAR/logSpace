@@ -12,11 +12,17 @@ See 'DESIGN NOTE' in 'MDM_getValues.js'
 <script>
     const tcpLab = {{ $.Site.Data.TCPL }};
 </script>
-<!-- Import the JS script -->
+<!-- Import the JS DateOperator-specific script -->
 <script defer
         language="javascript"
         type="text/javascript"
         src='{{ "js/MDM_date_operator.js" | urlize | relURL }}'>
+</script>
+<!-- Import the JS UI-Helpers script, for the benefit of all other scripts -->
+<script defer
+        language="javascript"
+        type="text/javascript"
+        src='{{ "js/MDM_ui_helpers.js" | urlize | relURL }}'>
 </script>
 
 <!-- Date field as a calendar selector -->

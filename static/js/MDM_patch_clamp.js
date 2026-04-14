@@ -23,21 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // Auto-generate units from 'data-meta-unit' HTML attribute
 document.addEventListener("DOMContentLoaded", function () {
-    const fields = document.querySelectorAll(".withUnit");
-
-    fields.forEach(field => {
-        const unit = field.dataset.metaUnit;
-        if (!unit) return;
-
-        const wrapper = field.parentElement;
-
-        // Safety: avoid duplicate insertion
-        if (wrapper.querySelector(".unitInside")) return;
-
-        const span = document.createElement("span");
-        span.className = "unitInside";
-        span.textContent = unit;
-
-        wrapper.appendChild(span);
-    });
+    if (window.MDMUI) {
+        window.MDMUI.injectUnits(document);
+    }
 });

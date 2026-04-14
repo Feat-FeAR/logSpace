@@ -20,27 +20,6 @@ function escapeHtmlAttribute(str) {
 }
 */
 
-// Add visible unit text inside all ".withUnit" inputs contained inside "root".
-// Auto-generate units from 'data-meta-unit' HTML attribute
-function injectUnits(root = document) {
-    const fields = root.querySelectorAll(".withUnit");
-
-    fields.forEach(field => {
-        const unit = field.dataset.metaUnit;
-        if (!unit) return;
-
-        const wrapper = field.parentElement;
-        // Safety: avoid duplicate insertion (safe to call multiple times)
-        if (!wrapper || wrapper.querySelector(".unitInside")) return;
-
-        const span = document.createElement("span");
-        span.className = "unitInside";
-        span.textContent = unit;
-
-        wrapper.appendChild(span);
-    });
-}
-
 // Add one 'change event' row containing:
 // - a numeric time field
 // - a dropdown to select the new stimulus at that time
@@ -81,7 +60,9 @@ function addChangeRow() {
     section.appendChild(newRow);
 
     // Add visible unit text to the newly created numeric field
-    injectUnits(newRow);
+    if (window.MDMUI) {
+        window.MDMUI.injectUnits(newRow);
+    }
 
     // Ask the shared stimulus module to refresh ALL dependent dropdowns,
     // including the one we just created.
@@ -132,5 +113,7 @@ window.setFileFromSelection = setFileFromSelection;
 
 // Initialize at page startup
 document.addEventListener("DOMContentLoaded", function () {
-    injectUnits(document);
+    if (window.MDMUI) {
+        window.MDMUI.injectUnits(document);
+    }
 });
