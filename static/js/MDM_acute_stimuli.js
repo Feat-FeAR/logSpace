@@ -111,4 +111,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (firstStimulusInput) {
         firstStimulusInput.addEventListener("input", refreshAllStimulusDropdowns);
     }
+
+    // Initialize all dependent dropdowns immediately at page load
+    refreshAllStimulusDropdowns();
 });

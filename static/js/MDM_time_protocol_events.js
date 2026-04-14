@@ -126,7 +126,7 @@ window.populateFilesFromSelection = populateFilesFromSelection;
 
 // Initialize at page startup
 document.addEventListener("DOMContentLoaded", function () {
-    // Populate the first file-event dropdown
+    // Populate the first protocol-stimulus dropdown
     window.MDMStimuli.populateStimulusDropdown("stimulus_proto-file_1");
 
     // Add visible units to fields already present in the HTML

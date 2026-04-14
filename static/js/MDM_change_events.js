@@ -99,13 +99,13 @@ function setFileFromSelection(traceFile) {
 }
 
 // Expose button handlers used directly by HTML
-window.addProtocolRow = addProtocolRow;
-window.removeProtocolRow = removeProtocolRow;
+window.addChangeRow = addChangeRow;
+window.removeChangeRow = removeChangeRow;
 window.setFileFromSelection = setFileFromSelection;
 
 // Initialize at page startup
 document.addEventListener("DOMContentLoaded", function () {
-    // Populate the first file-event dropdown
+    // Populate the first 'change event' dropdown
     window.MDMStimuli.populateStimulusDropdown("name_change_1");
 
     // Add visible units to fields already present in the HTML
