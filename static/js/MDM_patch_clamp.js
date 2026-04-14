@@ -16,14 +16,11 @@ function toggleWholeCellFields() {
     }
 }
 
-// Initialize state at page startup
+// Initialize at page startup
 document.addEventListener("DOMContentLoaded", function () {
     toggleWholeCellFields();
-});
 
-// Auto-generate units from 'data-meta-unit' HTML attribute
-document.addEventListener("DOMContentLoaded", function () {
-    if (window.MDMUI) {
+    if (window.MDMUI?.injectUnits) {
         window.MDMUI.injectUnits(document);
     }
 });
