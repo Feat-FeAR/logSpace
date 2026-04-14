@@ -25,8 +25,35 @@ systematically converted from kebab-case (e.g., data-meta-info) to camelCase
 (e.g., metaInfo -> element.dataset.metaInfo).
 */
 
+// Function to create 'time_events' top-level block lazily (i.e., when the
+// first related field is encountered in the DOM)
+function ensureTimeEventsBlock(metadata) {
+    if (!("time_events" in metadata)) {
+        metadata.time_events = {};
+    }
+    if (!("full_time_course" in metadata.time_events)) {
+        metadata.time_events.full_time_course = null;
+    }
+    if (!("stimulus_changes" in metadata.time_events)) {
+        metadata.time_events.stimulus_changes = [];
+    }
+    if (!("protocol_applications" in metadata.time_events)) {
+        metadata.time_events.protocol_applications = [];
+    }
+}
+
+// Same thing for the 'general' block.
+function ensureGeneralBlock(metadata) {
+    if (!("general" in metadata)) {
+        metadata.general = {};
+    }
+    if (!("operators" in metadata.general)) {
+        metadata.general.operators = [];
+    }
+}
+
 function getAllMetaValues() {
-    // Select all elements with the class "metaValue"
+    // Select all exportable metadata fields in DOM order
     const elements = document.querySelectorAll(".metaValue");
 
     // Create an object to store metadata
@@ -40,35 +67,31 @@ function getAllMetaValues() {
     const metadata = {
         schema_version: "0.9.0",
         generated_by: "MetaDataMaker",
-        generated_at: new Date().toISOString(),
-        general: {
-            operators: []
-        },
-        time_events: {
-            full_time_course: null,
-            stimulus_changes: [],
-            protocol_applications: []
-        }
+        generated_at: new Date().toISOString()
     };
 
-    // Temporary store for time-event rows
+    // Temporary stores for the nested 'time_events' content.
     const protocolRows = {};
     const changeRows = {};
 
-    // Loop through the elements
+    // Loop through every exportable field in DOM order.
     elements.forEach(element => {
-        // Get keys and values
-        const metaInfo = element.dataset.metaInfo || "";
+        // Read from data-* attributes to get keys and values
+        //const metaInfo = element.dataset.metaInfo || "";
         const group = element.dataset.metaGroup || "general";
         const key = element.dataset.metaKey || element.id;
         const unit = element.dataset.metaUnit || null;
 
+        // Retrieve the values
         let value;
-
         if (element.value === "GUEST") {
-            const opNum = element.id.match(/\d+$/)[0];
-            const guestField = document.getElementById(`guest_operator${opNum}`);
-            value = guestField.value === "" ? null : guestField.value;
+            const opNumMatch = element.id.match(/\d+$/);
+            const opNum = opNumMatch ? opNumMatch[0] : null;
+            const guestField = opNum ? document.getElementById(`guest_operator${opNum}`) : null;
+
+            value = guestField && guestField.value.trim() !== ""
+                ? guestField.value
+                : null;
         } else if (element.type === "checkbox") {
             value = element.checked;
         } else if (element.type === "number") {
@@ -76,17 +99,24 @@ function getAllMetaValues() {
         } else {
             value = element.value === "" ? null : element.value;
         }
-
-        // Operators as an array
+        
+        // SPECIAL CASE 1
+        // --------------
+        // operators are exported as an array under: metadata.general.operators
         if (key.startsWith("operator")) {
+            ensureGeneralBlock(metadata);
             if (value !== null && value !== "") {
                 metadata.general.operators.push(value);
             }
             return;
         }
 
-        // Special handling for fileProtocolRow's
+        // SPECIAL CASE 2
+        // --------------
+        // protocol application rows belong to the nested
+        // "time_events.protocol_applications" array.
         if (group === "protocol_applications") {
+            ensureTimeEventsBlock(metadata);
             const match = key.match(/_(\d+)$/);
             if (!match) return;
 
@@ -103,6 +133,7 @@ function getAllMetaValues() {
                 };
             }
 
+            // Map flat HTML field keys into the nested row structure
             if (key.startsWith("name_proto-file_")) {
                 protocolRows[rowIndex].file = value;
             } else if (key.startsWith("stimulus_proto-file_")) {
@@ -116,14 +147,19 @@ function getAllMetaValues() {
             return;
         }
 
-        // Special handling for changeRow's
+        // SPECIAL CASE 3
+        // --------------
+        // stimulus-change rows also belong to the nested "time_events" block
         if (group === "stimulus_changes") {
+            ensureTimeEventsBlock(metadata);
 
-            if (key === 'full_trace_file') {
+            // The full trace filename is stored as a scalar field
+            if (key === "full_trace_file") {
                 metadata.time_events.full_time_course = value;
                 return;
             }
 
+            // All other stimulus_changes fields are row-based
             const match = key.match(/_(\d+)$/);
             if (!match) return;
 
@@ -139,6 +175,7 @@ function getAllMetaValues() {
                 };
             }
 
+            // Map flat HTML field keys into the nested row structure
             if (key.startsWith("to_stimulus_")) {
                 changeRows[rowIndex].stimulus = value;
             } else if (key.startsWith("time_change_")) {
@@ -150,52 +187,48 @@ function getAllMetaValues() {
             return;
         }
 
-        // Create the group in the JSON if still does not exist
+        // STANDARD CASE
+        // -------------
+        // Any other field is stored directly under its top-level group
         if (!(group in metadata)) {
             metadata[group] = {};
         }
 
-        // Store the standard metadata
-        if (unit) {
-            metadata[group][key] = {
-                value: value,
-                unit: unit
-            };
-        } else {
-            metadata[group][key] = value;
-        }
+        metadata[group][key] = unit
+            ? { value: value, unit: unit }
+            : value;
     });
 
-    if (metadata.general.operators.length === 0) {
+    // POST-PROCESSING
+    // ---------------
+    // Convert temporary row stores into ordered arrays, and normalize empty
+    // sections to null where needed
+
+    // If the General module exists but no operators were collected, export null
+    if ("general" in metadata && metadata.general.operators.length === 0) {
         metadata.general.operators = null;
     }
 
+    // Finalize protocol_applications and stimulus_changes as ordered arrays
+    if ("time_events" in metadata) {
+        metadata.time_events.protocol_applications = Object.keys(protocolRows)
+            .sort((a, b) => Number(a) - Number(b))
+            .map(index => protocolRows[index]);
 
+        if (metadata.time_events.protocol_applications.length === 0) {
+            metadata.time_events.protocol_applications = null;
+        }
 
+        metadata.time_events.stimulus_changes = Object.keys(changeRows)
+            .sort((a, b) => Number(a) - Number(b))
+            .map(index => changeRows[index]);
 
-    // Finalize nested Protocol rows as an ordered array
-    metadata.time_events.protocol_applications = Object.keys(protocolRows)
-        .sort((a, b) => Number(a) - Number(b))
-        .map(index => protocolRows[index]);
-
-    if (metadata.time_events.protocol_applications.length === 0) {
-        metadata.time_events.protocol_applications = null;
+        if (metadata.time_events.stimulus_changes.length === 0) {
+            metadata.time_events.stimulus_changes = null;
+        }
     }
 
-
-
-    metadata.time_events.stimulus_changes = Object.keys(changeRows)
-        .sort((a, b) => Number(a) - Number(b))
-        .map(index => changeRows[index]);
-
-    if (metadata.time_events.stimulus_changes.length === 0) {
-        metadata.time_events.stimulus_changes = null;
-    }
-
-
-
-
-    // Return the object
+    // Return the fully assembled metadata object
     return metadata;
 }
 
