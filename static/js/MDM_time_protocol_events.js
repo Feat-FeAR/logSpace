@@ -9,16 +9,6 @@
 
 let protoFileCounter = 2; // Next protocol-row index to create (row 1 already exists)
 
-// Small helper to safely place filenames inside HTML attribute values
-// Without escaping, those characters could break the generated HTML string.
-function escapeHtmlAttribute(str) {
-    return String(str)
-        .replace(/&/g, "&amp;")
-        .replace(/"/g, "&quot;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;");
-}
-
 // Add one protocol-stimulus association row
 // 'fileName' parameter: optional filename to prefill the text input
 function addProtocolRow(fileName = "") {
@@ -38,8 +28,7 @@ function addProtocolRow(fileName = "") {
                data-meta-info="Protocol File Name ${protoFileCounter}"
                data-meta-group="protocol_applications"
                data-meta-key="name_proto-file_${protoFileCounter}"
-               placeholder="filename.ext"
-               value="${escapeHtmlAttribute(fileName)}">
+               placeholder="filename.ext">
 
         <label class="metaLabel" for="stimulus_proto-file_${protoFileCounter}">
             Stimulus:
@@ -66,8 +55,14 @@ function addProtocolRow(fileName = "") {
                    data-meta-unit="s">
         </div>
     `;
-
+    
     section.appendChild(newRow);
+
+    // Set the filename through the DOM API instead of embedding it in innerHTML
+    const fileInput = newRow.querySelector(`#name_proto-file_${protoFileCounter}`);
+    if (fileInput) {
+        fileInput.value = fileName;
+    }
 
     // Add visible unit text to the new numeric field
     if (window.MDMUI) {

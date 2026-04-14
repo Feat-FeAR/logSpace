@@ -21,6 +21,17 @@ function injectUnits(root = document) {
     });
 }
 
+/*
+// Small helper to safely place filenames inside HTML attribute values
+function escapeHtmlAttribute(str) {
+    return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/"/g, "&quot;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;");
+}
+*/
+
 window.MDMUI = {
     injectUnits
 };

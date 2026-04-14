@@ -9,17 +9,6 @@
 
 let changeCounter = 2; // Next change-row index to create (row 1 already exists)
 
-/*
-// Small helper to safely place filenames inside HTML attribute values
-function escapeHtmlAttribute(str) {
-    return String(str)
-        .replace(/&/g, "&amp;")
-        .replace(/"/g, "&quot;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;");
-}
-*/
-
 // Add one 'change event' row containing:
 // - a numeric time field
 // - a dropdown to select the new stimulus at that time
