@@ -16,9 +16,8 @@
 </button>
 <input type="file"
        id="local_files_picker_change"
-       multiple
        style="display: none;"
-       onchange="setFileFromSelection(this.files)">
+       onchange="setFileFromSelection(this.files[0])">
 
 <div class="stdMetaField">
     <label class="metaLabel" for="full_trace_file">

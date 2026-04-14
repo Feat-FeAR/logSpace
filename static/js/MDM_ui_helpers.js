@@ -21,8 +21,8 @@ function injectUnits(root = document) {
     });
 }
 
-/*
-// Small helper to safely place filenames inside HTML attribute values
+// Safely place filenames inside HTML attribute values (when using 'innerHTML')
+// CURRENTLY UNUSED
 function escapeHtmlAttribute(str) {
     return String(str)
         .replace(/&/g, "&amp;")
@@ -30,7 +30,8 @@ function escapeHtmlAttribute(str) {
         .replace(/</g, "&lt;")
         .replace(/>/g, "&gt;");
 }
-*/
+
+// -----------------------------------------------------------------------------
 
 window.MDMUI = {
     injectUnits

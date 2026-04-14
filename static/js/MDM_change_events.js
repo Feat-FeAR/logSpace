@@ -76,12 +76,12 @@ function removeChangeRow() {
 
 // Fill the "Full Trace File" input from a file selected in the hidden picker.
 function setFileFromSelection(traceFile) {
-    if (!traceFile || traceFile.length === 0) return;
+    if (!traceFile) return;
 
     const fileInput = document.getElementById("full_trace_file");
     if (!fileInput) return;
 
-    fileInput.value = traceFile[0].name;
+    fileInput.value = traceFile.name;
 
     // Reset the hidden picker so selecting the same file again still fires
     // the "change" event next time.
