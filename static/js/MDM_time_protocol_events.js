@@ -99,18 +99,27 @@ function removeProtocolRow() {
 function populateFilesFromSelection(fileList) {
     if (!fileList || fileList.length === 0) return;
 
-    let startIndex = 0;
-    const firstFileInput = document.getElementById("name_proto-file_1");
+    // Collect all existing filename inputs, in DOM order
+    const existingInputs = document.querySelectorAll(
+        '#fileProtocolFields input[type="text"][id^="name_proto-file_"]'
+    );
 
-    // Reuse the first existing row only if still empty
-    if (firstFileInput && firstFileInput.value.trim() === "") {
-        firstFileInput.value = fileList[0].name;
-        startIndex = 1;
-    }
+    let fileIndex = 0;
 
-    // Create one additional row for each remaining file
-    for (let i = startIndex; i < fileList.length; i++) {
-        addProtocolRow(fileList[i].name);
+    // First, reuse all currently empty fields
+    existingInputs.forEach(input => {
+        if (fileIndex >= fileList.length) return;
+
+        if (input.value.trim() === "") {
+            input.value = fileList[fileIndex].name;
+            fileIndex++;
+        }
+    });
+
+    // Then create new rows for any remaining files
+    while (fileIndex < fileList.length) {
+        addProtocolRow(fileList[fileIndex].name);
+        fileIndex++;
     }
 
     // Reset the hidden picker so selecting the same files again still fires
