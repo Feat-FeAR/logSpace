@@ -1,6 +1,13 @@
 // JavaScript code for the ChangeEvents MetaDataMaker (MDM) shortcode
+//
+// DESIGN NOTE
+// This module does NOT own the list of available stimuli.
+// The stimulus list is owned by MDM_acute_stimuli.js and exposed through:
+//     window.MDMStimuli
+//
+// This module assumes that MDM_acute_stimuli.js is loaded on the page too.
 
-let changeCounter = 2; // next file row index
+let changeCounter = 2; // Next change-row index to create (row 1 already exists)
 
 /*
 // Small helper to safely place filenames inside HTML attribute values
@@ -13,7 +20,7 @@ function escapeHtmlAttribute(str) {
 }
 */
 
-// Add visible unit text inside all ".withUnit" inputs contained in root
+// Add visible unit text inside all ".withUnit" inputs contained inside "root".
 // Auto-generate units from 'data-meta-unit' HTML attribute
 function injectUnits(root = document) {
     const fields = root.querySelectorAll(".withUnit");
@@ -23,7 +30,7 @@ function injectUnits(root = document) {
         if (!unit) return;
 
         const wrapper = field.parentElement;
-        // Safety: avoid duplicate insertion
+        // Safety: avoid duplicate insertion (safe to call multiple times)
         if (!wrapper || wrapper.querySelector(".unitInside")) return;
 
         const span = document.createElement("span");
@@ -34,9 +41,13 @@ function injectUnits(root = document) {
     });
 }
 
-// Add one 'change event' row
-function addChangeRow(fileName = "") {
+// Add one 'change event' row containing:
+// - a numeric time field
+// - a dropdown to select the new stimulus at that time
+function addChangeRow() {
     const section = document.getElementById("changeFields");
+    if (!section) return;
+
     const newRow = document.createElement("div");
     newRow.className = "changeRow";
 
@@ -57,7 +68,7 @@ function addChangeRow(fileName = "") {
         </div>
 
         <label class="metaLabel" for="name_change_${changeCounter}">
-            Stimulus Change to:
+            Change to Stimulus:
         </label>
         <select id="name_change_${changeCounter}"
                 class="metaValue"
@@ -69,45 +80,57 @@ function addChangeRow(fileName = "") {
 
     section.appendChild(newRow);
 
-    // Fill this row's dropdown using the API from 'MDM_acute_stimuli.js' script
-    window.MDMStimuli.populateStimulusDropdown(`name_change_${changeCounter}`);
-
-    // Add visible unit for the newly created numeric field
+    // Add visible unit text to the newly created numeric field
     injectUnits(newRow);
+
+    // Ask the shared stimulus module to refresh ALL dependent dropdowns,
+    // including the one we just created.
+    if (window.MDMStimuli) {
+        window.MDMStimuli.refreshAllStimulusDropdowns();
+    }
 
     changeCounter++;
 }
 
-// Remove the last 'change event' row
+// Remove the last "change event" row, but never remove row 1.
 function removeChangeRow() {
     if (changeCounter > 2) {
         changeCounter--;
+
         const section = document.getElementById("changeFields");
+        if (!section || !section.lastElementChild) return;
+
         section.removeChild(section.lastElementChild);
     }
 }
 
-// Populate rows automatically from files selected on the local filesystem
+// Fill the "Full Trace File" input from a file selected in the hidden picker.
 function setFileFromSelection(traceFile) {
     if (!traceFile || traceFile.length === 0) return;
 
     const fileInput = document.getElementById("full_trace_file");
+    if (!fileInput) return;
+
     fileInput.value = traceFile[0].name;
 
-    // Reset input so selecting the same files again still triggers onchange
-    document.getElementById("local_files_picker_change").value = "";
+    // Reset the hidden picker so selecting the same file again still fires
+    // the "change" event next time.
+    const picker = document.getElementById("local_files_picker_change");
+    if (picker) {
+        picker.value = "";
+    }
 }
 
-// Expose button handlers used directly by HTML
+// -----------------------------------------------------------------------------
+
+// Expose button/file-picker handlers used directly by HTML onclick/onchange
 window.addChangeRow = addChangeRow;
 window.removeChangeRow = removeChangeRow;
 window.setFileFromSelection = setFileFromSelection;
 
+// -----------------------------------------------------------------------------
+
 // Initialize at page startup
 document.addEventListener("DOMContentLoaded", function () {
-    // Populate the first 'change event' dropdown
-    window.MDMStimuli.populateStimulusDropdown("name_change_1");
-
-    // Add visible units to fields already present in the HTML
     injectUnits(document);
 });
