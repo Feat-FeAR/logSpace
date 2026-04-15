@@ -8,127 +8,129 @@
 </script>
 
 <h2>Cell Cultures</h2>
-<div class="stdMetaField">
-    <label class="metaLabel" for="cell_type">
-        Cell Type:
-    </label>
-    <input type="text"
-           id="cell_type"
-           class="metaValue hardField"
-           data-meta-info="Cell Type"
-           data-meta-group="cell_cultures"
-           data-meta-key="cell_type">
-</div>
+<div class="cellCultureGrid">
+    <div class="stdMetaField">
+        <label class="metaLabel" for="cell_type">
+            Cell Type:
+        </label>
+        <input type="text"
+               id="cell_type"
+               class="metaValue hardField"
+               data-meta-info="Cell Type"
+               data-meta-group="cell_cultures"
+               data-meta-key="cell_type">
+    </div>
 
-<div class="stdMetaField">
-    <label class="metaLabel" for="batch">
-        Batch:
-    </label>
-    <input type="text"
-           id="batch"
-           class="metaValue standardizeUnits hardField"
-           data-meta-info="Batch"
-           data-meta-group="cell_cultures"
-           data-meta-key="batch">
-</div>
+    <div class="stdMetaField">
+        <label class="metaLabel" for="batch">
+            Batch:
+        </label>
+        <input type="text"
+               id="batch"
+               class="metaValue standardizeUnits hardField"
+               data-meta-info="Batch"
+               data-meta-group="cell_cultures"
+               data-meta-key="batch">
+    </div>
 
-<div class="stdMetaField">
-    <label class="metaLabel" for="lineage">
-        Lineage:
-    </label>
-    <input type="text"
-           id="lineage"
-           class="metaValue standardizeUnits hardField"
-           data-meta-info="Lineage"
-           data-meta-group="cell_cultures"
-           data-meta-key="lineage">
-</div>
+    <div class="stdMetaField">
+        <label class="metaLabel" for="lineage">
+            Lineage:
+        </label>
+        <input type="text"
+               id="lineage"
+               class="metaValue standardizeUnits hardField"
+               data-meta-info="Lineage"
+               data-meta-group="cell_cultures"
+               data-meta-key="lineage">
+    </div>
 
-<div class="stdMetaField">
-    <label class="metaLabel" for="primary_culture">
-        Primary Cell Culture:
-    </label>
-    <input type="checkbox"
-           id="primary_culture"
-           class="metaValue hardField"
-           data-meta-info="Primary Cell Culture"
-           data-meta-group="cell_cultures"
-           data-meta-key="primary_culture"
-           onchange="toggleCellLineFields()">
-</div>
+    <div class="stdMetaField">
+        <label class="metaLabel" for="primary_culture">
+            Primary Cell Culture:
+        </label>
+        <input type="checkbox"
+               id="primary_culture"
+               class="metaValue hardField"
+               data-meta-info="Primary Cell Culture"
+               data-meta-group="cell_cultures"
+               data-meta-key="primary_culture"
+               onchange="toggleCellLineFields()">
+    </div>
 
-<div class="stdMetaField">
-    <label class="metaLabel" for="passage">
-        Passage:
-    </label>
-    <input type="number"
-           step="any"
-           inputmode="decimal"
-           id="passage"
-           class="metaValue cellLineOnly hardField"
-           data-meta-info="Passage"
-           data-meta-group="cell_cultures"
-           data-meta-key="passage">
-</div>
+    <div class="stdMetaField combinedField">
+        <label class="metaLabel" for="passage">
+            Passage:
+        </label>
+        <div class="combinedInput">
+            <input type="number"
+                   step="any"
+                   inputmode="decimal"
+                   id="passage"
+                   class="metaValue cellLineOnly hardField"
+                   data-meta-info="Passage"
+                   data-meta-group="cell_cultures"
+                   data-meta-key="passage">
 
-<div class="stdMetaField">
-    <label class="metaLabel" for="absolute_passage">
-        Absolute:
-    </label>
-    <input type="checkbox"
-           id="absolute_passage"
-           class="metaValue cellLineOnly hardField"
-           data-meta-info="Absolute Passage"
-           data-meta-group="cell_cultures"
-           data-meta-key="absolute_passage">
-</div>
+            <label class="inlineLabel" for="absolute_passage">
+                Absolute:
+            </label>
+            <input type="checkbox"
+                   id="absolute_passage"
+                   class="metaValue cellLineOnly hardField"
+                   data-meta-info="Absolute Passage"
+                   data-meta-group="cell_cultures"
+                   data-meta-key="absolute_passage">
+        </div>
+    </div>
 
-<div class="stdMetaField">
-    <label class="metaLabel" for="dics">
-        Days in Culture:
-    </label>
-    <input type="number"
-           step="any"
-           inputmode="decimal"
-           id="dics"
-           class="metaValue hardField"
-           data-meta-info="Days in Culture"
-           data-meta-group="cell_cultures"
-           data-meta-key="days_in_culture">
-</div>
+    <div class="stdMetaField">
+        <label class="metaLabel" for="dics">
+            Days in Culture:
+        </label>
+        <input type="number"
+               step="any"
+               inputmode="decimal"
+               id="dics"
+               class="metaValue hardField"
+               data-meta-info="Days in Culture"
+               data-meta-group="cell_cultures"
+               data-meta-key="days_in_culture">
+    </div>
 
-<div class="stdMetaField">
-    <label class="metaLabel" for="medium">
-        Base Culture Medium:
-    </label>
-    <input type="text"
-           id="medium"
-           class="metaValue standardizeUnits hardField"
-           data-meta-info="Base Culture Medium"
-           data-meta-group="cell_cultures"
-           data-meta-key="base_culture_medium">
-</div>
+    <div class="stdMetaField">
+        <label class="metaLabel" for="medium">
+            Base Culture Medium:
+        </label>
+        <input type="text"
+               id="medium"
+               class="metaValue standardizeUnits hardField"
+               data-meta-info="Base Culture Medium"
+               data-meta-group="cell_cultures"
+               data-meta-key="base_culture_medium">
+    </div>
 
-<div class="stdMetaField">
-    <label class="metaLabel" for="condition">
-        Experimental Condition:
-    </label>
-    <input type="text"
-           id="condition"
-           class="metaValue standardizeUnits hardField"
-           data-meta-info="Experimental Condition"
-           data-meta-group="cell_cultures"
-           data-meta-key="experimental_condition">
-</div>
+    <div class="stdMetaField">
+        <label class="metaLabel" for="condition">
+            Experimental Condition:
+        </label>
+        <input type="text"
+               id="condition"
+               class="metaValue standardizeUnits hardField"
+               data-meta-info="Experimental Condition"
+               data-meta-group="cell_cultures"
+               data-meta-key="experimental_condition">
+    </div>
 
-<div class="stdMetaField">
-    <label class="metaLabel" for="condition_description">
-        Condition Description:
-    </label>
-    <input type="text"
-           id="condition_description"
-           class="metaValue standardizeUnits hardField"
-           data-meta-info="Condition Description"
-           data-meta-group="cell_cultures"
-           data-meta-key="condition_description">
+    <div class="stdMetaField">
+        <label class="metaLabel" for="condition_description">
+            Condition Description:
+        </label>
+        <input type="text"
+               id="condition_description"
+               class="metaValue standardizeUnits hardField"
+               data-meta-info="Condition Description"
+               data-meta-group="cell_cultures"
+               data-meta-key="condition_description">
+    </div>
 </div>

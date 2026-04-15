@@ -1,7 +1,6 @@
 /* CSS for the MetaDataMaker (MDM) */
 
-/* Indentation */
-/* Apply to .stdMetaField class */
+/* Master field indentation */
 .stdMetaField {
     margin-left: 40px;
 }
@@ -13,32 +12,13 @@ label.metaLabel {
     margin-right: 10px;
 }
 
-/* Special style for id=today_date input field */
-#today_date {
-    width: 150px;
-    padding: 6px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 16px;
-    margin-bottom: 15px;
-}
-
-/* Subtle inline hint for date format */
-.dateHint {
-    margin-left: 10px;
-    font-size: 13px;
-    color: rgba(255,255,255,0.5);
-    font-style: italic;
-    vertical-align: middle;
-}
-
-/* Drop-down menus */
+/* Drop-down menus default*/
 select {
     width: 265px;
-    padding: 6px;
-    border: 1px solid #ccc;
+    padding: 4px;
+    border: 1px solid #888;
     border-radius: 4px;
-    font-size: 16px;
+    font-size: 14px;
     margin-bottom: 15px;
     margin-left: 10px;
 }
@@ -51,12 +31,7 @@ select {
     width: 150px;
 }
 
-
-
-
-
-
-/* smallButton class-specific style */
+/* *Button class-specific style */
 button.smallButton {
     padding: 4px 10px;
     font-size: 16px;
@@ -70,10 +45,10 @@ button.smallButton:hover {
     background-color: rgba(83, 122, 143, 0.5);
 }
 
-
 .bigButtonGroup {
     margin-top: 60px;
 }
+
 button.bigButton {
     font-size: 20px;
     padding: 14px 12px;
@@ -103,11 +78,6 @@ button.bigButton:hover {
     padding: 32px 12px;
 }
 
-
-
-
-
-
 /* Generic numeric inputs */
 input[type="number"] {
     width: 80px;
@@ -135,7 +105,7 @@ input[type="number"] {
     display: inline-block;
 }
 
-/* The unit text inside the input */
+/* Unit text inside the input */
 .unitInside {
     position: absolute;
     right: 10px;
@@ -148,8 +118,9 @@ input[type="number"] {
 }
 
 /* Generic text inputs */
+/*
 input[type="text"] {
-    width: 200px;
+    width: 265px;
     padding: 6px;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -157,6 +128,7 @@ input[type="text"] {
     margin-bottom: 15px;
     margin-left: 10px;
 }
+*/
 
 /* Checkbox spacing */
 input[type="checkbox"] {
@@ -165,6 +137,7 @@ input[type="checkbox"] {
     transform: scale(1.2);
 }
 
+/* Free textarea input */
 .fullWidthNotes {
     width: 100%;
     min-height: 110px;
@@ -174,4 +147,157 @@ input[type="checkbox"] {
     font-size: 16px;
     box-sizing: border-box;
     resize: vertical;
+}
+
+
+
+/* ===== DateOperator module ===== */
+
+.dateGrid,
+.operatorPanel {
+    display: grid;
+    gap: 8px;
+}
+
+.dateGrid .dateRow {
+    display: grid;
+    grid-template-columns: 220px 220px 1fr;
+    align-items: center;
+    column-gap: 12px;
+}
+
+.dateGrid .metaLabel {
+    margin: 0;
+    white-space: nowrap;
+}
+
+.dateGrid input[type="date"] {
+    width: 65%;
+    min-width: 130px;
+    box-sizing: border-box;
+    margin: 0;
+    border: 1px solid #888;
+    border-radius: 4px;
+    padding: 4px;
+    font-size: 14px;
+}
+
+.dateGrid .dateHint {
+    white-space: nowrap;
+    font-size: 13px;
+    color: rgba(255,255,255,0.5);
+    font-style: italic;
+    vertical-align: middle;
+    margin-left: 0px;
+}
+
+.operatorButtons {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    padding: 4px 0px;
+    font-size: 16px;
+    margin-bottom: 0px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button.operatorButtons:hover {
+    background-color: rgba(83, 122, 143, 0.5);
+}
+
+/* Dynamic operator rows: label | dropdown | guest input */
+.operatorGrid {
+    display: grid;
+    gap: 8px;
+}
+
+.operatorGrid .operatorRow {
+    display: grid;
+    grid-template-columns: 220px minmax(180px, 280px) minmax(180px, 1fr);
+    align-items: center;
+    column-gap: 12px;
+}
+
+.operatorGrid .metaLabel {
+    margin: 0;
+    white-space: nowrap;
+}
+
+.operatorGrid select,
+.operatorGrid input[type="text"] {
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid #888;
+    border-radius: 4px;
+    padding: 4px;
+    font-size: 14px;
+    margin: 0;
+}
+
+/* Hidden still wins when JS toggles it */
+.operatorGrid .hidden {
+    display: none;
+}
+
+
+
+/* ===== CellCulture module ===== */
+
+.cellCultureGrid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+}
+
+.cellCultureGrid .stdMetaField {
+    display: grid;
+    grid-template-columns: 220px minmax(0, 1fr);
+    align-items: center;
+    column-gap: 12px;
+}
+
+.cellCultureGrid .metaLabel {
+    margin: 0;
+    white-space: nowrap;
+}
+
+.cellCultureGrid .combinedInput {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.cellCultureGrid .inlineLabel {
+    white-space: nowrap;
+    margin-left: 10px;
+}
+
+.cellCultureGrid input[type="text"],
+.cellCultureGrid select,
+.cellCultureGrid textarea {
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid #888;
+    border-radius: 4px;
+    padding: 4px;
+    font-size: 14px;
+    margin: 0;
+}
+
+.cellCultureGrid input[type="number"] {
+    width: 20%;
+    min-width: 80px;
+    border: 1px solid #888;
+    border-radius: 4px;
+    padding: 4px;
+    font-size: 14px;
+    margin: 0;
+}
+
+.cellCultureGrid input[type="checkbox"] {
+    justify-self: start;
+    margin: 0;
+    transform: scale(1.3);
 }

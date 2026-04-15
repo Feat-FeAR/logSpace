@@ -36,9 +36,10 @@ function generateFieldOptions(field_Id, optionArray) {
 function addOp() {
     const op_section = document.getElementById("opFields");
     const new_field = document.createElement("div");
+    new_field.className = "stdMetaField operatorRow";
     new_field.innerHTML = `
         <label class="metaLabel" for="dropdown_operator${opCounter}">
-            Op. ${opCounter}:
+            Operator ${opCounter}:
         </label>
         <select id="dropdown_operator${opCounter}"
                 onchange="toggleCustomInput(this)"
