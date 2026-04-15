@@ -42,6 +42,11 @@ select {
     width: 150px;
 }
 
+
+
+
+
+
 /* smallButton class-specific style */
 button.smallButton {
     padding: 4px 10px;
@@ -55,6 +60,44 @@ button.smallButton {
 button.smallButton:hover {
     background-color: rgba(83, 122, 143, 0.5);
 }
+
+
+.bigButtonGroup {
+    margin-top: 60px;
+}
+button.bigButton {
+    font-size: 20px;
+    padding: 14px 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+button.bigButton:hover {
+    background-color: rgba(83, 122, 143, 0.5);
+}
+
+.bigButtonLine {
+    margin-bottom: 10px;
+    display: flex;
+    gap: 10px; /* space between buttons */
+}
+
+.bigButtonLine .bigButton {
+    flex: 1; /* each button takes equal width */
+}
+
+#getMetadataButton {
+    font-size: 26px;
+    padding: 32px 12px;
+}
+
+
+
+
+
 
 /* Generic numeric inputs */
 input[type="number"] {
@@ -113,3 +156,13 @@ input[type="checkbox"] {
     transform: scale(1.2);
 }
 
+.fullWidthNotes {
+    width: 100%;
+    min-height: 110px;
+    padding: 6px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    box-sizing: border-box;
+    resize: vertical;
+}

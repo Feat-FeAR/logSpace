@@ -7,24 +7,25 @@
         src='{{ "js/MDM_get_values.js" | urlize | relURL }}'>
 </script>
 
-<br /><br />
+<div class="bigButtonGroup">
+    <div class="bigButtonLine">
+        <button class="bigButton"
+                type="button"
+                onclick="clearMetadataForm(false)">
+            Soft Clear
+        </button>
 
-<button class="stdMetaField smallButton"
-        type="button"
-        onclick="clearMetadataForm(false)">
-    Soft Clear
-</button>
+        <button class="bigButton"
+                type="button"
+                onclick="clearMetadataForm(true)">
+            Clear All
+        </button>
+    </div>
 
-<button class="smallButton"
-        type="button"
-        onclick="clearMetadataForm(true)">
-    Clear All
-</button>
-
-<button class="stdMetaField smallButton"
-        type="button"
-        style="padding: 12px 136px;
-               font-size: 20px;"
-        onclick="downloadJsonData()">
-    Make MetaData !
-</button>
+    <button id="getMetadataButton"
+            class="bigButton"
+            type="button"
+            onclick="downloadJsonData()">
+        Make MetaData !
+    </button>
+</div>
