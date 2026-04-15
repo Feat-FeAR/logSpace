@@ -1,5 +1,10 @@
 <!-- Shortcode for the PatchClamp MetaDataMaker (MDM) field -->
 
+<!-- Access the JSON ('./data/RecipeBook.json') -->
+<script>
+    const recipeBook = {{ $.Site.Data.RecipeBook }};
+</script>
+
 <!-- Import the JS script -->
 <script defer
         language="javascript"
@@ -8,6 +13,35 @@
 </script>
 
 <h2>Patch clamp</h2>
+<h3>Saline Solutions</h3>
+<div class="stdMetaField">
+    <label class="metaLabel" for="extracellular_solution">
+        Extracellular:
+    </label>
+    <select id="extracellular_solution"
+            class="metaValue hardField"
+            data-meta-info="Extracellular Saline Solution"
+            data-meta-group="patch_clamp"
+            data-meta-key="extracellular_solution"
+            data-meta-recipe-book="true"
+            data-default="Tyrode_Standard">
+    </select>
+</div>
+
+<div class="stdMetaField">
+    <label class="metaLabel" for="intracellular_solution">
+        Intracellular:
+    </label>
+    <select id="intracellular_solution"
+            class="metaValue hardField"
+            data-meta-info="Intracellular Saline Solution"
+            data-meta-group="patch_clamp"
+            data-meta-key="intracellular_solution"
+            data-meta-recipe-book="true"
+            data-default="SIKA_0_EGTA">
+    </select>
+</div>
+
 <h3>Pipette</h3>
 <div class="stdMetaField">
     <label class="metaLabel" for="pipette_size">

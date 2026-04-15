@@ -186,6 +186,20 @@ function getAllMetaValues() {
             return;
         }
 
+        // SPECIAL CASE 4
+        // --------------
+        // saline-solution dropdowns: export full recipe from RecipeBook.json
+        if (element.dataset.metaRecipeBook === "true") {
+            if (value === null || value === "") {
+                value = null;
+            } else {
+                value = {
+                    name: value.replaceAll("_", " "),
+                    recipe: recipeBook[value] || null
+                };
+            }
+        }
+
         // STANDARD CASE
         // -------------
         // Any other field is stored directly under its top-level group
@@ -257,21 +271,40 @@ function clearMetadataForm(hard = false) {
     const fields = document.querySelectorAll("input, select, textarea");
 
     fields.forEach(field => {
+        // Soft Clear -> leaves hardField values untouched
         if (!hard && field.classList.contains("hardField")) {
-            return;
+            return; // Exits the function (to skip iteration in 'forEach')
         }
 
+        // NON-DATA INPUTS: Some elements are not real metadata fields, such as:
+        // buttons, submit controls, file pickers...
+        // For file inputs, assigning "" clears the current file selection.
+        // For buttons/submit inputs, this has no real harmful effect and
+        // simply ensures they are ignored as metadata content.
         if (field.type === "button" || field.type === "submit" || field.type === "file") {
             field.value = "";
             return;
         }
 
+        // Read the optional default value declared in HTML
+        const defaultValue = field.dataset.default;
+
         if (field.type === "checkbox") {
-            field.checked = false;
+            field.checked = (defaultValue !== undefined)
+                ? (defaultValue === "true")
+                : false;
         } else if (field.tagName === "SELECT") {
-            field.selectedIndex = 0;
-        } else {
-            field.value = "";
+            if (defaultValue !== undefined) {
+                field.value = defaultValue;
+            } else {
+                field.selectedIndex = 0; // first option in the list
+            }
+        } else { // TEXT / NUMBER / TEXTAREA / OTHER VALUE-BASED FIELDS
+            if (defaultValue !== undefined) {
+                field.value = defaultValue;
+            } else {
+                field.value = "";
+            }
         }
     });
 
@@ -280,8 +313,8 @@ function clearMetadataForm(hard = false) {
 
     // Re-run module-dependent UI logic
     document.getElementById("today_date").valueAsDate = new Date();
-    window.toggleCellLineFields?.();
-    window.toggleWholeCellFields?.();
+    window.MDMCellCultures?.toggleCellLineFields?.();
+    window.MDMPatchClamp?.toggleWholeCellFields?.();
     window.MDMStimuli?.refreshAllStimulusDropdowns?.();
 }
 

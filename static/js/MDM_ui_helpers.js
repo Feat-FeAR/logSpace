@@ -65,11 +65,36 @@ function attachUnitStandardizationToAll(root = document) {
     });
 }
 
+// Generate the template of the locale format
+function getLocaleDatePattern() {
+    const formatter = new Intl.DateTimeFormat(undefined, {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric"
+    });
+
+    const parts = formatter.formatToParts(new Date());
+
+    return parts.map(part => {
+        switch (part.type) {
+            case "day":
+                return "DD";
+            case "month":
+                return "MM";
+            case "year":
+                return "YYYY";
+            default:
+                return part.value; // keeps separators like "/", ".", "-"
+        }
+    }).join("");
+}
+
 // -----------------------------------------------------------------------------
 
 window.MDMUI = {
     injectUnits,
     standardizeUnits,
     attachUnitStandardization,
-    attachUnitStandardizationToAll
+    attachUnitStandardizationToAll,
+    getLocaleDatePattern
 };

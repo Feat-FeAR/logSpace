@@ -16,6 +16,15 @@ function toggleCellLineFields() {
     }
 }
 
+// -----------------------------------------------------------------------------
+
+// Shared CellCultures API exposed to other modules
+window.MDMCellCultures = {
+    toggleCellLineFields
+};
+
+// -----------------------------------------------------------------------------
+
 // Initialize state at page startup
 document.addEventListener("DOMContentLoaded", function () {
     toggleCellLineFields();

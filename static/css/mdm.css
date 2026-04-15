@@ -23,6 +23,15 @@ label.metaLabel {
     margin-bottom: 15px;
 }
 
+/* Subtle inline hint for date format */
+.dateHint {
+    margin-left: 10px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.5);
+    font-style: italic;
+    vertical-align: middle;
+}
+
 /* Drop-down menus */
 select {
     width: 265px;

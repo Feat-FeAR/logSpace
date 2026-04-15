@@ -1,7 +1,6 @@
 // JavaScript code for the DateOperator MetaDataMaker (MDM) shortcode
 
-// Set the default date to today's date
-document.getElementById("today_date").valueAsDate = new Date();
+let opCounter = 2; // Next operator's index to create (Op. 1 already exists)
 
 // Function to generate drop-down field options
 function generateFieldOptions(field_Id, optionArray) {
@@ -11,9 +10,9 @@ function generateFieldOptions(field_Id, optionArray) {
 
     // Add placeholder option
     const placeholder = document.createElement("option");
-    placeholder.value = "";
+    placeholder.value = "";  // important: maps to null later
     placeholder.text = "--";
-    placeholder.disabled = true;
+    placeholder.disabled = false;
     placeholder.selected = true;
 
     dropdown.appendChild(placeholder);
@@ -33,11 +32,7 @@ function generateFieldOptions(field_Id, optionArray) {
     dropdown.appendChild(otherOption);
 }
 
-// Generate the options for the drop-down menus at page startup
-generateFieldOptions("dropdown_operator1", tcpLab.member);
-
 // Add an operator field to the drop-down menu
-let opCounter = 2; // Next operator's index
 function addOp() {
     const op_section = document.getElementById("opFields");
     const new_field = document.createElement("div");
@@ -85,3 +80,22 @@ function removeOp() {
 window.addOp = addOp;
 window.removeOp = removeOp;
 window.toggleCustomInput = toggleCustomInput;
+
+// -----------------------------------------------------------------------------
+
+// Initialize at page startup
+document.addEventListener("DOMContentLoaded", function () {
+    generateFieldOptions("dropdown_operator1", tcpLab.member);
+
+    const today = new Date();
+
+    const dateInput = document.getElementById("today_date");
+    if (dateInput) {
+        dateInput.valueAsDate = today;
+    }
+
+    const hint = document.getElementById("date_format_hint");
+    if (hint) {
+        hint.textContent = `Your locale format: ${window.MDMUI?.getLocaleDatePattern()}`;
+    }
+});
