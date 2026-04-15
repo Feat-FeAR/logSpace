@@ -31,8 +31,45 @@ function escapeHtmlAttribute(str) {
         .replace(/>/g, "&gt;");
 }
 
+// Uniform common scientific unit notations in a text string ("10 uM" → "10 µM")
+function standardizeUnits(text) {
+    if (!text) return text;
+    return text
+        .replace(/\buM\b/g, "µM")
+        .replace(/\bum\b/g, "µm")
+        .replace(/\bumol\b/g, "µmol")
+        .replace(/\bug\b/g, "µg")
+        .replace(/\bu[Ll]\b/g, "µL")
+        .replace(/\buS\b/g, "µS")
+        .replace(/\bus\b/g, "µs")
+        .replace(/\buV\b/g, "µV")
+        .replace(/\bdegC\b/g, "°C")
+        .replace(/ohm/gi, "Ω");
+}
+
+function attachUnitStandardization(input) {
+    if (!input || input.dataset.unitStandardized === "true") return;
+
+    input.addEventListener("blur", function () {
+        input.value = standardizeUnits(input.value);
+    });
+
+    // Mark already-initialized inputs to avoid attaching duplicate blur listeners
+    input.dataset.unitStandardized = "true";
+}
+
+function attachUnitStandardizationToAll(root = document) {
+    const inputs = root.querySelectorAll(".standardizeUnits");
+    inputs.forEach(input => {
+        attachUnitStandardization(input);
+    });
+}
+
 // -----------------------------------------------------------------------------
 
 window.MDMUI = {
-    injectUnits
+    injectUnits,
+    standardizeUnits,
+    attachUnitStandardization,
+    attachUnitStandardizationToAll
 };

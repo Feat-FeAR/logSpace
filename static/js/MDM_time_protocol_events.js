@@ -136,7 +136,5 @@ window.populateFilesFromSelection = populateFilesFromSelection;
 
 // Initialize at page startup
 document.addEventListener("DOMContentLoaded", function () {
-    if (window.MDMUI) {
-        window.MDMUI.injectUnits(document);
-    }
+    window.MDMUI?.injectUnits?.(document);
 });

@@ -19,8 +19,5 @@ function toggleWholeCellFields() {
 // Initialize at page startup
 document.addEventListener("DOMContentLoaded", function () {
     toggleWholeCellFields();
-
-    if (window.MDMUI?.injectUnits) {
-        window.MDMUI.injectUnits(document);
-    }
+    window.MDMUI?.injectUnits?.(document);
 });

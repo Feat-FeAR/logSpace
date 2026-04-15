@@ -25,11 +25,17 @@ function getCurrentStimuli() {
     const stimuli = [];
 
     for (let i = 0; i < stimInputs.length; i++) {
-        const value = stimInputs[i].value.trim();
+        let value = stimInputs[i].value.trim();
+
+        if (window.MDMUI?.standardizeUnits) {
+            value = window.MDMUI.standardizeUnits(value);
+        }
+
         if (value !== "") {
             stimuli.push(value);
         }
     }
+
     return stimuli;
 }
 
@@ -103,7 +109,7 @@ function addStimulus() {
         </label>
         <input type="text"
                id="stimulus_${stimulusCounter}"
-               class="auxiliary"
+               class="auxiliary standardizeUnits"
                placeholder="S${stimulusCounter}">
     `;
 
@@ -111,14 +117,13 @@ function addStimulus() {
 
     // Any change in the new input must refresh all dependent dropdowns
     const newInput = newField.querySelector("input");
-    if (newInput) {
-        // This runs later, every time the user changes the text...
-        newInput.addEventListener("input", refreshAllStimulusDropdowns);
-    }
-    
-    stimulusCounter++;
+    window.MDMUI?.attachUnitStandardizationToAll?.(newField);
+    // This runs later, every time the user changes the text...
+    newInput?.addEventListener("input", refreshAllStimulusDropdowns);
     // ...this one runs immediately after adding the row.
     refreshAllStimulusDropdowns();
+    
+    stimulusCounter++;
 }
 
 // Remove the last stimulus field (but never remove Stimulus 1)
@@ -154,11 +159,8 @@ document.addEventListener("DOMContentLoaded", function () {
     // Attach the "input" listener to the pre-existing Stimulus 1 field, since
     // that field is already present in HTML (not created by 'addStimulus()').
     const firstStimulusInput = document.getElementById("stimulus_1");
-    if (firstStimulusInput) {
-        firstStimulusInput.addEventListener("input", refreshAllStimulusDropdowns);
-    }
-
-    // Initialize all dependent dropdowns at startup (so their placeholder "--"
-    // appears correctly at page load even before the user edits anything).
+    firstStimulusInput?.addEventListener("input", refreshAllStimulusDropdowns);
+    
+    window.MDMUI?.attachUnitStandardizationToAll?.(document);
     refreshAllStimulusDropdowns();
 });

@@ -19,4 +19,5 @@ function toggleCellLineFields() {
 // Initialize state at page startup
 document.addEventListener("DOMContentLoaded", function () {
     toggleCellLineFields();
+    window.MDMUI?.attachUnitStandardizationToAll?.(document);
 });
