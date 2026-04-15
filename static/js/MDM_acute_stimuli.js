@@ -109,7 +109,7 @@ function addStimulus() {
         </label>
         <input type="text"
                id="stimulus_${stimulusCounter}"
-               class="auxiliary standardizeUnits"
+               class="auxiliary standardizeUnits hardField"
                placeholder="S${stimulusCounter}">
     `;
 
@@ -160,7 +160,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // that field is already present in HTML (not created by 'addStimulus()').
     const firstStimulusInput = document.getElementById("stimulus_1");
     firstStimulusInput?.addEventListener("input", refreshAllStimulusDropdowns);
-    
+
     window.MDMUI?.attachUnitStandardizationToAll?.(document);
     refreshAllStimulusDropdowns();
 });

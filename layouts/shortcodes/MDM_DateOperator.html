@@ -55,15 +55,14 @@ See 'DESIGN NOTE' in 'MDM_getValues.js'
     [ − ]
 </button>
 <!-- Nested <div> to accommodate multiple drop-down menus -->
-<div id="opFields"
-     class="stdMetaField">
+<div id="opFields" class="stdMetaField">
     <div> <!-- For a single Drop-down menu -->
         <label class="metaLabel" for="dropdown_operator1">
             Op. 1:
         </label>
         <select id="dropdown_operator1"
                 onchange="toggleCustomInput(this)"
-                class="metaValue"
+                class="metaValue hardField"
                 data-meta-info="Operator 1"
                 data-meta-group="general"
                 data-meta-key="operator_1">
@@ -73,7 +72,7 @@ See 'DESIGN NOTE' in 'MDM_getValues.js'
          <!-- Input field for a custom name -->
         <input type="text"
                id="guest_operator1"
-               placeholder="Name Surname"
-               class="hidden">
+               class="hidden hardField"
+               placeholder="Name Surname">
     </div>
 </div>

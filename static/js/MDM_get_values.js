@@ -88,7 +88,6 @@ function getAllMetaValues() {
             const opNumMatch = element.id.match(/\d+$/);
             const opNum = opNumMatch ? opNumMatch[0] : null;
             const guestField = opNum ? document.getElementById(`guest_operator${opNum}`) : null;
-
             value = guestField && guestField.value.trim() !== ""
                 ? guestField.value
                 : null;
@@ -251,4 +250,77 @@ function downloadJsonData() {
     a.click();
 
     URL.revokeObjectURL(url);
+}
+
+// Main clearing function
+function clearMetadataForm(hard = false) {
+    const fields = document.querySelectorAll("input, select, textarea");
+
+    fields.forEach(field => {
+        if (!hard && field.classList.contains("hardField")) {
+            return;
+        }
+
+        if (field.type === "button" || field.type === "submit" || field.type === "file") {
+            field.value = "";
+            return;
+        }
+
+        if (field.type === "checkbox") {
+            field.checked = false;
+        } else if (field.tagName === "SELECT") {
+            field.selectedIndex = 0;
+        } else {
+            field.value = "";
+        }
+    });
+
+    // Restore default structural state (dynamically generated soft-fields)
+    resetDynamicSectionsToBaseState(hard);
+
+    // Re-run module-dependent UI logic
+    document.getElementById("today_date").valueAsDate = new Date();
+    window.toggleCellLineFields?.();
+    window.toggleWholeCellFields?.();
+    window.MDMStimuli?.refreshAllStimulusDropdowns?.();
+}
+
+function resetDynamicSectionsToBaseState(hard = false) {
+    // Add here all the dynamically generated fields, together with their
+    // combinator selector and their (exposed) removal function
+    const groups = [
+        {
+            rowSelector: "#opFields > div",
+            removeFun: removeOp
+        },
+        {
+            rowSelector: "#stimulusFields > div",
+            removeFun: removeStimulus
+        },
+        {
+            rowSelector: "#fileProtocolFields > .fileProtocolRow",
+            removeFun: removeProtocolRow
+        },
+        {
+            rowSelector: "#changeFields > .changeRow",
+            removeFun: removeChangeRow
+        }
+    ];
+
+    groups.forEach(group => {
+        let rows = Array.from(document.querySelectorAll(group.rowSelector));
+
+        // keep at least the base row
+        while (rows.length > 1) {
+            const lastRow = rows[rows.length - 1];
+            const hasHardField = lastRow.querySelector(".hardField") !== null;
+
+            if (!hard && hasHardField) {
+                break;
+            }
+
+            group.removeFun();
+            rows = Array.from(document.querySelectorAll(group.rowSelector));
+        }
+    });
 }

@@ -47,15 +47,15 @@ function addOp() {
         </label>
         <select id="dropdown_operator${opCounter}"
                 onchange="toggleCustomInput(this)"
-                class="metaValue"
+                class="metaValue hardField"
                 data-meta-info="Operator ${opCounter}"
                 data-meta-group="general"
                 data-meta-key="operator_${opCounter}">
         </select>
         <input type="text"
                id="guest_operator${opCounter}"
-               placeholder="Name Surname"
-               class="hidden">
+               class="hidden hardField"
+               placeholder="Name Surname">
     `;
     op_section.appendChild(new_field);
     // Generate the options for the newly created field
@@ -78,3 +78,10 @@ function removeOp() {
         op_section.removeChild(op_section.lastElementChild);
     }
 }
+
+// -----------------------------------------------------------------------------
+
+// Expose button handlers used directly by HTML onclick attributes
+window.addOp = addOp;
+window.removeOp = removeOp;
+window.toggleCustomInput = toggleCustomInput;
