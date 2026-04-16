@@ -102,6 +102,7 @@ function addStimulus() {
     if (!section) return;
 
     const newField = document.createElement("div");
+    newField.className = "stdMetaField stimulusRow";
 
     newField.innerHTML = `
         <label class="metaLabel" for="stimulus_${stimulusCounter}">
@@ -112,7 +113,7 @@ function addStimulus() {
                class="auxiliary standardizeUnits hardField"
                placeholder="S${stimulusCounter}">
     `;
-
+    
     section.appendChild(newField);
 
     // Any change in the new input must refresh all dependent dropdowns

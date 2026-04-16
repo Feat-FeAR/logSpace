@@ -16,7 +16,7 @@ function addProtocolRow(fileName = "") {
     if (!section) return;
 
     const newRow = document.createElement("div");
-    newRow.className = "fileProtocolRow";
+    newRow.className = "stdMetaField fileProtocolRow";
 
     newRow.innerHTML = `
         <label class="metaLabel" for="name_proto-file_${protoFileCounter}">

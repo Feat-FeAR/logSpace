@@ -17,7 +17,7 @@ function addChangeRow() {
     if (!section) return;
 
     const newRow = document.createElement("div");
-    newRow.className = "changeRow";
+    newRow.className = "stdMetaField changeRow";
 
     newRow.innerHTML = `
         <label class="metaLabel" for="time_change_${changeCounter}">

@@ -8,66 +8,70 @@
 </script>
 
 <h3>Clampex Files Association</h3>
-<button class="stdMetaField smallButton"
-        type="button"
-        onclick="addProtocolRow()">
-    [ + ]
-</button>
-<button class="smallButton"
-        type="button"
-        onclick="removeProtocolRow()">
-    [ − ]
-</button>
-<button class="smallButton"
-        type="button"
-        onclick="document.getElementById('local_files_picker_proto').click()">
-    Select Files
-</button>
+<div class="protocolPanel">
+    <div class="stdMetaField protocolButtons">
+        <button class="smallButton"
+                type="button"
+                onclick="addProtocolRow()">
+            [ + ]
+        </button>
+        <button class="smallButton"
+                type="button"
+                onclick="removeProtocolRow()">
+            [ − ]
+        </button>
+        <button class="smallButton"
+                type="button"
+                onclick="document.getElementById('local_files_picker_proto').click()">
+            Select Files
+        </button>
 
-<!-- Hidden file input to auto-create rows from local file names -->
-<input type="file"
-       id="local_files_picker_proto"
-       multiple
-       style="display: none;"
-       onchange="populateFilesFromSelection(this.files)">
+        <!-- Hidden file input to auto-create rows from local file names -->
+        <input type="file"
+               id="local_files_picker_proto"
+               multiple
+               style="display: none;"
+               onchange="populateFilesFromSelection(this.files)">
+    </div>
 
-<!-- Nested <div> to accommodate multiple fileProtocolRow's -->
-<div id="fileProtocolFields" class="stdMetaField stimulusEventFields">
-    <div class="fileProtocolRow"> <!-- For a single fileProtocolRow -->
-        <label class="metaLabel" for="name_proto-file_1">
-            File 1:
-        </label>
-        <input type="text"
-               id="name_proto-file_1"
-               class="metaValue"
-               data-meta-info="Protocol File Name 1"
-               data-meta-group="protocol_applications"
-               data-meta-key="name_proto-file_1"
-               placeholder="filename.ext">
-
-        <label class="metaLabel" for="stimulus_proto-file_1">
-            Stimulus:
-        </label>
-        <select id="stimulus_proto-file_1"
-                class="metaValue"
-                data-meta-info="Protocol File Stimulus 1"
-                data-meta-group="protocol_applications"
-                data-meta-key="stimulus_proto-file_1">
-        </select>
-
-        <label class="metaLabel" for="time_proto-file_1">
-            Time:
-        </label>
-        <div class="inputWithUnit">
-            <input type="number"
-                   step="any"
-                   inputmode="decimal"
-                   id="time_proto-file_1"
-                   class="metaValue withUnit"
-                   data-meta-info="Protocol File Time 1"
+    <!-- Nested <div> to accommodate multiple fileProtocolRow's -->
+    <div id="fileProtocolFields" class=" stimulusEventFields fileProtocolGrid">
+        <div class="stdMetaField fileProtocolRow"> <!-- For a single fileProtocolRow -->
+            <label class="metaLabel" for="name_proto-file_1">
+                File 1:
+            </label>
+            <input type="text"
+                   id="name_proto-file_1"
+                   class="metaValue"
+                   data-meta-info="Protocol File Name 1"
                    data-meta-group="protocol_applications"
-                   data-meta-key="time_proto-file_1"
-                   data-meta-unit="s">
+                   data-meta-key="name_proto-file_1"
+                   placeholder="filename.ext">
+
+            <label class="metaLabel" for="stimulus_proto-file_1">
+                Stimulus:
+            </label>
+            <select id="stimulus_proto-file_1"
+                    class="metaValue"
+                    data-meta-info="Protocol File Stimulus 1"
+                    data-meta-group="protocol_applications"
+                    data-meta-key="stimulus_proto-file_1">
+            </select>
+
+            <label class="metaLabel" for="time_proto-file_1">
+                Time:
+            </label>
+            <div class="inputWithUnit">
+                <input type="number"
+                       step="any"
+                       inputmode="decimal"
+                       id="time_proto-file_1"
+                       class="metaValue withUnit"
+                       data-meta-info="Protocol File Time 1"
+                       data-meta-group="protocol_applications"
+                       data-meta-key="time_proto-file_1"
+                       data-meta-unit="s">
+            </div>
         </div>
     </div>
 </div>

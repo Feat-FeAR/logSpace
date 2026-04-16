@@ -9,25 +9,29 @@
 
 <h2>Time Events</h2>
 <h3>Stimulus Panel</h3>
-<button class="stdMetaField smallButton"
-        type="button"
-        onclick="addStimulus()">
-    [ + ]
-</button>
-<button class="smallButton"
-        type="button"
-        onclick="removeStimulus()">
-    [ − ]
-</button>
+<div class="stimulusPanel">
+    <div class="stdMetaField simulusButtons">
+        <button class="smallButton"
+                type="button"
+                onclick="addStimulus()">
+            [ + ]
+        </button>
+        <button class="smallButton"
+                type="button"
+                onclick="removeStimulus()">
+            [ − ]
+        </button>
+    </div>
 
-<div id="stimulusFields" class="stdMetaField">
-    <div>
-        <label class="metaLabel" for="stimulus_1">
-            Stimulus 1:
-        </label>
-        <input type="text"
-               id="stimulus_1"
-               class="auxiliary standardizeUnits hardField"
-               placeholder="S1">
+    <div id="stimulusFields" class="stimulusGrid">
+        <div class="stdMetaField stimulusRow">
+            <label class="metaLabel" for="stimulus_1">
+                Stimulus 1:
+            </label>
+            <input type="text"
+                   id="stimulus_1"
+                   class="auxiliary standardizeUnits hardField"
+                   placeholder="S1">
+        </div>
     </div>
 </div>
