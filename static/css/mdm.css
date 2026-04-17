@@ -64,16 +64,16 @@ button.smallButton:hover {
 
 /* === DateOperatorAUX module =============================================== */
 
-.dateGrid,
-.operatorPanel {
+.dateGrid {
     display: grid;
+    column-gap: 12px;
     gap: 8px;
 }
 
 .dateGrid .dateRow {
     display: grid;
-    grid-template-columns: 220px minmax(130px, 150px) 1fr;
     column-gap: 12px;
+    grid-template-columns: 220px minmax(130px, 150px) 1fr;
     align-items: center;
 }
 
@@ -91,38 +91,44 @@ button.smallButton:hover {
     margin-left: 0px;
 }
 
-
-
+.operatorPanel {
+    display: grid;
+    column-gap: 12px;
+    gap: 8px;
+    margin-bottom: 20px;
+}
 
 .operatorButtons {
     display: grid;
-    gap: 8px;
+    column-gap: 12px;
     align-items: center;
-    grid-template-columns: 220px minmax(50px, 60px) minmax(50px, 60px);
+    grid-template-columns: 220px 1fr;
 }
 
-
-
-
+.buttonGroup {
+    display: flex;
+    column-gap: 12px;
+    gap: 8px;
+    grid-column: 2;
+}
 
 .operatorGrid {
     display: grid;
+    column-gap: 12px;
     gap: 8px;
 }
 
 .operatorGrid .operatorRow {
     display: grid;
-    grid-template-columns: 220px minmax(180px, 280px) minmax(180px, 1fr);
-    align-items: center;
     column-gap: 12px;
+    grid-template-columns: 220px minmax(180px, 240px) minmax(180px, 1fr);
+    align-items: center;
 }
 
 .operatorGrid select,
 .operatorGrid input[type="text"] {
     width: 100%;
 }
-
-/* Hidden still wins when JS toggles it */
 .operatorGrid .hidden {
     display: none;
 }
