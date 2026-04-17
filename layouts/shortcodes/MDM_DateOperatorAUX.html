@@ -1,4 +1,4 @@
-<!-- Shortcode for the DateOperator MetaDataMaker (MDM) field -->
+<!-- Shortcode for the DateOperatorAUX MetaDataMaker (MDM) module -->
 
 <!--
 NOTE: MDM relies on every value-producing field having `class="metaValue"`, plus
@@ -12,13 +12,15 @@ See 'DESIGN NOTE' in 'MDM_getValues.js'
 <script>
     const tcpLab = {{ $.Site.Data.TCPL }};
 </script>
+
 <!-- Import the JS DateOperator-specific script -->
 <script defer
         language="javascript"
         type="text/javascript"
         src='{{ "js/MDM_date_operator.js" | urlize | relURL }}'>
 </script>
-<!-- Import the JS UI-Helpers script, for the benefit of all other scripts -->
+
+<!-- Import the JS UI-Helpers (AUX) script, for the benefit of all -->
 <script defer
         language="javascript"
         type="text/javascript"
@@ -26,8 +28,8 @@ See 'DESIGN NOTE' in 'MDM_getValues.js'
 </script>
 
 <!-- Date field as a calendar selector -->
-<h2>General</h2>
-<h3>Time</h3>
+<h2 class="mdmTitle">General</h2>
+<h3 class="mdmTitle">Time</h3>
 <div class="dateGrid">
     <div class="stdMetaField dateRow">
         <label class="metaLabel" for="today_date">
@@ -45,29 +47,30 @@ See 'DESIGN NOTE' in 'MDM_getValues.js'
 
 <!-- Operator field as a drop-down menu, with [+] and [-] buttons to add and
      remove operators, and the 'Guest' option for custom operator values -->
-<h3>Operator(s)</h3>
+<h3 class="mdmTitle">Operators</h3>
 <div class="operatorPanel">
     <div class="stdMetaField operatorButtons">
+        <span></span>
         <button class="smallButton"
                 type="button"
-                onclick="addOp()">
+                onclick="addOperatorRow()">
             [ + ]
         </button>
         <button class="smallButton"
                 type="button"
-                onclick="removeOp()">
+                onclick="removeOperatorRow()">
             [ − ]
         </button>
     </div>
 
     <!-- Nested <div> to accommodate multiple drop-down menus -->
-    <div id="opFields" class="operatorGrid">
-        <div class="stdMetaField operatorRow"> <!-- For a single Drop-down menu -->
+    <div id="operatorFields" class="operatorGrid">
+        <div class="stdMetaField operatorRow"> <!-- For a single dropdown -->
             <label class="metaLabel" for="dropdown_operator1">
                 Operator 1:
             </label>
             <select id="dropdown_operator1"
-                    onchange="toggleCustomInput(this)"
+                    onchange="toggleGuestOperator(this)"
                     class="metaValue hardField"
                     data-meta-info="Operator 1"
                     data-meta-group="general"

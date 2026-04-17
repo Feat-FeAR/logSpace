@@ -323,8 +323,8 @@ function resetDynamicSectionsToBaseState(hard = false) {
     // combinator selector and their (exposed) removal function
     const groups = [
         {
-            rowSelector: "#opFields > div",
-            removeFun: removeOp
+            rowSelector: "#operatorFields > .operatorRow",
+            removeFun: removeOperatorRow
         },
         {
             rowSelector: "#stimulusFields > div",

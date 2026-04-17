@@ -1,9 +1,9 @@
-// JavaScript code for the DateOperator MetaDataMaker (MDM) shortcode
+// JavaScript code for the DateOperatorAUX MetaDataMaker (MDM) shortcode
 
 let opCounter = 2; // Next operator's index to create (Op. 1 already exists)
 
 // Function to generate drop-down field options
-function generateFieldOptions(field_Id, optionArray) {
+function populateOperatorDropdown(field_Id, optionArray) {
 
     const dropdown = document.getElementById(field_Id);
     dropdown.innerHTML = ''; // Clear previous options
@@ -25,7 +25,7 @@ function generateFieldOptions(field_Id, optionArray) {
         dropdown.appendChild(option);
     }
     
-    // Add a "Guest" option
+    // Add a "GUEST" option
     const otherOption = document.createElement("option");
     otherOption.value = "GUEST";
     otherOption.text = "GUEST";
@@ -33,16 +33,19 @@ function generateFieldOptions(field_Id, optionArray) {
 }
 
 // Add an operator field to the drop-down menu
-function addOp() {
-    const op_section = document.getElementById("opFields");
-    const new_field = document.createElement("div");
-    new_field.className = "stdMetaField operatorRow";
-    new_field.innerHTML = `
+function addOperatorRow() {
+    const section = document.getElementById("operatorFields");
+    if (!section) return;
+
+    const newRow = document.createElement("div");
+    newRow.className = "stdMetaField operatorRow";
+
+    newRow.innerHTML = `
         <label class="metaLabel" for="dropdown_operator${opCounter}">
             Operator ${opCounter}:
         </label>
         <select id="dropdown_operator${opCounter}"
-                onchange="toggleCustomInput(this)"
+                onchange="toggleGuestOperator(this)"
                 class="metaValue hardField"
                 data-meta-info="Operator ${opCounter}"
                 data-meta-group="general"
@@ -53,48 +56,50 @@ function addOp() {
                class="hidden hardField"
                placeholder="Name Surname">
     `;
-    op_section.appendChild(new_field);
+
+    section.appendChild(newRow);
+
     // Generate the options for the newly created field
-    generateFieldOptions(`dropdown_operator${opCounter}`, tcpLab.member);
+    populateOperatorDropdown(`dropdown_operator${opCounter}`, tcpLab.member);
+
     opCounter++;
 }
 
 // Function to toggle the display for the guest op. based on the selected option
-function toggleCustomInput(selectElement) {
+function toggleGuestOperator(selectElement) {
     const customInput = selectElement.nextElementSibling;
-    customInput.style.display = selectElement.value === "GUEST" ? "inline-block" : "none";
+    customInput.style.display = (selectElement.value === "GUEST" ? "inline-block" : "none");
 }
 
 // Remove an operator field from the drop-down menu
-function removeOp() {
+function removeOperatorRow() {
     if (opCounter > 2) {
         opCounter--;
-        const op_section = document.getElementById("opFields");
+        const section = document.getElementById("operatorFields");
         // Remove the last added field
-        op_section.removeChild(op_section.lastElementChild);
+        section.removeChild(section.lastElementChild);
     }
 }
 
 // -----------------------------------------------------------------------------
 
 // Expose button handlers used directly by HTML onclick attributes
-window.addOp = addOp;
-window.removeOp = removeOp;
-window.toggleCustomInput = toggleCustomInput;
+window.addOperatorRow = addOperatorRow;
+window.removeOperatorRow = removeOperatorRow;
+window.toggleGuestOperator = toggleGuestOperator;
 
 // -----------------------------------------------------------------------------
 
-// Initialize at page startup
+// Initialize at page startup (i.e., add an event listener to the document that
+// executes the function once the DOM has been fully constructed).
 document.addEventListener("DOMContentLoaded", function () {
-    generateFieldOptions("dropdown_operator1", tcpLab.member);
+    populateOperatorDropdown("dropdown_operator1", tcpLab.member);
 
     const today = new Date();
-
     const dateInput = document.getElementById("today_date");
     if (dateInput) {
         dateInput.valueAsDate = today;
     }
-
     const hint = document.getElementById("date_format_hint");
     if (hint) {
         hint.textContent = `Your locale format: ${window.MDMUI?.getLocaleDatePattern()}`;
