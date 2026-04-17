@@ -1,4 +1,4 @@
-<!-- Shortcode for the PatchClamp MetaDataMaker (MDM) field -->
+<!-- Shortcode for the PatchClamp MetaDataMaker (MDM) module -->
 
 <!-- Access the JSON ('./data/RecipeBook.json') -->
 <script>
@@ -12,10 +12,10 @@
         src='{{ "js/MDM_patch_clamp.js" | urlize | relURL }}'>
 </script>
 
-<h2>Patch clamp</h2>
-<h3>Saline Solutions</h3>
+<h2 class="mdmTitle">Patch clamp</h2>
+<h3 class="mdmTitle">Saline Solutions</h3>
 <div class="patchClampGrid">
-    <div class="stdMetaField">
+    <div class="patchClampRow stdMetaField">
         <label class="metaLabel" for="extracellular_solution">
             Extracellular:
         </label>
@@ -29,7 +29,7 @@
         </select>
     </div>
 
-    <div class="stdMetaField">
+    <div class="patchClampRow stdMetaField">
         <label class="metaLabel" for="intracellular_solution">
             Intracellular:
         </label>
@@ -43,8 +43,8 @@
         </select>
     </div>
 
-    <h3>Pipette</h3>
-    <div class="stdMetaField">
+    <h3 class="mdmTitle">Pipette</h3>
+    <div class="patchClampRow stdMetaField">
         <label class="metaLabel" for="pipette_size">
             Pipette Size:
         </label>
@@ -61,8 +61,8 @@
         </div>
     </div>
 
-    <h3>Bath</h3>
-    <div class="stdMetaField">
+    <h3 class="mdmTitle">Bath</h3>
+    <div class="patchClampRow stdMetaField">
         <label class="metaLabel" for="pipette_resistance">
             Pipette Resistance:
         </label>
@@ -79,7 +79,7 @@
         </div>
     </div>
 
-    <div class="stdMetaField">
+    <div class="patchClampRow stdMetaField">
         <label class="metaLabel" for="pipette_offset">
             Pipette Offset:
         </label>
@@ -96,7 +96,7 @@
         </div>
     </div>
 
-    <div class="stdMetaField">
+    <div class="patchClampRow stdMetaField">
         <label class="metaLabel" for="pipette_capacitance_comp">
             Pipette Capacitance Compensation:
         </label>
@@ -108,8 +108,8 @@
                data-meta-key="pipette_capacitance_compensation">
     </div>
 
-    <h3>Patch</h3>
-    <div class="stdMetaField">
+    <h3 class="mdmTitle">Patch</h3>
+    <div class="patchClampRow stdMetaField">
         <label class="metaLabel" for="seal_resistance">
             Seal Resistance:
         </label>
@@ -126,7 +126,7 @@
         </div>
     </div>
 
-    <div class="stdMetaField">
+    <div class="patchClampRow stdMetaField">
         <label class="metaLabel" for="configuration">
             Configuration:
         </label>
@@ -141,8 +141,8 @@
         </select>
     </div>
 
-    <h3>Cell</h3>
-    <div class="stdMetaField">
+    <h3 class="mdmTitle">Cell</h3>
+    <div class="patchClampRow stdMetaField">
         <label class="metaLabel" for="membrane_capacitance">
             Membrane Capacitance:
         </label>
@@ -159,7 +159,7 @@
         </div>
     </div>
 
-    <div class="stdMetaField">
+    <div class="patchClampRow stdMetaField">
         <label class="metaLabel" for="membrane_capacitance_comp">
             Membrane Capacitance Compensation:
         </label>
@@ -171,7 +171,7 @@
                data-meta-key="membrane_capacitance_compensation">
     </div>
 
-    <div class="stdMetaField">
+    <div class="patchClampRow stdMetaField">
         <label class="metaLabel" for="access_resistance">
             Access Resistance:
         </label>
@@ -188,7 +188,7 @@
         </div>
     </div>
 
-    <div class="stdMetaField">
+    <div class="patchClampRow stdMetaField">
         <label class="metaLabel" for="membrane_resting_potential">
             Membrane Resting Potential:
         </label>
@@ -205,8 +205,8 @@
         </div>
     </div>
 
-    <h3>Protocol</h3>
-    <div class="stdMetaField">
+    <h3 class="mdmTitle">Protocol</h3>
+    <div class="patchClampRow stdMetaField">
         <label class="metaLabel" for="protocol_type">
             Type:
         </label>

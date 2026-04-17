@@ -1,4 +1,4 @@
-<!-- Shortcode for the CellCultures MetaDataMaker (MDM) field -->
+<!-- Shortcode for the CellCultures MetaDataMaker (MDM) module -->
 
 <!-- Import the JS script -->
 <script defer
@@ -7,9 +7,9 @@
         src='{{ "js/MDM_cell_cultures.js" | urlize | relURL }}'>
 </script>
 
-<h2>Cell Cultures</h2>
+<h2 class="mdmTitle">Cell Cultures</h2>
 <div class="cellCultureGrid">
-    <div class="stdMetaField">
+    <div class="cellCultureRow stdMetaField">
         <label class="metaLabel" for="cell_type">
             Cell Type:
         </label>
@@ -21,7 +21,7 @@
                data-meta-key="cell_type">
     </div>
 
-    <div class="stdMetaField">
+    <div class="cellCultureRow stdMetaField">
         <label class="metaLabel" for="batch">
             Batch:
         </label>
@@ -33,7 +33,7 @@
                data-meta-key="batch">
     </div>
 
-    <div class="stdMetaField">
+    <div class="cellCultureRow stdMetaField">
         <label class="metaLabel" for="lineage">
             Lineage:
         </label>
@@ -45,7 +45,7 @@
                data-meta-key="lineage">
     </div>
 
-    <div class="stdMetaField">
+    <div class="cellCultureRow stdMetaField">
         <label class="metaLabel" for="primary_culture">
             Primary Cell Culture:
         </label>
@@ -58,7 +58,7 @@
                onchange="toggleCellLineFields()">
     </div>
 
-    <div class="stdMetaField combinedField">
+    <div class="cellCultureRow stdMetaField">
         <label class="metaLabel" for="passage">
             Passage:
         </label>
@@ -84,7 +84,7 @@
         </div>
     </div>
 
-    <div class="stdMetaField">
+    <div class="cellCultureRow stdMetaField">
         <label class="metaLabel" for="dics">
             Days in Culture:
         </label>
@@ -98,7 +98,7 @@
                data-meta-key="days_in_culture">
     </div>
 
-    <div class="stdMetaField">
+    <div class="cellCultureRow stdMetaField">
         <label class="metaLabel" for="medium">
             Base Culture Medium:
         </label>
@@ -110,7 +110,7 @@
                data-meta-key="base_culture_medium">
     </div>
 
-    <div class="stdMetaField">
+    <div class="cellCultureRow stdMetaField">
         <label class="metaLabel" for="condition">
             Experimental Condition:
         </label>
@@ -122,7 +122,7 @@
                data-meta-key="experimental_condition">
     </div>
 
-    <div class="stdMetaField">
+    <div class="cellCultureRow stdMetaField">
         <label class="metaLabel" for="condition_description">
             Condition Description:
         </label>

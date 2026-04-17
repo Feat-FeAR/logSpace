@@ -50,11 +50,12 @@ function standardizeUnits(text) {
 function attachUnitStandardization(input) {
     if (!input || input.dataset.unitStandardized === "true") return;
 
+    // "blur" fires when an element loses focus
     input.addEventListener("blur", function () {
         input.value = standardizeUnits(input.value);
     });
 
-    // Mark already-initialized inputs to avoid attaching duplicate blur listeners
+    // Mark already-initialized inputs to avoid attaching duplicate listeners
     input.dataset.unitStandardized = "true";
 }
 
