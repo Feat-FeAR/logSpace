@@ -1,4 +1,4 @@
-<!-- Shortcode for the TimeProtocolEvents MetaDataMaker (MDM) field -->
+<!-- Shortcode for the TimeProtocolEvents MetaDataMaker (MDM) module -->
 
 <!-- Import the JS script -->
 <script defer
@@ -7,36 +7,37 @@
         src='{{ "js/MDM_time_protocol_events.js" | urlize | relURL }}'>
 </script>
 
-<h3>Clampex Files Association</h3>
+<h3 class="mdmTitle">Clampex Files Association</h3>
 <div class="protocolPanel">
-    <div class="stdMetaField protocolButtons">
-        <button class="smallButton"
-                type="button"
-                onclick="addProtocolRow()">
-            [ + ]
-        </button>
-        <button class="smallButton"
-                type="button"
-                onclick="removeProtocolRow()">
-            [ − ]
-        </button>
-        <button class="smallButton"
-                type="button"
-                onclick="document.getElementById('local_files_picker_proto').click()">
-            Select Files
-        </button>
-
-        <!-- Hidden file input to auto-create rows from local file names -->
-        <input type="file"
-               id="local_files_picker_proto"
-               multiple
-               style="display: none;"
-               onchange="populateFilesFromSelection(this.files)">
+    <div class="protocolButtons stdMetaField">
+        <div class="buttonGroup">
+            <button class="smallButton"
+                    type="button"
+                    onclick="addProtocolRow()">
+                [ + ]
+            </button>
+            <button class="smallButton"
+                    type="button"
+                    onclick="removeProtocolRow()">
+                [ − ]
+            </button>
+            <button class="smallButton"
+                    type="button"
+                    onclick="document.getElementById('clampexFile_picker').click()">
+                Select Files
+            </button>
+            <!-- Hidden file input to auto-create rows from local file names -->
+            <input type="file"
+                   id="clampexFile_picker"
+                   multiple
+                   style="display: none;"
+                   onchange="populateFilesFromSelection(this.files)">
+        </div>
     </div>
 
     <!-- Nested <div> to accommodate multiple fileProtocolRow's -->
-    <div id="fileProtocolFields" class=" stimulusEventFields fileProtocolGrid">
-        <div class="stdMetaField fileProtocolRow"> <!-- For a single fileProtocolRow -->
+    <div id="fileProtocolFields" class="fileProtocolGrid stimulusEventFields">
+        <div class="fileProtocolRow stdMetaField"> <!-- For a single fileProtocolRow -->
             <label class="metaLabel" for="name_proto-file_1">
                 File 1:
             </label>

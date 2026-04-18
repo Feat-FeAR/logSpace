@@ -308,7 +308,7 @@ button.smallButton:hover {
     display: grid;
     column-gap: 12px;
     align-items: center;
-    grid-template-columns: 40px 1fr;
+    grid-template-columns: 50px 1fr;
 }
 
 .changeGrid {
@@ -336,45 +336,39 @@ button.smallButton:hover {
     padding-right: 35px;
 }
 
+/* === TimeProtocolEvents module ============================================ */
 
-
-
-
-
-
-
-
-
-
-
-
-
-/* === TimeProtocolEvent Module === */
+.protocolPanel {
+    display: grid;
+    column-gap: 12px;
+    gap: 8px;
+    margin-bottom: 30px;
+}
 
 .protocolButtons {
-    display: flex;
-    gap: 8px;
+    display: grid;
+    column-gap: 12px;
     align-items: center;
+    grid-template-columns: 50px 1fr;
+    margin-top: 10px;
 }
 
 .fileProtocolGrid {
     display: grid;
+    column-gap: 12px;
     gap: 8px;
 }
 
 .fileProtocolGrid .fileProtocolRow {
     display: grid;
-    grid-template-columns: 50px minmax(100px, 200px) 70px minmax(10px, 100px) 70px minmax(10px, 1fr);
-    align-items: center;
     column-gap: 12px;
-}
-
-.fileProtocolGrid input[type="text"] {
-    width: 100%;
+    grid-template-columns: 50px minmax(100px, 210px) 65px minmax(10px, 160px) 40px minmax(10px, 1fr);
+    align-items: center;
 }
 
 .fileProtocolGrid .inputWithUnit,
-.fileProtocolGrid select {
+.fileProtocolGrid select,
+.fileProtocolGrid input[type="text"] {
     width: 100%;
 }
 
@@ -383,6 +377,11 @@ button.smallButton:hover {
     min-width: 90px;
     padding-right: 35px;
 }
+
+
+
+
+
 
 
 /* ------------------------- */

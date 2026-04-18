@@ -119,7 +119,7 @@ function populateFilesFromSelection(fileList) {
 
     // Reset the hidden picker so selecting the same files again still fires
     // the "change" event next time.
-    const picker = document.getElementById("local_files_picker_proto");
+    const picker = document.getElementById("axoFile_picker");
     if (picker) {
         picker.value = "";
     }
