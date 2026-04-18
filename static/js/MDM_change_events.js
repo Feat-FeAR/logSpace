@@ -17,7 +17,7 @@ function addChangeRow() {
     if (!section) return;
 
     const newRow = document.createElement("div");
-    newRow.className = "stdMetaField changeRow";
+    newRow.className = "changeRow stdMetaField";
 
     newRow.innerHTML = `
         <label class="metaLabel" for="time_change_${changeCounter}">
@@ -34,7 +34,7 @@ function addChangeRow() {
                    data-meta-key="time_change_${changeCounter}"
                    data-meta-unit="s">
         </div>
-
+        <div></div>
         <label class="metaLabel" for="name_change_${changeCounter}">
             Change to Stimulus:
         </label>

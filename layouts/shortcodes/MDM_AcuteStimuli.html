@@ -1,4 +1,4 @@
-<!-- Shortcode for the AcuteStimuli MetaDataMaker (MDM) field -->
+<!-- Shortcode for the AcuteStimuli MetaDataMaker (MDM) module -->
 
 <!-- Import the JS script -->
 <script defer
@@ -7,24 +7,26 @@
         src='{{ "js/MDM_acute_stimuli.js" | urlize | relURL }}'>
 </script>
 
-<h2>Time Events</h2>
-<h3>Stimulus Panel</h3>
+<h2 class="mdmTitle">Time Events</h2>
+<h3 class="mdmTitle">Stimulus Panel</h3>
 <div class="stimulusPanel">
-    <div class="stdMetaField simulusButtons">
-        <button class="smallButton"
-                type="button"
-                onclick="addStimulus()">
-            [ + ]
-        </button>
-        <button class="smallButton"
-                type="button"
-                onclick="removeStimulus()">
-            [ − ]
-        </button>
+    <div class="simulusButtons stdMetaField">
+        <div class="buttonGroup">
+            <button class="smallButton"
+                    type="button"
+                    onclick="addStimulusRow()">
+                [ + ]
+            </button>
+            <button class="smallButton"
+                    type="button"
+                    onclick="removeStimulusRow()">
+                [ − ]
+            </button>
+        </div>
     </div>
 
     <div id="stimulusFields" class="stimulusGrid">
-        <div class="stdMetaField stimulusRow">
+        <div class="stimulusRow stdMetaField">
             <label class="metaLabel" for="stimulus_1">
                 Stimulus 1:
             </label>

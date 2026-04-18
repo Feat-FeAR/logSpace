@@ -1,4 +1,4 @@
-<!-- Shortcode for the ChangeEvents MetaDataMaker (MDM) field -->
+<!-- Shortcode for the ChangeEvents MetaDataMaker (MDM) module -->
 
 <!-- Import the JS script -->
 <script defer
@@ -7,54 +7,59 @@
         src='{{ "js/MDM_change_events.js" | urlize | relURL }}'>
 </script>
 
-<h3>AxoScope Files Association</h3>
-<!-- Full trace filename -->
+<h3 class="mdmTitle">AxoScope Files Association</h3>
+<!-- Full (gap-free) trace filename -->
 <div class="axoPanel">
-    <div class="stdMetaField axoButtons">
-        <button class="smallButton"
-                type="button"
-                onclick="document.getElementById('local_files_picker_change').click()">
-            Select File
-        </button>
-        <input type="file"
-               id="local_files_picker_change"
-               style="display: none;"
-               onchange="setFileFromSelection(this.files[0])">
+    <div class="axoButtons stdMetaField">
+        <div class="buttonGroup">
+            <button class="smallButton"
+                    type="button"
+                    onclick="document.getElementById('axoFile_picker').click()">
+                Select File
+            </button>
+            <input type="file"
+                   id="axoFile_picker"
+                   style="display: none;"
+                   onchange="setFileFromSelection(this.files[0])">
+        </div>
     </div>
 
-    <div class="stdMetaField axoRow">
-        <label class="metaLabel" for="full_trace_file">
-            Full Trace File:
-        </label>
-        <input type="text"
-               id="full_trace_file"
-               class="metaValue"
-               data-meta-info="Full Trace File:"
-               data-meta-group="stimulus_changes"
-               data-meta-key="full_trace_file"
-               placeholder="filename.ext">
+    <div id="axoFields" class="axoGrid">
+        <div class="axoRow stdMetaField">
+            <label class="metaLabel" for="full_trace_file">
+                Full Trace File:
+            </label>
+            <input type="text"
+                   id="full_trace_file"
+                   class="metaValue"
+                   data-meta-info="Full Trace File:"
+                   data-meta-group="stimulus_changes"
+                   data-meta-key="full_trace_file"
+                   placeholder="filename.ext">
+        </div>
     </div>
 </div>
 
-
 <!-- List of Stimulus Changes -->
 <div class="changePanel">
-    <div class="stdMetaField axoButtons">
-        <button class="smallButton"
-                type="button"
-                onclick="addChangeRow()">
-            [ + ]
-        </button>
-        <button class="smallButton"
-                type="button"
-                onclick="removeChangeRow()">
-            [ − ]
-        </button>
+    <div class="changeButtons stdMetaField">
+        <div class="buttonGroup">
+            <button class="smallButton"
+                    type="button"
+                    onclick="addChangeRow()">
+                [ + ]
+            </button>
+            <button class="smallButton"
+                    type="button"
+                    onclick="removeChangeRow()">
+                [ − ]
+            </button>
+        </div>
     </div>
 
     <!-- Nested <div> to accommodate multiple changeRow's -->
-    <div id="changeFields" class="stimulusEventFields changeGrid">
-        <div class="stdMetaField changeRow"> <!-- For a single changeRow -->
+    <div id="changeFields" class="changeGrid stimulusEventFields">
+        <div class="changeRow stdMetaField"> <!-- For a single changeRow -->
             <label class="metaLabel" for="time_change_1">
                 Time:
             </label>
@@ -69,7 +74,7 @@
                        data-meta-key="time_change_1"
                        data-meta-unit="s">
             </div>
-
+            <div></div> <!-- spacer-column in 5-column grid -->
             <label class="metaLabel" for="name_change_1">
                 Change to Stimulus:
             </label>

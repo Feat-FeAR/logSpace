@@ -38,7 +38,7 @@ function addOperatorRow() {
     if (!section) return;
 
     const newRow = document.createElement("div");
-    newRow.className = "stdMetaField operatorRow";
+    newRow.className = "operatorRow stdMetaField";
 
     newRow.innerHTML = `
         <label class="metaLabel" for="dropdown_operator${opCounter}">
@@ -75,7 +75,10 @@ function toggleGuestOperator(selectElement) {
 function removeOperatorRow() {
     if (opCounter > 2) {
         opCounter--;
+
         const section = document.getElementById("operatorFields");
+        if (!section || !section.lastElementChild) return;
+        
         // Remove the last added field
         section.removeChild(section.lastElementChild);
     }

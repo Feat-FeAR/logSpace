@@ -327,8 +327,8 @@ function resetDynamicSectionsToBaseState(hard = false) {
             removeFun: removeOperatorRow
         },
         {
-            rowSelector: "#stimulusFields > div",
-            removeFun: removeStimulus
+            rowSelector: "#stimulusFields > .stimulusRow",
+            removeFun: removeStimulusRow
         },
         {
             rowSelector: "#fileProtocolFields > .fileProtocolRow",

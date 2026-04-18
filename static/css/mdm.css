@@ -90,6 +90,13 @@ button.smallButton:hover {
     background-color: rgba(83, 122, 143, 0.5);
 }
 
+.buttonGroup {
+    display: flex;
+    column-gap: 12px;
+    gap: 8px;
+    grid-column: 2;
+}
+
 /* === DateOperatorAUX module =============================================== */
 
 .dateGrid {
@@ -133,13 +140,6 @@ button.smallButton:hover {
     grid-template-columns: 220px 1fr;
 }
 
-.buttonGroup {
-    display: flex;
-    column-gap: 12px;
-    gap: 8px;
-    grid-column: 2;
-}
-
 .operatorGrid {
     display: grid;
     column-gap: 12px;
@@ -157,6 +157,7 @@ button.smallButton:hover {
 .operatorGrid input[type="text"] {
     width: 100%;
 }
+
 .operatorGrid .hidden {
     display: none;
 }
@@ -226,77 +227,103 @@ button.smallButton:hover {
 
 /* === AcuteStimuli module ================================================== */
 
-.simulusButtons {
-    display: flex;
+.stimulusPanel {
+    display: grid;
+    column-gap: 12px;
     gap: 8px;
-    align-items: center;
+    margin-bottom: 30px;
 }
 
+.simulusButtons {
+    display: grid;
+    column-gap: 12px;
+    align-items: center;
+    grid-template-columns: 220px 1fr;
+}
 
 .stimulusGrid {
     display: grid;
+    column-gap: 12px;
     gap: 8px;
 }
 
 .stimulusGrid .stimulusRow {
     display: grid;
-    grid-template-columns: 220px minmax(180px, 280px) minmax(180px, 1fr);
-    align-items: center;
     column-gap: 12px;
+    grid-template-columns: 220px minmax(180px, 240px);
+    align-items: center;
 }
 
 .stimulusGrid input[type="text"] {
     width: 100%;
 }
 
-
-
-
-
-/* ===== ChangeEvent module ===== */
-
-.axoButtons {
-    display: flex;
-    gap: 8px;
-    align-items: center;
+.stimulusGrid .hidden {
+    display: none;
 }
 
+/* === ChangeEvent module =================================================== */
 
+/* axo-part */
 .axoPanel {
     display: grid;
+    column-gap: 12px;
+    gap: 8px;
+    margin-bottom: 30px;
+}
+
+.axoButtons {
+    display: grid;
+    column-gap: 12px;
+    align-items: center;
+    grid-template-columns: 220px 1fr;
+}
+
+.axoGrid {
+    display: grid;
+    column-gap: 12px;
     gap: 8px;
 }
 
-.axoPanel .axoRow {
+.axoGrid .axoRow {
     display: grid;
-    grid-template-columns: 220px minmax(180px, 280px) minmax(180px, 1fr);
-    align-items: center;
     column-gap: 12px;
+    grid-template-columns: 220px minmax(240px, 1fr);
+    align-items: center;
 }
 
-.axoPanel input[type="text"] {
+.axoGrid input[type="text"] {
     width: 100%;
 }
 
+/* change-part */
+.changePanel {
+    display: grid;
+    column-gap: 12px;
+    gap: 8px;
+    margin-bottom: 30px;
+}
 
-
+.changeButtons {
+    display: grid;
+    column-gap: 12px;
+    align-items: center;
+    grid-template-columns: 40px 1fr;
+}
 
 .changeGrid {
     display: grid;
+    column-gap: 12px;
     gap: 8px;
 }
 
+/* 3rd column is spacer */
 .changeGrid .changeRow {
     display: grid;
-    grid-template-columns: minmax(30px, 50px) 150px minmax(70px, 150px) minmax(180px, 1fr);
-    align-items: center;
     column-gap: 12px;
+    grid-template-columns: 50px minmax(70px, 130px) 16px 160px minmax(180px, 1fr);
+    align-items: center;
 }
-
-.changeGrid input[type="text"] {
-    width: 100%;
-}
-
 
 .changeGrid .inputWithUnit,
 .changeGrid select {
@@ -314,6 +341,14 @@ button.smallButton:hover {
 
 
 
+
+
+
+
+
+
+
+
 /* === TimeProtocolEvent Module === */
 
 .protocolButtons {
@@ -321,7 +356,6 @@ button.smallButton:hover {
     gap: 8px;
     align-items: center;
 }
-
 
 .fileProtocolGrid {
     display: grid;
@@ -339,8 +373,6 @@ button.smallButton:hover {
     width: 100%;
 }
 
-
-
 .fileProtocolGrid .inputWithUnit,
 .fileProtocolGrid select {
     width: 100%;
@@ -353,10 +385,7 @@ button.smallButton:hover {
 }
 
 
-
-
-
-
+/* ------------------------- */
 .bigButtonGroup {
     margin-top: 60px;
 }

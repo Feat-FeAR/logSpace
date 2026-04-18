@@ -1,20 +1,16 @@
 // JavaScript code for the AcuteStimuli MetaDataMaker (MDM) shortcode
 //
 // DESIGN NOTE
-// This module is the single source of truth for all stimulus names used
-// elsewhere in the page.
-//
-// Responsibilities of this file:
-// 1. Manage the "Stimulus Panel" rows (add/remove stimulus names).
-// 2. Read the currently defined stimulus names.
-// 3. Populate any dependent <select> dropdown that must offer those names.
-// 4. Refresh all dependent dropdowns whenever the stimulus list changes.
+// This module keeps all stimulus-dependent dropdowns synchronized from one
+// place by
+// 1. managing the "Stimulus Panel" rows (add/remove stimulus names).
+// 2. reading the currently defined stimulus names.
+// 3. populating any dependent <select> dropdown that must offer those names.
+// 4. refreshing all dependent dropdowns whenever the stimulus list changes.
 //
 // Other modules (for example TimeProtocolEvents and ChangeEvents) should NOT
 // duplicate stimulus-list logic. Instead, they should call the shared API:
 //     window.MDMStimuli.refreshAllStimulusDropdowns();
-//
-// This keeps all stimulus-dependent dropdowns synchronized from one place.
 
 let stimulusCounter = 2; // Next stimulus index to create (Stimulus 1 already exists)
 
@@ -42,7 +38,7 @@ function getCurrentStimuli() {
 // Fill one dropdown (i.e., <select> element) with the current stimulus names
 function populateStimulusDropdown(selectId) {
     const dropdown = document.getElementById(selectId);
-    if (!dropdown) return; // Safe exit if the requested element does not exist
+    if (!dropdown) return;
 
     const currentValue = dropdown.value;
     const stimuli = getCurrentStimuli();
@@ -51,11 +47,6 @@ function populateStimulusDropdown(selectId) {
     dropdown.innerHTML = "";
 
     // Insert a placeholder option "--" as first entry
-    /*
-     * Why the placeholder is disabled:
-     * - It acts as a visual "no selection yet" entry.
-     * - The user cannot re-select it after choosing a real stimulus.
-     */
     const placeholder = document.createElement("option");
     placeholder.value = "";
     placeholder.text = "--";
@@ -97,12 +88,12 @@ function refreshAllStimulusDropdowns() {
 }
 
 // Add a new stimulus text field to the Stimulus Panel
-function addStimulus() {
+function addStimulusRow() {
     const section = document.getElementById("stimulusFields");
     if (!section) return;
 
     const newField = document.createElement("div");
-    newField.className = "stdMetaField stimulusRow";
+    newField.className = "stimulusRow stdMetaField";
 
     newField.innerHTML = `
         <label class="metaLabel" for="stimulus_${stimulusCounter}">
@@ -128,7 +119,7 @@ function addStimulus() {
 }
 
 // Remove the last stimulus field (but never remove Stimulus 1)
-function removeStimulus() {
+function removeStimulusRow() {
     if (stimulusCounter > 2) {
         stimulusCounter--;
 
@@ -150,16 +141,18 @@ window.MDMStimuli = {
 };
 
 // Expose button handlers used directly by HTML onclick attributes
-window.addStimulus = addStimulus;
-window.removeStimulus = removeStimulus;
+window.addStimulusRow = addStimulusRow;
+window.removeStimulusRow = removeStimulusRow;
 
 // -----------------------------------------------------------------------------
 
 // Initialize at page startup
 document.addEventListener("DOMContentLoaded", function () {
     // Attach the "input" listener to the pre-existing Stimulus 1 field, since
-    // that field is already present in HTML (not created by 'addStimulus()').
+    // that field is already present in HTML (not created by 'addStimulusRow').
     const firstStimulusInput = document.getElementById("stimulus_1");
+    // The 'input' event fires immediately whenever the value changes.
+    // The 'blur' event fires only when leaving the field.
     firstStimulusInput?.addEventListener("input", refreshAllStimulusDropdowns);
 
     window.MDMUI?.attachUnitStandardizationToAll?.(document);
