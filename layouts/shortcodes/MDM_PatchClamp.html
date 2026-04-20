@@ -80,18 +80,18 @@
     </div>
 
     <div class="patchClampRow stdMetaField">
-        <label class="metaLabel" for="pipette_offset">
-            Pipette Offset:
+        <label class="metaLabel" for="pipette_offset_initial">
+            Pipette Offset - Initial:
         </label>
         <div class="inputWithUnit">
             <input type="number"
                    step="any"
                    inputmode="decimal"
-                   id="pipette_offset"
+                   id="pipette_offset_initial"
                    class="metaValue withUnit"
-                   data-meta-info="Pipette Offset"
+                   data-meta-info="Initial Pipette Offset"
                    data-meta-group="patch_clamp"
-                   data-meta-key="pipette_offset"
+                   data-meta-key="pipette_offset_initial"
                    data-meta-unit="mV">
         </div>
     </div>
@@ -106,6 +106,23 @@
                data-meta-info="Pipette Capacitance Compensation"
                data-meta-group="patch_clamp"
                data-meta-key="pipette_capacitance_compensation">
+    </div>
+
+    <div class="patchClampRow stdMetaField">
+        <label class="metaLabel" for="pipette_offset_final">
+            Pipette Offset - Final:
+        </label>
+        <div class="inputWithUnit">
+            <input type="number"
+                   step="any"
+                   inputmode="decimal"
+                   id="pipette_offset_final"
+                   class="metaValue withUnit"
+                   data-meta-info="Final Pipette Offset"
+                   data-meta-group="patch_clamp"
+                   data-meta-key="pipette_offset_final"
+                   data-meta-unit="mV">
+        </div>
     </div>
 
     <h3 class="mdmTitle">Patch</h3>

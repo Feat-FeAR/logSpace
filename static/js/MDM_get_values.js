@@ -65,7 +65,7 @@ function getAllMetaValues() {
         MAJOR (1.0.0 → 2.0.0): breaking changes (renamed keys, structure change)
     */
     const metadata = {
-        schema_version: "0.9.0",
+        schema_version: "1.0.0",
         generated_by: "MetaDataMaker",
         generated_at: new Date().toISOString()
     };
