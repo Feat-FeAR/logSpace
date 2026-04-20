@@ -1,8 +1,8 @@
 // JavaScript code for the TimeProtocolEvents MetaDataMaker (MDM) shortcode
 //
 // DESIGN NOTE
-// This module does NOT own the list of available stimuli.
-// The stimulus list is owned by MDM_acute_stimuli.js and exposed through:
+// This module does NOT own the list of available stimuli, which, on the
+// contrary, is owned by MDM_acute_stimuli.js and exposed through:
 //     window.MDMStimuli
 //
 // This module assumes that MDM_acute_stimuli.js is loaded on the page too.
@@ -16,7 +16,7 @@ function addProtocolRow(fileName = "") {
     if (!section) return;
 
     const newRow = document.createElement("div");
-    newRow.className = "stdMetaField fileProtocolRow";
+    newRow.className = "fileProtocolRow stdMetaField";
 
     newRow.innerHTML = `
         <label class="metaLabel" for="name_proto-file_${protoFileCounter}">

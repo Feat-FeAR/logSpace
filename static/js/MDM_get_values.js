@@ -25,7 +25,7 @@ systematically converted from kebab-case (e.g., data-meta-info) to camelCase
 (e.g., metaInfo -> element.dataset.metaInfo).
 */
 
-// Function to create 'time_events' top-level block lazily (i.e., when the
+// Function to create 'time_events' top-level JSON block lazily (i.e., when the
 // first related field is encountered in the DOM)
 function ensureTimeEventsBlock(metadata) {
     if (!("time_events" in metadata)) {

@@ -7,6 +7,7 @@
         src='{{ "js/MDM_get_values.js" | urlize | relURL }}'>
 </script>
 
+<h2 class="mdmTitle"></h2> <!-- just for border-bottom -->
 <div class="bigButtonGroup">
     <div class="bigButtonLine">
         <button class="bigButton"
@@ -21,11 +22,12 @@
             Clear All
         </button>
     </div>
-
-    <button id="getMetadataButton"
-            class="bigButton"
-            type="button"
-            onclick="downloadJsonData()">
-        Make MetaData !
-    </button>
+    <div class="bigButtonLine">
+        <button id="getMetadataButton"
+                class="bigButton"
+                type="button"
+                onclick="downloadJsonData()">
+            Make MetaData !
+        </button>
+    </div>
 </div>
