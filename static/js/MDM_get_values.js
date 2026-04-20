@@ -245,9 +245,11 @@ function getAllMetaValues() {
     return metadata;
 }
 
-function downloadJsonData() {
-    // Get the data
+async function downloadJsonData() {
+    // Collect metadata and convert the object to a JSON string
+    // The third parameter (4) is for indentation
     const metadata = getAllMetaValues();
+    const jsonString = JSON.stringify(metadata, null, 4);
 
     // Retrieve some fields to build filename
     function sanitize(str) {
@@ -258,20 +260,41 @@ function downloadJsonData() {
     const generatedAt = metadata.generated_at.replace(/[:.]/g, "-");
     const filename = `metadata_${sanitize(cellType)}_${sanitize(condition)}_${generatedAt}.json`;
 
-    // Convert the object to a JSON string
-    // The third parameter (4) is for indentation
-    const jsonString = JSON.stringify(metadata, null, 4);
+    // Modern save dialog (if supported): modern browsers expose
+    // window.showSaveFilePicker(), which opens a native save dialog.
+    if ("showSaveFilePicker" in window) {
+        try {
+            const handle = await window.showSaveFilePicker({
+                suggestedName: filename,
+                types: [{
+                    description: "JSON files",
+                    accept: { "application/json": [".json"] }
+                }]
+            });
 
-    // Create a Blob containing the JSON data
+            const writable = await handle.createWritable();
+            await writable.write(jsonString);
+            await writable.close();
+            
+        } catch (err) {
+            // User cancelled → silently fallback
+            console.warn("Save picker cancelled or failed, falling back.", err);
+        }
+        return;
+    }
+
+    // Fallback: standard browser download
     const blob = new Blob([jsonString], { type: "application/json" });
-    
-    // Create a download link
     const url = URL.createObjectURL(blob);
+
     const a = document.createElement("a");
     a.href = url;
     a.download = filename;
-    a.click();
+    a.style.display = "none";
 
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
     URL.revokeObjectURL(url);
 }
 
