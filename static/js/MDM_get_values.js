@@ -275,10 +275,10 @@ async function downloadJsonData() {
             const writable = await handle.createWritable();
             await writable.write(jsonString);
             await writable.close();
-            
+
         } catch (err) {
-            // User cancelled → silently fallback
-            console.warn("Save picker cancelled or failed, falling back.", err);
+            // User cancelled
+            console.warn("Save picker cancelled or failed.", err);
         }
         return;
     }
