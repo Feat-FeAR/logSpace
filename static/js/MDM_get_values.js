@@ -249,6 +249,15 @@ function downloadJsonData() {
     // Get the data
     const metadata = getAllMetaValues();
 
+    // Retrieve some fields to build filename
+    function sanitize(str) {
+        return str.replace(/\s+/g, "_").replace(/[^\w\-.()\[\]+]/g, "")
+    }
+    const cellType = metadata.cell_cultures.cell_type || "unknown";
+    const condition = metadata.cell_cultures.experimental_condition || "unknown"; 
+    const generatedAt = metadata.generated_at.replace(/[:.]/g, "-");
+    const filename = `metadata_${sanitize(cellType)}_${sanitize(condition)}_${generatedAt}.json`;
+
     // Convert the object to a JSON string
     // The third parameter (4) is for indentation
     const jsonString = JSON.stringify(metadata, null, 4);
@@ -260,7 +269,7 @@ function downloadJsonData() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = "metadata.json";
+    a.download = filename;
     a.click();
 
     URL.revokeObjectURL(url);
