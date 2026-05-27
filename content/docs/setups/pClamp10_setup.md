@@ -1,6 +1,6 @@
 ---
 title: "pCLAMP 10"
-weight: 20
+weight: 30
 draft: false
 # bookFlatSection: false
 # bookToc: true
