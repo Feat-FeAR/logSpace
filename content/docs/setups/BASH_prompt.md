@@ -1,5 +1,5 @@
 ---
-title: "BASH Prompt"
+title: "BASH Config"
 weight: 20
 draft: true
 # bookFlatSection: false
@@ -10,61 +10,63 @@ draft: true
 # bookSearchExclude: false
 ---
 
-# BASH Prompt Customizationx
+# BASH Customization
 
+## Bash Prompt
+### Prompt Variables
+In Bash, the shell prompt is mainly controlled through a few special environment (or shell) variables.
+Bash displays the primary prompt `PS1` when it is ready to read a command, and the secondary prompt `PS2` displayed when a command continues on the next line.
+`PS0`, `PS3`, and `PS4` are more rarely used.
 
+| Variable Name | Purpose                       | Default String  |
+|:-------------:|:------------------------------|-----------------|
+|`PS0`          | Pre-execution prompt          | ` `             |
+|`PS1`          | __Primary prompt__            | `[\u@\h \W]\$ ` |
+|`PS2`          | __Secondary prompt__          | `>`             |
+|`PS3`          | Prompt for `select` loops     | ` `             |
+|`PS4`          | Debug/Trace prompt (`set -x`) | `+`             |
 
-## Escaping
-If you are going to use these codes in your special bash variables
-- PS0
-- PS1
-- PS2 (= this is for prompting)
-- PS4
-you should add extra escape characters so that bash can interpret them correctly. Without this adding extra escape characters it works but you will face problems when you use `Ctrl + r` for search in your history.
-
-exception rule for bash
-You should add `\[` before any starting ANSI code and add `\]` after any ending ones.
-
-Example:
-- in regular usage: `\033[32mThis is in green\033[0m`
-- for PS0/1/2/4: `\[\033[32m\]This is in green\[\033[m\]`
-
-
-
-
-## Environment variables
-Bash prompt configuration is stored in four environment variables named `PS1`, `PS2`, `PS3`, and `PS4`.
-Bash displays the primary prompt `PS1` when it is ready to read a command, and the secondary prompt `PS2` when it needs more input to complete command.
-`PS3` and `PS4` are rarely used.
+Print the current value of Bash primary prompt:
 ```sh
-# Print the current value of Bash prompt
 echo $PS1
 ```
 
-### Special characters
-Within Bash prompt environment variables you can use the folowing special characters:
-- `\u` &emsp;&nbsp; your username
-- `\h` &emsp;&nbsp; the hostname (computer name), up to the first `.`
-- `\H` &emsp;&nbsp; the hostname
-- `\d` &emsp;&nbsp; the date, in "Weekday Month Date" format
-- `\w` &emsp;&nbsp; the current working directory, with `$HOME` abbreviated as `~`
-- `\W` &emsp;&nbsp; the basename of `$PWD`, with `$HOME` abbreviated as `~`
-- `\$` &emsp;&nbsp; `$` if you’re a normal user account or `#` if you’re root
-- `\a` &emsp;&nbsp; a bell character
-- `\n` &emsp;&nbsp; a newline
-- `\e` &emsp;&nbsp; an escape character
-- `\033` &nbsp; an alternative syntax for the `Esc` character 
-- `\[` &emsp;&nbsp; begin a sequence of non-printing characters
-- `\]` &emsp;&nbsp; end a sequence of non-printing characters
+### Common Escape Sequences
+Within Bash prompt environment variables you can use the following special characters:
 
-The default prompt is typically something like
-```
-"[\u@\h \W]\$ "
-```
-or
-```
-"\u@\h:\w\$"
-```
+| Sequence | Meaning |
+|:--------:|:--------|
+| `\u`     | Username |
+| `\h`     | Hostname, short form (up to the first `.`) |
+| `\H`     | Full hostname |
+| `\w`     | Current working directory (with `$HOME` abbreviated as `~`) |
+| `\W`     | Basename of `$PWD` (with `$HOME` abbreviated as `~`) |
+| `\d`     | Date (in "Weekday Month Date" format) |
+| `\t`     | Time, 24-hour format: `HH:MM:SS` |
+| `\T`     | Time, 12-hour format |
+| `\@`     | Time, 12-hour format with AM/PM |
+| `\!`     | History number |
+| `\$`     | `#` if root, `$` otherwise |
+| `\n`     | Newline |
+| `\a`     | A bell character |
+| `\\`     | Literal backslash |
+| `\e`     | An escape (`ESC`) character |
+| `\033`   | An alternative syntax for the `ESC` character |
+| `\[`     | Begin a sequence of non-printing characters |
+| `\]`     | End a sequence of non-printing characters |
+
+### Login/User Context Variables Often Used in Prompts
+These variables are frequently referenced---by usual _variable expansion_---in prompt definitions.
+
+| Variable | Meaning |
+|:--------:|---------|
+| `USER` | Current username |
+| `HOSTNAME` | Hostname |
+| `PWD` | Current directory |
+| `HOME` | Home directory |
+| `OLDPWD` | Previous directory |
+| `SHLVL` | Shell nesting level |
+| `TERM` | Terminal type |
 
 ### Including commands outputs
 The output of any Bash command can be showed in the prompt just by using the usual _command substitution_ syntax `$(...)`.
@@ -73,9 +75,14 @@ For example:
 PS1="$(date)>"
 ```
 
-## Prompt colors
+
+
+### Color Handling
+You typically use ANSI escape sequences.
+Non-printing characters must be wrapped in:
+
 1. Include the entire color code information between `\[` and `\]`;
-2. Inside the tag, you must begin with either `\033[` or `\e[` to indicate to Bash that this is color information;
+2. Inside the tag, you must begin with either `\033[` or `\e[`---representing the ASCII `ESC` character---to indicate to Bash that this is color information;
 3. At the end of the tag, you must end with `m`;
 
 Here’s what every color tag will look like:
@@ -122,6 +129,31 @@ However, keep in mind that text with these attributes will look different in dif
 "ANYTHING" # Characters, specials, or some command output 
 \[\033[0m\] # End of color change (back to default color scheme)
 ```
+
+
+
+
+
+
+
+
+## Escaping
+If you are going to use these codes in your special bash variables
+- PS0
+- PS1
+- PS2 (= this is for prompting)
+- PS4
+you should add extra escape characters so that bash can interpret them correctly. Without this adding extra escape characters it works but you will face problems when you use `Ctrl + r` for search in your history.
+
+exception rule for bash
+You should add `\[` before any starting ANSI code and add `\]` after any ending ones.
+
+Example:
+- in regular usage: `\033[32mThis is in green\033[0m`
+- for PS0/1/2/4: `\[\033[32m\]This is in green\[\033[m\]`
+
+
+
 
 
 
