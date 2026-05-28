@@ -30,8 +30,7 @@ The default installation is a minimal base system, configured by the user to *on
 Arch Linux is an independently developed *x86-64* general-purpose GNU/Linux distribution that strives to provide the latest stable versions of most software by following a *rolling release model*.
 It uses the ___Pacman___ package manager to install, update, and remove the software from its [__Official Repositories__](https://archlinux.org/packages/) (`core` and `extra`, essentially).
 
-Arch follows the *file system hierarchy* for operating systems using the *systemd* service manager.
-
+Arch follows the *file system hierarchy* for operating systems and uses the `systemd` service manager as the `init` process.
 
 ## Installation procedure
 1. Download the official ISO file from [here](https://archlinux.org/download/) and verify its integrity (image signature can be copied from [here](https://archlinux.org/download/#checksums)).
@@ -237,8 +236,8 @@ Then, generate the locales by running
 Remove the installation medium and then login into the new system with the root account.
 
 ## Post-installation
-### Unprivileged users 
-Create one or more unprivileged users in the usual way and enable `sudo` for the `wheel` group.
+### Unprivileged users
+Since new installations leave you with only the _superuser_, you usually have to create one or more unprivileged users and enable `sudo` for the `wheel` group.
 Specifically, provided that you logged in as root:
 1. Create a regular user with home directory and _bash_ shell:
     ```sh
@@ -334,7 +333,7 @@ NetworkManager comes with `nmcli` CLI and `nmtui` TUI.
 Additional interfaces are `nm-connection-editor` for a GUI and `network-manager-applet` for a system tray applet.
 {{< /hint >}}
 
-### KDE Plasma GUI
+### KDE Plasma desktop environment
 {{< hint info >}}
 __INFO__  
 Starting from *Plasma 6.4*, the *Wayland* graphics platform has become the default and preferred one.
