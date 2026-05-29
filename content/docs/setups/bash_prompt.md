@@ -12,50 +12,45 @@ draft: true
 
 # Bash Customization
 
-## Bash Prompt
-### Prompt Variables
+## Bash prompt
+### Prompt variables
 In Bash, the shell prompt is mainly controlled through a few special environment or shell variables.
-Bash displays the primary prompt `PS1` when it is ready to read a command, and the secondary prompt `PS2` displayed when a command continues on the next line.
-`PS3` is for the select loops, while  `PS4` for the debug mode.
-`PS0` is a less known and less commonly used prompt variable. It is expanded after Bash reads a command and before the command is executed.
+Bash displays the primary prompt `PS1` when it is ready to read a command, and the secondary prompt `PS2` when a command continues on the next line.
+`PS3` is for selection inputs, while `PS4` is used in debug mode.
+`PS0` is a less known and less commonly used prompt variable: it is expanded after Bash reads a command and before the command is executed.
 
+| Variable Name | Purpose                       | Default String    |
+|:-------------:|:------------------------------|-------------------|
+|`PS0`          | Pre-execution prompt          | `""`              |
+|`PS1`          | __Primary prompt__            | `"[\u@\h \W]\$ "` |
+|`PS2`          | __Secondary prompt__          | `"> "`            |
+|`PS3`          | Prompt for `select` loops     | `""`              |
+|`PS4`          | Debug/Trace prompt (`set -x`) | `"+ "`            |
 
-| Variable Name | Purpose                       | Default String  |
-|:-------------:|:------------------------------|-----------------|
-|`PS0`          | Pre-execution prompt          | ` `             |
-|`PS1`          | __Primary prompt__            | `[\u@\h \W]\$ ` |
-|`PS2`          | __Secondary prompt__          | `> `            |
-|`PS3`          | Prompt for `select` loops     | ` `             |
-|`PS4`          | Debug/Trace prompt (`set -x`) | `+ `            |
-
-Print the current value of Bash primary prompt:
+Check the current value of Bash primary prompt:
 ```sh
 echo $PS1
 ```
-Or all prompts
+or all prompts
 ```sh
 set | grep '^PS'
 ```
 
-In addition, there is also the related `PROMPT_COMMAND` variable, which is meant to store a command executed before Bash displays `PS1`.
-
-Very commonly used for:
-
+In addition, there is also the related `PROMPT_COMMAND` variable, which stores a command that is meant to be executed before Bash displays `PS1`.
+This is very commonly used for:
 - dynamic prompts
 - updating terminal titles
 - Git branch information
 - timers
 - status checks
 
-My Default:
-```sh
-echo $PROMPT_COMMAND
+Here is a possible default for terminal title updating, as returned by `echo $PROMPT_COMMAND`:
+```text
+printf "\033]0;%s@%s:%s\007" "${USER}" "${HOSTNAME%%.*}" "${PWD/#$HOME/\~}"
 ```
-`printf "\033]0;%s@%s:%s\007" "${USER}" "${HOSTNAME%%.*}" "${PWD/#$HOME/\~}"`
 
-
-### Common Escape Sequences
-Within Bash prompt environment variables you can use the following special characters:
+### Escape sequences
+Within Bash prompt environment variables, the following special characters can be used:
 
 | Sequence | Meaning |
 |:--------:|:--------|
@@ -78,24 +73,15 @@ Within Bash prompt environment variables you can use the following special chara
 | `\[`     | Begin a sequence of non-printing characters |
 | `\]`     | End a sequence of non-printing characters |
 
-
-NOTE:
+{{< hint warning >}}
+__WARNING__  
 ANSI escape sequences are terminal-dependent.
-
-Most modern terminals support them, including:
-
-- xterm
-- GNOME Terminal
-- iTerm2
-- Windows Terminal
-- Alacritty
-- Kitty
-
+Most modern terminals (including _xterm_, _GNOME Terminal_, _iTerm2_, _Windows Terminal_, _Alacritty_, _Kitty_, ...) support them. 
 Older terminals may not.
+{{< /hint >}}
 
-
-### Login/User Context Variables Often Used in Prompts
-These variables are frequently referenced---by usual _variable expansion_---in prompt definitions.
+### Context variables
+These variables are frequently referenced in prompt definitions (by using the usual _variable expansion_ `$` syntax).
 
 | Variable | Meaning |
 |:--------:|---------|
@@ -107,33 +93,54 @@ These variables are frequently referenced---by usual _variable expansion_---in p
 | `SHLVL` | Shell nesting level |
 | `TERM` | Terminal type |
 
-### Including commands outputs
-The output of any Bash command can be showed in the prompt just by using the usual _command substitution_ syntax `$(...)`.
+### Commands outputs
+The output of any Bash command can be showed in the prompt by using the usual _command substitution_ `$(...)` syntax .
 For example:
 ```sh
 PS1="$(date)>"
 ```
 
+### Color handling
+For an explanation of how colors are defined in Bash through ANSI escape sequences, see the section ...
 
-### Color Handling in Bash
+When used in prompt variables, non-printing characters must be wrapped in `\[` and `\]` to tell Bash that these characters do not take screen space.
+Without them, cursor positioning and line editing can become broken.
 
-You typically use ANSI escape sequences.
-Non-printing characters must be wrapped in:
+Example:
+- in regular usage: `\033[32mThis is in green\033[0m`
+- for PS0/1/2/4: `\[\033[32m\]This is in green\[\033[m\]`
 
-1. Include the entire color code information between `\[` and `\]` to tell Bash that these characters do not take screen space (without them, cursor positioning and line editing can become broken).
-1. Inside the tag, you must begin with either `\033` or `\e`---representing the ASCII `ESC` character---to indicate to Bash that this is color information;
-1. CSI, represented by `[`
-1. color parameter
-1. At the end of the tag, you must end with command `m`;
-
-Here’s what every color tag will look like:
-```bash
-\[\033["COLOR"m\]
-
+Here's what every color tag will look like:
+```text
+\033[<n>m
+# or
+\e[<n>m
+```
+```sh
 # E.g., red text
 echo -e "\e[31mHello\e[0m"
 ```
-where `"COLOR"` is a placeholder for the actual color code.
+where `<n>` is a placeholder for the actual color code.
+
+So any colored text line will look like this:
+```sh
+\[\033[1;34m\]"ANYTHING"\[\033[0m\]
+
+# Breaking it down...
+\[  # Color sequences in prompt are enclosed in escaped square brackets
+  \033[   # Start of color tag
+    1;34  # Color pair x;y to use (bold/light blue)
+  m     # End of color tag
+\]
+"ANYTHING" # Characters, specials, or some command output 
+\[\033[0m\] # End of color change (back to default color scheme)
+```
+
+
+
+
+
+
 
 
 
@@ -146,14 +153,6 @@ If you are going to use these codes in your special Bash variables
 - PS2 (= this is for prompting)
 - PS4
 you should add extra escape characters so that Bash can interpret them correctly. Without this adding extra escape characters it works but you will face problems when you use `Ctrl + r` for search in your history.
-
-exception rule for Bash
-You should add `\[` before any starting ANSI code and add `\]` after any ending ones.
-
-Example:
-- in regular usage: `\033[32mThis is in green\033[0m`
-- for PS0/1/2/4: `\[\033[32m\]This is in green\[\033[m\]`
-
 
 
 ## Linux KALI-style prompt
@@ -221,7 +220,7 @@ PS1="..."
 ```
 
 
-
+## Aliases
 
 ## Persisting Changes
 
@@ -230,9 +229,6 @@ Prompt settings are usually placed in one of these files:
 - `~/.bashrc`
 - `~/.bash_profile`
 - `/etc/bash.bashrc`, for system-wide settings
-
-
-
 
 
 To make that new prompt permanent you need to change the contents of the PS1 variable in the Bash prompt configuration stored in your user account’s `.bashrc` file which is at `~/.bashrc`.
