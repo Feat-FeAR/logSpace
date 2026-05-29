@@ -1,6 +1,6 @@
 ---
 title: "Shallow vs deep"
-weight: 40
+weight: 100
 draft: true
 # bookFlatSection: false
 # bookToc: true

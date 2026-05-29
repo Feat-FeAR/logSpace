@@ -1,5 +1,5 @@
 ---
-title: "BASH Config"
+title: "Bash Config"
 weight: 20
 draft: true
 # bookFlatSection: false
@@ -10,26 +10,49 @@ draft: true
 # bookSearchExclude: false
 ---
 
-# BASH Customization
+# Bash Customization
 
 ## Bash Prompt
 ### Prompt Variables
-In Bash, the shell prompt is mainly controlled through a few special environment (or shell) variables.
+In Bash, the shell prompt is mainly controlled through a few special environment or shell variables.
 Bash displays the primary prompt `PS1` when it is ready to read a command, and the secondary prompt `PS2` displayed when a command continues on the next line.
-`PS0`, `PS3`, and `PS4` are more rarely used.
+`PS3` is for the select loops, while  `PS4` for the debug mode.
+`PS0` is a less known and less commonly used prompt variable. It is expanded after Bash reads a command and before the command is executed.
+
 
 | Variable Name | Purpose                       | Default String  |
 |:-------------:|:------------------------------|-----------------|
 |`PS0`          | Pre-execution prompt          | ` `             |
 |`PS1`          | __Primary prompt__            | `[\u@\h \W]\$ ` |
-|`PS2`          | __Secondary prompt__          | `>`             |
+|`PS2`          | __Secondary prompt__          | `> `            |
 |`PS3`          | Prompt for `select` loops     | ` `             |
-|`PS4`          | Debug/Trace prompt (`set -x`) | `+`             |
+|`PS4`          | Debug/Trace prompt (`set -x`) | `+ `            |
 
 Print the current value of Bash primary prompt:
 ```sh
 echo $PS1
 ```
+Or all prompts
+```sh
+set | grep '^PS'
+```
+
+In addition, there is also the related `PROMPT_COMMAND` variable, which is meant to store a command executed before Bash displays `PS1`.
+
+Very commonly used for:
+
+- dynamic prompts
+- updating terminal titles
+- Git branch information
+- timers
+- status checks
+
+My Default:
+```sh
+echo $PROMPT_COMMAND
+```
+`printf "\033]0;%s@%s:%s\007" "${USER}" "${HOSTNAME%%.*}" "${PWD/#$HOME/\~}"`
+
 
 ### Common Escape Sequences
 Within Bash prompt environment variables you can use the following special characters:
@@ -50,10 +73,26 @@ Within Bash prompt environment variables you can use the following special chara
 | `\n`     | Newline |
 | `\a`     | A bell character |
 | `\\`     | Literal backslash |
-| `\e`     | An escape (`ESC`) character |
+| `\e`     | Start ANSI escape (`ESC`) character |
 | `\033`   | An alternative syntax for the `ESC` character |
 | `\[`     | Begin a sequence of non-printing characters |
 | `\]`     | End a sequence of non-printing characters |
+
+
+NOTE:
+ANSI escape sequences are terminal-dependent.
+
+Most modern terminals support them, including:
+
+- xterm
+- GNOME Terminal
+- iTerm2
+- Windows Terminal
+- Alacritty
+- Kitty
+
+Older terminals may not.
+
 
 ### Login/User Context Variables Often Used in Prompts
 These variables are frequently referenced---by usual _variable expansion_---in prompt definitions.
@@ -76,76 +115,39 @@ PS1="$(date)>"
 ```
 
 
+### Color Handling in Bash
 
-### Color Handling
 You typically use ANSI escape sequences.
 Non-printing characters must be wrapped in:
 
-1. Include the entire color code information between `\[` and `\]`;
-2. Inside the tag, you must begin with either `\033[` or `\e[`---representing the ASCII `ESC` character---to indicate to Bash that this is color information;
-3. At the end of the tag, you must end with `m`;
+1. Include the entire color code information between `\[` and `\]` to tell Bash that these characters do not take screen space (without them, cursor positioning and line editing can become broken).
+1. Inside the tag, you must begin with either `\033` or `\e`---representing the ASCII `ESC` character---to indicate to Bash that this is color information;
+1. CSI, represented by `[`
+1. color parameter
+1. At the end of the tag, you must end with command `m`;
 
 Here’s what every color tag will look like:
 ```bash
 \[\033["COLOR"m\]
+
+# E.g., red text
+echo -e "\e[31mHello\e[0m"
 ```
 where `"COLOR"` is a placeholder for the actual color code.
-
-### Foreground text color
-Most used foreground text color:
-- `30` &ensp; Black
-- `31` &ensp; Red
-- `32` &ensp; Green
-- `33` &ensp; Yellow
-- `34` &ensp; Blue
-- `35` &ensp; Purple
-- `36` &ensp; Cyan
-- `37` &ensp; White
-
-### Text attributes
-You can also specify an attribute for the text.
-This attribute must be added _before_ the color number, separated by a semicolon `;`.
-
-- Normal_Text:    0 (the default; doesn't actually need to be included)
-- Bold_or_Light_Text:  1 (It depends on the terminal emulator)
-- Dim_Text:     2
-- Underlined_Text:  4
-- Blinking_Text:    5 (This does not work in most terminal emulators)
-- Reversed_Text:    7 (This inverts the foreground and background colors)
-- Hidden_Text:    8
-
-However, keep in mind that text with these attributes will look different in different terminal emulators.
-
-### General color tag
-```bash
-\[\033[1;34m\]"ANYTHING"\[\033[0m\]
-
-# Breaking it down...
-\[  # Color sequences in prompt are enclosed in escaped square brackets
-  \033[   # Start of color tag
-    1;34  # Color pair x;y to use (bold/light blue)
-  m     # End of color tag
-\]
-"ANYTHING" # Characters, specials, or some command output 
-\[\033[0m\] # End of color change (back to default color scheme)
-```
-
-
-
 
 
 
 
 
 ## Escaping
-If you are going to use these codes in your special bash variables
+If you are going to use these codes in your special Bash variables
 - PS0
 - PS1
 - PS2 (= this is for prompting)
 - PS4
-you should add extra escape characters so that bash can interpret them correctly. Without this adding extra escape characters it works but you will face problems when you use `Ctrl + r` for search in your history.
+you should add extra escape characters so that Bash can interpret them correctly. Without this adding extra escape characters it works but you will face problems when you use `Ctrl + r` for search in your history.
 
-exception rule for bash
+exception rule for Bash
 You should add `\[` before any starting ANSI code and add `\]` after any ending ones.
 
 Example:
@@ -154,18 +156,8 @@ Example:
 
 
 
-
-
-
-
-
-
-
-
-
-
 ## Linux KALI-style prompt
-```bash
+```sh
 ┌──(fear@SilverLife-3)-[~/Documents]
 └─$ echo $PS1
 
@@ -207,7 +199,7 @@ Example:
 ```
 
 ## Customization  
-```bash
+```sh
 # Save the contents of the current PS1 variable into a backup variable
 DEFAULT=$PS1
 
@@ -228,8 +220,24 @@ PS1="..."
 \n\[\e]0;\u@\h: \w\a\]\[\033[1;32m\]┌──(\[\033[1;34m\]\u\[\033[1;32m\] 💀 \[\033[1;34m\]\h\[\033[1;32m\])-[\[\033[0;1m\]\w\[\033[1;32m\]]\n\[\033[1;32m\]└─\[\033[1;34m\]\$ \[\033[0m\]
 ```
 
-To make that new prompt permanent you need to change the contents of the PS1 variable in the Bash prompt configuration stored in your user account’s `.bashrc` file which is at `~/.bashrc`. So, open the `.bashrc` file in a text editor (e.g., nano), scroll down and locate the *PS1=* section. Just replace the default variable with your customized variable. Enter your colored PS1 variable under the *if* line that check for color feature in the shell
-```bash
+
+
+
+## Persisting Changes
+
+Prompt settings are usually placed in one of these files:
+
+- `~/.bashrc`
+- `~/.bash_profile`
+- `/etc/bash.bashrc`, for system-wide settings
+
+
+
+
+
+To make that new prompt permanent you need to change the contents of the PS1 variable in the Bash prompt configuration stored in your user account’s `.bashrc` file which is at `~/.bashrc`.
+So, open the `.bashrc` file in a text editor (e.g., nano), scroll down and locate the *PS1=* section. Just replace the default variable with your customized variable. Enter your colored PS1 variable under the *if* line that check for color feature in the shell
+```sh
 if [ "$color_prompt" = yes ]; then
 # or
 if ${use_color} ; then
@@ -237,16 +245,35 @@ if ${use_color} ; then
 ```
 And, possibly, enter the variable without colors under the *else* line.
 Remember that root's UID is 0, so
-```bash
+```sh
 if [[ ${EUID} == 0 ]]
 ```
 means 'if user is the root user'.
 Finally, save the file and close your text editor.
 
 
+NOTE
+
+Technically:
+
+- `PS1`, `PS2`, `PS3`, and `PS4` are shell variables.
+- They become environment variables only if exported.
+
+Example:
+
+```sh
+export PS1
+```
+
+Normally, they stay local to the shell session.
 
 
+Example:
 
+```sh
+echo "export PS1='\u@\h:\w\$ '" >> ~/.bashrc
+source ~/.bashrc
+```
 
 
 ## References - colors in Bash

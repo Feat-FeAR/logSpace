@@ -1,6 +1,6 @@
 ---
 title: "Bash Strict Mode"
-weight: 100
+weight: 50
 draft: false
 # bookFlatSection: false
 # bookToc: true
