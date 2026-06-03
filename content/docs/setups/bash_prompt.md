@@ -1,7 +1,7 @@
 ---
 title: "Bash Config"
 weight: 20
-draft: true
+draft: false
 # bookFlatSection: false
 # bookToc: true
 # bookHidden: false
@@ -12,47 +12,53 @@ draft: true
 
 # Bash Customization
 
-## Colors in GNU nano
-Enable colors in ___GNU nano___ by editing `/etc/nanorc`
+## GNU nano
+### Colors
+Enable colors in ___GNU nano___ by editing `/etc/nanorc`:
 ```sh
 sudo nano /etc/nanorc
 ```
 1. To color the interface elements in ___nano___, locate the section 
-  ```
-  ## Paint the interface elements of nano.
-  ```
-  and uncomment all (or some of) the lines below.
-1. To enable syntax highlighting, uncomment the following line in section `## === Syntax coloring ===`
-  ```sh
-  ## To include most of the existing syntax definitions, you can do:
-  include "/usr/share/nano/*.nanorc"
-  ```
+    ```sh
+    ## Paint the interface elements of nano.
+    ```
+    and uncomment all (or some of) the lines below it.
 
-{{< hint warning >}}
+1. To enable syntax highlighting, uncomment the following line under `## === Syntax coloring ===` section:
+    ```sh
+    ## To include most of the existing syntax definitions, you can do:
+    include "/usr/share/nano/*.nanorc"
+    ```
+
+1. Check it by opening, e.g., the Bash startup configuration file in your home:
+    ```sh
+    nano ~/.bashrc
+    ```
+### Text
+1. Enable word wrapping by uncommenting this line:
+    ```sh
+    ## Spread overlong lines over multiple screen lines.
+    set softwrap
+    ```
+    {{< hint warning >}}
 __WARNING__  
-Nano supports two different forms of line wrapping:
-
-Soft line wrapping is activated with Alt-$. Wraps lines without inserting line break characters into the file. That is, the effect is purely visual.
-
-Hard line wrapping is activated with Alt-L. Wraps lines by inserting line breaks into the file. The file is physically changed.
+___Nano___ supports two different forms of line wrapping:
+- _soft_ line wrapping (toggled by `Alt`+`$`), which is is purely visual (i.e., it wraps lines without inserting line break characters into the file);
+- _hard_ line wrapping (toggled by `Alt`+`L`, which wraps lines by inserting line breaks into the file.
+__In this case the file is physically changed, and likely broken in the case of files where wraps are meaningful, such as scripts, config files, or source codes.__
 {{< /hint >}}
 
-```sh
-## Spread overlong lines over multiple screen lines.
-set softwrap
-```
-```sh
-## Display line numbers to the left (and any anchors in the margin).
-set linenumbers
-```
+1. To avoid mistakes with (soft) word wrapping, it is recommended to also enable line numbering by uncommenting this line:
+    ```sh
+    ## Display line numbers to the left (and any anchors in the margin).
+    set linenumbers
+    ```
 
-https://bbs.archlinux.org/viewtopic.php?id=311249
-https://wiki.archlinux.org/title/KDE#Plasma_desktop_does_not_respect_locale/language_settings
+### Issues
+If you're having trouble pasting in ___nano___ __non-ASCII Unicode characters__ like `Ʌ†┌──💀`, it might be due to [this well known issue](https://bbs.archlinux.org/viewtopic.php?id=311249) with Plasma desktop, which corrupts UTF-8 encoding.
+As per the official [_Arch Linux Wiki_](https://wiki.archlinux.org/title/KDE#Plasma_desktop_does_not_respect_locale/language_settings), try to log out and log in after removing `~/.config/plasma-localerc`.
 
-
-
-
-## Change Bash prompt
+## Bash prompt
 ### Prompt variables
 In Bash, the shell prompt is mainly controlled through a few special _shell variables_: `PS0`, `PS1`, `PS2`, `PS3`, `PS4`.
 Bash displays (actually _expands_) the primary prompt `PS1` when it is ready to read a command, and the secondary prompt `PS2` when a command continues on the next line.
@@ -79,10 +85,10 @@ set | grep '^PS'
 {{< hint info >}}
 __NOTE__  
 `set` and `env` are used to list all the currently assigned _shell_ and _environment_ variables, respectively.
-While environment variables are inherited by all child processes (including sub-shells), shell variables are not (they exist only inside the current shell).
+While environment variables are inherited by all child processes (including sub-shells), shell variables are not (i.e., they exist only inside the current shell).
 A shell variable becomes an environment one when exported through the `export` command.
 Normally, __prompt variables are just _shell_ variables__ but, even when we want to make them available to child processes, __they do not need to be exported__.
-This is because they are typically encoded in the `~/.bashrc` startup file, which is used by any new sub-shell to reinitialize prompt-related settings (see below).
+This is because they are typically encoded in the `~/.bashrc` startup file (or in some other config file), which is used by any new sub-shell to reinitialize prompt-related settings (see below).
 {{< /hint >}}
 
 In addition, there is also the related `PROMPT_COMMAND` shell variable, which stores a command to be executed _before_ Bash displays `PS1`.
@@ -93,14 +99,13 @@ This is very commonly used for:
 - timers
 - status checks
 
-A possible default value for terminal title updating, as returned by `echo $PROMPT_COMMAND`, could be:
+A possible default value for terminal title updating, as returned by my `echo $PROMPT_COMMAND`, is:
 ```text
 printf "\033]0;%s@%s:%s\007" "${USER}" "${HOSTNAME%%.*}" "${PWD/#$HOME/\~}"
 ```
 
 ### Escape sequences
 Within Bash prompt environment variables, the following special characters can be used:
-
 | Sequence | Meaning |
 |:--------:|:--------|
 | `\u`     | Username |
@@ -109,13 +114,14 @@ Within Bash prompt environment variables, the following special characters can b
 | `\w`     | Current working directory (with `$HOME` abbreviated as `~`) |
 | `\W`     | Basename of `$PWD` (with `$HOME` abbreviated as `~`) |
 | `\d`     | Date (in "Weekday Month Date" format) |
-| `\t`     | Time, 24-hour format: `HH:MM:SS` |
-| `\T`     | Time, 12-hour format |
-| `\@`     | Time, 12-hour format with AM/PM |
+| `\t`     | Time, 24-hour `HH:MM:SS` format |
+| `\T`     | Time, 12-hour `HH:MM:SS` format |
+| `\@`     | Time, 12-hour AM/PM format |
+| `\A`     | Time, 24-hour `HH:MM` format |
 | `\!`     | History number |
 | `\$`     | `#` if root, `$` otherwise |
 | `\n`     | Newline |
-| `\a`     | A bell character |
+| `\a`     | Bell character |
 | `\\`     | Literal backslash |
 | `\e`     | Start ANSI escape (`ESC`) character |
 | `\033`   | An alternative syntax for the `ESC` character |
@@ -131,7 +137,6 @@ Older terminals may not.
 
 ### Context variables
 These variables are frequently referenced in prompt definitions through the usual _variable expansion_ `$` syntax.
-
 | Variable | Meaning |
 |:--------:|---------|
 | `USER` | Current username |
@@ -145,19 +150,19 @@ These variables are frequently referenced in prompt definitions through the usua
 {{< hint info >}}
 __NOTE__  
 To make context variables to be evaluated _each time PS* is used_ it is important to redefine prompts by using single quotes (e.g., `PS1='...'`), otherwise the expression will be evaluated once, when the `~/.bashrc` is run, and the result is substituted forever after.
-As an alternative, you can escape all the variable expansions that need to be constantly evaluated (e.g., `\${PWD}`).
-The same is true for command substitution (see below).
+As an alternative, you can use double quotes and escape all the variable expansions that need to be constantly evaluated (e.g., `"\${PWD}"`).
+The same is true for command substitution below.
 {{< /hint >}}
 
 ### Commands outputs
-The output of any Bash command can be showed in the prompt by using the usual _command substitution_ `$(...)` syntax .
+The output of any Bash command can be shown in the prompt by using the usual _command substitution_ `$(...)` syntax .
 For example:
 ```sh
 PS1='$(date)>'
 ```
 
 ### Color handling
-For an explanation of how colors are defined in Bash through ANSI escape sequences, see the section ...
+For an explanation of how colors are defined in Bash through ANSI escape sequences, see <a href="../../devel/bash_colors/index.html">this section</a>.
 
 When used in prompt variables, non-printing characters must be wrapped in `\[` and `\]` to tell Bash that these characters do not take screen space.
 Without them, cursor positioning and line editing can become broken.
@@ -262,11 +267,13 @@ PS1=" ... "       # prompt assignment by double quotes (allows expansions)
 
 \[\e[0m\]       # remove all attributes (formatting and colors)
 ```
+{{< hint info >}}
+__NOTE__  
+Provided that a proper encoding (usually UTF-8) has been correctly set system-wide, all Unicode symbols can be used for prompt literal text, including emoji symbols like 💀 or similar! 
+{{< /hint >}}
 
-
-you can even use emoji symbols like 💀
-
-
+### References
+[Arch Linux Wiki](https://wiki.archlinux.org/title/Bash/Prompt_customization)
 
 ### Persisting Changes
 To test a custom prompt, you can save the contents of the current prompt variable into a backup variable and then reassign it with a new value.
@@ -289,9 +296,35 @@ source ~/.bashrc
 
 ## Aliases
 
+_Alias_ is a command, which enables a replacement of a word with another string.
+It is often used for abbreviating a system command, or for adding default arguments to a regularly used command.
 
-## References - colors in Bash
-- https://linuxhint.com/ls_colors_bash/
-- https://www.howtogeek.com/307701/how-to-customize-and-colorize-your-bash-prompt/
-- https://wiki.archlinux.org/title/Bash_(Italiano)/Prompt_customization_(Italiano)
-- https://stackoverflow.com/questions/5947742/how-to-change-the-output-color-of-echo-in-linux
+Personal aliases can be made persistent by storing them in `~/.bashrc` or any separate file sourced from `~/.bashrc`.
+System-wide aliases (which affect all users) belong in `/etc/bash.bashrc`.
+
+```sh
+
+alias ls='ls --color=auto'
+alias ll='ls -hal'   # Human Long-format list of All files
+
+alias please='sudo $(fc -ln -1)'   # Run the previous command as admin
+alias fuck="please"   # ...the same, but with a better sense of control
+
+# NOTE: this only works for simple commands. If the command contains redirections or pipes, you need to invoke a shell under sudo:
+alias please='sudo "$BASH" -c "$(history -p !!)"'
+
+alias myip='curl ipinfo.io/ip'   # Print my public IP
+alias joke="curl https://icanhazdadjoke.com"   # Have a joke!
+
+ # Move to the directory of the last queried file or directory
+function gothere {
+  local last_output="$(eval "$(history | tail -n 2 | head -n 1 | sed -E 's/^ *[0-9]+ *//')")"
+    if [[ -d "$last_output" ]]; then
+        cd "$last_output" || echo "Failed to change directory"
+    elif [[ -f "$last_output" ]]; then
+        cd "$(dirname "$last_output")" || echo "Failed to change directory"
+    else
+        echo "Not a valid directory or file: '$last_output'"
+    fi
+}
+```
