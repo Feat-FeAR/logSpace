@@ -12,20 +12,60 @@ draft: true
 
 # Bash Customization
 
-## Bash prompt
+## Colors in GNU nano
+Enable colors in ___GNU nano___ by editing `/etc/nanorc`
+```sh
+sudo nano /etc/nanorc
+```
+1. To color the interface elements in ___nano___, locate the section 
+  ```
+  ## Paint the interface elements of nano.
+  ```
+  and uncomment all (or some of) the lines below.
+1. To enable syntax highlighting, uncomment the following line in section `## === Syntax coloring ===`
+  ```sh
+  ## To include most of the existing syntax definitions, you can do:
+  include "/usr/share/nano/*.nanorc"
+  ```
+
+{{< hint warning >}}
+__WARNING__  
+Nano supports two different forms of line wrapping:
+
+Soft line wrapping is activated with Alt-$. Wraps lines without inserting line break characters into the file. That is, the effect is purely visual.
+
+Hard line wrapping is activated with Alt-L. Wraps lines by inserting line breaks into the file. The file is physically changed.
+{{< /hint >}}
+
+```sh
+## Spread overlong lines over multiple screen lines.
+set softwrap
+```
+```sh
+## Display line numbers to the left (and any anchors in the margin).
+set linenumbers
+```
+
+https://bbs.archlinux.org/viewtopic.php?id=311249
+https://wiki.archlinux.org/title/KDE#Plasma_desktop_does_not_respect_locale/language_settings
+
+
+
+
+## Change Bash prompt
 ### Prompt variables
-In Bash, the shell prompt is mainly controlled through a few special environment or shell variables.
-Bash displays the primary prompt `PS1` when it is ready to read a command, and the secondary prompt `PS2` when a command continues on the next line.
+In Bash, the shell prompt is mainly controlled through a few special _shell variables_: `PS0`, `PS1`, `PS2`, `PS3`, `PS4`.
+Bash displays (actually _expands_) the primary prompt `PS1` when it is ready to read a command, and the secondary prompt `PS2` when a command continues on the next line.
 `PS3` is for selection inputs, while `PS4` is used in debug mode.
 `PS0` is a less known and less commonly used prompt variable: it is expanded after Bash reads a command and before the command is executed.
 
 | Variable Name | Purpose                       | Default String    |
-|:-------------:|:------------------------------|-------------------|
-|`PS0`          | Pre-execution prompt          | `""`              |
-|`PS1`          | __Primary prompt__            | `"[\u@\h \W]\$ "` |
-|`PS2`          | __Secondary prompt__          | `"> "`            |
-|`PS3`          | Prompt for `select` loops     | `""`              |
-|`PS4`          | Debug/Trace prompt (`set -x`) | `"+ "`            |
+|:-------------:|:------------------------------|:------------------|
+|`PS0`          | Pre-execution prompt          | _none_            |
+|`PS1`          | __Primary prompt__            | `'[\u@\h \W]\$ '` |
+|`PS2`          | __Secondary prompt__          | `'> '`            |
+|`PS3`          | Prompt for `select` loops     | _none_            |
+|`PS4`          | Debug/Trace prompt (`set -x`) | `'+ '`            |
 
 Check the current value of Bash primary prompt:
 ```sh
@@ -36,7 +76,16 @@ or all prompts
 set | grep '^PS'
 ```
 
-In addition, there is also the related `PROMPT_COMMAND` variable, which stores a command that is meant to be executed before Bash displays `PS1`.
+{{< hint info >}}
+__NOTE__  
+`set` and `env` are used to list all the currently assigned _shell_ and _environment_ variables, respectively.
+While environment variables are inherited by all child processes (including sub-shells), shell variables are not (they exist only inside the current shell).
+A shell variable becomes an environment one when exported through the `export` command.
+Normally, __prompt variables are just _shell_ variables__ but, even when we want to make them available to child processes, __they do not need to be exported__.
+This is because they are typically encoded in the `~/.bashrc` startup file, which is used by any new sub-shell to reinitialize prompt-related settings (see below).
+{{< /hint >}}
+
+In addition, there is also the related `PROMPT_COMMAND` shell variable, which stores a command to be executed _before_ Bash displays `PS1`.
 This is very commonly used for:
 - dynamic prompts
 - updating terminal titles
@@ -44,7 +93,7 @@ This is very commonly used for:
 - timers
 - status checks
 
-Here is a possible default for terminal title updating, as returned by `echo $PROMPT_COMMAND`:
+A possible default value for terminal title updating, as returned by `echo $PROMPT_COMMAND`, could be:
 ```text
 printf "\033]0;%s@%s:%s\007" "${USER}" "${HOSTNAME%%.*}" "${PWD/#$HOME/\~}"
 ```
@@ -81,7 +130,7 @@ Older terminals may not.
 {{< /hint >}}
 
 ### Context variables
-These variables are frequently referenced in prompt definitions (by using the usual _variable expansion_ `$` syntax).
+These variables are frequently referenced in prompt definitions through the usual _variable expansion_ `$` syntax.
 
 | Variable | Meaning |
 |:--------:|---------|
@@ -93,11 +142,18 @@ These variables are frequently referenced in prompt definitions (by using the us
 | `SHLVL` | Shell nesting level |
 | `TERM` | Terminal type |
 
+{{< hint info >}}
+__NOTE__  
+To make context variables to be evaluated _each time PS* is used_ it is important to redefine prompts by using single quotes (e.g., `PS1='...'`), otherwise the expression will be evaluated once, when the `~/.bashrc` is run, and the result is substituted forever after.
+As an alternative, you can escape all the variable expansions that need to be constantly evaluated (e.g., `\${PWD}`).
+The same is true for command substitution (see below).
+{{< /hint >}}
+
 ### Commands outputs
 The output of any Bash command can be showed in the prompt by using the usual _command substitution_ `$(...)` syntax .
 For example:
 ```sh
-PS1="$(date)>"
+PS1='$(date)>'
 ```
 
 ### Color handling
@@ -108,168 +164,130 @@ Without them, cursor positioning and line editing can become broken.
 
 Example:
 - in regular usage: `\033[32mThis is in green\033[0m`
-- for PS0/1/2/4: `\[\033[32m\]This is in green\[\033[m\]`
-
-Here's what every color tag will look like:
-```text
-\033[<n>m
-# or
-\e[<n>m
-```
-```sh
-# E.g., red text
-echo -e "\e[31mHello\e[0m"
-```
-where `<n>` is a placeholder for the actual color code.
+- in PS0/1/2/3/4: `\[\033[32m\]This is in green\[\033[m\]`
 
 So any colored text line will look like this:
 ```sh
-\[\033[1;34m\]"ANYTHING"\[\033[0m\]
-
-# Breaking it down...
-\[  # Color sequences in prompt are enclosed in escaped square brackets
-  \033[   # Start of color tag
-    1;34  # Color pair x;y to use (bold/light blue)
-  m     # End of color tag
-\]
-"ANYTHING" # Characters, specials, or some command output 
-\[\033[0m\] # End of color change (back to default color scheme)
+\[\e[1;34m\]"anything"\[\e[0m\]
 ```
-
-
-
-
-
-
-
-
-
-
-
-## Escaping
-If you are going to use these codes in your special Bash variables
-- PS0
-- PS1
-- PS2 (= this is for prompting)
-- PS4
-you should add extra escape characters so that Bash can interpret them correctly. Without this adding extra escape characters it works but you will face problems when you use `Ctrl + r` for search in your history.
-
-
-## Linux KALI-style prompt
+Breaking it down
 ```sh
-┌──(fear@SilverLife-3)-[~/Documents]
-└─$ echo $PS1
-
-\[\e]0;\u@\h: \w\a\]\[\033[;32m\]┌──(\[\033[1;34m\]\u@\h\[\033[;32m\])-[\[\033[0;1m\]\w\[\033[;32m\]]\n\[\033[0;32m\]└─\[\033[1;34m\]\$\[\033[0m\]
-
-# Breaking it down...
-
-\[
-  \e]0;           # Set the title of the terminal...
-  \u@\h: \w\a     # ...to <user>@<host>: <path>
+\[        # Color sequences in prompt are enclosed in escaped square brackets
+  \e[     # Start of color tag
+    1;34  # Color pair x;y to use (bold/blue)
+  m       # End of color tag
 \]
-
-\[\033[;32m\]     # sequence of colored elements
-  ┌──(
-
-\[\033[1;34m\]
-  \u@\h           # <username>@<hostname>
-
-\[\033[;32m\]
-  )-[
-
-\[\033[0;1m\]
-  \w              # the current working directory
-
-\[\033[;32m\]
-  ]
-
-\n                # a new line
-
-\[\033[;32m\]
-  └─
-
-\[\033[1;34m\]
-  \$              # "$" or "#" for normal user or root, respectively
-
-\[\033[0m\]       # remove all attributes (formatting and colors)
-                  # It can be a good idea to add it at the end of
-                  # each colored text.
+"anything" # Characters, specials, or some command output 
+\[\e[0m\]  # End of color change (back to default color scheme)
 ```
 
-## Customization  
+### Kali-style prompt
+Here is an example of custom prompt.
+Since I always found Kali Linux prompt cool, I tried to reproduce it in my shell, but with some tweaks and upgrades:
 ```sh
-# Save the contents of the current PS1 variable into a backup variable
-DEFAULT=$PS1
+# To paste into ~/bashrc
 
-# To test a custom prompt just reassign the PS1 variable with one of the
-# following expressions (between quotes)
-PS1="..."
+_set_prompt () {
 
-# green-blue, with a "\[\033[;32m\]_Ʌ†_" in the place of "@"
-\n\[\e]0;\u@\h: \w\a\]\[\033[1;32m\]┌──(\[\033[1;34m\]\u\[\033[1;32m\]_Ʌ†_\[\033[1;34m\]\h\[\033[1;32m\])-[\[\033[0;1m\]\w\[\033[1;32m\]]\n\[\033[1;32m\]└─\[\033[1;34m\]\$ \[\033[0m\]
+  if [[ ${SHLVL} == 1 ]]; then
+    local lvl_str="1;34m\]level 1"
+  elif [[ ${SHLVL} == 2 || ${SHLVL} == 3 ]]; then
+    local lvl_str="1;3${SHLVL}m\]level ${SHLVL}"
+  else
+    local lvl_str="1;31m\]level ${SHLVL}"
+  fi
 
-# purple-cyan
-\n\[\e]0;\u@\h: \w\a\]\[\033[1;35m\]┌──(\[\033[1;36m\]\u\[\033[1;35m\]_Ʌ†_\[\033[1;36m\]\h\[\033[1;35m\])-[\[\033[0;1m\]\w\[\033[1;35m\]]\n\[\033[1;35m\]└─\[\033[1;36m\]\$ \[\033[0m\]
+  PS1="\n\[\e[1;35m\]┌──(\[\e[1;36m\]\u\[\e[1;35m\]_Ʌ†_\[\e[1;36m\]\h\[\e[1;35m\])──[\[\e[${lvl_str}\[\e[1;35m\]]──[\[\e[\$(code=\$?; [ \$code == 0 ] && echo \"1;34m\]exit \${code}\" || echo \"1;31m\]exit \${code}\")\[\e[1;35m\]]──[\[\e[1;34m\]\w\[\e[1;35m\]]\n\[\e[1;35m\]└─\[\e[1;36m\]\$ \[\e[0m\]"
+}
 
-# hybrid colors
-\n\[\e]0;\u@\h: \w\a\]\[\033[1;35m\]┌──(\[\033[1;36m\]\u\[\033[1;32m\]_Ʌ†_\[\033[1;34m\]\h\[\033[1;35m\])-[\[\033[0;1m\]\w\[\033[1;35m\]]\n\[\033[1;35m\]└─\[\033[1;36m\]\$ \[\033[0m\]
+_set_prompt
+```
+Breaking it down:
+```sh
+_set_prompt () {} # function to define local variables
+                  # not to interfere with global environment
 
-# green-blue, with a "💀" in the place of "@"
-\n\[\e]0;\u@\h: \w\a\]\[\033[1;32m\]┌──(\[\033[1;34m\]\u\[\033[1;32m\] 💀 \[\033[1;34m\]\h\[\033[1;32m\])-[\[\033[0;1m\]\w\[\033[1;32m\]]\n\[\033[1;32m\]└─\[\033[1;34m\]\$ \[\033[0m\]
+if [[ ... ]]; fi  # shell level tag, with color-coded levels
+                  # external to PS1 to prevent the exit code from being overwritten by echo commands
+                  # this is evaluated only at shell startup... which is fine to store the shell level, since each newly spawned sub-shell reads ~/.bashrc at startup!
+
+PS1=" ... "       # prompt assignment by double quotes (allows expansions)
+
+\n                # new line
+
+\[\e[1;35m\]      # color tag (escaped as per prompt variable)
+  ┌──(            # connectors
+
+\[\e[1;36m\]
+  \u              # username
+
+\[\e[1;35m\]
+  _Ʌ†_            # cool replacement for @ symbol
+
+\[\e[1;36m\]
+  \h              # hostname
+
+\[\e[1;35m\]
+  )──[            # connectors
+
+\[\e[${lvl_str}   # level-tag expansion
+
+
+\[\e[1;35m\]
+  ]──[            # connectors
+
+\[\e[             # in-line conditional color tag
+                  # herein, we need to escape everything we want to send verbatim to PS1 (i.e., `$` and `"` need to be present in the prompt definition as such to enable the on-line evaluation and expansion of the exit code... check the final "echo $PS1"!).
+  \$(             # command substitution (executed in sub-shell)
+    code=\$?;     # this won't pollute the environment
+    [ \$code == 0 ]                     # if exit-status == 0
+      && echo \"1;34m\]exit \${code}\"  # zero exit status in blue
+      || echo \"1;31m\]exit \${code}\"  # non-zero exit status in red
+  )
+
+\[\e[1;35m\]
+  ]──[          # connectors
+
+\[\e[1;34m\]
+  \w            # current working directory
+
+\[\e[1;35m\]
+  ]\n           # connector + new line
+
+\[\e[1;35m\]
+  └─             # connector
+
+\[\e[1;36m\]
+  \$            # $ or # for normal user or root, respectively
+
+\[\e[0m\]       # remove all attributes (formatting and colors)
 ```
 
 
-## Aliases
+you can even use emoji symbols like 💀
 
-## Persisting Changes
 
-Prompt settings are usually placed in one of these files:
 
-- `~/.bashrc`
-- `~/.bash_profile`
+### Persisting Changes
+To test a custom prompt, you can save the contents of the current prompt variable into a backup variable and then reassign it with a new value.
+```sh
+`DEFAULT=$PS1`
+PS1='custom_prompt'
+```
+However, to make this changes permanent and shared with child processes (sub-shells), prompt variable definitions are to be stored within some startup file.
+In particular, prompt settings are usually placed in one of these files:
+- `~/.bashrc`, per user settings
+- `~/.bash_profile`, per user settings
 - `/etc/bash.bashrc`, for system-wide settings
 
+Open the `~/.bashrc` file in a text editor, locate the _PS1=_ section, and replace the default variable with your customized variable.
 
-To make that new prompt permanent you need to change the contents of the PS1 variable in the Bash prompt configuration stored in your user account’s `.bashrc` file which is at `~/.bashrc`.
-So, open the `.bashrc` file in a text editor (e.g., nano), scroll down and locate the *PS1=* section. Just replace the default variable with your customized variable. Enter your colored PS1 variable under the *if* line that check for color feature in the shell
+Finally, save the file, close your text editor, and
 ```sh
-if [ "$color_prompt" = yes ]; then
-# or
-if ${use_color} ; then
-# or somethink alike...
-```
-And, possibly, enter the variable without colors under the *else* line.
-Remember that root's UID is 0, so
-```sh
-if [[ ${EUID} == 0 ]]
-```
-means 'if user is the root user'.
-Finally, save the file and close your text editor.
-
-
-NOTE
-
-Technically:
-
-- `PS1`, `PS2`, `PS3`, and `PS4` are shell variables.
-- They become environment variables only if exported.
-
-Example:
-
-```sh
-export PS1
-```
-
-Normally, they stay local to the shell session.
-
-
-Example:
-
-```sh
-echo "export PS1='\u@\h:\w\$ '" >> ~/.bashrc
 source ~/.bashrc
 ```
+
+## Aliases
 
 
 ## References - colors in Bash

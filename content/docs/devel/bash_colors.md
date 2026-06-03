@@ -95,7 +95,7 @@ echo -e "\e[38;5;31mBright Teal Text\e[0m"
 Show all:
 ```sh
 for (( i = 0; i < 256; i++ )); do
-  echo -e "\e[38;5;${i}mAll work and no play makes Jack a dull boy.\e[0m"
+  echo -e "\e[38;5;${i}m${i}: All work and no play makes Jack a dull boy.\e[0m"
 done
 ```
 
