@@ -1,7 +1,7 @@
 ---
 title: "R"
 weight: 40
-draft: false
+draft: true
 # bookFlatSection: false
 # bookToc: true
 # bookHidden: false

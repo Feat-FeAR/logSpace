@@ -186,6 +186,11 @@ Breaking it down
 \[\e[0m\]  # End of color change (back to default color scheme)
 ```
 
+{{< hint info >}}
+__NOTE__  
+Although most terminals now support the <a href="../../devel/bash_colors/index.html#truecolor-24-bit-rgb">24-bit RGB TrueColor specification</a>, in most cases it is more practical to use the 8 basic colors (`\e[30-37m`) and then apply a _theme_ to the console to get more refined color palettes.
+{{< /hint >}}
+
 ### Kali-style prompt
 Here is an example of custom prompt.
 Since I always found Kali Linux prompt cool, I tried to reproduce it in my shell, but with some tweaks and upgrades:
