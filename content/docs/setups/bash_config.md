@@ -349,7 +349,7 @@ As an example, here is a powerful function that allow the user to move to locati
 ```sh
 # Move to the directory of the last queried file or directory
 gothere () {
-  # Get previous command, excluding this gothere invocation
+  # Get previous command, excluding this 'gothere' invocation
   # Also remove leading and trailing whitespaces
   local last_cmd="$(
     HISTTIMEFORMAT= history 2 |
@@ -361,13 +361,11 @@ gothere () {
   if [[ "${1:-}" != -u || "${1:-}" != --unsafe ]]; then
     local safe_cmd='^(ls|ll|which|find)([[:blank:]]|$)' # List of allowed commands
     local unsafe_syntax='([;&|`<>]|-exec|-delete)' # List of unsafe characters
-
     if [[ ! "$last_cmd" =~ $safe_cmd ]]; then
       echo "Cannot go. Last command in history could be unsafe:" >&2
       echo "   $last_cmd" >&2
       return 1
     fi
-
     if [[ "$last_cmd" =~ $unsafe_syntax ]]; then
       echo "Cannot go. Last command in history contains shell metacharacters:" >&2
       echo "   $last_cmd" >&2
@@ -375,10 +373,10 @@ gothere () {
     fi
   fi
 
-  # Get the output of the last command
-  # (in case of multi-line output, use the last one)
+  # Get the last command (adjust it to return plain file- or directory-names)
   last_cmd="$(echo "${last_cmd}" |
-    sed -E 's/(^ll[[:blank:]]+|^ls[[:blank:]]+)/ls -d -- /')" # Adjust the output
+    sed -E 's/(^ll[[:blank:]]+|^ls[[:blank:]]+)/ls -d -- /')"
+  # Get the output (in case of multi-line output, use the last one)
   local last_output="$(eval "${last_cmd}" | sed '/^[[:space:]]*$/d' | tail -n 1)"
   if [[ -d "$last_output" ]]; then
       cd -- "$last_output" || {
