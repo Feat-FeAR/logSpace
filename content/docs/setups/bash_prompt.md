@@ -24,7 +24,8 @@ sudo nano /etc/nanorc
     ```
     and uncomment all (or some of) the lines below it.
 
-1. To enable syntax highlighting, uncomment the following line under `## === Syntax coloring ===` section:
+1. To enable syntax highlighting, uncomment the following line under the section  
+    `## === Syntax coloring ===` :
     ```sh
     ## To include most of the existing syntax definitions, you can do:
     include "/usr/share/nano/*.nanorc"
@@ -81,7 +82,6 @@ or all prompts
 ```sh
 set | grep '^PS'
 ```
-
 {{< hint info >}}
 __NOTE__  
 `set` and `env` are used to list all the currently assigned _shell_ and _environment_ variables, respectively.
@@ -106,6 +106,7 @@ printf "\033]0;%s@%s:%s\007" "${USER}" "${HOSTNAME%%.*}" "${PWD/#$HOME/\~}"
 
 ### Escape sequences
 Within Bash prompt environment variables, the following special characters can be used:
+
 | Sequence | Meaning |
 |:--------:|:--------|
 | `\u`     | Username |
@@ -137,6 +138,7 @@ Older terminals may not.
 
 ### Context variables
 These variables are frequently referenced in prompt definitions through the usual _variable expansion_ `$` syntax.
+
 | Variable | Meaning |
 |:--------:|---------|
 | `USER` | Current username |
@@ -149,9 +151,9 @@ These variables are frequently referenced in prompt definitions through the usua
 
 {{< hint info >}}
 __NOTE__  
-To make context variables to be evaluated _each time PS* is used_ it is important to redefine prompts by using single quotes (e.g., `PS1='...'`), otherwise the expression will be evaluated once, when the `~/.bashrc` is run, and the result is substituted forever after.
-As an alternative, you can use double quotes and escape all the variable expansions that need to be constantly evaluated (e.g., `"\${PWD}"`).
-The same is true for command substitution below.
+To make context variables to be evaluated _each time PS* is used_ it is important to reassign prompts by using single quotes (e.g., `PS1='...'`), otherwise the expression will be evaluated once, as soon as `~/.bashrc` is run, and the result is substituted forever after.
+As an alternative, you can use double quotes and escape all the variable expansions that need to be evaluated regularly at prompt-time (e.g., `"\${PWD}"`).
+The same is true for _command substitution_ (see below).
 {{< /hint >}}
 
 ### Commands outputs
@@ -171,7 +173,7 @@ Example:
 - in regular usage: `\033[32mThis is in green\033[0m`
 - in PS0/1/2/3/4: `\[\033[32m\]This is in green\[\033[m\]`
 
-So any colored text line will look like this:
+So any colored text line in prompt definition will look like this:
 ```sh
 \[\e[1;34m\]"anything"\[\e[0m\]
 ```
@@ -179,21 +181,20 @@ Breaking it down
 ```sh
 \[        # Color sequences in prompt are enclosed in escaped square brackets
   \e[     # Start of color tag
-    1;34  # Color pair x;y to use (bold/blue)
+    1;34  # Color pair x;y to use (bold;blue)
   m       # End of color tag
 \]
 "anything" # Characters, specials, or some command output 
 \[\e[0m\]  # End of color change (back to default color scheme)
 ```
-
 {{< hint info >}}
 __NOTE__  
-Although most terminals now support the <a href="../../devel/bash_colors/index.html#truecolor-24-bit-rgb">24-bit RGB TrueColor specification</a>, in most cases it is more practical to use the 8 basic colors (`\e[30-37m`) and then apply a _theme_ to the console to get more refined color palettes.
+Although most terminals now support the <a href="../../devel/bash_colors/index.html#truecolor-24-bit-rgb">24-bit RGB TrueColor specification</a>, in most cases it is much more practical to use the 8 basic colors (`\[\e[30-37m\]`) and then apply a _theme_ to the console to get more refined color palettes.
 {{< /hint >}}
 
 ### Kali-style prompt
 Here is an example of custom prompt.
-Since I always found Kali Linux prompt cool, I tried to reproduce it in my shell, but with some tweaks and upgrades:
+Since I've always found the Kali Linux prompt cool, I tried to replicate it in my shell, but with a few tweaks and improvements:
 ```sh
 # To paste into ~/bashrc
 
@@ -214,73 +215,78 @@ _set_prompt
 ```
 Breaking it down:
 ```sh
-_set_prompt () {} # function to define local variables
-                  # not to interfere with global environment
+_set_prompt () {} # Function to define local variables
+                  # (not to interfere with global environment).
 
-if [[ ... ]]; fi  # shell level tag, with color-coded levels
-                  # external to PS1 to prevent the exit code from being overwritten by echo commands
-                  # this is evaluated only at shell startup... which is fine to store the shell level, since each newly spawned sub-shell reads ~/.bashrc at startup!
+if [[ ... ]]; fi  # Tag about (sub)-shell level, with color-coded levels.
+                  # External to PS1 to prevent the exit code from being
+                  # overwritten by `echo` commands.
+                  # This is evaluated only at shell startup... which is fine to
+                  # store the (sub)-shell level, since each newly spawned
+                  # sub-shell reads `~/.bashrc` at startup!
 
-PS1=" ... "       # prompt assignment by double quotes (allows expansions)
+PS1=" ... "       # Prompt assignment by double quotes (allows early expansions)
 
-\n                # new line
+\n                # New line
 
-\[\e[1;35m\]      # color tag (escaped as per prompt variable)
-  ┌──(            # connectors
-
-\[\e[1;36m\]
-  \u              # username
-
-\[\e[1;35m\]
-  _Ʌ†_            # cool replacement for @ symbol
+\[\e[1;35m\]      # Color tag (escaped as per prompt variable)
+  ┌──(            # Connectors (text)
 
 \[\e[1;36m\]
-  \h              # hostname
+  \u              # Username
 
 \[\e[1;35m\]
-  )──[            # connectors
+  _Ʌ†_            # Cool replacement for @ symbol
 
-\[\e[${lvl_str}   # level-tag expansion
+\[\e[1;36m\]
+  \h              # Hostname
+
+\[\e[1;35m\]
+  )──[            # Connectors
+
+\[\e[${lvl_str}   # Level-tag expansion
 
 
 \[\e[1;35m\]
-  ]──[            # connectors
+  ]──[            # Connectors
 
-\[\e[             # in-line conditional color tag
-                  # herein, we need to escape everything we want to send verbatim to PS1 (i.e., `$` and `"` need to be present in the prompt definition as such to enable the on-line evaluation and expansion of the exit code... check the final "echo $PS1"!).
-  \$(             # command substitution (executed in sub-shell)
-    code=\$?;     # this won't pollute the environment
-    [ \$code == 0 ]                     # if exit-status == 0
-      && echo \"1;34m\]exit \${code}\"  # zero exit status in blue
-      || echo \"1;31m\]exit \${code}\"  # non-zero exit status in red
+\[\e[             # In-line conditional color tag.
+                  # Herein, we need to escape everything we want to send
+                  # "verbatim" to PS1 (`$` and `"` need to be present in the
+                  # prompt definition as such to enable the on-line evaluation
+                  # and expansion of the exit code... check with "echo $PS1"!).
+  \$(             # Command substitution (executed in sub-shell...
+    code=\$?;     # ...so this <--- won't pollute the global environment).
+                  # Grab the status as soon as you can, not to be overwritten
+                  # by the outcome of test operator.
+    [ \$code == 0 ]                      # If exit-status == 0; then
+      && echo \"1;34m\]exit \${code}\"   # show zero exit status in blue; else
+      || echo \"1;31m\]exit \${code}\"   # show non-zero exit status in red
   )
 
 \[\e[1;35m\]
-  ]──[          # connectors
+  ]──[          # Connectors
 
 \[\e[1;34m\]
-  \w            # current working directory
+  \w            # Current working directory
 
 \[\e[1;35m\]
-  ]\n           # connector + new line
+  ]\n           # Connector + new line
 
 \[\e[1;35m\]
-  └─             # connector
+  └─            # Connector
 
 \[\e[1;36m\]
-  \$            # $ or # for normal user or root, respectively
+  \$            # $ or # for normal user or root, respectively.
 
-\[\e[0m\]       # remove all attributes (formatting and colors)
+\[\e[0m\]       # Remove all attributes (formatting and colors).
 ```
 {{< hint info >}}
 __NOTE__  
-Provided that a proper encoding (usually UTF-8) has been correctly set system-wide, all Unicode symbols can be used for prompt literal text, including emoji symbols like 💀 or similar! 
+Provided that a proper encoding (usually UTF-8) has been set correctly system-wide, all Unicode symbols can be used for prompt literal text, including emoji symbols like 💀 or similar! 
 {{< /hint >}}
 
-### References
-[Arch Linux Wiki](https://wiki.archlinux.org/title/Bash/Prompt_customization)
-
-### Persisting Changes
+### Persisting changes
 To test a custom prompt, you can save the contents of the current prompt variable into a backup variable and then reassign it with a new value.
 ```sh
 `DEFAULT=$PS1`
@@ -288,25 +294,27 @@ PS1='custom_prompt'
 ```
 However, to make this changes permanent and shared with child processes (sub-shells), prompt variable definitions are to be stored within some startup file.
 In particular, prompt settings are usually placed in one of these files:
-- `~/.bashrc`, per user settings
-- `~/.bash_profile`, per user settings
+- `~/.bashrc`, per-user settings
+- `~/.bash_profile`, per-user settings
 - `/etc/bash.bashrc`, for system-wide settings
 
 Open the `~/.bashrc` file in a text editor, locate the _PS1=_ section, and replace the default variable with your customized variable.
-
 Finally, save the file, close your text editor, and
 ```sh
 source ~/.bashrc
 ```
 
-## Aliases
+### References
+> [Arch Linux Wiki](https://wiki.archlinux.org/title/Bash/Prompt_customization)
 
+## Custom commands
+### Aliases
 _Alias_ is a command, which enables a replacement of a word with another string.
 It is often used for abbreviating a system command, or for adding default arguments to a regularly used command.
 
 Personal aliases can be made persistent by storing them in `~/.bashrc` or any separate file sourced from `~/.bashrc`.
 System-wide aliases (which affect all users) belong in `/etc/bash.bashrc`.
-
+As an example, here is a list of the aliases I use the most.
 ```sh
 
 alias ls='ls --color=auto'
@@ -315,21 +323,72 @@ alias ll='ls -hal'   # Human Long-format list of All files
 alias please='sudo $(fc -ln -1)'   # Run the previous command as admin
 alias fuck="please"   # ...the same, but with a better sense of control
 
-# NOTE: this only works for simple commands. If the command contains redirections or pipes, you need to invoke a shell under sudo:
+# NOTE: the previous only works for simple commands. If the command contains
+# redirections or pipes, you need to invoke a shell under sudo:
 alias please='sudo "$BASH" -c "$(history -p !!)"'
 
 alias myip='curl ipinfo.io/ip'   # Print my public IP
 alias joke="curl https://icanhazdadjoke.com"   # Have a joke!
+```
 
- # Move to the directory of the last queried file or directory
-function gothere {
-  local last_output="$(eval "$(history | tail -n 2 | head -n 1 | sed -E 's/^ *[0-9]+ *//')")"
-    if [[ -d "$last_output" ]]; then
-        cd "$last_output" || echo "Failed to change directory"
-    elif [[ -f "$last_output" ]]; then
-        cd "$(dirname "$last_output")" || echo "Failed to change directory"
-    else
-        echo "Not a valid directory or file: '$last_output'"
+### Shell functions
+In `~/.bashrc` you can also define shell functions, and they behave like _custom commands_ available in your interactive shell.
+Functions are often better than aliases when you need logic, arguments, conditionals, local variables, or commands like `cd`.
+E.g.:
+```sh
+# Move to the directory of the last queried file or directory
+gothere () {
+  # Get previous command, excluding this gothere invocation
+  # Also remove leading and trailing whitespaces
+  local last_cmd="$(
+    HISTTIMEFORMAT= history 2 |
+    head -n 1 |
+    sed -E 's/^[[:blank:]]*[0-9]+[[:blank:]]+//' |
+    sed -E 's/[[:blank:]]*$//')"
+
+  # Safety layer to avoid rerun dangerous commands
+  if [[ "${1:-}" != -u ]]; then
+    local safe_cmd='^(ls|ll|which|find)([[:blank:]]|$)' # List of allowed commands
+    local unsafe_syntax='([;&|`<>]|-exec|-delete)' # List of unsafe characters
+
+    if [[ ! "$last_cmd" =~ $safe_cmd ]]; then
+      echo "Cannot go. Last command in history could be unsafe:" >&2
+      echo "   $last_cmd" >&2
+      return 1
     fi
+
+    if [[ "$last_cmd" =~ $unsafe_syntax ]]; then
+      echo "Cannot go. Last command in history contains shell metacharacters:" >&2
+      echo "   $last_cmd" >&2
+      return 1
+    fi
+  fi
+
+  # Get the output of the last command
+  local last_output="$(eval "${last_cmd}")"
+  if [[ -d "$last_output" ]]; then
+      cd -- "$last_output" || {
+        echo "Failed to change directory." >&2
+        return 1
+      }
+  elif [[ -f "$last_output" ]]; then
+      cd -- "$(dirname "$last_output")" || {
+        echo "Failed to change directory." >&2
+        return 1
+      }
+  else
+      echo "Not a valid directory or file:" >&2
+      echo "   $last_output" >&2
+      return 1
+  fi
 }
 ```
+{{< hint info >}}
+__NOTE__  
+Because a Bash function runs inside the current shell, it can do:
+```sh
+cd somewhere
+```
+and your current terminal session really changes directory.
+A standalone script usually cannot do that, because it runs in a child process.
+{{< /hint >}}
