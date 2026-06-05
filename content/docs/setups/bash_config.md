@@ -334,7 +334,18 @@ alias joke="curl https://icanhazdadjoke.com"   # Have a joke!
 ### Shell functions
 In `~/.bashrc` you can also define shell functions, and they behave like _custom commands_ available in your interactive shell.
 Functions are often better than aliases when you need logic, arguments, conditionals, local variables, or commands like `cd`.
-E.g.:
+{{< hint info >}}
+__NOTE__  
+Because a Bash function runs inside the current shell, it can do:
+```sh
+cd somewhere
+```
+and your current terminal session really changes directory.
+A standalone script usually cannot do that, because it runs in a child process.
+{{< /hint >}}
+
+Since `history` stores commands---not their output---Bash does not automatically remember the output of the previous command.
+As an example, here is a powerful function that allow the user to move to location of the last returned file or directory.
 ```sh
 # Move to the directory of the last queried file or directory
 gothere () {
@@ -347,7 +358,7 @@ gothere () {
     sed -E 's/[[:blank:]]*$//')"
 
   # Safety layer to avoid rerun dangerous commands
-  if [[ "${1:-}" != -u ]]; then
+  if [[ "${1:-}" != -u || "${1:-}" != --unsafe ]]; then
     local safe_cmd='^(ls|ll|which|find)([[:blank:]]|$)' # List of allowed commands
     local unsafe_syntax='([;&|`<>]|-exec|-delete)' # List of unsafe characters
 
@@ -365,7 +376,10 @@ gothere () {
   fi
 
   # Get the output of the last command
-  local last_output="$(eval "${last_cmd}")"
+  # (in case of multi-line output, use the last one)
+  last_cmd="$(echo "${last_cmd}" |
+    sed -E 's/(^ll[[:blank:]]+|^ls[[:blank:]]+)/ls -d -- /')" # Adjust the output
+  local last_output="$(eval "${last_cmd}" | sed '/^[[:space:]]*$/d' | tail -n 1)"
   if [[ -d "$last_output" ]]; then
       cd -- "$last_output" || {
         echo "Failed to change directory." >&2
@@ -383,12 +397,13 @@ gothere () {
   fi
 }
 ```
-{{< hint info >}}
-__NOTE__  
-Because a Bash function runs inside the current shell, it can do:
-```sh
-cd somewhere
-```
-and your current terminal session really changes directory.
-A standalone script usually cannot do that, because it runs in a child process.
+{{< hint danger >}}
+__DANGER__  
+__Using `eval` on shell history has to be considered an _unsafe and dangerous_ approach because it actually re-executes a previous command, which can be risky and surprising__.
+For instance, if your previous command collaterally moved or removed some file, then `gothere` will do it again.
+The `find` command itself can run actions like `-exec`.
+Even if a basic safety layer is implemented in the function, it is pretty much heuristic and in any case it can be suppressed by the `-u | --unsafe` option.
+__So use this function at your own risk and always keep in mind that it may run something other than what you mentally think it is running!__
+
+But then again, it’s also true that, as adults, we're exposed every day to the risks posed by the tools we choose to use.
 {{< /hint >}}
