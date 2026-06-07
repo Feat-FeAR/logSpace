@@ -13,8 +13,8 @@ draft: false
 # Install Arch Linux
 {{< hint warning >}}
 __Disclaimer__  
-The following is a bulleted list summarizing _a possible basic installation_ procedure for Arch Linux.
-It is designed as a quick and concise reference guide for personal use, a kind of _dryer version_ of the official [Installation Guide](https://wiki.archlinux.org/title/Installation_guide), organized into bullet points.
+The following is a bulleted list summarizing _a possible basic installation_ procedure for Arch Linux, with minimal introduction, comments, and explanations.
+It is designed as a quick and concise guide---almost as personal reference---being a kind of _dryer version_ of the official [Installation Guide](https://wiki.archlinux.org/title/Installation_guide).
 It is by no means intended to be a comprehensive guide to installing the operating system; for that, please refer to the official websites, specifically:
 - [archlinux.org](https://archlinux.org/)
 - [ArchWiki](https://wiki.archlinux.org/title/ArchWiki)
@@ -44,7 +44,7 @@ Arch follows the *file system hierarchy* for operating systems and uses the `sys
     - All other setting: (default)
 
 1. Enter the UEFI and
-    - Disable [*Secure Boot*](https://wiki.archlinux.org/title/Unified_Extensible_Firmware_Interface/Secure_Boot) (if desired, *Secure Boot* can be---sometimes---set up after completing the installation);
+    - Disable [*Secure Boot*](https://wiki.archlinux.org/title/Unified_Extensible_Firmware_Interface/Secure_Boot) (after completing the installation, you can try to set up *Secure Boot* again... sometimes it works);
     - Set the USB drive as the boot priority.
 
 1. Restart to boot the live environment, select _Arch Linux install medium_, and press `Enter` to enter the installation environment.
@@ -254,7 +254,7 @@ Specifically, provided that you logged in as root:
     usermod -aG wheel _username_
     ```
 
-1. Edit `/etc/sudoers` to enable `sudo` for the wheel group:
+1. Use `visudo` to edit `/etc/sudoers` and enable `sudo` for the wheel group:
     ```sh
     EDITOR=nano visudo
     ```
@@ -357,8 +357,6 @@ Alternatively, install only the relevant dependencies of `kde-applications-meta`
     sudo pacman -Syu powerdevil power-profiles-daemon
     ```
 
-1. Install alternative application for internet and mail (e.g., `firefox`, `thunderbird`)
-
 ### GRUB themes
 For aesthetic reasons and/or to improve readability on HD laptop screens, it may be necessary to install additional [GRUB Themes](https://www.gnome-look.org/browse?cat=109&ord=latest).
 For instance, in order to install this [Minimal GRUB Theme](https://www.gnome-look.org/p/2353413), download and extract the related folder, then run
@@ -388,7 +386,7 @@ Since _Pacman_ is not intended to interact with AUR, this approach lacks a mecha
 #### Yay AUR helper
 To avoid manual updating, many _AUR helpers_ (_yay_, _pikaur_, _paru_, _pacaur_, ...) have been created to help users install and update packages directly from the AUR repository, as if they were a kind of "_Pacman_ for the AUR".
 This means that the only AUR package that needs to be installed manually is the AUR package manager itself (which, in most of the cases, will also update itself automatically).
-To install _Yay_:
+E.g., to install _Yay_:
 1. update the system and install `git` and `base-devel` as required packages:
     ```sh
     sudo pacman -Syu git base-devel

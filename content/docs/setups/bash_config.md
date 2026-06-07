@@ -1,5 +1,5 @@
 ---
-title: "Bash Config"
+title: "Bash"
 weight: 20
 draft: false
 # bookFlatSection: false

@@ -1,5 +1,5 @@
 ---
-title: "SetUps"
+title: "SetUps & Configs"
 weight: 40
 bookCollapseSection: true
 customcss: "css/sub-index.css"
