@@ -1,6 +1,6 @@
 ---
-title: "Metadata"
-weight: 0
+title: "Metadata Maker"
+weight: 50
 draft: false
 # bookFlatSection: false
 # bookToc: true

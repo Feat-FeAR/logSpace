@@ -1,0 +1,107 @@
+<!-- Shortcode for the MetaDataFinder (MDF) / MDM local-search module -->
+
+<!-- Import the JS script -->
+<script defer
+        language="javascript"
+        type="text/javascript"
+        src='{{ "js/MDM_metadata_finder.js" | urlize | relURL }}'>
+</script>
+
+<div class="mdmfPanel">
+    <!-- Search MDM Files -->
+    <h2 class="mdmTitle">MetaData Finder</h2>
+
+    <!-- Modern picker uses showDirectoryPicker() -->
+    <div class="bigButtonGroup mdmfSearchButtons">
+        <div class="bigButtonLine">
+            <button id="mdmfSearchButton"
+                    class="bigButton"
+                    type="button"
+                    onclick="MDMFinder.searchMdmFiles()">
+                Search MDM Files
+            </button>
+            <button id="mdmfCancelButton"
+                    class="bigButton mdmfSecondaryButton"
+                    type="button"
+                    onclick="MDMFinder.cancelSearch()"
+                    hidden>
+                Cancel Search
+            </button>
+        </div>
+    </div>
+
+    <!-- Fallback picker used when showDirectoryPicker() is unavailable -->
+    <input type="file"
+           id="mdmfFolderInput"
+           accept=".json,application/json"
+           multiple
+           webkitdirectory
+           style="display: none;"
+           onchange="MDMFinder.handleFolderInput(this.files)">
+    
+    <div id="mdmfSearchStatus" class="mdmfStatus stdMetaField">
+        No folder selected.
+    </div>
+    
+    <div id="mdmfInitialResults" class="mdmfInsetWindow stdMetaField">
+        MDM JSON files will be listed here after folder selection.
+    </div>
+
+    <!-- Filter MDM Files -->
+    <h2 class="mdmTitle">Filter Query</h2>
+    <div class="mdmfFilterButtons stdMetaField">
+        <button class="smallButton"
+                type="button"
+                onclick="MDMFinder.addQueryElement('kv')">
+            Key-Value
+        </button>
+        <button class="smallButton"
+                type="button"
+                onclick="MDMFinder.addQueryElement('and')">
+            AND
+        </button>
+        <button class="smallButton"
+                type="button"
+                onclick="MDMFinder.addQueryElement('or')">
+            OR
+        </button>
+        <button class="smallButton"
+                type="button"
+                onclick="MDMFinder.addQueryElement('open')">
+            (
+        </button>
+        <button class="smallButton"
+                type="button"
+                onclick="MDMFinder.addQueryElement('close')">
+            )
+        </button>
+    </div>
+
+    <div id="mdmfQueryRows" class="mdmfQueryRows">
+        <div class="mdmfEmptyQuery stdMetaField">
+            Add query elements with the buttons above.
+        </div>
+    </div>
+    
+    <div class="mdmfApplyButtons stdMetaField">
+        <button class="smallButton"
+                type="button"
+                onclick="MDMFinder.applyFilter()">
+            Apply Filter
+        </button>
+        <button class="smallButton"
+                type="button"
+                onclick="MDMFinder.clearQuery()">
+            Clear Query
+        </button>
+    </div>
+
+    <h3 class="mdmTitle">Filtered Results</h3>
+    <div id="mdmfFilterStatus" class="mdmfStatus stdMetaField">
+        No filter applied.
+    </div>
+
+    <div id="mdmfFilteredResults" class="mdmfInsetWindow stdMetaField">
+        Filtered MDM JSON files will be listed here.
+    </div>
+</div>

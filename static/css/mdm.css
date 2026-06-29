@@ -416,3 +416,127 @@ button.bigButton:hover {
     font-size: 26px;
     padding: 32px 12px;
 }
+
+
+
+/* === MetaDataFinder module =============================================== */
+
+.mdmfPanel {
+    display: grid;
+    column-gap: 12px;
+    gap: 10px;
+}
+
+.mdmfSearchButtons {
+    margin-top: 10px;
+}
+
+button.mdmfSecondaryButton {
+    font-size: 20px;
+    padding: 10px 12px;
+}
+
+.mdmfStatus {
+    font-size: 14px;
+    color: rgba(255,255,255,0.75);
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+
+.mdmfError {
+    color: #ffb4b4;
+}
+
+.mdmfInsetWindow {
+    border: 1px inset rgba(255,255,255,0.35);
+    border-radius: 4px;
+    padding: 10px;
+    min-height: 110px;
+    max-height: 260px;
+    overflow: auto;
+    font-size: 13px;
+    background: rgba(0,0,0,0.18);
+    box-sizing: border-box;
+}
+
+.mdmfSummaryLine {
+    margin-bottom: 6px;
+    font-weight: 500;
+}
+
+.mdmfMutedLine {
+    color: rgba(255,255,255,0.55);
+    font-style: italic;
+    margin-bottom: 6px;
+}
+
+.mdmfFileList {
+    display: grid;
+    gap: 3px;
+}
+
+.mdmfFileLine {
+    display: block;
+    line-height: 1.35;
+    word-break: break-word;
+}
+
+.mdmfFilePath {
+    font-family: monospace;
+    white-space: pre-wrap;
+}
+
+.mdmfFileMeta {
+    color: rgba(255,255,255,0.55);
+    margin-left: 20px;
+}
+
+.mdmfFilterButtons,
+.mdmfApplyButtons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.mdmfQueryRows {
+    display: grid;
+    gap: 8px;
+}
+
+.mdmfQueryRow {
+    display: grid;
+    grid-template-columns: 55px 90px minmax(180px, 1fr) minmax(160px, 1fr);
+    column-gap: 12px;
+    align-items: center;
+}
+
+.mdmfQueryRow .metaLabel {
+    white-space: nowrap;
+}
+
+.mdmfBinButton {
+    font-size: 12px;
+    padding: 3px 6px;
+}
+
+.mdmfInput {
+    font-size: 14px;
+    box-sizing: border-box;
+    border: 1px solid #888;
+    border-radius: 4px;
+    padding: 4px;
+    margin: 0;
+    width: 100%;
+}
+
+.mdmfLogicalToken {
+    grid-column: 2 / span 3;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+}
+
+.mdmfEmptyQuery {
+    color: rgba(255,255,255,0.55);
+    font-style: italic;
+}
