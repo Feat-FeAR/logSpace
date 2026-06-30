@@ -497,6 +497,17 @@ button.mdmfSecondaryButton {
     margin-bottom: 8px;
 }
 
+.mdmfFilterButtons button:disabled,
+.mdmfApplyButtons button:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+}
+
+.mdmfFilterButtons button:disabled:hover,
+.mdmfApplyButtons button:disabled:hover {
+    background-color: inherit;
+}
+
 .mdmfQueryRows {
     display: grid;
     gap: 8px;

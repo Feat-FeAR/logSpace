@@ -51,27 +51,43 @@
     <h2 class="mdmTitle">MetaData Filter</h2>
     <h3 class="mdmTitle">Query Builder</h3>
     <div class="mdmfFilterButtons stdMetaField">
-        <button class="smallButton"
+        <button id="mdmfAddKvButton"
+                class="smallButton"
                 type="button"
                 onclick="MDMFinder.addQueryElement('kv')">
             Key — Value
         </button>
-        <button class="smallButton"
+
+        <button id="mdmfAddAndButton"
+                class="smallButton"
                 type="button"
                 onclick="MDMFinder.addQueryElement('and')">
             AND
         </button>
-        <button class="smallButton"
+
+        <button id="mdmfAddOrButton"
+                class="smallButton"
                 type="button"
                 onclick="MDMFinder.addQueryElement('or')">
             OR
         </button>
-        <button class="smallButton"
+
+        <button id="mdmfAddXorButton"
+                class="smallButton"
+                type="button"
+                onclick="MDMFinder.addQueryElement('xor')">
+            XOR
+        </button>
+
+        <button id="mdmfAddOpenButton"
+                class="smallButton"
                 type="button"
                 onclick="MDMFinder.addQueryElement('open')">
             (
         </button>
-        <button class="smallButton"
+
+        <button id="mdmfAddCloseButton"
+                class="smallButton"
                 type="button"
                 onclick="MDMFinder.addQueryElement('close')">
             )
@@ -85,7 +101,8 @@
     </div>
     
     <div class="mdmfApplyButtons stdMetaField">
-        <button class="smallButton"
+        <button id="mdmfApplyFilterButton"
+                class="smallButton"
                 type="button"
                 onclick="MDMFinder.applyFilter()">
             Apply Filter

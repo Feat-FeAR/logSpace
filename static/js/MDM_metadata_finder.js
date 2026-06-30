@@ -604,17 +604,29 @@
     // -------------------------------------------------------------------------
 
     // Add a new query row of a requested kind.
-    // kind must be one of: kv, and, or, open, close.
+    // kind must be one of: kv, and, or, xor, open, close.
     function addQueryElement(kind) {
         const normalizedKind = String(kind || "").toLowerCase();
-        const allowedKinds = ["kv", "and", "or", "open", "close"];
+        const allowedKinds = ["kv", "and", "or", "xor", "open", "close"];
         if (!allowedKinds.includes(normalizedKind)) return;
+
+        // The button-shadowing system should already prevent invalid clicks.
+        // This guard is still important because addQueryElement() is part of
+        // the public MDMFinder API and could be called manually by the console.
+        if (!canAddQueryElement(normalizedKind)) {
+            setFilterStatus(
+                "Cannot add " + queryKindLabel(normalizedKind) + " at this position in the query.",
+                true
+            );
+            updateQueryBuilderButtonStates();
+            return;
+        }
 
         state.queryElements.push({
             id: state.nextQueryId++,
             kind: normalizedKind,
             key: "",
-            comparator: "=", // Default operator
+            comparator: "=",
             value: ""
         });
 
@@ -654,6 +666,7 @@
 
         if (state.queryElements.length === 0) {
             appendTextLine(container, "Add query elements with the buttons above.", "mdmfEmptyQuery stdMetaField");
+            updateQueryBuilderButtonStates();
             return;
         }
 
@@ -680,6 +693,8 @@
 
             container.appendChild(row);
         });
+
+        updateQueryBuilderButtonStates();
     }
 
     // Render a Key-Value row:
@@ -749,6 +764,8 @@
                 return "AND";
             case "or":
                 return "OR";
+            case "xor":
+                return "XOR";
             case "open":
                 return "(";
             case "close":
@@ -784,6 +801,170 @@
         });
 
         select.disabled = keys.length === 0;
+    }
+
+    // -------------------------------------------------------------------------
+    // Query-builder button availability (button-shadowing system)
+    // -------------------------------------------------------------------------
+
+    // The query UI is an infix boolean-expression builder. Not every token is
+    // valid at every position. Here is the formal grammar:
+    //  - Key-Value can be used only as first query item, after AND/OR/XOR, or
+    //    after an open parenthesis "(";
+    //  - AND/OR/XOR can only be used after a Key-Value item or after a closed
+    //    parenthesis ")";
+    //  - "(" can only be used as first item, after another open parenthesis "(",
+    //    or after AND/OR/XOR;
+    //  - ")" can only be used after a Key-Value element or after another ")",
+    //    and only if there is an unmatched open parenthesis.
+    function getQueryPrefixState() {
+        let expectOperand = true;
+        let openParentheses = 0;
+        let invalidPrefix = false;
+
+        state.queryElements.forEach(element => {
+            if (invalidPrefix) return;
+
+            if (element.kind === "kv") {
+                if (!expectOperand) {
+                    invalidPrefix = true;
+                    return;
+                }
+                expectOperand = false;
+                return;
+            }
+
+            if (element.kind === "open") {
+                if (!expectOperand) {
+                    invalidPrefix = true;
+                    return;
+                }
+                openParentheses += 1;
+                expectOperand = true;
+                return;
+            }
+
+            if (element.kind === "close") {
+                if (expectOperand || openParentheses === 0) {
+                    invalidPrefix = true;
+                    return;
+                }
+                openParentheses -= 1;
+                expectOperand = false;
+                return;
+            }
+
+            if (isLogicalOperatorKind(element.kind)) {
+                if (expectOperand) {
+                    invalidPrefix = true;
+                    return;
+                }
+                expectOperand = true;
+                return;
+            }
+
+            invalidPrefix = true;
+        });
+
+        return {
+            expectOperand,
+            openParentheses,
+            invalidPrefix
+        };
+    }
+
+    function isLogicalOperatorKind(kind) {
+        return kind === "and" || kind === "or" || kind === "xor";
+    }
+
+    function canAddQueryElement(kind) {
+        const prefix = getQueryPrefixState();
+        if (prefix.invalidPrefix) return false;
+
+        if (kind === "kv") {
+            return prefix.expectOperand;
+        }
+
+        if (kind === "open") {
+            return prefix.expectOperand;
+        }
+
+        if (isLogicalOperatorKind(kind)) {
+            return !prefix.expectOperand;
+        }
+
+        if (kind === "close") {
+            return !prefix.expectOperand && prefix.openParentheses > 0;
+        }
+
+        return false;
+    }
+
+    function updateQueryBuilderButtonStates() {
+        const prefix = getQueryPrefixState();
+
+        const canAddOperand = !prefix.invalidPrefix && prefix.expectOperand;
+        const canAddOperator = !prefix.invalidPrefix && !prefix.expectOperand;
+        const canAddClose = canAddOperator && prefix.openParentheses > 0;
+
+        setButtonEnabled(
+            "mdmfAddKvButton",
+            canAddOperand,
+            "Key-Value can be inserted only at the beginning, after AND/OR/XOR, or after '('."
+        );
+
+        setButtonEnabled(
+            "mdmfAddAndButton",
+            canAddOperator,
+            "AND can be inserted only after a Key-Value row or after ')'."
+        );
+
+        setButtonEnabled(
+            "mdmfAddOrButton",
+            canAddOperator,
+            "OR can be inserted only after a Key-Value row or after ')'."
+        );
+
+        setButtonEnabled(
+            "mdmfAddXorButton",
+            canAddOperator,
+            "XOR can be inserted only after a Key-Value row or after ')'."
+        );
+
+        setButtonEnabled(
+            "mdmfAddOpenButton",
+            canAddOperand,
+            "'(' can be inserted only at the beginning, after another '(', or after AND/OR/XOR."
+        );
+
+        setButtonEnabled(
+            "mdmfAddCloseButton",
+            canAddClose,
+            "')' can be inserted only after a Key-Value row or after another ')', and only if there is an unmatched '('."
+        );
+
+        // Empty query remains valid because the current behavior is:
+        // no query elements = show all MDM files.
+        const canApply =
+            !prefix.invalidPrefix &&
+            (
+                state.queryElements.length === 0 ||
+                (!prefix.expectOperand && prefix.openParentheses === 0)
+            );
+
+        setButtonEnabled(
+            "mdmfApplyFilterButton",
+            canApply,
+            "Complete the query before applying the filter."
+        );
+    }
+
+    function setButtonEnabled(id, enabled, disabledTitle) {
+        const button = byId(id);
+        if (!button) return;
+
+        button.disabled = !enabled;
+        button.title = enabled ? "" : disabledTitle;
     }
 
     // -------------------------------------------------------------------------
@@ -841,10 +1022,15 @@
     // Validate query rows and convert them to RPN.
     //
     // Also detects syntax errors such as:
-    //   - two Key-Value rows without AND/OR between them
-    //   - AND/OR at the beginning
+    //   - two Key-Value rows without AND/OR/XOR between them
+    //   - AND/OR/XOR at the beginning
     //   - unmatched parentheses
-    //   - query ending with AND/OR/(
+    //   - query ending with AND/OR/XOR/(
+    //
+    // Note that button shadowing is a preventive UI layer, not a replacement
+    // for compileQuery(). Users can still create invalid expressions by
+    // deleting intermediate rows. For example: "A AND B" then deleting AND
+    // gives: "A B", which is an invalid expression.
     function compileQuery(elements) {
         if (!elements || elements.length === 0) return [];
 
@@ -857,7 +1043,7 @@
 
             if (element.kind === "kv") {
                 if (!expectOperand) {
-                    throw new Error("missing AND/OR before Key-Value at row " + position);
+                    throw new Error("missing AND/OR/XOR before Key-Value at row " + position);
                 }
 
                 if (!element.key) {
@@ -893,7 +1079,7 @@
 
             if (element.kind === "open") {
                 if (!expectOperand) {
-                    throw new Error("missing AND/OR before '(' at row " + position);
+                    throw new Error("missing AND/OR/XOR before '(' at row " + position);
                 }
 
                 operators.push(element);
@@ -924,12 +1110,12 @@
                 return;
             }
 
-            if (element.kind === "and" || element.kind === "or") {
+            if (isLogicalOperatorKind(element.kind)) {
                 if (expectOperand) {
                     throw new Error("missing Key-Value before " + queryKindLabel(element.kind) + " at row " + position);
                 }
 
-                // Apply normal boolean precedence: AND before OR.
+                // Apply boolean precedence: AND > XOR > OR.
                 while (operators.length > 0) {
                     const top = operators[operators.length - 1];
                     if (top.kind === "open") break;
@@ -949,7 +1135,7 @@
         });
 
         if (expectOperand) {
-            throw new Error("query cannot end with AND, OR, or '('");
+            throw new Error("query cannot end with AND, OR, XOR, or '('");
         }
 
         // Move remaining operators to output. Any remaining "open" parenthesis
@@ -966,8 +1152,11 @@
     }
 
     // Boolean operator precedence used by compileQuery().
+    // The precedence of XOR is not universally standardized in every query
+    // language. Here we choose the deterministic convention: AND > XOR > OR
     function operatorPrecedence(kind) {
-        if (kind === "and") return 2;
+        if (kind === "and") return 3;
+        if (kind === "xor") return 2;
         if (kind === "or") return 1;
         return 0;
     }
@@ -984,10 +1173,19 @@
                 return;
             }
 
-            if (token.kind === "and" || token.kind === "or") {
-                const right = stack.pop();
-                const left = stack.pop();
-                stack.push(token.kind === "and" ? Boolean(left && right) : Boolean(left || right));
+            if (isLogicalOperatorKind(token.kind)) {
+                const right = Boolean(stack.pop());
+                const left = Boolean(stack.pop());
+
+                if (token.kind === "and") {
+                    stack.push(left && right);
+                } else if (token.kind === "or") {
+                    stack.push(left || right);
+                } else if (token.kind === "xor") {
+                    // Exclusive OR:
+                    // true only when exactly one side is true.
+                    stack.push(left !== right);
+                }
             }
         });
 
@@ -1347,6 +1545,7 @@
     document.addEventListener("DOMContentLoaded", function () {
         renderInitialResults();
         renderQueryRows();
+        updateQueryBuilderButtonStates();
         renderFilteredResults([], "Filtered MDM JSON files will be listed here.");
     });
 
