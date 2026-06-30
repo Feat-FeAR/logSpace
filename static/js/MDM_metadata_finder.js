@@ -38,6 +38,7 @@
     // Operators available in each Key-Value row.
     const COMPARISON_OPERATORS = [
         { value: "=", label: "=" },
+        { value: "!=", label: "≠" },
         { value: ">", label: ">" },
         { value: "<", label: "<" },
         { value: ">=", label: "≥" },
@@ -1054,12 +1055,15 @@
                 const query = String(element.value || "").trim();
 
                 // Relational comparisons require an actual comparison value.
-                // Empty value only makes sense for "=" where it means "key exists".
-                if (isRelationalComparator(comparator)) {
-                    if (query === "") {
-                        throw new Error("missing comparison value in Key-Value row " + position);
-                    }
+                // Empty value is allowed only for "=", where it means:
+                //    "the selected key exists"
+                // For "!=", an empty value would be ambiguous: key != what?
+                // For >, <, >=, <=, an empty value is also invalid.
+                if (requiresExplicitComparisonValue(comparator) && query === "") {
+                    throw new Error("missing comparison value in Key-Value row " + position);
+                }
 
+                if (isRelationalComparator(comparator)) {
                     if (parseComparableScalar(query) === null) {
                         throw new Error(
                             "comparison value in Key-Value row " +
@@ -1194,22 +1198,40 @@
     }
 
     // Evaluate one Key-Value row against one metadata object. If the value
-    // field is empty and comparator is "=", the condition means: "this key exists"
+    // field is empty and comparator is "=", condition means: "this key exists".
+    // If comparator is "!=", the key must exist and none of the values found at
+    // this key path may match the user-entered value. Missing keys return false.
     // If comparator is >, <, >=, or <=, at least one value found at this key
     // path must be comparable as a pure number or as an ISO date.
     function evaluateKeyValue(metadata, keyPath, queryValue, comparator = "=") {
         const rawValues = getValuesAtPath(metadata, keyPath);
+
+        // Important for "!=": a missing key should not match.
+        // Without this rule, a query such as:
+        //
+        //   cell_cultures.cell_type != HEK
+        //
+        // would also return files with no cell_cultures.cell_type field at all,
+        // which is usually not what a metadata search user expects.
         if (rawValues.length === 0) return false;
 
         const normalizedComparator = normalizeComparator(comparator);
         const query = String(queryValue || "").trim();
 
-        // Empty value keeps the old "key exists" behavior only for equality.
-        // Empty relational comparisons are invalid and are normally caught by
-        // compileQuery(), but this guard keeps evaluation safe as well.
+        // Empty value produce the "key exists" behavior only for equality.
+        // Empty "!=" and relational comparisons are invalid and are normally
+        // caught by compileQuery(), but this guard keeps evaluation safe too.
         if (query === "") {
             return normalizedComparator === "=" &&
                 rawValues.some(value => value !== undefined);
+        }
+
+        if (normalizedComparator === "!=") {
+            // Equality means "at least one value at this path matches".
+            // Not-equal therefore means the key exists and no value at this path
+            // matches. This is safer than checking whether some value differs,
+            // because paths expanded through arrays can produce multiple values.
+            return !rawValues.some(value => valueMatchesEqualityQuery(value, query));
         }
 
         return rawValues.some(value => {
@@ -1218,17 +1240,27 @@
     }
 
     // Compare one raw metadata value against the text typed by the user.
+    //
     // Equality matching rules:
     //   - strings: case-insensitive substring match
     //   - booleans: true/false are matched as booleans when possible
     //   - numbers: exact numeric match when the query is numeric
     //   - objects: compare against value, unit, "value unit", and JSON string
+    //
+    // "!=" is handled here as the negation of equality for one raw value.
+    // evaluateKeyValue() applies the path-level rule that no value at the
+    // selected path may match.
+    //
     // Relational matching rules:
     //   - both sides must be pure numbers, or
     //   - both sides must be ISO dates such as YYYY-MM-DD
     //   - mixed number/date/string comparisons return false
     function valueMatchesQuery(rawValue, query, comparator = "=") {
         const normalizedComparator = normalizeComparator(comparator);
+
+        if (normalizedComparator === "!=") {
+            return !valueMatchesEqualityQuery(rawValue, query);
+        }
 
         if (isRelationalComparator(normalizedComparator)) {
             return valueMatchesRelationalQuery(rawValue, query, normalizedComparator);
@@ -1299,11 +1331,19 @@
         });
     }
 
+    // Only "=" allows an empty value, where empty means "key exists".
+    // All other comparison operators need an explicit value.
+    function requiresExplicitComparisonValue(comparator) {
+        return normalizeComparator(comparator) !== "=";
+    }
+
     // Convert different textual variants into the internal comparison operators.
-    // This lets the code tolerate either >= or ≥, and either <= or ≤.
+    // This lets the code tolerate either >= or ≥, either <= or ≤, and either
+    // != or ≠.
     function normalizeComparator(comparator) {
         const value = String(comparator || "=").trim();
 
+        if (value === "!=" || value === "≠") return "!=";
         if (value === ">") return ">";
         if (value === "<") return "<";
         if (value === ">=" || value === "≥") return ">=";
@@ -1311,7 +1351,7 @@
 
         return "=";
     }
-
+    
     // True only for operators that require numeric/date comparison.
     function isRelationalComparator(comparator) {
         const normalized = normalizeComparator(comparator);
