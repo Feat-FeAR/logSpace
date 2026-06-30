@@ -35,6 +35,15 @@
     // be unnecessarily expensive for large folders.
     const STATUS_UPDATE_INTERVAL = 50;
 
+    // Operators available in each Key-Value row.
+    const COMPARISON_OPERATORS = [
+        { value: "=", label: "=" },
+        { value: ">", label: ">" },
+        { value: "<", label: "<" },
+        { value: ">=", label: "≥" },
+        { value: "<=", label: "≤" }
+    ];
+
     // All mutable data used by the Finder is kept in this one object.
     const state = {
         selectedRootLabel: "",  // Label for the selected target folder.
@@ -548,6 +557,15 @@
         }
     }
 
+    // Convert any metadata value into a list of simple comparable values.
+    //
+    // This lets the filter match against:
+    //   - primitive values directly
+    //   - every item in an array
+    //   - object.value
+    //   - object.unit
+    //   - "value unit"
+    //   - JSON string representation of an object
     function extractComparableValues(value, output = []) {
         if (value === undefined) return output;
 
@@ -581,20 +599,12 @@
         return output;
     }
 
-    
-
-
-
-
-
-
-
-
-
-    // ------------------------------------------------------------------
+    // -------------------------------------------------------------------------
     // Query UI model and rendering
-    // ------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
+    // Add a new query row of a requested kind.
+    // kind must be one of: kv, and, or, open, close.
     function addQueryElement(kind) {
         const normalizedKind = String(kind || "").toLowerCase();
         const allowedKinds = ["kv", "and", "or", "open", "close"];
@@ -604,17 +614,20 @@
             id: state.nextQueryId++,
             kind: normalizedKind,
             key: "",
+            comparator: "=", // Default operator
             value: ""
         });
 
         renderQueryRows();
     }
 
+    // Remove one query row by its unique id.
     function removeQueryElement(id) {
         state.queryElements = state.queryElements.filter(element => element.id !== Number(id));
         renderQueryRows();
     }
 
+    // Remove all query rows and reset the filtered-results panel.
     function clearQuery() {
         state.queryElements = [];
         renderQueryRows();
@@ -622,12 +635,17 @@
         setFilterStatus("No filter applied.");
     }
 
+    // Update one query row with a partial object, for example:
+    //
+    //   updateQueryElement(3, { key: "general.date" })
+    //   updateQueryElement(3, { value: "2026" })
     function updateQueryElement(id, patch) {
         const element = state.queryElements.find(item => item.id === Number(id));
         if (!element) return;
         Object.assign(element, patch);
     }
 
+    // Render all query rows inside the mdmfQueryRows container.
     function renderQueryRows() {
         const container = byId("mdmfQueryRows");
         if (!container) return;
@@ -646,7 +664,7 @@
             const deleteButton = document.createElement("button");
             deleteButton.className = "smallButton mdmfBinButton";
             deleteButton.type = "button";
-            deleteButton.textContent = "[ x ]";
+            deleteButton.textContent = "❌";
             deleteButton.title = "Delete this query element";
             deleteButton.addEventListener("click", () => removeQueryElement(element.id));
             row.appendChild(deleteButton);
@@ -664,11 +682,15 @@
         });
     }
 
+    // Render a Key-Value row:
+    //
+    //   delete button + key dropdown + comparison dropdown + value input
+    //
     function renderKeyValueQueryElement(row, element) {
-        const label = document.createElement("label");
-        label.className = "metaLabel";
-        label.textContent = "Key-Value:";
-        row.appendChild(label);
+        //const label = document.createElement("label");
+        //label.className = "metaLabel";
+        //label.textContent = "Key-Value:";
+        //row.appendChild(label);
 
         const keySelect = document.createElement("select");
         keySelect.className = "mdmfInput mdmfKeySelect";
@@ -679,10 +701,19 @@
         populateKeySelect(keySelect, element.key);
         row.appendChild(keySelect);
 
+        const comparatorSelect = document.createElement("select");
+        comparatorSelect.className = "mdmfInput mdmfComparatorSelect";
+        comparatorSelect.title = "Comparison operator";
+        comparatorSelect.addEventListener("change", () => {
+            updateQueryElement(element.id, { comparator: comparatorSelect.value });
+        });
+        populateComparatorSelect(comparatorSelect, element.comparator);
+        row.appendChild(comparatorSelect);
+
         const valueInput = document.createElement("input");
         valueInput.className = "mdmfInput mdmfValueInput";
         valueInput.type = "text";
-        valueInput.placeholder = "Value; empty = key exists";
+        valueInput.placeholder = "Value; empty with = means key exists";
         valueInput.value = element.value || "";
         valueInput.addEventListener("input", () => {
             updateQueryElement(element.id, { value: valueInput.value });
@@ -690,6 +721,28 @@
         row.appendChild(valueInput);
     }
 
+    // Fill the comparison dropdown for one Key-Value row.
+    function populateComparatorSelect(select, selectedValue) {
+        if (!select) return;
+
+        clearElement(select);
+
+        const selectedComparator = normalizeComparator(selectedValue);
+
+        COMPARISON_OPERATORS.forEach(operator => {
+            const option = document.createElement("option");
+            option.value = operator.value;
+            option.textContent = operator.label;
+
+            if (operator.value === selectedComparator) {
+                option.selected = true;
+            }
+
+            select.appendChild(option);
+        });
+    }
+
+    // Convert internal query kinds to the labels shown in the UI.
     function queryKindLabel(kind) {
         switch (kind) {
             case "and":
@@ -705,6 +758,8 @@
         }
     }
 
+    // Fill a Key dropdown with all paths discovered in the scanned MDM JSON
+    // files. The dropdown is disabled until keys are available.
     function populateKeySelect(select, selectedValue) {
         if (!select) return;
 
@@ -731,9 +786,25 @@
         select.disabled = keys.length === 0;
     }
 
-    // ---------------------------------------------------------------------
+    // -------------------------------------------------------------------------
     // Query compilation and filtering
+    // -------------------------------------------------------------------------
+    //
+    // The user-created query rows are first validated and converted into Reverse
+    // Polish Notation (RPN). RPN makes evaluation simple because it can be done
+    // with a stack.
+    //
+    // Example normal query:
+    //
+    //   A AND (B OR C)
+    //
+    // Equivalent RPN:
+    //
+    //   A B C OR AND
+    //
+    // compileQuery() performs this conversion using the shunting-yard algorithm.
 
+    // Called when the user clicks "Apply Filter".
     function applyFilter() {
         if (state.mdmFiles.length === 0) {
             setFilterStatus("No MDM files are available. Search a folder first.", true);
@@ -767,6 +838,13 @@
         renderFilteredResults(matches);
     }
 
+    // Validate query rows and convert them to RPN.
+    //
+    // Also detects syntax errors such as:
+    //   - two Key-Value rows without AND/OR between them
+    //   - AND/OR at the beginning
+    //   - unmatched parentheses
+    //   - query ending with AND/OR/(
     function compileQuery(elements) {
         if (!elements || elements.length === 0) return [];
 
@@ -781,11 +859,34 @@
                 if (!expectOperand) {
                     throw new Error("missing AND/OR before Key-Value at row " + position);
                 }
+
                 if (!element.key) {
                     throw new Error("missing key in Key-Value row " + position);
                 }
 
-                output.push(element);
+                const comparator = normalizeComparator(element.comparator);
+                const query = String(element.value || "").trim();
+
+                // Relational comparisons require an actual comparison value.
+                // Empty value only makes sense for "=" where it means "key exists".
+                if (isRelationalComparator(comparator)) {
+                    if (query === "") {
+                        throw new Error("missing comparison value in Key-Value row " + position);
+                    }
+
+                    if (parseComparableScalar(query) === null) {
+                        throw new Error(
+                            "comparison value in Key-Value row " +
+                            position +
+                            " must be a pure number or an ISO date such as 2026-06-30"
+                        );
+                    }
+                }
+
+                // Store a normalized copy in the compiled query.
+                // This means "≥" and ">=" are treated identically later.
+                output.push(Object.assign({}, element, { comparator }));
+
                 expectOperand = false;
                 return;
             }
@@ -828,6 +929,7 @@
                     throw new Error("missing Key-Value before " + queryKindLabel(element.kind) + " at row " + position);
                 }
 
+                // Apply normal boolean precedence: AND before OR.
                 while (operators.length > 0) {
                     const top = operators[operators.length - 1];
                     if (top.kind === "open") break;
@@ -850,6 +952,8 @@
             throw new Error("query cannot end with AND, OR, or '('");
         }
 
+        // Move remaining operators to output. Any remaining "open" parenthesis
+        // indicates an unmatched "(".
         while (operators.length > 0) {
             const top = operators.pop();
             if (top.kind === "open") {
@@ -861,12 +965,14 @@
         return output;
     }
 
+    // Boolean operator precedence used by compileQuery().
     function operatorPrecedence(kind) {
         if (kind === "and") return 2;
         if (kind === "or") return 1;
         return 0;
     }
 
+    // Evaluate a compiled RPN query against one parsed metadata object.
     function evaluateCompiledQuery(compiled, metadata) {
         if (!compiled || compiled.length === 0) return true;
 
@@ -874,7 +980,7 @@
 
         compiled.forEach(token => {
             if (token.kind === "kv") {
-                stack.push(evaluateKeyValue(metadata, token.key, token.value));
+                stack.push(evaluateKeyValue(metadata, token.key, token.value, token.comparator));
                 return;
             }
 
@@ -885,22 +991,58 @@
             }
         });
 
+        // A valid RPN boolean expression should leave exactly one final result.
         return stack.length === 1 ? Boolean(stack[0]) : false;
     }
 
-    function evaluateKeyValue(metadata, keyPath, queryValue) {
+    // Evaluate one Key-Value row against one metadata object. If the value
+    // field is empty and comparator is "=", the condition means: "this key exists"
+    // If comparator is >, <, >=, or <=, at least one value found at this key
+    // path must be comparable as a pure number or as an ISO date.
+    function evaluateKeyValue(metadata, keyPath, queryValue, comparator = "=") {
         const rawValues = getValuesAtPath(metadata, keyPath);
         if (rawValues.length === 0) return false;
 
+        const normalizedComparator = normalizeComparator(comparator);
         const query = String(queryValue || "").trim();
+
+        // Empty value keeps the old "key exists" behavior only for equality.
+        // Empty relational comparisons are invalid and are normally caught by
+        // compileQuery(), but this guard keeps evaluation safe as well.
         if (query === "") {
-            return rawValues.some(value => value !== undefined);
+            return normalizedComparator === "=" &&
+                rawValues.some(value => value !== undefined);
         }
 
-        return rawValues.some(value => valueMatchesQuery(value, query));
+        return rawValues.some(value => {
+            return valueMatchesQuery(value, query, normalizedComparator);
+        });
     }
 
-    function valueMatchesQuery(rawValue, query) {
+    // Compare one raw metadata value against the text typed by the user.
+    // Equality matching rules:
+    //   - strings: case-insensitive substring match
+    //   - booleans: true/false are matched as booleans when possible
+    //   - numbers: exact numeric match when the query is numeric
+    //   - objects: compare against value, unit, "value unit", and JSON string
+    // Relational matching rules:
+    //   - both sides must be pure numbers, or
+    //   - both sides must be ISO dates such as YYYY-MM-DD
+    //   - mixed number/date/string comparisons return false
+    function valueMatchesQuery(rawValue, query, comparator = "=") {
+        const normalizedComparator = normalizeComparator(comparator);
+
+        if (isRelationalComparator(normalizedComparator)) {
+            return valueMatchesRelationalQuery(rawValue, query, normalizedComparator);
+        }
+
+        return valueMatchesEqualityQuery(rawValue, query);
+    }
+
+    // Previous equality-matching logic, kept separate so the relational feature
+    // does not accidentally change how "=" behaves for strings, booleans,
+    // numbers, arrays, or unit objects.
+    function valueMatchesEqualityQuery(rawValue, query) {
         const queryLower = query.toLowerCase();
         const queryBoolean = parseBoolean(query);
         const queryNumber = parseNumberStrict(query);
@@ -927,6 +1069,136 @@
         });
     }
 
+    // Relational comparison for >, <, >=, <=.
+    // extractComparableValues() can return several candidates for one raw field.
+    // For example, an MDM unit object may produce:
+    //
+    //   3.2
+    //   "MΩ"
+    //   "3.2 MΩ"
+    //   "{...}"
+    //
+    // This function tries each candidate and succeeds if at least one candidate
+    // can be compared with the query as the same scalar type.
+    function valueMatchesRelationalQuery(rawValue, query, comparator) {
+        const queryComparable = parseComparableScalar(query);
+        if (queryComparable === null) return false;
+
+        const values = extractComparableValues(rawValue);
+
+        return values.some(value => {
+            const valueComparable = parseComparableScalar(value);
+            if (valueComparable === null) return false;
+
+            // Do not compare a date against a number, or a number against a date.
+            if (valueComparable.type !== queryComparable.type) return false;
+
+            return compareScalars(
+                valueComparable.value,
+                queryComparable.value,
+                comparator
+            );
+        });
+    }
+
+    // Convert different textual variants into the internal comparison operators.
+    // This lets the code tolerate either >= or ≥, and either <= or ≤.
+    function normalizeComparator(comparator) {
+        const value = String(comparator || "=").trim();
+
+        if (value === ">") return ">";
+        if (value === "<") return "<";
+        if (value === ">=" || value === "≥") return ">=";
+        if (value === "<=" || value === "≤") return "<=";
+
+        return "=";
+    }
+
+    // True only for operators that require numeric/date comparison.
+    function isRelationalComparator(comparator) {
+        const normalized = normalizeComparator(comparator);
+
+        return normalized === ">" ||
+            normalized === "<" ||
+            normalized === ">=" ||
+            normalized === "<=";
+    }
+
+    // Compare two already-parsed scalar values.
+    function compareScalars(left, right, comparator) {
+        switch (normalizeComparator(comparator)) {
+            case ">":
+                return left > right;
+            case "<":
+                return left < right;
+            case ">=":
+                return left >= right;
+            case "<=":
+                return left <= right;
+            default:
+                return left === right;
+        }
+    }
+
+    // Parse a raw value as either:
+    //
+    //   { type: "number", value: Number }
+    //   { type: "date", value: milliseconds_since_epoch }
+    //
+    // Returns null if the value is not a pure number and not a strict ISO date.
+    // This is the key guard that prevents >/< from affecting arbitrary strings.
+    function parseComparableScalar(value) {
+        if (value === null || value === undefined) return null;
+
+        if (typeof value === "number") {
+            return Number.isFinite(value)
+                ? { type: "number", value }
+                : null;
+        }
+
+        const text = String(value).trim();
+        if (text === "") return null;
+
+        const number = parseNumberStrict(text);
+        if (number !== null) {
+            return { type: "number", value: number };
+        }
+
+        const date = parseIsoDateStrict(text);
+        if (date !== null) {
+            return { type: "date", value: date };
+        }
+
+        return null;
+    }
+
+    // Parse a strict ISO date of the form YYYY-MM-DD.
+    //
+    // This matches the format produced by HTML <input type="date">,
+    // which MDM uses for general.date.
+    //
+    // Invalid calendar dates, such as 2026-02-31, are rejected instead of being
+    // silently normalized by Date.parse().
+    function parseIsoDateStrict(text) {
+        const match = String(text || "").trim().match(/^(\d{4})-(\d{2})-(\d{2})$/);
+        if (!match) return null;
+
+        const year = Number(match[1]);
+        const month = Number(match[2]);
+        const day = Number(match[3]);
+
+        const milliseconds = Date.UTC(year, month - 1, day);
+        const date = new Date(milliseconds);
+
+        const valid =
+            date.getUTCFullYear() === year &&
+            date.getUTCMonth() === month - 1 &&
+            date.getUTCDate() === day;
+
+        return valid ? milliseconds : null;
+    }
+
+    // Parse a text value as boolean only if it is exactly true or false.
     function parseBoolean(text) {
         const value = String(text || "").trim().toLowerCase();
         if (value === "true") return true;
@@ -934,6 +1206,8 @@
         return null;
     }
 
+    // Parse a text value as number only if the whole string is numeric.
+    // This avoids treating a string like "3 mV" as number 3.
     function parseNumberStrict(text) {
         const trimmed = String(text || "").trim();
         if (trimmed === "") return null;
@@ -943,13 +1217,11 @@
         return Number.isFinite(number) ? number : null;
     }
 
-
-
-
-
-    // ---------------------------------------------------------------------
+    // -------------------------------------------------------------------------
     // Results rendering
+    // -------------------------------------------------------------------------
 
+    // Render the upper inset window: all MDM files found in the selected folder.
     function renderInitialResults() {
         const container = byId("mdmfInitialResults");
         if (!container) return;
@@ -981,6 +1253,7 @@
         container.appendChild(list);
     }
 
+    // Render the lower inset window: files matching the current filter query.
     function renderFilteredResults(matches, message) {
         const container = byId("mdmfFilteredResults");
         if (!container) return;
@@ -1009,6 +1282,7 @@
         container.appendChild(list);
     }
 
+    // Append one file entry line to a result list.
     function appendFileLine(parent, entry) {
         const line = document.createElement("div");
         line.className = "mdmfFileLine";
@@ -1026,6 +1300,8 @@
         parent.appendChild(line);
     }
 
+    // Create a compact summary shown after each path in the results list.
+    // This is optional display information; it does not affect filtering.
     function makeEntrySummary(entry) {
         const metadata = entry.metadata || {};
         const parts = [];
@@ -1043,6 +1319,7 @@
         return parts.length > 0 ? "[" + parts.join("; ") + "]" : "";
     }
 
+    // Get the first non-empty comparable value for display summaries.
     function getFirstComparable(metadata, keyPath) {
         const raw = getValuesAtPath(metadata, keyPath);
         if (raw.length === 0) return "";
@@ -1054,27 +1331,27 @@
         return values.length > 0 ? String(values[0]) : "";
     }
 
+    // -------------------------------------------------------------------------
+    // Initialization and public API
+    // -------------------------------------------------------------------------
 
-
-
-
-
-
-
-
-    // ---------------------------------------------------------------------
-
+    // Request cancellation. The scan checks this flag between files/folders.
+    // It cannot interrupt the exact instant of a file read, but it stops soon
+    // afterward.
     function cancelSearch() {
         state.searchCancelRequested = true;
         setSearchStatus("Cancelling search after the current file/folder finishes...");
     }
 
+    // Initialize the empty UI once the HTML document is ready.
     document.addEventListener("DOMContentLoaded", function () {
         renderInitialResults();
         renderQueryRows();
         renderFilteredResults([], "Filtered MDM JSON files will be listed here.");
     });
 
+    // Export only the functions that the HTML page needs to call.
+    // The rest of the script remains private inside the IIFE.
     window.MDMFinder = {
         searchMdmFiles,
         cancelSearch,

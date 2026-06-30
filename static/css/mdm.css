@@ -417,8 +417,6 @@ button.bigButton:hover {
     padding: 32px 12px;
 }
 
-
-
 /* === MetaDataFinder module =============================================== */
 
 .mdmfPanel {
@@ -506,7 +504,7 @@ button.mdmfSecondaryButton {
 
 .mdmfQueryRow {
     display: grid;
-    grid-template-columns: 55px 90px minmax(180px, 1fr) minmax(160px, 1fr);
+    grid-template-columns: 55px minmax(180px, 1fr) 65px minmax(160px, 1fr);
     column-gap: 12px;
     align-items: center;
 }
@@ -518,6 +516,10 @@ button.mdmfSecondaryButton {
 .mdmfBinButton {
     font-size: 12px;
     padding: 3px 6px;
+}
+
+.mdmfComparatorSelect {
+    min-width: 60px;
 }
 
 .mdmfInput {
