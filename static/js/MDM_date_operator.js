@@ -105,6 +105,10 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     const hint = document.getElementById("date_format_hint");
     if (hint) {
+        // NOTE: For an HTML <input type="date">, browser's submitted/internal
+        // value format is always YYYY-MM-DD. The browser UI may display the
+        // date according to locale, but element.value is standardized as
+        // year-month-day, which is crucial for MDM Finder module.
         hint.textContent = `Your locale format: ${window.MDMUI?.getLocaleDatePattern()}`;
     }
 });

@@ -35,6 +35,8 @@ See 'DESIGN NOTE' in 'MDM_getValues.js'
         <label class="metaLabel" for="today_date">
             Date:
         </label>
+        <!-- NOTE: Browser date inputs expose their actual .value as normalized
+             YYYY-MM-DD, even if the displayed date follows the user locale -->
         <input type="date"
                id="today_date"
                class="metaValue"

@@ -678,7 +678,7 @@
             const deleteButton = document.createElement("button");
             deleteButton.className = "smallButton mdmfBinButton";
             deleteButton.type = "button";
-            deleteButton.textContent = "❌";
+            deleteButton.textContent = "[ × ]";
             deleteButton.title = "Delete this query element";
             deleteButton.addEventListener("click", () => removeQueryElement(element.id));
             row.appendChild(deleteButton);
