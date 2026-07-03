@@ -222,10 +222,10 @@
         </div>
     </div>
 
-    <h3 class="mdmTitle">Protocol</h3>
+    <h3 class="mdmTitle">Amplifier Settings</h3>
     <div class="patchClampRow stdMetaField">
         <label class="metaLabel" for="protocol_type">
-            Type:
+            Protocol Type:
         </label>
         <select id="protocol_type"
                 class="metaValue shortText hardField"
@@ -235,5 +235,40 @@
             <option value="voltage-clamp" selected>voltage-clamp</option>
             <option value="current-clamp">current-clamp</option>
         </select>
+    </div>
+
+    <div class="patchClampRow stdMetaField">
+        <label class="metaLabel" for="protocol_type">
+            Filter Type (global):
+        </label>
+        <select id="global_filter_type"
+                class="metaValue shortText hardField"
+                data-meta-info="Global Filter Type"
+                data-meta-group="patch_clamp"
+                data-meta-key="filter_type">
+            <option value="voltage-clamp" selected>Bessel</option>
+            <option value="current-clamp">Butterworth</option>
+            <option value="current-clamp">Chebyshev</option>
+            <option value="current-clamp">Notch</option>
+            <option value="current-clamp">Gaussian (Digital)</option>
+            <option value="current-clamp">Box-Car Smoothing (Digital)</option>
+        </select>
+    </div>
+
+    <div class="patchClampRow stdMetaField">
+        <label class="metaLabel" for="cutoff_frequency">
+             Filter Cutoff Frequency (global):
+        </label>
+        <div class="inputWithUnit">
+            <input type="number"
+                   step="any"
+                   inputmode="decimal"
+                   id="cutoff_frequency"
+                   class="metaValue withUnit hardField"
+                   data-meta-info="Global Filter Cutoff Frequency:"
+                   data-meta-group="patch_clamp"
+                   data-meta-key="global_cutoff_frequency"
+                   data-meta-unit="kHz">
+        </div>
     </div>
 </div>
