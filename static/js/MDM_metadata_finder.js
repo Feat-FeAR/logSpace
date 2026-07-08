@@ -700,7 +700,7 @@
 
     // Render a Key-Value row:
     //
-    //   delete button + key dropdown + comparison dropdown + value input
+    //   delete button + key input/datalist + comparison dropdown + value input
     //
     function renderKeyValueQueryElement(row, element) {
         //const label = document.createElement("label");
@@ -708,14 +708,35 @@
         //label.textContent = "Key-Value:";
         //row.appendChild(label);
 
-        const keySelect = document.createElement("select");
-        keySelect.className = "mdmfInput mdmfKeySelect";
-        keySelect.value = element.key || "";
-        keySelect.addEventListener("change", () => {
-            updateQueryElement(element.id, { key: keySelect.value });
+        // Native <datalist> binds predefined suggestions (dropdown-style) to
+        // a user-defined input via matching (i.e., autocomplete feature).
+        const keyInput = document.createElement("input");
+        const keyList = document.createElement("datalist");
+        const keyListId = "mdmfKeyOptions_" + element.id;
+
+        keyInput.className = "mdmfInput mdmfKeySelect";
+        keyInput.type = "text";
+        keyInput.value = element.key || "";
+        keyInput.placeholder = state.keySet.size > 0
+            ? "Type or choose metadata key"
+            : "-- no keys available --";
+        keyInput.setAttribute("list", keyListId);
+        keyInput.autocomplete = "off";
+        keyInput.disabled = state.keySet.size === 0;
+
+        keyInput.addEventListener("input", () => {
+            updateQueryElement(element.id, { key: keyInput.value.trim() });
         });
-        populateKeySelect(keySelect, element.key);
-        row.appendChild(keySelect);
+
+        keyInput.addEventListener("change", () => {
+            updateQueryElement(element.id, { key: keyInput.value.trim() });
+        });
+
+        keyList.id = keyListId;
+        populateKeyDatalist(keyList);
+
+        row.appendChild(keyInput);
+        row.appendChild(keyList);
 
         const comparatorSelect = document.createElement("select");
         comparatorSelect.className = "mdmfInput mdmfComparatorSelect";
@@ -776,32 +797,21 @@
         }
     }
 
-    // Fill a Key dropdown with all paths discovered in the scanned MDM JSON
-    // files. The dropdown is disabled until keys are available.
-    function populateKeySelect(select, selectedValue) {
-        if (!select) return;
+    // Fill a Key datalist with all paths discovered in the scanned MDM JSON
+    // files. Native <datalist> binds predefined suggestions (dropdown-style)
+    // to an input via matching. The field is disabled until keys are available.
+    function populateKeyDatalist(datalist) {
+        if (!datalist) return;
 
-        clearElement(select);
-
-        const placeholder = document.createElement("option");
-        placeholder.value = "";
-        placeholder.textContent = state.keySet.size > 0 ? "-- choose metadata key --" : "-- no keys available --";
-        placeholder.disabled = true;
-        placeholder.selected = !selectedValue;
-        select.appendChild(placeholder);
+        clearElement(datalist);
 
         const keys = Array.from(state.keySet).sort((a, b) => a.localeCompare(b));
+
         keys.forEach(key => {
             const option = document.createElement("option");
             option.value = key;
-            option.textContent = key;
-            if (key === selectedValue) {
-                option.selected = true;
-            }
-            select.appendChild(option);
+            datalist.appendChild(option);
         });
-
-        select.disabled = keys.length === 0;
     }
 
     // -------------------------------------------------------------------------
