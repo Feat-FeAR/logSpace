@@ -30,6 +30,10 @@
     // A JSON file is accepted only if metadata.generated_by === MDM_GENERATOR.
     const MDM_GENERATOR = "MetaDataMaker";
 
+    // The special pseudo-key to search the entered value across all discovered
+    // filterable metadata paths.
+    const ANY_KEY = "[ ANY ]";
+
     // During a long scan, the UI status is updated every N filesystem entries.
     // This avoids refreshing the page text after every single file, which would
     // be unnecessarily expensive for large folders.
@@ -558,6 +562,25 @@
         }
     }
 
+    // Make the universal "any" key case insensitive 
+    function isAnyKeyPath(keyPath) {
+        return String(keyPath || "").trim().toLowerCase() === ANY_KEY.toLowerCase();
+    }
+
+    // So "any" key searches across the same universe of keys that appears in
+    // the dropdown/autocomplete list.
+    function getAllFilterableValues(metadata) {
+        const values = [];
+
+        Array.from(state.keySet).forEach(keyPath => {
+            getValuesAtPath(metadata, keyPath).forEach(value => {
+                values.push(value);
+            });
+        });
+
+        return values;
+    }
+
     // Convert any metadata value into a list of simple comparable values.
     //
     // This lets the filter match against:
@@ -804,6 +827,13 @@
         if (!datalist) return;
 
         clearElement(datalist);
+
+        // Include the universal "any" key
+        const anyOption = document.createElement("option");
+        anyOption.value = ANY_KEY;
+        anyOption.label = "[ ANY ] -> search all metadata fields";
+        anyOption.textContent = "[ ANY ] -> search all metadata fields";
+        datalist.appendChild(anyOption);
 
         const keys = Array.from(state.keySet).sort((a, b) => a.localeCompare(b));
 
@@ -1214,7 +1244,9 @@
     // If comparator is >, <, >=, or <=, at least one value found at this key
     // path must be comparable as a pure number or as an ISO date.
     function evaluateKeyValue(metadata, keyPath, queryValue, comparator = "=") {
-        const rawValues = getValuesAtPath(metadata, keyPath);
+        const rawValues = isAnyKeyPath(keyPath)
+            ? getAllFilterableValues(metadata)
+            : getValuesAtPath(metadata, keyPath);
 
         // Important for "!=": a missing key should not match.
         // Without this rule, a query such as:
