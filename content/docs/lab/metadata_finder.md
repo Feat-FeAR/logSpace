@@ -23,13 +23,16 @@ Start by clicking `Search MDM Files`, then select the target folder containing y
 The browser will recursively scan the selected folder and its subfolders for `.json` files, but only files whose parsed JSON contains the top-level field `"generated_by": "MetaDataMaker"` are kept.
 
 After the scan, all valid MDM files are listed in the upper results window, together with basic statistics such as the number of files found.
-The tool also inspects those files to collect all available metadata keys and sub-keys, which are then made available in the _Key_ dropdown menu.
+The tool also inspects those files to collect all available metadata keys and sub-keys, which are then made available as autocomplete suggestions in the _Key_ dropdown menu.
 
 Build your filter query by adding `Key-Value` rows and connecting them with logical operators: `AND`, `OR`, and `XOR`.
 Use `(` and `)` to define priorities explicitly.
 Buttons are enabled or disabled automatically to help prevent invalid query structures.
 
-Each `Key-Value` row lets you choose a metadata key, a comparison operator, and a value.
+Each `Key-Value` row lets you enter or select a metadata key, choose a comparison operator, and provide a value.
+The _Key_ field supports autocomplete: start typing to display matching metadata keys collected from the scanned files, or manually enter a custom key path if needed.
+The special pseudo-key `[ ANY ]` can be used to search for the specified value across all available metadata fields, instead of restricting the search to one selected key.
+
 The available comparison operators are `=`, `≠`, `>`, `<`, `≥`, and `≤`.
 The `=` operator performs the standard matching behavior; an empty value with `=` means "_key exists_".
 The `≠` operator means "_key exists, but its value does not match the specified value_".
