@@ -1,24 +1,24 @@
-<!-- Shortcode for the TimeProtocolEvents MetaDataMaker (MDM) module -->
+<!-- Shortcode for the SweepEvents MetaDataMaker (MDM) module -->
 
 <!-- Import the JS script -->
 <script defer
         language="javascript"
         type="text/javascript"
-        src='{{ "js/MDM_time_protocol_events.js" | urlize | relURL }}'>
+        src='{{ "js/MDM_sweep_events.js" | urlize | relURL }}'>
 </script>
 
-<div class="protocolPanel">
-    <h3 class="mdmTitle">Clampex Files Association</h3>
-    <div class="protocolButtons stdMetaField">
+<div class="sweepPanel">
+    <h3 class="mdmTitle">Episodic Recordings (Sweeps) [Clampex acquisition]</h3>
+    <div class="sweepButtons stdMetaField">
         <div class="buttonGroup">
             <button class="smallButton"
                     type="button"
-                    onclick="addProtocolRow()">
+                    onclick="addSweepRow()">
                 [ + ]
             </button>
             <button class="smallButton"
                     type="button"
-                    onclick="removeProtocolRow()">
+                    onclick="removeSweepRow()">
                 [ − ]
             </button>
             <button class="smallButton"
@@ -35,42 +35,42 @@
         </div>
     </div>
 
-    <!-- Nested <div> to accommodate multiple fileProtocolRow's -->
-    <div id="fileProtocolFields" class="fileProtocolGrid stimulusEventFields">
-        <div class="fileProtocolRow stdMetaField"> <!-- For a single fileProtocolRow -->
-            <label class="metaLabel" for="name_proto-file_1">
+    <!-- Nested <div> to accommodate multiple sweepRow's -->
+    <div id="sweepFields" class="sweepGrid stimulusEventFields">
+        <div class="sweepRow stdMetaField"> <!-- For a single sweepRow -->
+            <label class="metaLabel" for="file_sweep_1">
                 File 1:
             </label>
             <input type="text"
-                   id="name_proto-file_1"
+                   id="file_sweep_1"
                    class="metaValue"
-                   data-meta-info="Protocol File Name 1"
-                   data-meta-group="protocol_applications"
-                   data-meta-key="name_proto-file_1"
+                   data-meta-info="Sweep File 1"
+                   data-meta-group="episodic_sweeps"
+                   data-meta-key="file_sweep_1"
                    placeholder="filename.ext">
 
-            <label class="metaLabel" for="stimulus_proto-file_1">
+            <label class="metaLabel" for="stimulus_sweep_1">
                 Stimulus:
             </label>
-            <select id="stimulus_proto-file_1"
+            <select id="stimulus_sweep_1"
                     class="metaValue"
-                    data-meta-info="Protocol File Stimulus 1"
-                    data-meta-group="protocol_applications"
-                    data-meta-key="stimulus_proto-file_1">
+                    data-meta-info="Sweep Stimulus 1"
+                    data-meta-group="episodic_sweeps"
+                    data-meta-key="stimulus_sweep_1">
             </select>
 
-            <label class="metaLabel" for="time_proto-file_1">
+            <label class="metaLabel" for="time_sweep_1">
                 Time:
             </label>
             <div class="inputWithUnit">
                 <input type="number"
                        step="any"
                        inputmode="decimal"
-                       id="time_proto-file_1"
+                       id="time_sweep_1"
                        class="metaValue withUnit"
-                       data-meta-info="Protocol File Time 1"
-                       data-meta-group="protocol_applications"
-                       data-meta-key="time_proto-file_1"
+                       data-meta-info="Sweep Time 1"
+                       data-meta-group="episodic_sweeps"
+                       data-meta-key="time_sweep_1"
                        data-meta-unit="s">
             </div>
         </div>

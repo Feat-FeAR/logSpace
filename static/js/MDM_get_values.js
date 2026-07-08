@@ -31,14 +31,14 @@ function ensureTimeEventsBlock(metadata) {
     if (!("time_events" in metadata)) {
         metadata.time_events = {};
     }
-    if (!("full_time_course" in metadata.time_events)) {
-        metadata.time_events.full_time_course = null;
+    if (!("gap_free_file" in metadata.time_events)) {
+        metadata.time_events.gap_free_file = null;
     }
     if (!("stimulus_changes" in metadata.time_events)) {
         metadata.time_events.stimulus_changes = [];
     }
-    if (!("protocol_applications" in metadata.time_events)) {
-        metadata.time_events.protocol_applications = [];
+    if (!("episodic_sweeps" in metadata.time_events)) {
+        metadata.time_events.episodic_sweeps = [];
     }
 }
 
@@ -65,13 +65,13 @@ function getAllMetaValues() {
         MAJOR (1.0.0 → 2.0.0): breaking changes (renamed keys, structure change)
     */
     const metadata = {
-        schema_version: "1.0.1",
+        schema_version: "2.0.0",
         generated_by: "MetaDataMaker",
         generated_at: new Date().toISOString()
     };
 
     // Temporary stores for the nested 'time_events' content.
-    const protocolRows = {};
+    const sweepRows = {};
     const changeRows = {};
 
     // Loop through every exportable field in DOM order.
@@ -112,17 +112,16 @@ function getAllMetaValues() {
 
         // SPECIAL CASE 2
         // --------------
-        // protocol application rows belong to the nested
-        // "time_events.protocol_applications" array.
-        if (group === "protocol_applications") {
+        // sweep rows belong to the nested "time_events.episodic_sweeps" array.
+        if (group === "episodic_sweeps") {
             ensureTimeEventsBlock(metadata);
             const match = key.match(/_(\d+)$/);
             if (!match) return;
 
             const rowIndex = match[1];
 
-            if (!(rowIndex in protocolRows)) {
-                protocolRows[rowIndex] = {
+            if (!(rowIndex in sweepRows)) {
+                sweepRows[rowIndex] = {
                     file: null,
                     stimulus: null,
                     time: {
@@ -133,12 +132,12 @@ function getAllMetaValues() {
             }
 
             // Map flat HTML field keys into the nested row structure
-            if (key.startsWith("name_proto-file_")) {
-                protocolRows[rowIndex].file = value;
-            } else if (key.startsWith("stimulus_proto-file_")) {
-                protocolRows[rowIndex].stimulus = value;
-            } else if (key.startsWith("time_proto-file_")) {
-                protocolRows[rowIndex].time = unit
+            if (key.startsWith("file_sweep_")) {
+                sweepRows[rowIndex].file = value;
+            } else if (key.startsWith("stimulus_sweep_")) {
+                sweepRows[rowIndex].stimulus = value;
+            } else if (key.startsWith("time_sweep_")) {
+                sweepRows[rowIndex].time = unit
                     ? { value: value, unit: unit }
                     : value;
             }
@@ -153,8 +152,8 @@ function getAllMetaValues() {
             ensureTimeEventsBlock(metadata);
 
             // The full trace filename is stored as a scalar field
-            if (key === "full_trace_file") {
-                metadata.time_events.full_time_course = value;
+            if (key === "gap_free_file") {
+                metadata.time_events.gap_free_file = value;
                 return;
             }
 
@@ -222,14 +221,14 @@ function getAllMetaValues() {
         metadata.general.operators = null;
     }
 
-    // Finalize protocol_applications and stimulus_changes as ordered arrays
+    // Finalize episodic_sweeps and stimulus_changes as ordered arrays
     if ("time_events" in metadata) {
-        metadata.time_events.protocol_applications = Object.keys(protocolRows)
+        metadata.time_events.episodic_sweeps = Object.keys(sweepRows)
             .sort((a, b) => Number(a) - Number(b))
-            .map(index => protocolRows[index]);
+            .map(index => sweepRows[index]);
 
-        if (metadata.time_events.protocol_applications.length === 0) {
-            metadata.time_events.protocol_applications = null;
+        if (metadata.time_events.episodic_sweeps.length === 0) {
+            metadata.time_events.episodic_sweeps = null;
         }
 
         metadata.time_events.stimulus_changes = Object.keys(changeRows)
@@ -363,8 +362,8 @@ function resetDynamicSectionsToBaseState(hard = false) {
             removeFun: removeStimulusRow
         },
         {
-            rowSelector: "#fileProtocolFields > .fileProtocolRow",
-            removeFun: removeProtocolRow
+            rowSelector: "#sweepFields > .sweepRow",
+            removeFun: removeSweepRow
         },
         {
             rowSelector: "#changeFields > .changeRow",

@@ -74,11 +74,11 @@ function removeChangeRow() {
     }
 }
 
-// Fill the "Full Trace File" input from a file selected in the hidden picker
+// Fill the "Gap-Free Recording" input from a file selected in the hidden picker
 function setFileFromSelection(traceFile) {
     if (!traceFile) return;
 
-    const fileInput = document.getElementById("full_trace_file");
+    const fileInput = document.getElementById("gap_free_file");
     if (!fileInput) return;
 
     fileInput.value = traceFile.name;

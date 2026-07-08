@@ -335,41 +335,41 @@ button.smallButton:hover {
     padding-right: 25px;
 }
 
-/* === TimeProtocolEvents module ============================================ */
+/* === SweepEvents module =================================================== */
 
-.protocolPanel {
+.sweepPanel {
     display: grid;
     column-gap: 12px;
     gap: 8px;
 }
 
-.protocolButtons {
+.sweepButtons {
     display: grid;
     column-gap: 12px;
     align-items: center;
     grid-template-columns: 50px 1fr;
 }
 
-.fileProtocolGrid {
+.sweepGrid {
     display: grid;
     column-gap: 12px;
     gap: 8px;
 }
 
-.fileProtocolGrid .fileProtocolRow {
+.sweepGrid .sweepRow {
     display: grid;
     column-gap: 12px;
     grid-template-columns: 50px minmax(100px, 210px) 65px minmax(10px, 160px) 40px minmax(10px, 1fr);
     align-items: center;
 }
 
-.fileProtocolGrid .inputWithUnit,
-.fileProtocolGrid select,
-.fileProtocolGrid input[type="text"] {
+.sweepGrid .inputWithUnit,
+.sweepGrid select,
+.sweepGrid input[type="text"] {
     width: 100%;
 }
 
-.fileProtocolGrid .inputWithUnit input[type="number"] {
+.sweepGrid .inputWithUnit input[type="number"] {
     width: 100%;
     padding-right: 25px;
 }

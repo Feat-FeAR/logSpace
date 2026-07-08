@@ -21,6 +21,6 @@ The current implementation is a prototype tailored to patch-clamp experiments; h
 {{< MDM_PatchClamp >}}
 {{< MDM_AcuteStimuli >}}
 	{{< MDM_ChangeEvents >}}
-	{{< MDM_TimeProtocolEvents >}}
+	{{< MDM_SweepEvents >}}
 {{< MDM_Notes >}}
 {{< MDM_getValues >}}

@@ -8,8 +8,8 @@
 // 3. populating any dependent <select> dropdown that must offer those names.
 // 4. refreshing all dependent dropdowns whenever the stimulus list changes.
 //
-// Other modules (for example TimeProtocolEvents and ChangeEvents) should NOT
-// duplicate stimulus-list logic. Instead, they should call the shared API:
+// Other modules (for example SweepEvents and ChangeEvents) should NOT duplicate
+// stimulus-list logic. Instead, they should call the shared API:
 //     window.MDMStimuli.refreshAllStimulusDropdowns();
 
 let stimulusCounter = 2; // Next stimulus index to create (Stimulus 1 already exists)
@@ -70,7 +70,7 @@ function populateStimulusDropdown(selectId) {
 }
 
 // Refresh all stimulus-dependent dropdowns after stimulus changes. Currently,
-// 'stimulusEventFields' class is used to target both TimeProtocolEvents and
+// 'stimulusEventFields' class is used to target both SweepEvents and
 // ChangeEvents modules. Any future module that needs automatic stimulus
 // dropdown updates should place its relevant <select> elements inside a
 // container with that class!!

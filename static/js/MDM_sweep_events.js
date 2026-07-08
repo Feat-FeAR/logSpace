@@ -1,4 +1,4 @@
-// JavaScript code for the TimeProtocolEvents MetaDataMaker (MDM) shortcode
+// JavaScript code for the SweepEvents MetaDataMaker (MDM) shortcode
 //
 // DESIGN NOTE
 // This module does NOT own the list of available stimuli, which, on the
@@ -7,51 +7,51 @@
 //
 // This module assumes that MDM_acute_stimuli.js is loaded on the page too.
 
-let protoFileCounter = 2; // Next protocol-row index to create (row 1 already exists)
+let sweepCounter = 2; // Next sweep-row index to create (row 1 already exists)
 
-// Add one protocol-stimulus association row
+// Add one sweep-stimulus association row
 // 'fileName' parameter: optional filename to prefill the text input
-function addProtocolRow(fileName = "") {
-    const section = document.getElementById("fileProtocolFields");
+function addSweepRow(fileName = "") {
+    const section = document.getElementById("sweepFields");
     if (!section) return;
 
     const newRow = document.createElement("div");
-    newRow.className = "fileProtocolRow stdMetaField";
+    newRow.className = "sweepRow stdMetaField";
 
     newRow.innerHTML = `
-        <label class="metaLabel" for="name_proto-file_${protoFileCounter}">
-            File ${protoFileCounter}:
+        <label class="metaLabel" for="file_sweep_${sweepCounter}">
+            File ${sweepCounter}:
         </label>
         <input type="text"
-               id="name_proto-file_${protoFileCounter}"
+               id="file_sweep_${sweepCounter}"
                class="metaValue"
-               data-meta-info="Protocol File Name ${protoFileCounter}"
-               data-meta-group="protocol_applications"
-               data-meta-key="name_proto-file_${protoFileCounter}"
+               data-meta-info="Sweep File ${sweepCounter}"
+               data-meta-group="episodic_sweeps"
+               data-meta-key="file_sweep_${sweepCounter}"
                placeholder="filename.ext">
 
-        <label class="metaLabel" for="stimulus_proto-file_${protoFileCounter}">
+        <label class="metaLabel" for="stimulus_sweep_${sweepCounter}">
             Stimulus:
         </label>
-        <select id="stimulus_proto-file_${protoFileCounter}"
+        <select id="stimulus_sweep_${sweepCounter}"
                 class="metaValue"
-                data-meta-info="Protocol File Stimulus ${protoFileCounter}"
-                data-meta-group="protocol_applications"
-                data-meta-key="stimulus_proto-file_${protoFileCounter}">
+                data-meta-info="Sweep Stimulus ${sweepCounter}"
+                data-meta-group="episodic_sweeps"
+                data-meta-key="stimulus_sweep_${sweepCounter}">
         </select>
 
-        <label class="metaLabel" for="time_proto-file_${protoFileCounter}">
+        <label class="metaLabel" for="time_sweep_${sweepCounter}">
             Time:
         </label>
         <div class="inputWithUnit">
             <input type="number"
                    step="any"
                    inputmode="decimal"
-                   id="time_proto-file_${protoFileCounter}"
+                   id="time_sweep_${sweepCounter}"
                    class="metaValue withUnit"
-                   data-meta-info="Protocol File Time ${protoFileCounter}"
-                   data-meta-group="protocol_applications"
-                   data-meta-key="time_proto-file_${protoFileCounter}"
+                   data-meta-info="Sweep Time ${sweepCounter}"
+                   data-meta-group="episodic_sweeps"
+                   data-meta-key="time_sweep_${sweepCounter}"
                    data-meta-unit="s">
         </div>
     `;
@@ -59,7 +59,7 @@ function addProtocolRow(fileName = "") {
     section.appendChild(newRow);
 
     // Set the filename through the DOM API instead of embedding it in innerHTML
-    const fileInput = newRow.querySelector(`#name_proto-file_${protoFileCounter}`);
+    const fileInput = newRow.querySelector(`#file_sweep_${sweepCounter}`);
     if (fileInput) {
         fileInput.value = fileName;
     }
@@ -75,15 +75,15 @@ function addProtocolRow(fileName = "") {
         window.MDMStimuli.refreshAllStimulusDropdowns();
     }
 
-    protoFileCounter++;
+    sweepCounter++;
 }
 
-// Remove the last protocol-stimulus association row, but never remove row 1.
-function removeProtocolRow() {
-    if (protoFileCounter > 2) {
-        protoFileCounter--;
+// Remove the last sweep-stimulus association row, but never remove row 1.
+function removeSweepRow() {
+    if (sweepCounter > 2) {
+        sweepCounter--;
 
-        const section = document.getElementById("fileProtocolFields");
+        const section = document.getElementById("sweepFields");
         if (!section || !section.lastElementChild) return;
 
         section.removeChild(section.lastElementChild);
@@ -96,7 +96,7 @@ function populateFilesFromSelection(fileList) {
 
     // Collect all existing filename inputs, in DOM order
     const existingInputs = document.querySelectorAll(
-        '#fileProtocolFields input[type="text"][id^="name_proto-file_"]'
+        '#sweepFields input[type="text"][id^="file_sweep_"]'
     );
 
     let fileIndex = 0;
@@ -113,7 +113,7 @@ function populateFilesFromSelection(fileList) {
 
     // Then create new rows for any remaining files
     while (fileIndex < fileList.length) {
-        addProtocolRow(fileList[fileIndex].name);
+        addSweepRow(fileList[fileIndex].name);
         fileIndex++;
     }
 
@@ -128,8 +128,8 @@ function populateFilesFromSelection(fileList) {
 // -----------------------------------------------------------------------------
 
 // Expose button/file-picker handlers used directly by HTML onclick/onchange
-window.addProtocolRow = addProtocolRow;
-window.removeProtocolRow = removeProtocolRow;
+window.addSweepRow = addSweepRow;
+window.removeSweepRow = removeSweepRow;
 window.populateFilesFromSelection = populateFilesFromSelection;
 
 // -----------------------------------------------------------------------------
