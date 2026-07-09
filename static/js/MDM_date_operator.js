@@ -41,10 +41,10 @@ function addOperatorRow() {
     newRow.className = "operatorRow stdMetaField";
 
     newRow.innerHTML = `
-        <label class="metaLabel" for="dropdown_operator${opCounter}">
+        <label class="metaLabel" for="operator_${opCounter}">
             Operator ${opCounter}:
         </label>
-        <select id="dropdown_operator${opCounter}"
+        <select id="operator_${opCounter}"
                 onchange="toggleGuestOperator(this)"
                 class="metaValue hardField"
                 data-meta-info="Operator ${opCounter}"
@@ -52,7 +52,7 @@ function addOperatorRow() {
                 data-meta-key="operator_${opCounter}">
         </select>
         <input type="text"
-               id="guest_operator${opCounter}"
+               id="guest_operator_${opCounter}"
                class="hidden hardField"
                placeholder="Name Surname">
     `;
@@ -60,7 +60,7 @@ function addOperatorRow() {
     section.appendChild(newRow);
 
     // Generate the options for the newly created field
-    populateOperatorDropdown(`dropdown_operator${opCounter}`, tcpLab.member);
+    populateOperatorDropdown(`operator_${opCounter}`, tcpLab.member);
 
     opCounter++;
 }
@@ -96,7 +96,7 @@ window.toggleGuestOperator = toggleGuestOperator;
 // Initialize at page startup (i.e., add an event listener to the document that
 // executes the function once the DOM has been fully constructed).
 document.addEventListener("DOMContentLoaded", function () {
-    populateOperatorDropdown("dropdown_operator1", tcpLab.member);
+    populateOperatorDropdown("operator_1", tcpLab.member);
 
     const today = new Date();
     const dateInput = document.getElementById("today_date");

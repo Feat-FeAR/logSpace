@@ -39,7 +39,7 @@ function populateRecipeDropdown(selectId) {
         if (key === "molecular_weights") return;
 
         const option = document.createElement("option");
-        option.value = key;                       // keep original key internally
+        option.value = key; // keep original key internally
         option.textContent = prettifyRecipeName(key); // show user-friendly label
         select.appendChild(option);
     });

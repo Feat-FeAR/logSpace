@@ -87,7 +87,7 @@ function getAllMetaValues() {
         if (element.value === "GUEST") {
             const opNumMatch = element.id.match(/\d+$/);
             const opNum = opNumMatch ? opNumMatch[0] : null;
-            const guestField = opNum ? document.getElementById(`guest_operator${opNum}`) : null;
+            const guestField = opNum ? document.getElementById(`guest_operator_${opNum}`) : null;
             value = guestField && guestField.value.trim() !== ""
                 ? guestField.value
                 : null;
@@ -126,7 +126,7 @@ function getAllMetaValues() {
                     stimulus: null,
                     time: {
                         value: null,
-                        unit: "s"
+                        unit: "s" // default fallback
                     }
                 };
             }
@@ -151,13 +151,14 @@ function getAllMetaValues() {
         if (group === "stimulus_changes") {
             ensureTimeEventsBlock(metadata);
 
-            // The full trace filename is stored as a scalar field
+            // The gap-free recording filename is stored as a standalone scalar field
             if (key === "gap_free_file") {
                 metadata.time_events.gap_free_file = value;
                 return;
             }
 
-            // All other stimulus_changes fields are row-based
+            // All other stimulus_changes fields are row-based and, therefore,
+            // are organized into an array
             const match = key.match(/_(\d+)$/);
             if (!match) return;
 
@@ -167,7 +168,7 @@ function getAllMetaValues() {
                 changeRows[rowIndex] = {
                     time: {
                         value: null,
-                        unit: "s"
+                        unit: "s" // default fallback
                     },
                     stimulus: null
                 };
@@ -221,7 +222,7 @@ function getAllMetaValues() {
         metadata.general.operators = null;
     }
 
-    // Finalize episodic_sweeps and stimulus_changes as ordered arrays
+    // Finalize `episodic_sweeps` and `stimulus_changes` as ordered arrays
     if ("time_events" in metadata) {
         metadata.time_events.episodic_sweeps = Object.keys(sweepRows)
             .sort((a, b) => Number(a) - Number(b))

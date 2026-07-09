@@ -66,13 +66,13 @@ See 'DESIGN NOTE' in 'MDM_getValues.js'
         </div>
     </div>
 
-    <!-- Nested <div> to accommodate multiple drop-down menus -->
+    <!-- Nested <div> to accommodate multiple operatorRow's -->
     <div id="operatorFields" class="operatorGrid">
-        <div class="operatorRow stdMetaField"> <!-- For a single dropdown -->
-            <label class="metaLabel" for="dropdown_operator1">
+        <div class="operatorRow stdMetaField"> <!-- For a single operatorRow -->
+            <label class="metaLabel" for="operator_1">
                 Operator 1:
             </label>
-            <select id="dropdown_operator1"
+            <select id="operator_1"
                     onchange="toggleGuestOperator(this)"
                     class="metaValue hardField"
                     data-meta-info="Operator 1"
@@ -81,7 +81,7 @@ See 'DESIGN NOTE' in 'MDM_getValues.js'
             </select>
              <!-- Input field for a custom name -->
             <input type="text"
-                   id="guest_operator1"
+                   id="guest_operator_1"
                    class="hidden hardField"
                    placeholder="Name Surname">
         </div>
