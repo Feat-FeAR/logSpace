@@ -27,8 +27,8 @@ function populateOperatorDropdown(field_Id, optionArray) {
     
     // Add a "GUEST" option
     const otherOption = document.createElement("option");
-    otherOption.value = "GUEST";
-    otherOption.text = "GUEST";
+    otherOption.value = "[ GUEST ]";
+    otherOption.text = "[ GUEST ]";
     dropdown.appendChild(otherOption);
 }
 
@@ -68,7 +68,7 @@ function addOperatorRow() {
 // Function to toggle the display for the guest op. based on the selected option
 function toggleGuestOperator(selectElement) {
     const customInput = selectElement.nextElementSibling;
-    customInput.style.display = (selectElement.value === "GUEST" ? "inline-block" : "none");
+    customInput.style.display = (selectElement.value === "[ GUEST ]" ? "inline-block" : "none");
 }
 
 // Remove an operator field from the drop-down menu

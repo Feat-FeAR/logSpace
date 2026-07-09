@@ -84,7 +84,7 @@ function getAllMetaValues() {
 
         // Retrieve the values
         let value;
-        if (element.value === "GUEST") {
+        if (element.value === "[ GUEST ]") {
             const opNumMatch = element.id.match(/\d+$/);
             const opNum = opNumMatch ? opNumMatch[0] : null;
             const guestField = opNum ? document.getElementById(`guest_operator_${opNum}`) : null;
