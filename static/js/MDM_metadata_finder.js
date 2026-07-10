@@ -1108,7 +1108,8 @@
                         throw new Error(
                             "comparison value in Key-Value row " +
                             position +
-                            " must be a pure number or an ISO date such as 2026-06-30"
+                            " must be a pure number, an ISO date such as 2026-06-30, " +
+                            "or a semantic version such as 2.0.1"
                         );
                     }
                 }
@@ -1362,8 +1363,17 @@
             const valueComparable = parseComparableScalar(value);
             if (valueComparable === null) return false;
 
-            // Do not compare a date against a number, or a number against a date.
+            // Do not compare a date against a number, a number against a
+            // version, a version against a date, etc.
             if (valueComparable.type !== queryComparable.type) return false;
+
+            if (valueComparable.type === "semver") {
+                return compareSemanticVersions(
+                    valueComparable.value,
+                    queryComparable.value,
+                    comparator
+                );
+            }
 
             return compareScalars(
                 valueComparable.value,
@@ -1419,11 +1429,42 @@
                 return left === right;
         }
     }
+    
+    // Compare two already-parsed semantic versions.
+    function compareSemanticVersions(left, right, comparator) {
+        const comparison = compareSemanticVersionTriplets(left, right);
+
+        switch (normalizeComparator(comparator)) {
+            case ">":
+                return comparison > 0;
+            case "<":
+                return comparison < 0;
+            case ">=":
+                return comparison >= 0;
+            case "<=":
+                return comparison <= 0;
+            default:
+                return comparison === 0;
+        }
+    }
+
+    function compareSemanticVersionTriplets(left, right) {
+        for (let i = 0; i < 3; i += 1) {
+            const leftPart = left[i];
+            const rightPart = right[i];
+
+            if (leftPart > rightPart) return 1;
+            if (leftPart < rightPart) return -1;
+        }
+
+        return 0;
+    }
 
     // Parse a raw value as either:
     //
     //   { type: "number", value: Number }
     //   { type: "date", value: milliseconds_since_epoch }
+    //   { type: "semver", value: [major, minor, patch] }
     //
     // Returns null if the value is not a pure number and not a strict ISO date.
     // This is the key guard that prevents >/< from affecting arbitrary strings.
@@ -1447,6 +1488,11 @@
         const date = parseIsoDateStrict(text);
         if (date !== null) {
             return { type: "date", value: date };
+        }
+
+        const semanticVersion = parseSemanticVersionStrict(text);
+        if (semanticVersion !== null) {
+            return { type: "semver", value: semanticVersion };
         }
 
         return null;
@@ -1476,6 +1522,18 @@
             date.getUTCDate() === day;
 
         return valid ? milliseconds : null;
+    }
+
+    // Parse a strict three-component semantic version of the form MAJOR.MINOR.PATCH
+    function parseSemanticVersionStrict(text) {
+        const match = String(text || "").trim().match(/^(\d+)\.(\d+)\.(\d+)$/);
+        if (!match) return null;
+
+        return [
+            Number(match[1]),
+            Number(match[2]),
+            Number(match[3])
+        ];
     }
 
     // Parse a text value as boolean only if it is exactly true or false.
