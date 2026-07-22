@@ -1,10 +1,25 @@
-<!-- Shortcode for the MetaDataFinder (MDF) / MDM local-search module -->
+<!-- Shortcode for the MetaDataFinder (MDF), the MDM local-search module -->
 
-<!-- Import the JS script -->
+<!-- Import MDF modules in dependency order -->
 <script defer
         language="javascript"
         type="text/javascript"
-        src='{{ "js/MDM_metadata_finder.js" | urlize | relURL }}'>
+        src='{{ "js/MDF_core.js" | urlize | relURL }}'>
+</script>
+<script defer
+        language="javascript"
+        type="text/javascript"
+        src='{{ "js/MDF_ui.js" | urlize | relURL }}'>
+</script>
+<script defer
+        language="javascript"
+        type="text/javascript"
+        src='{{ "js/MDF_query.js" | urlize | relURL }}'>
+</script>
+<script defer
+        language="javascript"
+        type="text/javascript"
+        src='{{ "js/MDF_scan.js" | urlize | relURL }}'>
 </script>
 
 <div class="mdmfPanel">
