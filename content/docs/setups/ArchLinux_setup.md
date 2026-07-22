@@ -44,7 +44,8 @@ Arch follows the *file system hierarchy* for operating systems and uses the `sys
     - All other setting: (default)
 
 1. Enter the UEFI and
-    - Disable [*Secure Boot*](https://wiki.archlinux.org/title/Unified_Extensible_Firmware_Interface/Secure_Boot) (after completing the installation, you can try to set up *Secure Boot* again... sometimes it works);
+    - Disable [*Secure Boot*](https://wiki.archlinux.org/title/Unified_Extensible_Firmware_Interface/Secure_Boot).
+    After completing the installation, you can try to set up *Secure Boot* again... sometimes it works, however leave it disabled if you also need to _Disable BD PROCHOT on Linux_ (see below);
     - Set the USB drive as the boot priority.
 
 1. Restart to boot the live environment, select _Arch Linux install medium_, and press `Enter` to enter the installation environment.
@@ -427,3 +428,49 @@ Otherwise, you'll have to compile the program for the initial installation and r
 - Install `linux-firmware`, `libcamera` to use the cameras in applications that support _libcamera_.
 - The `qcam` utility available from `libcamera-tools` can be used to test camera functionality.
 - Both cameras should work in _Firefox_ after installing `pipewire-libcamera` and enabling `media.webrtc.camera.allow-pipewire` in the browser.
+
+### Thermal throttling
+_BD PROCHOT_ (Bi-Directional PROCHOT) is an Intel feature that lets external chips (VRMs, chipset, thermal sensors) signal the CPU to throttle hard, even when the CPU itself is cool.
+On some laptops a dying battery or a misreporting sensor can pin the cores at 800 MHz (or even 400 mHz) indefinitely.
+
+If that happens, you can get the _Disable BD PROCHOT on Linux_ utility by [fralapo](https://github.com/fralapo) from the same-named [GitHub repository](https://github.com/fralapo/Disable-BD-PROCHOT-on-LINUX), which removes thermal throttling at boot and after every resume from suspend, just like the popular [ThrottleStop](https://throttlestop.net/) for Windows.
+1. Install it:
+    ```sh
+    curl -LO https://raw.githubusercontent.com/fralapo/Disable-BD-PROCHOT-on-LINUX/main/Disable_BD_PROCHOT
+    sudo bash Disable_BD_PROCHOT
+    ```
+
+1. Verify it worked:
+    - Type
+        ```sh
+        sudo rdmsr -a 0x1FC
+        ```
+        then look at the last hex digit of every line:
+        ```
+        even (0 2 4 6 8 a c e) → BD PROCHOT is disabled
+        odd  (1 3 5 7 9 b d f) → still active
+        ```
+    
+    - Check the cores aren't pinned low through the Plasma _System Monitor_ or by
+        ```sh
+        watch -n 1 'grep MHz /proc/cpuinfo'
+        ```
+        You should see frequencies moving freely up to the turbo ceiling, not stuck near 800 MHz.
+    
+    - Check these two services are _enabled_ :
+        ```sh
+        systemctl is-enabled disable_bd_prochot.service
+        systemctl is-enabled disable_bd_prochot-resume.service
+        ```
+
+{{< hint danger >}}
+__CAUTIONS__  
+Disabling _BD PROCHOT_ removes one layer of thermal defense.
+If the external signal was real (actual overheating rather than a bad sensor), you now have no hardware-level brake.
+Keep an eye on temperatures through the Plasma _System Monitor_ or by
+```sh
+watch -n 1 sensors
+```
+If the fans can't keep up, reverse the change by running `Uninstall_BD_PROCHOT`.
+_Disable BD PROCHOT on Linux_ targets the specific case where the throttle trigger is a faulty external signal, not a CPU that is actually overheating.
+{{< /hint >}}
